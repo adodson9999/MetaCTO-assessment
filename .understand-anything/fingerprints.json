@@ -1,0 +1,4216 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "55ca918227aed430409a1ae46271448cb102d7f3",
+  "generatedAt": "2026-06-24T23:26:49.240Z",
+  "files": {
+    ".env.example": {
+      "filePath": ".env.example",
+      "contentHash": "d169dd5d9c890672385b301a5c9be5dad0136f9000b87b2667fd62a23caf6d7f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    ".github/FUNDING.yml": {
+      "filePath": ".github/FUNDING.yml",
+      "contentHash": "9a1ffeb42d4a4eb1a4266392966fdd134cc339c134df17406046802dabfe80a2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": true
+    },
+    ".github/workflows/deploy-public-to-s3.yml": {
+      "filePath": ".github/workflows/deploy-public-to-s3.yml",
+      "contentHash": "0f6336240a108a684064517cefd2158975e309ad8adbdc18be0faef238eec336",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "Dockerfile": {
+      "filePath": "Dockerfile",
+      "contentHash": "44967badacc9f4a454bf9cd28e00fe720ac72597106605ddb42af109fddb029c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "fonts/fonts.conf": {
+      "filePath": "fonts/fonts.conf",
+      "contentHash": "9ea54962619799810244d459601dbb278eb06cec2784f3b289fa5a4e74941794",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": false
+    },
+    "fonts/README.md": {
+      "filePath": "fonts/README.md",
+      "contentHash": "e9459326bc30dd1502d5c71f2ad4d567d7424fa3ce84116c1be991027249ade1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "index.js": {
+      "filePath": "index.js",
+      "contentHash": "8323a86455a099fa99f1914a6913da841359cabc432a311ee4cd364573ec7e9f",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "express"
+          ]
+        },
+        {
+          "source": "./src/db/mongoose.js",
+          "specifiers": [
+            "connectDB",
+            "disconnectDB"
+          ]
+        },
+        {
+          "source": "./src/middleware/index.js",
+          "specifiers": [
+            "injectMiddleWares"
+          ]
+        },
+        {
+          "source": "./src/middleware/error.js",
+          "specifiers": [
+            "errorMiddleware"
+          ]
+        },
+        {
+          "source": "./src/middleware/auth.js",
+          "specifiers": [
+            "authUser"
+          ]
+        },
+        {
+          "source": "./src/routes/index.js",
+          "specifiers": [
+            "routes"
+          ]
+        },
+        {
+          "source": "./src/utils/util.js",
+          "specifiers": [
+            "validateEnvVar",
+            "loadDataInMemory"
+          ]
+        },
+        {
+          "source": "./src/utils/cron-jobs.js",
+          "specifiers": [
+            "setupCRONJobs"
+          ]
+        },
+        {
+          "source": "./src/utils/fatal-handler.js",
+          "specifiers": [
+            "registerFatalHandlers",
+            "registerShutdownHandlers"
+          ]
+        }
+      ],
+      "exports": [
+        "server"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "0c1ba7f14dcdfd3e1996fcdc32b54041807a639649d326c2ee56d64a5a66f335",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "public/css/docs.scss": {
+      "filePath": "public/css/docs.scss",
+      "contentHash": "6b7ac7f31ca3eca09f2d06d24f6d863b1db05699817db85202685b9e22193fb9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 508,
+      "hasStructuralAnalysis": false
+    },
+    "public/css/partial/_404.scss": {
+      "filePath": "public/css/partial/_404.scss",
+      "contentHash": "47cb95532fc25be8f3e6a997344806ce059228422949d34df37a47cbaffd8515",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 109,
+      "hasStructuralAnalysis": false
+    },
+    "public/css/partial/_base.scss": {
+      "filePath": "public/css/partial/_base.scss",
+      "contentHash": "843e705343bd9aec0520bffa27827948fb481f03cf5ef2e236cd9ddc98306df7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 161,
+      "hasStructuralAnalysis": false
+    },
+    "public/css/partial/_font-dm-sans.scss": {
+      "filePath": "public/css/partial/_font-dm-sans.scss",
+      "contentHash": "e62140e70feaeccb5410fea9da842b6741c31801676d0d274198ff8f8f5cebfe",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": false
+    },
+    "public/css/partial/_nav.scss": {
+      "filePath": "public/css/partial/_nav.scss",
+      "contentHash": "68db146f5b27dcb0b035c0b37c4a283d74408a126e8628de13c25b01ed445ac2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 211,
+      "hasStructuralAnalysis": false
+    },
+    "public/css/styles.scss": {
+      "filePath": "public/css/styles.scss",
+      "contentHash": "0b862c26ac4e3329ae34d0dbad2feafd0815323972adeac195e41f07b250c4b6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1192,
+      "hasStructuralAnalysis": false
+    },
+    "public/js/2fa.js": {
+      "filePath": "public/js/2fa.js",
+      "contentHash": "4b96589c93e56ee085fab63b9d84c01232059c403ebc9f687115d74d51bed10a",
+      "functions": [
+        {
+          "name": "handleTotpCopyClick",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "generateTotpCode",
+          "params": [],
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "showTotpResult",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "showTotpError",
+          "params": [
+            "message"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "hideTotpError",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "startTotpCountdown",
+          "params": [
+            "seconds"
+          ],
+          "exported": false,
+          "lineCount": 43
+        },
+        {
+          "name": "clearTotpCountdown",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 164,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/common.js": {
+      "filePath": "public/js/common.js",
+      "contentHash": "c3224b64410676590d9da519b55b18b2c263ca70824a68fbccdb71d265612b26",
+      "functions": [
+        {
+          "name": "handleNavMenuClickOnMobile",
+          "params": [],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "copyTextToClipboard",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/custom-json-highlight.js": {
+      "filePath": "public/js/custom-json-highlight.js",
+      "contentHash": "9966f3a56db0f3ad0cedd6e64f37c9252e08a22be29a52f029d1132f4dba77dc",
+      "functions": [
+        {
+          "name": "highlightJSON",
+          "params": [
+            "json"
+          ],
+          "exported": false,
+          "lineCount": 47
+        },
+        {
+          "name": "clearJSONHighlighting",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/custom-response.js": {
+      "filePath": "public/js/custom-response.js",
+      "contentHash": "828fa55a85718c685e436e581f33912e8d472aec1bd155c9a36e33d3db67d588",
+      "functions": [
+        {
+          "name": "handleHomePageMethodSelector",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "handlePreCodeInput",
+          "params": [],
+          "exported": false,
+          "lineCount": 49
+        },
+        {
+          "name": "handlePrettifyJSONCode",
+          "params": [],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "handleCopyURLOnInputClick",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "generateCustomAPI",
+          "params": [],
+          "exported": false,
+          "lineCount": 49
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 167,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/docs.js": {
+      "filePath": "public/js/docs.js",
+      "contentHash": "f2bbd75bbb3ad583a833d8869eaaae238addba8f6a1499a3d56896a5a77585af",
+      "functions": [
+        {
+          "name": "formatCode",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "highlightJSCodeBlocks",
+          "params": [],
+          "exported": false,
+          "lineCount": 26
+        },
+        {
+          "name": "addListenerOnShowOutputButton",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "handleDocLinksClick",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 56
+        },
+        {
+          "name": "handleResourcesTitleClick",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "replaceInlineCode",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "selectNavItem",
+          "params": [
+            "hash"
+          ],
+          "exported": false,
+          "lineCount": 30
+        },
+        {
+          "name": "_markParentAndChildActive",
+          "params": [
+            "element"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 189,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/script.js": {
+      "filePath": "public/js/script.js",
+      "contentHash": "f6c44eebf53d759b9cab451eab3b73f49f8a6eb8868ad053df926879714d31ec",
+      "functions": [
+        {
+          "name": "highlightTryItJSONCodeBlock",
+          "params": [],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "handleHomePageResourcesSelector",
+          "params": [
+            "selector"
+          ],
+          "exported": false,
+          "lineCount": 33
+        },
+        {
+          "name": "handleSectionScrollViaArrowIcons",
+          "params": [],
+          "exported": false,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "public/robots.txt": {
+      "filePath": "public/robots.txt",
+      "contentHash": "c615c08cd384bdffc628fd225c8d346962d8e430cf38d288fed8b6ae28bb086d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": false
+    },
+    "public/sitemap.xml": {
+      "filePath": "public/sitemap.xml",
+      "contentHash": "40dfa1093cf6752f15d82099234e00721fbfa27c16ace72b09e04e303ba6f732",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 89,
+      "hasStructuralAnalysis": false
+    },
+    "raw/carts/carts-data-generator.js": {
+      "filePath": "raw/carts/carts-data-generator.js",
+      "contentHash": "eb611a22088942f252581b7b7c09913869645f99c790de27c6327fd39489fa2d",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 54
+        },
+        {
+          "name": "getRandomNumberOfProducts",
+          "params": [
+            "productsArr",
+            "length"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 70,
+      "hasStructuralAnalysis": true
+    },
+    "raw/comments/comments-data-generator.js": {
+      "filePath": "raw/comments/comments-data-generator.js",
+      "contentHash": "86ecf8cb92386d84bd5eb0bbfc82e2e9f621163e37c1038edda82b89347ead5c",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "raw/posts/posts-data-generator.js": {
+      "filePath": "raw/posts/posts-data-generator.js",
+      "contentHash": "8753aea7579100500ac12681bdc9c6b24ea8a68b795648b4ef146915c43328e8",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "raw/products/constants.js": {
+      "filePath": "raw/products/constants.js",
+      "contentHash": "d2d9443e263ec0fae276f9a11cd143409dcace469a975d4eedc755fe54713cf6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "raw/products/products-data-generator.js": {
+      "filePath": "raw/products/products-data-generator.js",
+      "contentHash": "79a2185c6acbf5947133ee4a97daeb28d379f448f1f5278622579c9f85dfcd92",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 71
+        },
+        {
+          "name": "generateSKU",
+          "params": [
+            "product",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "slugify",
+          "params": [
+            "str"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "generateRandomReviews",
+          "params": [
+            "users"
+          ],
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "getMOQ",
+          "params": [
+            "price"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "getProductImages",
+          "params": [
+            "product"
+          ],
+          "exported": false,
+          "lineCount": 44
+        },
+        {
+          "name": "generateThumbnailImage",
+          "params": [
+            "product"
+          ],
+          "exported": false,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 234,
+      "hasStructuralAnalysis": true
+    },
+    "raw/quotes/quotes-data-generator.js": {
+      "filePath": "raw/quotes/quotes-data-generator.js",
+      "contentHash": "a44409e5a45748b11ac75ff760d24143371772f9faf6c4b35f0a7bf450580ac7",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "raw/recipes/recipes-data-generator.js": {
+      "filePath": "raw/recipes/recipes-data-generator.js",
+      "contentHash": "9e368421b52845fd944873aa946ce982fcc308bff7e1b13870497b8a9647b038",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "raw/todos/todos-data-generator.js": {
+      "filePath": "raw/todos/todos-data-generator.js",
+      "contentHash": "f8478b49ab918a36a2defd0334240d9ec15190c1bdf7cf12d02260e1f007619c",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 21
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 27,
+      "hasStructuralAnalysis": true
+    },
+    "raw/users/constants.js": {
+      "filePath": "raw/users/constants.js",
+      "contentHash": "60fcc1dc53d008ce06971329a82d1438f8916ab1faa453fbd627d2d7989fe11e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 603,
+      "hasStructuralAnalysis": true
+    },
+    "raw/users/users-data-generator.js": {
+      "filePath": "raw/users/users-data-generator.js",
+      "contentHash": "bf15839260eafce739638da681acaea452a0aa850dadbce4b83bbf6368223a8a",
+      "functions": [
+        {
+          "name": "generateData",
+          "params": [],
+          "exported": false,
+          "lineCount": 70
+        },
+        {
+          "name": "generateUsername",
+          "params": [
+            "firstName",
+            "lastName",
+            "maidenName",
+            "flag"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "generateFakePhoneNumber",
+          "params": [],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "generateFakeBirthdayFromAge",
+          "params": [
+            "age"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "generateRandomAddress",
+          "params": [],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "generateRandomCompany",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "generateRandomIP",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "generateFakeMacAddress",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "generateRandomCardNumber",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "generateRandomIban",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "generateCardExpireDate",
+          "params": [],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "generateRandomSSN",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "generateRandomEIN",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "getRole",
+          "params": [],
+          "exported": false,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 217,
+      "hasStructuralAnalysis": true
+    },
+    "raw/utils.js": {
+      "filePath": "raw/utils.js",
+      "contentHash": "de9f714bd5a25449565a8fe828f2c70bfc895ff53e96f248b6489549a849484f",
+      "functions": [
+        {
+          "name": "getRandomNumberBetween",
+          "params": [
+            "min",
+            "max"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "getRandomNumberFloatBetween",
+          "params": [
+            "max"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "getRandomFromArray",
+          "params": [
+            "array"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "generateRandomBarcode",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "encodeURLSpaces",
+          "params": [
+            "url"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "e644c1579fa4694c25c470d2319120ba08f7088a2a9c1c2f3a7fb4e6181f2be0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 134,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/loadtest.js": {
+      "filePath": "scripts/loadtest.js",
+      "contentHash": "46631ebf465abd05cc8046d09ba251295cfd79cf15794edb4a03285cb307d835",
+      "functions": [
+        {
+          "name": "makeRequest",
+          "params": [
+            "url",
+            "tags"
+          ],
+          "exported": false,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "k6/http",
+          "specifiers": [
+            "http"
+          ]
+        },
+        {
+          "source": "k6",
+          "specifiers": [
+            "check",
+            "sleep"
+          ]
+        }
+      ],
+      "exports": [
+        "options"
+      ],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/minify-and-watch-public-js-files.js": {
+      "filePath": "scripts/minify-and-watch-public-js-files.js",
+      "contentHash": "51ffd428c548a91c6a5849a3977d4c17c735437274ab47cead94cd733ddade1a",
+      "functions": [
+        {
+          "name": "minifyJS",
+          "params": [
+            "filePath"
+          ],
+          "exported": false,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "chokidar",
+          "specifiers": [
+            "chokidar"
+          ]
+        },
+        {
+          "source": "uglify-js",
+          "specifiers": [
+            "uglifyJS"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "src/aws/aws.js": {
+      "filePath": "src/aws/aws.js",
+      "contentHash": "6691e2981baac8fb2bdeab2ac375f05bcf4f7c4bf07e9d3b8e0536c320177589",
+      "functions": [
+        {
+          "name": "uploadToStorage",
+          "params": [
+            "buffer",
+            "contentType",
+            "key"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "verifyInStorage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "getFromStorage",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "deleteFolderFromStorage",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "recursiveDelete",
+          "params": [
+            "location",
+            "token"
+          ],
+          "exported": false,
+          "lineCount": 38
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@aws-sdk/client-s3",
+          "specifiers": [
+            "S3Client",
+            "PutObjectCommand",
+            "GetObjectCommand",
+            "HeadObjectCommand",
+            "DeleteObjectCommand",
+            "ListObjectsV2Command",
+            "DeleteObjectsCommand"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError"
+          ]
+        }
+      ],
+      "exports": [
+        "uploadToStorage",
+        "verifyInStorage",
+        "getFromStorage",
+        "deleteFolderFromStorage"
+      ],
+      "totalLines": 112,
+      "hasStructuralAnalysis": true
+    },
+    "src/constants/http-codes.js": {
+      "filePath": "src/constants/http-codes.js",
+      "contentHash": "8709c9ada90370a9b34abe1e08c03ca8d9f893f4a1c755ab708c5124156740a4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "src/constants/index.js": {
+      "filePath": "src/constants/index.js",
+      "contentHash": "553cf5c86ab5704733bf16a19e9388a5813002c139e0ab8c994352b03d64383e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "httpCodes",
+        "REQUIRED_ENV_VARIABLES",
+        "OPTIONAL_ENV_VARIABLES",
+        "requestWhitelist",
+        "imageMimeTypes",
+        "allowedImageTypes",
+        "maxTokenExpireMins",
+        "customResponseExpiresInDays"
+      ],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/auth.js": {
+      "filePath": "src/controllers/auth.js",
+      "contentHash": "d2a30ec5a23e3dfa6a651b6637dcc82ff58e2da60a9187cd9ac3c81db7ab9097",
+      "functions": [
+        {
+          "name": "loginByUsernamePassword",
+          "params": [],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "getNewRefreshToken",
+          "params": [],
+          "exported": true,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/jwt.js",
+          "specifiers": [
+            "generateAccessToken",
+            "generateRefreshToken",
+            "verifyRefreshToken"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getUserPayload",
+            "isValidNumberInRange",
+            "findUserWithUsernameAndId",
+            "trueTypeOf"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "maxTokenExpireMins"
+          ]
+        }
+      ],
+      "exports": [
+        "loginByUsernamePassword",
+        "getNewRefreshToken"
+      ],
+      "totalLines": 90,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/cart.js": {
+      "filePath": "src/controllers/cart.js",
+      "contentHash": "0e81dc4ee08eaa9dfbeec21dc2020674f51bc5ea5e46585056e85952f014e3df",
+      "functions": [
+        {
+          "name": "getAllCarts",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "getCartsByUserId",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "getCartById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "addNewCart",
+          "params": [],
+          "exported": true,
+          "lineCount": 72
+        },
+        {
+          "name": "updateCartById",
+          "params": [],
+          "exported": true,
+          "lineCount": 82
+        },
+        {
+          "name": "deleteCartById",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyUserHandler"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "trueTypeOf",
+            "isNumber",
+            "limitArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllCarts",
+        "getCartsByUserId",
+        "getCartById",
+        "addNewCart",
+        "updateCartById",
+        "deleteCartById"
+      ],
+      "totalLines": 223,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/comment.js": {
+      "filePath": "src/controllers/comment.js",
+      "contentHash": "e3bc7d94c2b789332324d10126d2591308357066e3467f995928d6e84a76d7e8",
+      "functions": [
+        {
+          "name": "getAllComments",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "getCommentById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "getAllCommentsByPostId",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "addNewComment",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "updateCommentById",
+          "params": [],
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "deleteCommentById",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyPostHandler",
+            "verifyUserHandler"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "trueTypeOf",
+            "limitArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllComments",
+        "getCommentById",
+        "getAllCommentsByPostId",
+        "addNewComment",
+        "updateCommentById",
+        "deleteCommentById"
+      ],
+      "totalLines": 124,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/http.js": {
+      "filePath": "src/controllers/http.js",
+      "contentHash": "f57809f3271787905a6113a9c031c3123463bfbf4264b4462296e9e962c6f79c",
+      "functions": [
+        {
+          "name": "getHttpStatus",
+          "params": [],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "isNumber"
+          ]
+        }
+      ],
+      "exports": [
+        "getHttpStatus"
+      ],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/icon.js": {
+      "filePath": "src/controllers/icon.js",
+      "contentHash": "2c654403e3a566f3c6a83c08cd5f41e95be8adef96f25ccaddd3d843579a2a90",
+      "functions": [
+        {
+          "name": "generateIcon",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "jdenticon",
+          "specifiers": [
+            "toSvg",
+            "toPng"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "isValidNumberInRange"
+          ]
+        }
+      ],
+      "exports": [
+        "generateIcon"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/image.js": {
+      "filePath": "src/controllers/image.js",
+      "contentHash": "7af83e736788a88a548b8167b2795686bdc540844838da067706756a29d383e4",
+      "functions": [
+        {
+          "name": "imageComposer",
+          "params": [],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/image.js",
+          "specifiers": [
+            "verifyImageInCache",
+            "storeImgInCache",
+            "getCustomImageCacheKey",
+            "composeImage",
+            "isInvalidSize"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "imageMimeTypes",
+            "allowedImageTypes"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "log"
+          ]
+        }
+      ],
+      "exports": [
+        "imageComposer"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/post.js": {
+      "filePath": "src/controllers/post.js",
+      "contentHash": "e497b40f63eebfa96af5cf249eaf7dddbe113f4bb084b83d191e1bd565fb6501",
+      "functions": [
+        {
+          "name": "getAllPosts",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "searchPosts",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "getPostTagList",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPostTags",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPostsByTag",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "getPostById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "getPostsByUserId",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "addNewPost",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "updatePost",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "deletePostById",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyUserHandler",
+            "verifyPostHandler"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getMultiObjectSubset",
+            "getObjectSubset",
+            "limitArray",
+            "sortArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllPosts",
+        "searchPosts",
+        "getPostTagList",
+        "getPostTags",
+        "getPostsByTag",
+        "getPostById",
+        "getPostsByUserId",
+        "addNewPost",
+        "updatePost",
+        "deletePostById"
+      ],
+      "totalLines": 174,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/product.js": {
+      "filePath": "src/controllers/product.js",
+      "contentHash": "31e5e49ae627e7ed4ff8224d762416a238adec451acbfb5df5c98460b43b823b",
+      "functions": [
+        {
+          "name": "getAllProducts",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "searchProducts",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "getProductCategoryList",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getProductCategories",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getProductById",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "getProductsByCategoryName",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "addNewProduct",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "updateProductById",
+          "params": [],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "deleteProductById",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getMultiObjectSubset",
+            "getObjectSubset",
+            "limitArray",
+            "sortArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllProducts",
+        "searchProducts",
+        "getProductCategoryList",
+        "getProductCategories",
+        "getProductById",
+        "getProductsByCategoryName",
+        "addNewProduct",
+        "updateProductById",
+        "deleteProductById"
+      ],
+      "totalLines": 172,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/quote.js": {
+      "filePath": "src/controllers/quote.js",
+      "contentHash": "4f38584c62e47bd68d2301597b65e485186534c7ede9fe105b056fc7d72b4fec",
+      "functions": [
+        {
+          "name": "getAllQuotes",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "getRandomQuote",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "getQuoteById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "limitArray",
+            "isValidNumberInRange",
+            "getRandomFromArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllQuotes",
+        "getRandomQuote",
+        "getQuoteById"
+      ],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/recipes.js": {
+      "filePath": "src/controllers/recipes.js",
+      "contentHash": "c2d783885cbac15cea269748948abc75ebf49c056566e46ffb49be1b6a448ee6",
+      "functions": [
+        {
+          "name": "getAllRecipes",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "searchRecipes",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "getRecipeById",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "getRecipeTags",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "getRecipesByTag",
+          "params": [],
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "getRecipesByMealType",
+          "params": [],
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "addNewRecipe",
+          "params": [],
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "updateRecipeById",
+          "params": [],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "deleteRecipeById",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getMultiObjectSubset",
+            "getObjectSubset",
+            "limitArray",
+            "sortArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllRecipes",
+        "searchRecipes",
+        "getRecipeById",
+        "getRecipeTags",
+        "getRecipesByTag",
+        "getRecipesByMealType",
+        "addNewRecipe",
+        "updateRecipeById",
+        "deleteRecipeById"
+      ],
+      "totalLines": 247,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/todo.js": {
+      "filePath": "src/controllers/todo.js",
+      "contentHash": "93604381106329b0dae908c94e1aec7e8abe3046d6275369f9a5466ad66dd790",
+      "functions": [
+        {
+          "name": "getAllTodos",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "getRandomTodo",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "getTodoById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "getTodosByUserId",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "addNewTodo",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "updateTodoById",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "deleteTodoById",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyUserHandler"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getMultiObjectSubset",
+            "limitArray",
+            "getRandomFromArray",
+            "isValidNumberInRange"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllTodos",
+        "getRandomTodo",
+        "getTodoById",
+        "getTodosByUserId",
+        "addNewTodo",
+        "updateTodoById",
+        "deleteTodoById"
+      ],
+      "totalLines": 135,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/totp.js": {
+      "filePath": "src/controllers/totp.js",
+      "contentHash": "f3f8ca554ce08d97dc9d96957374315accb806ff60f5f26e4fab8b417d794bbf",
+      "functions": [
+        {
+          "name": "normalizeSecret",
+          "params": [
+            "key"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "isValidSecret",
+          "params": [
+            "secret"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "generateTotp",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "otplib",
+          "specifiers": [
+            "generateSync",
+            "createGuardrails"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        }
+      ],
+      "exports": [
+        "generateTotp"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "src/controllers/user.js": {
+      "filePath": "src/controllers/user.js",
+      "contentHash": "f52ef4e11f7e0e1a01ad2dd647419857533491639135038894e593f63aa1005d",
+      "functions": [
+        {
+          "name": "getAllUsers",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "searchUsers",
+          "params": [],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "filterUsers",
+          "params": [],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "getUserById",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "addNewUser",
+          "params": [],
+          "exported": true,
+          "lineCount": 104
+        },
+        {
+          "name": "updateUserById",
+          "params": [],
+          "exported": true,
+          "lineCount": 106
+        },
+        {
+          "name": "deleteUserById",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyUserHandler"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "frozenData",
+            "getMultiObjectSubset",
+            "getObjectSubset",
+            "getNestedValue",
+            "limitArray",
+            "sortArray"
+          ]
+        }
+      ],
+      "exports": [
+        "getAllUsers",
+        "searchUsers",
+        "filterUsers",
+        "getUserById",
+        "addNewUser",
+        "updateUserById",
+        "deleteUserById"
+      ],
+      "totalLines": 327,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/mongoose.js": {
+      "filePath": "src/db/mongoose.js",
+      "contentHash": "784b0572cd9c051be30daf5d5dd7aeac6b80f79c200745ed6b1a9014732eb97f",
+      "functions": [
+        {
+          "name": "connectDB",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "disconnectDB",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "mongoose",
+          "specifiers": [
+            "mongoose"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError"
+          ]
+        }
+      ],
+      "exports": [
+        "connectDB",
+        "disconnectDB"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "src/helpers/index.js": {
+      "filePath": "src/helpers/index.js",
+      "contentHash": "df6f23c82c8126609a980a9a4e9d933eaec3e37bf7846948ac0acdd112562b99",
+      "functions": [
+        {
+          "name": "verifyUserHandler",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "verifyPostHandler",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "isRequestInWhitelist",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "deleteMulterTemporaryFiles",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "multer",
+          "specifiers": [
+            "multer"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "requestWhitelist"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "isNumber",
+            "dataInMemory"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "./logger.js",
+          "specifiers": [
+            "logError",
+            "log"
+          ]
+        }
+      ],
+      "exports": [
+        "verifyUserHandler",
+        "verifyPostHandler",
+        "isRequestInWhitelist",
+        "multerInstance",
+        "deleteMulterTemporaryFiles"
+      ],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "src/helpers/logger.js": {
+      "filePath": "src/helpers/logger.js",
+      "contentHash": "2f5b5df873c282c48c61c7f8153b8ccfda3545c31bc7ddbdd2501b1b1c823c57",
+      "functions": [
+        {
+          "name": "basicLog",
+          "params": [
+            "message"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "logError",
+          "params": [
+            "message"
+          ],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "logWarn",
+          "params": [
+            "message"
+          ],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "logVerbose",
+          "params": [
+            "message"
+          ],
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "chalk",
+          "specifiers": [
+            "chalk"
+          ]
+        },
+        {
+          "source": "winston",
+          "specifiers": [
+            "createLogger",
+            "format",
+            "transports"
+          ]
+        }
+      ],
+      "exports": [
+        "log",
+        "logger",
+        "logError",
+        "logWarn",
+        "logVerbose"
+      ],
+      "totalLines": 97,
+      "hasStructuralAnalysis": true
+    },
+    "src/helpers/route-stat.js": {
+      "filePath": "src/helpers/route-stat.js",
+      "contentHash": "0e43be0ae9d2a7ca6f59007074b6f48de4c60c0bcfe7592b51d0cc8946028bde",
+      "functions": [
+        {
+          "name": "getTodayDateFloor",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "normalizePath",
+          "params": [
+            "path"
+          ],
+          "exported": false,
+          "lineCount": 33
+        },
+        {
+          "name": "flushRouteStatsSnapshot",
+          "params": [
+            "pathCounts"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../models/daily-route-stat.js",
+          "specifiers": [
+            "DailyRouteStat"
+          ]
+        }
+      ],
+      "exports": [
+        "flushRouteStatsSnapshot"
+      ],
+      "totalLines": 85,
+      "hasStructuralAnalysis": true
+    },
+    "src/helpers/user-agent-stat.js": {
+      "filePath": "src/helpers/user-agent-stat.js",
+      "contentHash": "fa0bc83e7debf4473637ff067c76d7a5c245a0d07453b843e99933751e4d9a95",
+      "functions": [
+        {
+          "name": "getCurrentMonthFloor",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "flushUserAgentStatsSnapshot",
+          "params": [
+            "userAgentCounts"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../models/monthly-user-agent-stat.js",
+          "specifiers": [
+            "MonthlyUserAgentStat"
+          ]
+        }
+      ],
+      "exports": [
+        "flushUserAgentStatsSnapshot"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/auth.js": {
+      "filePath": "src/middleware/auth.js",
+      "contentHash": "99de2ad5ef9568f74cffc73c0001ea6d797eed1860dcb0bb7773b832aecfd2f1",
+      "functions": [
+        {
+          "name": "authUser",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/jwt.js",
+          "specifiers": [
+            "verifyAccessToken"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "findUserWithUsernameAndId"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/cache.js": {
+      "filePath": "src/middleware/cache.js",
+      "contentHash": "f610007ffbc8e2c30a5e958deefdc781f6dc0ab36445641b9d3ee486724f6ad6",
+      "functions": [
+        {
+          "name": "cacheMiddleware",
+          "params": [],
+          "exported": false,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node-cache",
+          "specifiers": [
+            "NodeCache"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/clean-request.js": {
+      "filePath": "src/middleware/clean-request.js",
+      "contentHash": "9e93b5dba7a1521ff51a95d6ebd8af07bff8d89579cc0bf8d7707b94dc14f0c6",
+      "functions": [
+        {
+          "name": "cleanRequest",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 158
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "isNumber",
+            "trueTypeOf"
+          ]
+        },
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "multerInstance",
+            "deleteMulterTemporaryFiles"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError",
+            "log"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 169,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/delay-response.js": {
+      "filePath": "src/middleware/delay-response.js",
+      "contentHash": "80910c49577db51ba7200efd33d69edbed1012c968349c54a14c732cf6e8676a",
+      "functions": [
+        {
+          "name": "delayResponse",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/error.js": {
+      "filePath": "src/middleware/error.js",
+      "contentHash": "6af67cfdaa869c9aa266d6a373f159f1a7bf31db0fe07e4cdabe387f91a94471",
+      "functions": [
+        {
+          "name": "errorMiddleware",
+          "params": [
+            "err",
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 45
+        },
+        {
+          "name": "buildRequestMetaData",
+          "params": [
+            "req"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "log",
+            "logError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "isEmpty"
+          ]
+        }
+      ],
+      "exports": [
+        "buildRequestMetaData"
+      ],
+      "totalLines": 129,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/index.js": {
+      "filePath": "src/middleware/index.js",
+      "contentHash": "8620bc6c7c7a6113e95daa3e17fac6ea3a48406ca50b185f48c93b648e8acaec",
+      "functions": [
+        {
+          "name": "injectMiddleWares",
+          "params": [
+            "app"
+          ],
+          "exported": false,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "express"
+          ]
+        },
+        {
+          "source": "compression",
+          "specifiers": [
+            "compression"
+          ]
+        },
+        {
+          "source": "helmet",
+          "specifiers": [
+            "helmet"
+          ]
+        },
+        {
+          "source": "cors",
+          "specifiers": [
+            "cors"
+          ]
+        },
+        {
+          "source": "cookie-parser",
+          "specifiers": [
+            "cookieParser"
+          ]
+        },
+        {
+          "source": "./set-client-info.js",
+          "specifiers": [
+            "setClientInfo"
+          ]
+        },
+        {
+          "source": "./request-logger.js",
+          "specifiers": [
+            "requestLogger"
+          ]
+        },
+        {
+          "source": "./clean-request.js",
+          "specifiers": [
+            "cleanRequest"
+          ]
+        },
+        {
+          "source": "./delay-response.js",
+          "specifiers": [
+            "delayResponse"
+          ]
+        },
+        {
+          "source": "./rate-limiter.js",
+          "specifiers": [
+            "rateLimiter"
+          ]
+        },
+        {
+          "source": "../utils/request-context.js",
+          "specifiers": [
+            "requestContextMiddleware"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/rate-limiter.js": {
+      "filePath": "src/middleware/rate-limiter.js",
+      "contentHash": "1251b7b5028d233965b96ed9d10539001c33346f81a9ada884eeaa054f05560b",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express-rate-limit",
+          "specifiers": [
+            "rateLimit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/request-logger.js": {
+      "filePath": "src/middleware/request-logger.js",
+      "contentHash": "0ffe02b6ed22c303bafb2813e53a3cf4a90201cb9f0cb5532ca40f1a5b117eab",
+      "functions": [
+        {
+          "name": "requestLogger",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 64
+        },
+        {
+          "name": "recordStartTime",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "getResponseStatus",
+          "params": [
+            "req",
+            "res"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "getResponseTime",
+          "params": [
+            "req",
+            "res"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "getTotalTime",
+          "params": [
+            "req",
+            "res"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "isHeadersSent",
+          "params": [
+            "res"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "startCountLogger",
+          "params": [],
+          "exported": false,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "on-finished",
+          "specifiers": [
+            "onFinished"
+          ]
+        },
+        {
+          "source": "on-headers",
+          "specifiers": [
+            "onHeaders"
+          ]
+        },
+        {
+          "source": "../helpers/route-stat.js",
+          "specifiers": [
+            "flushRouteStatsSnapshot"
+          ]
+        },
+        {
+          "source": "../helpers/user-agent-stat.js",
+          "specifiers": [
+            "flushUserAgentStatsSnapshot"
+          ]
+        },
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "isRequestInWhitelist"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "log",
+            "logError"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "timeDifference"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 161,
+      "hasStructuralAnalysis": true
+    },
+    "src/middleware/set-client-info.js": {
+      "filePath": "src/middleware/set-client-info.js",
+      "contentHash": "cdc13dce065c399e8acece858e94dd8177aad7ad61fafed039ab4071b8cfb08c",
+      "functions": [
+        {
+          "name": "setClientInfo",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../utils/client-info.js",
+          "specifiers": [
+            "extractClientInfo"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "src/models/custom-response.js": {
+      "filePath": "src/models/custom-response.js",
+      "contentHash": "152fd3268dcc85169e9f5210113aed2079e59b0aec69382f3f25ba8750f4e2e4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "mongoose",
+          "specifiers": [
+            "mongoose"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/models/daily-route-stat.js": {
+      "filePath": "src/models/daily-route-stat.js",
+      "contentHash": "4ac4ca11595d0a7d24e28ab96ea2f4b3ed6f3cb1f2e60ba5f35818b5fb75732a",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "mongoose",
+          "specifiers": [
+            "mongoose"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/models/monthly-user-agent-stat.js": {
+      "filePath": "src/models/monthly-user-agent-stat.js",
+      "contentHash": "fc00525dae8cb217d2cbc38d3ba866207ef556a5fc9b224e277ddc061bcaa745",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "mongoose",
+          "specifiers": [
+            "mongoose"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/2fa.js": {
+      "filePath": "src/routes/2fa.js",
+      "contentHash": "6dfa029cf03e61d80fa715191e5e61bc655a4d19c8a16a969f6cc68f60dc5476",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/totp.js",
+          "specifiers": [
+            "generateTotp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/auth.js": {
+      "filePath": "src/routes/auth.js",
+      "contentHash": "d32feba3aaad0226a24b20a38e48c5b53911c3ff486528b62ae6639a14dba6fd",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/auth.js",
+          "specifiers": [
+            "loginByUsernamePassword",
+            "getNewRefreshToken"
+          ]
+        },
+        {
+          "source": "../middleware/auth.js",
+          "specifiers": [
+            "authUser"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/cart.js": {
+      "filePath": "src/routes/cart.js",
+      "contentHash": "c76b055f34756b5a19faf670c90d8c9fac0a6405f97e017aec180f0584f270fb",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/cart.js",
+          "specifiers": [
+            "getAllCarts",
+            "getCartsByUserId",
+            "getCartById",
+            "addNewCart",
+            "updateCartById",
+            "deleteCartById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/comment.js": {
+      "filePath": "src/routes/comment.js",
+      "contentHash": "a52063e3d6590a905013af78d9fab4577b4727de125ed7ffa30e57d0d4f4e2ec",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/comment.js",
+          "specifiers": [
+            "getAllComments",
+            "getCommentById",
+            "getAllCommentsByPostId",
+            "addNewComment",
+            "updateCommentById",
+            "deleteCommentById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 57,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/custom-response.js": {
+      "filePath": "src/routes/custom-response.js",
+      "contentHash": "e4ba6c0571f27a2b05f4309899aa4b95748bd5da2eaece4888932c3cf9a84606",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../models/custom-response.js",
+          "specifiers": [
+            "CustomResponse"
+          ]
+        },
+        {
+          "source": "../utils/custom-response.js",
+          "specifiers": [
+            "generateUniqueIdentifier",
+            "generateHash"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "customResponseExpiresInDays"
+          ]
+        },
+        {
+          "source": "../middleware/cache.js",
+          "specifiers": [
+            "cacheMiddleware"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 82,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/http.js": {
+      "filePath": "src/routes/http.js",
+      "contentHash": "722a1a2f7e8f03c6a9bff7866bfb70301311db83d474acb69ec9c54a7f029889",
+      "functions": [
+        {
+          "name": "getHttpCodeContentType",
+          "params": [
+            "status"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/http.js",
+          "specifiers": [
+            "getHttpStatus"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/icon.js": {
+      "filePath": "src/routes/icon.js",
+      "contentHash": "ee555b35534c27377967a4b6bbe7cc44563156401ae8f34892a849858c6b288b",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/icon.js",
+          "specifiers": [
+            "generateIcon"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/image.js": {
+      "filePath": "src/routes/image.js",
+      "contentHash": "bf159416b36a6164f6bd9467db78fe9d7f66384877768363c867fc6bc0d20c52",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/image.js",
+          "specifiers": [
+            "imageComposer"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError"
+          ]
+        },
+        {
+          "source": "../utils/error.js",
+          "specifiers": [
+            "APIError"
+          ]
+        },
+        {
+          "source": "../utils/image.js",
+          "specifiers": [
+            "generateProperData"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/index.js": {
+      "filePath": "src/routes/index.js",
+      "contentHash": "63bbb7629cc33736ea64a0b2220c985bb8e628e605a526c1b34fa3dda9e7a8e7",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "./static.js",
+          "specifiers": [
+            "staticRoutes"
+          ]
+        },
+        {
+          "source": "./auth.js",
+          "specifiers": [
+            "authRoutes"
+          ]
+        },
+        {
+          "source": "./cart.js",
+          "specifiers": [
+            "cartRoutes"
+          ]
+        },
+        {
+          "source": "./comment.js",
+          "specifiers": [
+            "commentRoutes"
+          ]
+        },
+        {
+          "source": "./post.js",
+          "specifiers": [
+            "postRoutes"
+          ]
+        },
+        {
+          "source": "./product.js",
+          "specifiers": [
+            "productRoutes"
+          ]
+        },
+        {
+          "source": "./quote.js",
+          "specifiers": [
+            "quoteRoutes"
+          ]
+        },
+        {
+          "source": "./recipe.js",
+          "specifiers": [
+            "recipeRoutes"
+          ]
+        },
+        {
+          "source": "./todo.js",
+          "specifiers": [
+            "todoRoutes"
+          ]
+        },
+        {
+          "source": "./user.js",
+          "specifiers": [
+            "userRoutes"
+          ]
+        },
+        {
+          "source": "./http.js",
+          "specifiers": [
+            "httpRoutes"
+          ]
+        },
+        {
+          "source": "./test.js",
+          "specifiers": [
+            "testRoutes"
+          ]
+        },
+        {
+          "source": "./image.js",
+          "specifiers": [
+            "imageRoutes"
+          ]
+        },
+        {
+          "source": "./icon.js",
+          "specifiers": [
+            "iconRoutes"
+          ]
+        },
+        {
+          "source": "./custom-response.js",
+          "specifiers": [
+            "customResponseRoutes"
+          ]
+        },
+        {
+          "source": "./ip.js",
+          "specifiers": [
+            "ipRoutes"
+          ]
+        },
+        {
+          "source": "./2fa.js",
+          "specifiers": [
+            "twoFactorRoutes"
+          ]
+        },
+        {
+          "source": "./redirect.js",
+          "specifiers": [
+            "redirectRoutes"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/ip.js": {
+      "filePath": "src/routes/ip.js",
+      "contentHash": "a16d66dc05fd0329c8eb5868a5d48023cb663146390fca49df04a13c2f06a4a2",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../utils/client-info.js",
+          "specifiers": [
+            "extractClientInfo"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/post.js": {
+      "filePath": "src/routes/post.js",
+      "contentHash": "a2f9b86c8202413df8bd5543acb0f89d973cd4dbac803bb5840a0f82f2a0efb0",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/comment.js",
+          "specifiers": [
+            "getAllCommentsByPostId"
+          ]
+        },
+        {
+          "source": "../controllers/post.js",
+          "specifiers": [
+            "getAllPosts",
+            "searchPosts",
+            "getPostById",
+            "getPostsByUserId",
+            "addNewPost",
+            "updatePost",
+            "deletePostById",
+            "getPostTagList",
+            "getPostTags",
+            "getPostsByTag"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 92,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/product.js": {
+      "filePath": "src/routes/product.js",
+      "contentHash": "512dd267d2527f056bed1dab5d0187d28e77befc395a1b6589748eef2c6671e7",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/product.js",
+          "specifiers": [
+            "getAllProducts",
+            "getProductById",
+            "searchProducts",
+            "getProductCategoryList",
+            "getProductCategories",
+            "getProductsByCategoryName",
+            "addNewProduct",
+            "updateProductById",
+            "deleteProductById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/quote.js": {
+      "filePath": "src/routes/quote.js",
+      "contentHash": "aa3c86a84755a40465bac556b0270c6c5b1768edef7eb706b13966558dd22945",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/quote.js",
+          "specifiers": [
+            "getAllQuotes",
+            "getRandomQuote",
+            "getQuoteById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/recipe.js": {
+      "filePath": "src/routes/recipe.js",
+      "contentHash": "e268622533202003e052ba573859d94db8d7d8cb29b29a7e5d22b35fdc3b54a3",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/recipes.js",
+          "specifiers": [
+            "getAllRecipes",
+            "getRecipeById",
+            "searchRecipes",
+            "getRecipeTags",
+            "getRecipesByTag",
+            "getRecipesByMealType",
+            "addNewRecipe",
+            "updateRecipeById",
+            "deleteRecipeById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/redirect.js": {
+      "filePath": "src/routes/redirect.js",
+      "contentHash": "4e070ff589bdf182e56f108c2d7d0fcfe9a64c0f8482f28d0ae63ca11a2ec148",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/static.js": {
+      "filePath": "src/routes/static.js",
+      "contentHash": "4f20990bb8c35cba9278541bf07c549b4e6bf0e81a76e52a11cb0ad63c427192",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath"
+          ]
+        },
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "capitalize"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 116,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/test.js": {
+      "filePath": "src/routes/test.js",
+      "contentHash": "369977f91f373cb50a2fac092978829ac23d9355d53d4760d8fd64921186f85f",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/todo.js": {
+      "filePath": "src/routes/todo.js",
+      "contentHash": "677c11d2045fc9bd42503b557af09f37ea3d4707f7438a828e2c0ef65ec81300",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/todo.js",
+          "specifiers": [
+            "getAllTodos",
+            "getRandomTodo",
+            "getTodoById",
+            "getTodosByUserId",
+            "addNewTodo",
+            "updateTodoById",
+            "deleteTodoById"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/user.js": {
+      "filePath": "src/routes/user.js",
+      "contentHash": "7f2eabbf3ce492eb49c4ea9b3f849b8b1052656be99017a5ce5c6a41bdffa2f2",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "../controllers/cart.js",
+          "specifiers": [
+            "getCartsByUserId"
+          ]
+        },
+        {
+          "source": "../controllers/post.js",
+          "specifiers": [
+            "getPostsByUserId"
+          ]
+        },
+        {
+          "source": "../controllers/todo.js",
+          "specifiers": [
+            "getTodosByUserId"
+          ]
+        },
+        {
+          "source": "../controllers/user.js",
+          "specifiers": [
+            "getAllUsers",
+            "getUserById",
+            "searchUsers",
+            "addNewUser",
+            "updateUserById",
+            "deleteUserById",
+            "filterUsers"
+          ]
+        },
+        {
+          "source": "../middleware/auth.js",
+          "specifiers": [
+            "authUser"
+          ]
+        },
+        {
+          "source": "../helpers/index.js",
+          "specifiers": [
+            "verifyUserHandler"
+          ]
+        },
+        {
+          "source": "../controllers/auth.js",
+          "specifiers": [
+            "loginByUsernamePassword"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 121,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/client-info.js": {
+      "filePath": "src/utils/client-info.js",
+      "contentHash": "a82ecd1e7e5efa90524717c46c94553dc4d627dcbaabea38970cb560d8c20b04",
+      "functions": [
+        {
+          "name": "extractClientInfo",
+          "params": [],
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/cron-jobs.js": {
+      "filePath": "src/utils/cron-jobs.js",
+      "contentHash": "6bced229ecfa53a0e9826d2ba2bcd97a6ecc9743f8dd44496e49a715e3c96f68",
+      "functions": [
+        {
+          "name": "deleteOldCustomResponses",
+          "params": [],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "setupCRONJobs",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node-cron",
+          "specifiers": [
+            "cron"
+          ]
+        },
+        {
+          "source": "../models/custom-response.js",
+          "specifiers": [
+            "CustomResponse"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "customResponseExpiresInDays"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError",
+            "log"
+          ]
+        }
+      ],
+      "exports": [
+        "setupCRONJobs"
+      ],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/custom-response.js": {
+      "filePath": "src/utils/custom-response.js",
+      "contentHash": "cf1ce957361157e39e2289cefa3ed0647dac03e27902ae50d652fae70cd3c3b0",
+      "functions": [
+        {
+          "name": "generateUniqueIdentifier",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "generateHash",
+          "params": [
+            "json",
+            "method"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:crypto",
+          "specifiers": [
+            "crypto"
+          ]
+        },
+        {
+          "source": "../models/custom-response.js",
+          "specifiers": [
+            "CustomResponse"
+          ]
+        },
+        {
+          "source": "./util.js",
+          "specifiers": [
+            "generateRandomId"
+          ]
+        }
+      ],
+      "exports": [
+        "generateUniqueIdentifier",
+        "generateHash"
+      ],
+      "totalLines": 27,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/error.js": {
+      "filePath": "src/utils/error.js",
+      "contentHash": "6be8c8bfbeb8f43dcff32d6d3a76abf40aded534dc17c2d77660bcbd1088454d",
+      "functions": [],
+      "classes": [
+        {
+          "name": "APIError",
+          "methods": [
+            "constructor"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/fatal-handler.js": {
+      "filePath": "src/utils/fatal-handler.js",
+      "contentHash": "ed6032bd88ce6858d2c540746f88cd4ec636f87d1ad753913d80c755a059dd04",
+      "functions": [
+        {
+          "name": "registerFatalHandlers",
+          "params": [],
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "registerShutdownHandlers",
+          "params": [],
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "log",
+            "logError"
+          ]
+        },
+        {
+          "source": "../middleware/error.js",
+          "specifiers": [
+            "buildRequestMetaData"
+          ]
+        },
+        {
+          "source": "../utils/request-context.js",
+          "specifiers": [
+            "getCurrentRequest"
+          ]
+        },
+        {
+          "source": "../utils/util.js",
+          "specifiers": [
+            "sendProcessErrorPushNotification"
+          ]
+        },
+        {
+          "source": "../../index.js",
+          "specifiers": [
+            "server"
+          ]
+        }
+      ],
+      "exports": [
+        "registerFatalHandlers",
+        "registerShutdownHandlers"
+      ],
+      "totalLines": 82,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/image.js": {
+      "filePath": "src/utils/image.js",
+      "contentHash": "53b8ee87eb3c5e1e7953d5d0a0d979c97f129fe3cfc5ba9a7404f58d21a81823",
+      "functions": [
+        {
+          "name": "generateProperData",
+          "params": [],
+          "exported": true,
+          "lineCount": 56
+        },
+        {
+          "name": "isInvalidSize",
+          "params": [
+            "height",
+            "width"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "getCustomImageCacheKey",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "composeImage",
+          "params": [],
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "verifyImageInCache",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "getImageFromCache",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "storeImgInCache",
+          "params": [
+            "buffer",
+            "contentType",
+            "key"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "deleteAllCache",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "resolveColor",
+          "params": [
+            "inputColor"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "getContrastColor",
+          "params": [
+            "bgColor"
+          ],
+          "exported": false,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:crypto",
+          "specifiers": [
+            "createHash"
+          ]
+        },
+        {
+          "source": "color-convert",
+          "specifiers": [
+            "colorConvert"
+          ]
+        },
+        {
+          "source": "sharp",
+          "specifiers": [
+            "sharp"
+          ]
+        },
+        {
+          "source": "./util.js",
+          "specifiers": [
+            "isNumber"
+          ]
+        },
+        {
+          "source": "../aws/aws.js",
+          "specifiers": [
+            "verifyInStorage",
+            "getFromStorage",
+            "uploadToStorage",
+            "deleteFolderFromStorage"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logError",
+            "log"
+          ]
+        }
+      ],
+      "exports": [
+        "generateProperData",
+        "isInvalidSize",
+        "getCustomImageCacheKey",
+        "composeImage",
+        "verifyImageInCache",
+        "getImageFromCache",
+        "storeImgInCache",
+        "deleteAllCache"
+      ],
+      "totalLines": 225,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/jwt.js": {
+      "filePath": "src/utils/jwt.js",
+      "contentHash": "a246809cc3ba2fbd6e636589982d48f6b6758d9dd81bd5594ee7b2574c6f8bde",
+      "functions": [
+        {
+          "name": "verifyAccessToken",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "generateRefreshToken",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "generateToken",
+          "params": [
+            "payload",
+            "expiresInMins"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "verifyToken",
+          "params": [
+            "token"
+          ],
+          "exported": false,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "jsonwebtoken",
+          "specifiers": [
+            "jwt"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "maxTokenExpireMins"
+          ]
+        }
+      ],
+      "exports": [
+        "generateAccessToken",
+        "verifyAccessToken",
+        "generateRefreshToken",
+        "verifyRefreshToken"
+      ],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/request-context.js": {
+      "filePath": "src/utils/request-context.js",
+      "contentHash": "0f821e98e78f9449f48e0bf9340161721d65a15f3509b829ec2dbb53c4675c23",
+      "functions": [
+        {
+          "name": "runInRequestContext",
+          "params": [
+            "req",
+            "fn"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getCurrentRequest",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "requestContextMiddleware",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:async_hooks",
+          "specifiers": [
+            "AsyncLocalStorage"
+          ]
+        }
+      ],
+      "exports": [
+        "runInRequestContext",
+        "getCurrentRequest",
+        "requestContextMiddleware"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/util.js": {
+      "filePath": "src/utils/util.js",
+      "contentHash": "d23194f83bffc70108baff318f313fc2a963d0bc7fa35ac3ca444f0c8787a262",
+      "functions": [
+        {
+          "name": "deepFreeze",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "loadDataInMemory",
+          "params": [],
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "getObjectSubset",
+          "params": [
+            "obj",
+            "keys"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getMultiObjectSubset",
+          "params": [
+            "arr",
+            "keys"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isNumber",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "validateEnvVar",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "trueTypeOf",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "isEmpty",
+          "params": [],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "deepCopy",
+          "params": [],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "getNestedValue",
+          "params": [
+            "obj",
+            "keys"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "limitArray",
+          "params": [
+            "arr",
+            "limit"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "sortArray",
+          "params": [
+            "arr",
+            "sortBy",
+            "order"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "capitalize",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isValidNumberInRange",
+          "params": [
+            "num",
+            "start",
+            "end"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getRandomFromArray",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "capitalizeWords",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "getSluggedData",
+          "params": [
+            "arr",
+            "resource",
+            "type"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "findUserWithUsernameAndId",
+          "params": [],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "getUserPayload",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "generateRandomId",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "timeDifference",
+          "params": [
+            "startDateMS",
+            "endDateMS"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "sendPushNotification",
+          "params": [],
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "sendProcessErrorPushNotification",
+          "params": [
+            "errorDetails"
+          ],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "formatRequestDataForNotification",
+          "params": [
+            "requestData"
+          ],
+          "exported": false,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs/promises",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "v4"
+          ]
+        },
+        {
+          "source": "../constants/index.js",
+          "specifiers": [
+            "REQUIRED_ENV_VARIABLES",
+            "OPTIONAL_ENV_VARIABLES",
+            "httpCodes"
+          ]
+        },
+        {
+          "source": "../helpers/logger.js",
+          "specifiers": [
+            "logWarn",
+            "logError"
+          ]
+        }
+      ],
+      "exports": [
+        "dataInMemory",
+        "deepFreeze",
+        "loadDataInMemory",
+        "getObjectSubset",
+        "getMultiObjectSubset",
+        "isNumber",
+        "validateEnvVar",
+        "trueTypeOf",
+        "isEmpty",
+        "deepCopy",
+        "getNestedValue",
+        "limitArray",
+        "sortArray",
+        "capitalize",
+        "isValidNumberInRange",
+        "getRandomFromArray",
+        "capitalizeWords",
+        "getSluggedData",
+        "findUserWithUsernameAndId",
+        "getUserPayload",
+        "generateRandomId",
+        "timeDifference",
+        "sendPushNotification",
+        "sendProcessErrorPushNotification"
+      ],
+      "totalLines": 317,
+      "hasStructuralAnalysis": true
+    },
+    "views/2fa.ejs": {
+      "filePath": "views/2fa.ejs",
+      "contentHash": "00cee239cab6bd6a7530e843d5e4ca691fdd20ead8a0f77f24110ba35b8d96ac",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 100,
+      "hasStructuralAnalysis": false
+    },
+    "views/404.ejs": {
+      "filePath": "views/404.ejs",
+      "contentHash": "8c56661a691d315edbf2c0a4881de434959faaa3e0bf3f4b3c84e4e7630451cc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 53,
+      "hasStructuralAnalysis": false
+    },
+    "views/custom-response.ejs": {
+      "filePath": "views/custom-response.ejs",
+      "contentHash": "f7f368cd98317aeb89ee9fd39b29eb7d8159018952f2d2addd6dfe4ca6866eba",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 171,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-auth.ejs": {
+      "filePath": "views/docs-auth.ejs",
+      "contentHash": "2bcf2a947a29a2a8ccb790bdeee8d0c1e79fc6b391ee20568c09d78158ca9437",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 128,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-carts.ejs": {
+      "filePath": "views/docs-carts.ejs",
+      "contentHash": "8efd77d443938860032c975cdc0902b07bd9b450ac8c381531fa03bc793c82a3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 332,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-comments.ejs": {
+      "filePath": "views/docs-comments.ejs",
+      "contentHash": "3b0cfb5441cceb085d4d3ab13d90bec78e0bd05fe716ca0b130f60433470491a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 290,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-http.ejs": {
+      "filePath": "views/docs-http.ejs",
+      "contentHash": "776591eb6b8a5a4841f34b3bfdf12c5fff1f48f4c55d577e738fb48fbf5bf2d9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 73,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-image.ejs": {
+      "filePath": "views/docs-image.ejs",
+      "contentHash": "4abbde2ec85624b9f689de948bb8b8789f72cdd032acbb1475fc2726e1e8eb35",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 209,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-posts.ejs": {
+      "filePath": "views/docs-posts.ejs",
+      "contentHash": "4b21d640dfdc70359f9581b2907374953376a681e6faf27ac577f160a1b5f4d4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 550,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-products.ejs": {
+      "filePath": "views/docs-products.ejs",
+      "contentHash": "5dc35277cfdf2c61ab9d347caecf960a5b52b35e98e64c03d4b74341894c9f07",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 493,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-quotes.ejs": {
+      "filePath": "views/docs-quotes.ejs",
+      "contentHash": "b08d323e2a334909ad0bd83dda9f71850efb5849da8c23211e26b191be6aff31",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 158,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-recipes.ejs": {
+      "filePath": "views/docs-recipes.ejs",
+      "contentHash": "78cc8075c87347f506e392b9c6dad40676d1393f9236591c69e566e3c28b2686",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 496,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-todos.ejs": {
+      "filePath": "views/docs-todos.ejs",
+      "contentHash": "c1ff81192e75c07644b5f5fea7afc98a32b8cf610e95a8cde548876ae06edae1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 278,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-tools.ejs": {
+      "filePath": "views/docs-tools.ejs",
+      "contentHash": "dc1139ca18bf0aeb5e691233863082b15ffedb39e42eefec7db0965627acceb6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 157,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs-users.ejs": {
+      "filePath": "views/docs-users.ejs",
+      "contentHash": "5371efafb621b24127b51b97e79e92a0ed8cc47e2f690df5cc6f992deae5183e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 672,
+      "hasStructuralAnalysis": false
+    },
+    "views/docs.ejs": {
+      "filePath": "views/docs.ejs",
+      "contentHash": "4137cafe5033906b204d3cc4916b2ec47283ccf7395283a82b053b9eee9f9b3b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": false
+    },
+    "views/index.ejs": {
+      "filePath": "views/index.ejs",
+      "contentHash": "bdd1c73e6d01ab571f43f8fd1c98192f8669cd9775777cc5239d4acbc694d52a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 459,
+      "hasStructuralAnalysis": false
+    },
+    "views/partials/docs-footer.ejs": {
+      "filePath": "views/partials/docs-footer.ejs",
+      "contentHash": "40bb25d3758dab532794e13c79037792ede369c7fec153a4a82183367c8007e0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": false
+    },
+    "views/partials/docs-head.ejs": {
+      "filePath": "views/partials/docs-head.ejs",
+      "contentHash": "b694b969651dc3ed087dc39c8010964c2a014e071c5c12075b8dbb5ee9b8ee00",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 103,
+      "hasStructuralAnalysis": false
+    },
+    "views/partials/docs-side-nav.ejs": {
+      "filePath": "views/partials/docs-side-nav.ejs",
+      "contentHash": "e790523fcb73369b8b5be9545c28e8cf08989284514588397a0e62a4e7779493",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 704,
+      "hasStructuralAnalysis": false
+    },
+    "views/partials/header.ejs": {
+      "filePath": "views/partials/header.ejs",
+      "contentHash": "2cdc4951974378ef20e3ddd333ca05a02ae91b0da9ae82bc189ce4dbc8e1b749",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 28,
+      "hasStructuralAnalysis": false
+    },
+    "views/tools.ejs": {
+      "filePath": "views/tools.ejs",
+      "contentHash": "5a59706d93e004035f121b00ee7e00bda65005dd55d24c56dc6c586997e21b70",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 103,
+      "hasStructuralAnalysis": false
+    }
+  }
+}

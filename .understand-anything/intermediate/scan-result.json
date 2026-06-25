@@ -1,0 +1,1079 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": ".env.example",
+      "language": "config",
+      "sizeLines": 5,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "language": "yaml",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".github/workflows/deploy-public-to-s3.yml",
+      "language": "yaml",
+      "sizeLines": 31,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 21,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "fonts/fonts.conf",
+      "language": "conf",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "fonts/README.md",
+      "language": "markdown",
+      "sizeLines": 1,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "index.js",
+      "language": "javascript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "sizeLines": 55,
+      "fileCategory": "config"
+    },
+    {
+      "path": "public/css/docs.scss",
+      "language": "css",
+      "sizeLines": 507,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/css/partial/_404.scss",
+      "language": "css",
+      "sizeLines": 108,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/css/partial/_base.scss",
+      "language": "css",
+      "sizeLines": 160,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/css/partial/_font-dm-sans.scss",
+      "language": "css",
+      "sizeLines": 34,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/css/partial/_nav.scss",
+      "language": "css",
+      "sizeLines": 210,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/css/styles.scss",
+      "language": "css",
+      "sizeLines": 1191,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "public/js/2fa.js",
+      "language": "javascript",
+      "sizeLines": 163,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/js/common.js",
+      "language": "javascript",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/js/custom-json-highlight.js",
+      "language": "javascript",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/js/custom-response.js",
+      "language": "javascript",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/js/docs.js",
+      "language": "javascript",
+      "sizeLines": 188,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/js/script.js",
+      "language": "javascript",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "public/robots.txt",
+      "language": "txt",
+      "sizeLines": 5,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "language": "xml",
+      "sizeLines": 88,
+      "fileCategory": "config"
+    },
+    {
+      "path": "raw/carts/carts-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/comments/comments-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/posts/posts-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/products/constants.js",
+      "language": "javascript",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/products/products-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 233,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/quotes/quotes-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/recipes/recipes-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/todos/todos-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/users/constants.js",
+      "language": "javascript",
+      "sizeLines": 602,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/users/users-data-generator.js",
+      "language": "javascript",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    },
+    {
+      "path": "raw/utils.js",
+      "language": "javascript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 133,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "scripts/loadtest.js",
+      "language": "javascript",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "scripts/minify-and-watch-public-js-files.js",
+      "language": "javascript",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/aws/aws.js",
+      "language": "javascript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/constants/http-codes.js",
+      "language": "javascript",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/constants/index.js",
+      "language": "javascript",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/auth.js",
+      "language": "javascript",
+      "sizeLines": 89,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/cart.js",
+      "language": "javascript",
+      "sizeLines": 222,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/comment.js",
+      "language": "javascript",
+      "sizeLines": 123,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/http.js",
+      "language": "javascript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/icon.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/image.js",
+      "language": "javascript",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/post.js",
+      "language": "javascript",
+      "sizeLines": 173,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/product.js",
+      "language": "javascript",
+      "sizeLines": 171,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/quote.js",
+      "language": "javascript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/recipes.js",
+      "language": "javascript",
+      "sizeLines": 246,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/todo.js",
+      "language": "javascript",
+      "sizeLines": 134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/totp.js",
+      "language": "javascript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/controllers/user.js",
+      "language": "javascript",
+      "sizeLines": 326,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/db/mongoose.js",
+      "language": "javascript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/helpers/index.js",
+      "language": "javascript",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/helpers/logger.js",
+      "language": "javascript",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/helpers/route-stat.js",
+      "language": "javascript",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/helpers/user-agent-stat.js",
+      "language": "javascript",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/auth.js",
+      "language": "javascript",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/cache.js",
+      "language": "javascript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/clean-request.js",
+      "language": "javascript",
+      "sizeLines": 168,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/delay-response.js",
+      "language": "javascript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/error.js",
+      "language": "javascript",
+      "sizeLines": 128,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/index.js",
+      "language": "javascript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/rate-limiter.js",
+      "language": "javascript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/request-logger.js",
+      "language": "javascript",
+      "sizeLines": 160,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/middleware/set-client-info.js",
+      "language": "javascript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/custom-response.js",
+      "language": "javascript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/daily-route-stat.js",
+      "language": "javascript",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/monthly-user-agent-stat.js",
+      "language": "javascript",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/2fa.js",
+      "language": "javascript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/auth.js",
+      "language": "javascript",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/cart.js",
+      "language": "javascript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/comment.js",
+      "language": "javascript",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/custom-response.js",
+      "language": "javascript",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/http.js",
+      "language": "javascript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/icon.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/image.js",
+      "language": "javascript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/index.js",
+      "language": "javascript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/ip.js",
+      "language": "javascript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/post.js",
+      "language": "javascript",
+      "sizeLines": 91,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/product.js",
+      "language": "javascript",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/quote.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/recipe.js",
+      "language": "javascript",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/redirect.js",
+      "language": "javascript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/static.js",
+      "language": "javascript",
+      "sizeLines": 115,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/test.js",
+      "language": "javascript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/todo.js",
+      "language": "javascript",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/user.js",
+      "language": "javascript",
+      "sizeLines": 120,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/client-info.js",
+      "language": "javascript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/cron-jobs.js",
+      "language": "javascript",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/custom-response.js",
+      "language": "javascript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/error.js",
+      "language": "javascript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/fatal-handler.js",
+      "language": "javascript",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/image.js",
+      "language": "javascript",
+      "sizeLines": 224,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/jwt.js",
+      "language": "javascript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/request-context.js",
+      "language": "javascript",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/utils/util.js",
+      "language": "javascript",
+      "sizeLines": 316,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/2fa.ejs",
+      "language": "ejs",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/404.ejs",
+      "language": "ejs",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/custom-response.ejs",
+      "language": "ejs",
+      "sizeLines": 170,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-auth.ejs",
+      "language": "ejs",
+      "sizeLines": 127,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-carts.ejs",
+      "language": "ejs",
+      "sizeLines": 331,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-comments.ejs",
+      "language": "ejs",
+      "sizeLines": 289,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-http.ejs",
+      "language": "ejs",
+      "sizeLines": 72,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-image.ejs",
+      "language": "ejs",
+      "sizeLines": 208,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-posts.ejs",
+      "language": "ejs",
+      "sizeLines": 549,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-products.ejs",
+      "language": "ejs",
+      "sizeLines": 492,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-quotes.ejs",
+      "language": "ejs",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-recipes.ejs",
+      "language": "ejs",
+      "sizeLines": 495,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-todos.ejs",
+      "language": "ejs",
+      "sizeLines": 277,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-tools.ejs",
+      "language": "ejs",
+      "sizeLines": 156,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs-users.ejs",
+      "language": "ejs",
+      "sizeLines": 671,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/docs.ejs",
+      "language": "ejs",
+      "sizeLines": 112,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/index.ejs",
+      "language": "ejs",
+      "sizeLines": 458,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/partials/docs-footer.ejs",
+      "language": "ejs",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/partials/docs-head.ejs",
+      "language": "ejs",
+      "sizeLines": 102,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/partials/docs-side-nav.ejs",
+      "language": "ejs",
+      "sizeLines": 703,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/partials/header.ejs",
+      "language": "ejs",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "views/tools.ejs",
+      "language": "ejs",
+      "sizeLines": 102,
+      "fileCategory": "code"
+    }
+  ],
+  "totalFiles": 119,
+  "filteredByIgnore": 33,
+  "estimatedComplexity": "moderate",
+  "stats": {
+    "filesScanned": 119,
+    "byCategory": {
+      "config": 4,
+      "infra": 2,
+      "code": 104,
+      "docs": 3,
+      "markup": 6
+    },
+    "byLanguage": {
+      "config": 1,
+      "yaml": 2,
+      "dockerfile": 1,
+      "conf": 1,
+      "markdown": 2,
+      "javascript": 81,
+      "json": 1,
+      "css": 6,
+      "txt": 1,
+      "xml": 1,
+      "ejs": 22
+    }
+  },
+  "projectName": "DummyJSON",
+  "projectDescription": "A free, no-auth REST API server that serves placeholder JSON data (products, users, carts, posts, comments, quotes, recipes, todos) plus JWT/2FA auth, an identicon + placeholder-image generator, and custom/mock HTTP responses. Built on Express with EJS-rendered docs, MongoDB/Mongoose for usage stats, and AWS S3 for image storage.",
+  "languages": [
+    "javascript",
+    "scss",
+    "css",
+    "ejs",
+    "dockerfile",
+    "yaml",
+    "json",
+    "markdown"
+  ],
+  "frameworks": [
+    "Express",
+    "Mongoose",
+    "EJS"
+  ],
+  "importMap": {
+    ".env.example": [],
+    ".github/FUNDING.yml": [],
+    ".github/workflows/deploy-public-to-s3.yml": [],
+    "Dockerfile": [],
+    "fonts/fonts.conf": [],
+    "fonts/README.md": [],
+    "index.js": [
+      "src/db/mongoose.js",
+      "src/middleware/auth.js",
+      "src/middleware/error.js",
+      "src/middleware/index.js",
+      "src/routes/index.js",
+      "src/utils/cron-jobs.js",
+      "src/utils/fatal-handler.js",
+      "src/utils/util.js"
+    ],
+    "package.json": [],
+    "public/css/docs.scss": [],
+    "public/css/partial/_404.scss": [],
+    "public/css/partial/_base.scss": [],
+    "public/css/partial/_font-dm-sans.scss": [],
+    "public/css/partial/_nav.scss": [],
+    "public/css/styles.scss": [],
+    "public/js/2fa.js": [],
+    "public/js/common.js": [],
+    "public/js/custom-json-highlight.js": [],
+    "public/js/custom-response.js": [],
+    "public/js/docs.js": [],
+    "public/js/script.js": [],
+    "public/robots.txt": [],
+    "public/sitemap.xml": [],
+    "raw/carts/carts-data-generator.js": [
+      "raw/utils.js"
+    ],
+    "raw/comments/comments-data-generator.js": [
+      "raw/utils.js"
+    ],
+    "raw/posts/posts-data-generator.js": [
+      "raw/utils.js"
+    ],
+    "raw/products/constants.js": [],
+    "raw/products/products-data-generator.js": [
+      "raw/products/constants.js",
+      "raw/utils.js"
+    ],
+    "raw/quotes/quotes-data-generator.js": [],
+    "raw/recipes/recipes-data-generator.js": [
+      "raw/utils.js"
+    ],
+    "raw/todos/todos-data-generator.js": [
+      "raw/utils.js"
+    ],
+    "raw/users/constants.js": [],
+    "raw/users/users-data-generator.js": [
+      "raw/users/constants.js",
+      "raw/utils.js"
+    ],
+    "raw/utils.js": [],
+    "README.md": [],
+    "scripts/loadtest.js": [],
+    "scripts/minify-and-watch-public-js-files.js": [],
+    "src/aws/aws.js": [
+      "src/helpers/logger.js"
+    ],
+    "src/constants/http-codes.js": [],
+    "src/constants/index.js": [],
+    "src/controllers/auth.js": [
+      "src/constants/index.js",
+      "src/utils/error.js",
+      "src/utils/jwt.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/cart.js": [
+      "src/helpers/index.js",
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/comment.js": [
+      "src/helpers/index.js",
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/http.js": [
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/icon.js": [
+      "src/utils/util.js"
+    ],
+    "src/controllers/image.js": [
+      "src/constants/index.js",
+      "src/helpers/logger.js",
+      "src/utils/error.js",
+      "src/utils/image.js"
+    ],
+    "src/controllers/post.js": [
+      "src/helpers/index.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/product.js": [
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/quote.js": [
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/recipes.js": [
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/todo.js": [
+      "src/helpers/index.js",
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/controllers/totp.js": [
+      "src/utils/error.js"
+    ],
+    "src/controllers/user.js": [
+      "src/helpers/index.js",
+      "src/utils/util.js"
+    ],
+    "src/db/mongoose.js": [
+      "src/helpers/logger.js"
+    ],
+    "src/helpers/index.js": [
+      "src/constants/index.js",
+      "src/helpers/logger.js",
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/helpers/logger.js": [],
+    "src/helpers/route-stat.js": [
+      "src/models/daily-route-stat.js"
+    ],
+    "src/helpers/user-agent-stat.js": [
+      "src/models/monthly-user-agent-stat.js"
+    ],
+    "src/middleware/auth.js": [
+      "src/utils/error.js",
+      "src/utils/jwt.js",
+      "src/utils/util.js"
+    ],
+    "src/middleware/cache.js": [],
+    "src/middleware/clean-request.js": [
+      "src/helpers/index.js",
+      "src/helpers/logger.js",
+      "src/utils/error.js",
+      "src/utils/util.js"
+    ],
+    "src/middleware/delay-response.js": [],
+    "src/middleware/error.js": [
+      "src/helpers/logger.js",
+      "src/utils/util.js"
+    ],
+    "src/middleware/index.js": [
+      "src/middleware/clean-request.js",
+      "src/middleware/delay-response.js",
+      "src/middleware/rate-limiter.js",
+      "src/middleware/request-logger.js",
+      "src/middleware/set-client-info.js",
+      "src/utils/request-context.js"
+    ],
+    "src/middleware/rate-limiter.js": [],
+    "src/middleware/request-logger.js": [
+      "src/helpers/index.js",
+      "src/helpers/logger.js",
+      "src/helpers/route-stat.js",
+      "src/helpers/user-agent-stat.js",
+      "src/utils/util.js"
+    ],
+    "src/middleware/set-client-info.js": [
+      "src/utils/client-info.js"
+    ],
+    "src/models/custom-response.js": [],
+    "src/models/daily-route-stat.js": [],
+    "src/models/monthly-user-agent-stat.js": [],
+    "src/routes/2fa.js": [
+      "src/controllers/totp.js"
+    ],
+    "src/routes/auth.js": [
+      "src/controllers/auth.js",
+      "src/middleware/auth.js"
+    ],
+    "src/routes/cart.js": [
+      "src/controllers/cart.js"
+    ],
+    "src/routes/comment.js": [
+      "src/controllers/comment.js"
+    ],
+    "src/routes/custom-response.js": [
+      "src/constants/index.js",
+      "src/middleware/cache.js",
+      "src/models/custom-response.js",
+      "src/utils/custom-response.js"
+    ],
+    "src/routes/http.js": [
+      "src/controllers/http.js"
+    ],
+    "src/routes/icon.js": [
+      "src/controllers/icon.js"
+    ],
+    "src/routes/image.js": [
+      "src/controllers/image.js",
+      "src/helpers/logger.js",
+      "src/utils/error.js",
+      "src/utils/image.js"
+    ],
+    "src/routes/index.js": [
+      "src/routes/2fa.js",
+      "src/routes/auth.js",
+      "src/routes/cart.js",
+      "src/routes/comment.js",
+      "src/routes/custom-response.js",
+      "src/routes/http.js",
+      "src/routes/icon.js",
+      "src/routes/image.js",
+      "src/routes/ip.js",
+      "src/routes/post.js",
+      "src/routes/product.js",
+      "src/routes/quote.js",
+      "src/routes/recipe.js",
+      "src/routes/redirect.js",
+      "src/routes/static.js",
+      "src/routes/test.js",
+      "src/routes/todo.js",
+      "src/routes/user.js"
+    ],
+    "src/routes/ip.js": [
+      "src/utils/client-info.js"
+    ],
+    "src/routes/post.js": [
+      "src/controllers/comment.js",
+      "src/controllers/post.js"
+    ],
+    "src/routes/product.js": [
+      "src/controllers/product.js"
+    ],
+    "src/routes/quote.js": [
+      "src/controllers/quote.js"
+    ],
+    "src/routes/recipe.js": [
+      "src/controllers/recipes.js"
+    ],
+    "src/routes/redirect.js": [],
+    "src/routes/static.js": [
+      "src/utils/util.js"
+    ],
+    "src/routes/test.js": [],
+    "src/routes/todo.js": [
+      "src/controllers/todo.js"
+    ],
+    "src/routes/user.js": [
+      "src/controllers/auth.js",
+      "src/controllers/cart.js",
+      "src/controllers/post.js",
+      "src/controllers/todo.js",
+      "src/controllers/user.js",
+      "src/helpers/index.js",
+      "src/middleware/auth.js"
+    ],
+    "src/utils/client-info.js": [],
+    "src/utils/cron-jobs.js": [
+      "src/constants/index.js",
+      "src/helpers/logger.js",
+      "src/models/custom-response.js"
+    ],
+    "src/utils/custom-response.js": [
+      "src/models/custom-response.js",
+      "src/utils/util.js"
+    ],
+    "src/utils/error.js": [],
+    "src/utils/fatal-handler.js": [
+      "index.js",
+      "src/helpers/logger.js",
+      "src/middleware/error.js",
+      "src/utils/request-context.js",
+      "src/utils/util.js"
+    ],
+    "src/utils/image.js": [
+      "src/aws/aws.js",
+      "src/helpers/logger.js",
+      "src/utils/util.js"
+    ],
+    "src/utils/jwt.js": [
+      "src/constants/index.js"
+    ],
+    "src/utils/request-context.js": [],
+    "src/utils/util.js": [
+      "src/constants/index.js",
+      "src/helpers/logger.js"
+    ],
+    "views/2fa.ejs": [],
+    "views/404.ejs": [],
+    "views/custom-response.ejs": [],
+    "views/docs-auth.ejs": [],
+    "views/docs-carts.ejs": [],
+    "views/docs-comments.ejs": [],
+    "views/docs-http.ejs": [],
+    "views/docs-image.ejs": [],
+    "views/docs-posts.ejs": [],
+    "views/docs-products.ejs": [],
+    "views/docs-quotes.ejs": [],
+    "views/docs-recipes.ejs": [],
+    "views/docs-todos.ejs": [],
+    "views/docs-tools.ejs": [],
+    "views/docs-users.ejs": [],
+    "views/docs.ejs": [],
+    "views/index.ejs": [],
+    "views/partials/docs-footer.ejs": [],
+    "views/partials/docs-head.ejs": [],
+    "views/partials/docs-side-nav.ejs": [],
+    "views/partials/header.ejs": [],
+    "views/tools.ejs": []
+  }
+}
