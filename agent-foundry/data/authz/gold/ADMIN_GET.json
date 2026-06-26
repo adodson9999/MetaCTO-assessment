@@ -1,0 +1,44 @@
+{
+  "sub_test": "ADMIN_GET",
+  "requesting_role": "admin",
+  "method": "GET",
+  "endpoint": "/auth/posts/3",
+  "resource_owner": "owner",
+  "expected_code": 200,
+  "leakage": {
+    "forbidden_fields": [
+      "id",
+      "title",
+      "body",
+      "tags",
+      "reactions",
+      "views",
+      "userId"
+    ],
+    "forbidden_substrings": [
+      "stack",
+      "Error:",
+      ".js:",
+      ".ts:",
+      "/src/",
+      "/Users/",
+      "node_modules",
+      "SELECT ",
+      "INSERT ",
+      "UPDATE ",
+      "WHERE ",
+      "Traceback",
+      "at Object.",
+      "at async"
+    ]
+  },
+  "expect_resource_data": true,
+  "list_must_exclude": null,
+  "body_snippet": "{\"id\":3,\"title\":\"Dave watched as the forest burned up on the hill.\",\"body\":\"Dave watched as the forest burned up on the hill, only a few miles from her house. The car had been hastily packed and Marta",
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "data_exposed": false,
+  "data_present": true,
+  "leak_safe": true,
+  "pass": true
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "todos_put",
+  "method": "PUT",
+  "path": "/todos/{id}",
+  "request_body": {
+    "todo": "Updated todo",
+    "completed": true
+  },
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 1,
+    "todo": "Updated todo",
+    "completed": true,
+    "userId": 152
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

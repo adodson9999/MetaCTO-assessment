@@ -1,0 +1,182 @@
+{
+  "agent": "api-tester-validate-correlation-id-propagation",
+  "run_id": "cid-run-2",
+  "target": "http://localhost:8899",
+  "correlation_id_propagation_rate_pct": 0.0,
+  "scenarios_total": 10,
+  "scenarios_propagated": 0,
+  "scenarios_api_correct": 0,
+  "emitted_plan": {
+    "correlation_id": "corr-abc-12345-test",
+    "header_name": "X-Correlation-ID",
+    "endpoint": {
+      "method": "POST",
+      "path": "/products/add"
+    },
+    "downstream_services": [
+      "inventory-service",
+      "payment-service"
+    ],
+    "with_header_request": {
+      "method": "POST",
+      "path": "/products/add",
+      "headers": {
+        "Authorization": "Bearer <valid_token>",
+        "X-Correlation-ID": "corr-abc-12345-test"
+      }
+    },
+    "no_header_request": {
+      "method": "POST",
+      "path": "/products/add",
+      "headers": {
+        "Authorization": "Bearer <valid_token>"
+      }
+    },
+    "uuid_v4_regex": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+    "assertions": [
+      "resp_header_echo_exact",
+      "api_log_present",
+      "api_log_unmodified",
+      "downstream_count_ge2",
+      "inventory_log_present",
+      "payment_log_present",
+      "no_header_uuid_generated",
+      "no_header_uuid_in_api_log",
+      "no_header_uuid_in_inventory",
+      "no_header_uuid_in_payment"
+    ]
+  },
+  "normalized_plan": {
+    "with_req": {
+      "method": "POST",
+      "path": "/products/add",
+      "headers": {
+        "Authorization": "Bearer <valid_token>",
+        "X-Correlation-ID": "corr-abc-12345-test"
+      }
+    },
+    "no_header_req": {
+      "method": "POST",
+      "path": "/products/add",
+      "headers": {
+        "Authorization": "Bearer <valid_token>"
+      }
+    },
+    "assertions": [
+      "resp_header_echo_exact",
+      "api_log_present",
+      "api_log_unmodified",
+      "downstream_count_ge2",
+      "inventory_log_present",
+      "payment_log_present",
+      "no_header_uuid_generated",
+      "no_header_uuid_in_api_log",
+      "no_header_uuid_in_inventory",
+      "no_header_uuid_in_payment"
+    ],
+    "downstream_services": [
+      "inventory-service",
+      "payment-service"
+    ],
+    "header_name": "X-Correlation-ID",
+    "corr_id": "corr-abc-12345-test",
+    "uuid_regex": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+  },
+  "observations": {
+    "with_request_sent": true,
+    "no_header_request_sent": true,
+    "resp_header_value": null,
+    "no_header_resp_value": null,
+    "no_header_is_uuid_v4": false,
+    "api_log_hits_corr": 0,
+    "api_log_corr_unmodified": false,
+    "inventory_log_hits_corr": 0,
+    "payment_log_hits_corr": 0,
+    "downstream_services_observed": 0,
+    "api_log_hits_uuid": 0,
+    "inventory_log_hits_uuid": 0,
+    "payment_log_hits_uuid": 0
+  },
+  "request_log": [
+    {
+      "phase": "with_header",
+      "method": "POST",
+      "path": "/products/add",
+      "status": 201,
+      "resp_header_value": null
+    },
+    {
+      "phase": "no_header",
+      "method": "POST",
+      "path": "/products/add",
+      "status": 201,
+      "resp_header_value": null
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "resp_header_echo_exact",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "api_log_present",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "api_log_unmodified",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "downstream_count_ge2",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "inventory_log_present",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "payment_log_present",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "no_header_uuid_generated",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "no_header_uuid_in_api_log",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "no_header_uuid_in_inventory",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "no_header_uuid_in_payment",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    }
+  ],
+  "token_obtained": true,
+  "error": null,
+  "api_log_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/data/validate-correlation-id-propagation/logs/api_server.log",
+  "downstream_log_dir": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/data/validate-correlation-id-propagation/downstream-logs"
+}

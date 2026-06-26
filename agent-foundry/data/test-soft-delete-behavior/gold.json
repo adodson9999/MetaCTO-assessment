@@ -1,0 +1,271 @@
+{
+  "task": "api-tester / test-soft-delete-behavior",
+  "built_at": "2026-06-26T03:07:05.909895+00:00",
+  "target": "http://127.0.0.1:8950",
+  "case_count": 5,
+  "reference_plan": {
+    "case_count": 5,
+    "create": {
+      "method": "POST",
+      "endpoint": "/resources",
+      "fields": {
+        "name": "widget",
+        "sku": "SKU",
+        "color": "octopus-teal"
+      }
+    },
+    "delete": {
+      "method": "DELETE",
+      "path_template": "/resources/{RESOURCE_ID}",
+      "expected_status": [
+        200,
+        204
+      ]
+    },
+    "get_deleted": {
+      "method": "GET",
+      "path_template": "/resources/{RESOURCE_ID}",
+      "expected_status": 404,
+      "assert_no_field_values": true
+    },
+    "collection": {
+      "method": "GET",
+      "endpoint": "/resources",
+      "expected_status": 200,
+      "assert_absent": true
+    },
+    "db_query": {
+      "table": "resources",
+      "id_column": "id",
+      "deleted_at_column": "deleted_at",
+      "is_deleted_column": "is_deleted",
+      "assert_row_exists": true,
+      "assert_deleted_at_not_null": true,
+      "assert_is_deleted_true": true,
+      "deleted_at_within_seconds": 10
+    },
+    "include_deleted": {
+      "method": "GET",
+      "endpoint": "/resources",
+      "query": "include_deleted=true",
+      "expected_status": 200,
+      "assert_present_with_deleted_at": true
+    }
+  },
+  "soft_delete_correctness_rate_pct": 100.0,
+  "correct_cases": 5,
+  "total_cases": 5,
+  "scenarios_total": 13,
+  "scenarios_api_correct": 13,
+  "request_log": {
+    "cases": [
+      {
+        "case": 0,
+        "create": {
+          "status": 201,
+          "id": "res-470a3975ee554c179c3482cb8296e325"
+        },
+        "delete": {
+          "path": "/resources/res-470a3975ee554c179c3482cb8296e325",
+          "status": 200,
+          "t_delete": 1782443225.88344
+        },
+        "get_by_id": {
+          "path": "/resources/res-470a3975ee554c179c3482cb8296e325",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:07:05.883786+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 1,
+        "create": {
+          "status": 201,
+          "id": "res-c9d6a8eae0594111ae98778d1e6aa82d"
+        },
+        "delete": {
+          "path": "/resources/res-c9d6a8eae0594111ae98778d1e6aa82d",
+          "status": 200,
+          "t_delete": 1782443225.8904698
+        },
+        "get_by_id": {
+          "path": "/resources/res-c9d6a8eae0594111ae98778d1e6aa82d",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:07:05.890651+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 2,
+        "create": {
+          "status": 201,
+          "id": "res-c3fd94149d264a8daf2840782a731d57"
+        },
+        "delete": {
+          "path": "/resources/res-c3fd94149d264a8daf2840782a731d57",
+          "status": 200,
+          "t_delete": 1782443225.8961139
+        },
+        "get_by_id": {
+          "path": "/resources/res-c3fd94149d264a8daf2840782a731d57",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:07:05.896325+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 3,
+        "create": {
+          "status": 201,
+          "id": "res-4dde544c048e463ba6569a49b9178363"
+        },
+        "delete": {
+          "path": "/resources/res-4dde544c048e463ba6569a49b9178363",
+          "status": 200,
+          "t_delete": 1782443225.901397
+        },
+        "get_by_id": {
+          "path": "/resources/res-4dde544c048e463ba6569a49b9178363",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:07:05.901569+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 4,
+        "create": {
+          "status": 201,
+          "id": "res-3b0cbbe96dab4251824e0b265bdbbf67"
+        },
+        "delete": {
+          "path": "/resources/res-3b0cbbe96dab4251824e0b265bdbbf67",
+          "status": 200,
+          "t_delete": 1782443225.906552
+        },
+        "get_by_id": {
+          "path": "/resources/res-3b0cbbe96dab4251824e0b265bdbbf67",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:07:05.906734+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      }
+    ],
+    "case_count": 5,
+    "tolerance_s": 10
+  },
+  "scenarios": [
+    {
+      "scenario": "all_create_201",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "create_success_count",
+      "ideal": "5",
+      "observed_token": "5",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_appear_before_delete",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_delete_2xx",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_get_by_id_404",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_get_by_id_no_field_leak",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_absent_from_collection",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_row_exists",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_deleted_at_not_null",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_deleted_at_within_10s",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_is_deleted_true",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_include_deleted_shows",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "soft_delete_correct_count",
+      "ideal": "5",
+      "observed_token": "5",
+      "api_correct": true
+    }
+  ]
+}

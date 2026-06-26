@@ -1,0 +1,3 @@
+{"sub_test": "VIEWER_ADMIN_ENDPOINT"}
+{"sub_test": "NO_TOKEN_GET"}
+{"sub_test": "BAD_TOKEN_GET"}

@@ -1,0 +1,6 @@
+{
+  "scenario": "all_db_deleted_at_not_null",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

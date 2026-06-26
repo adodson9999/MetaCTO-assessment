@@ -1,0 +1,38 @@
+{
+  "metric_name": "upload_download_test_fidelity",
+  "direction": "higher_is_better",
+  "agents": {
+    "api-tester-test-file-upload-and-download": {
+      "best": 42.86,
+      "runs": 1,
+      "last": 42.86
+    },
+    "claude_sdk": {
+      "best": 42.86,
+      "runs": 1,
+      "last": 42.86
+    },
+    "crewai": {
+      "best": 42.86,
+      "runs": 1,
+      "last": 42.86
+    },
+    "langgraph": {
+      "best": 42.86,
+      "runs": 1,
+      "last": 42.86
+    }
+  },
+  "runs": [
+    {
+      "run_id": "20260626T010209-fef790",
+      "ts": "2026-06-26T01:02:26.567094+00:00",
+      "values": {
+        "api-tester-test-file-upload-and-download": 42.86,
+        "claude_sdk": 42.86,
+        "crewai": 42.86,
+        "langgraph": 42.86
+      }
+    }
+  ]
+}

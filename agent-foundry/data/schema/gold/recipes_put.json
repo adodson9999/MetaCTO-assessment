@@ -1,0 +1,52 @@
+{
+  "slug": "recipes_put",
+  "method": "PUT",
+  "path": "/recipes/{id}",
+  "request_body": {
+    "name": "Updated Stew",
+    "ingredients": [
+      "salt"
+    ]
+  },
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 1,
+    "name": "Updated Stew",
+    "ingredients": [
+      "salt"
+    ],
+    "instructions": [
+      "Preheat the oven to 475\u00b0F (245\u00b0C).",
+      "Roll out the pizza dough and spread tomato sauce evenly.",
+      "Top with slices of fresh mozzarella and fresh basil leaves.",
+      "Drizzle with olive oil and season with salt and pepper.",
+      "Bake in the preheated oven for 12-15 minutes or until the crust is golden brown.",
+      "Slice and serve hot."
+    ],
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 15,
+    "servings": 4,
+    "difficulty": "Easy",
+    "cuisine": "Italian",
+    "caloriesPerServing": 300,
+    "tags": [
+      "Pizza",
+      "Italian"
+    ],
+    "userId": 166,
+    "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
+    "rating": 4.6,
+    "reviewCount": 98,
+    "mealType": [
+      "Dinner"
+    ]
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

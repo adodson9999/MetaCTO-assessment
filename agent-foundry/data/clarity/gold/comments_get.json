@@ -1,0 +1,33 @@
+{
+  "slug": "comments_get",
+  "method": "GET",
+  "path": "/comments/{id}",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    404
+  ],
+  "cases": [
+    {
+      "documented_code": 404,
+      "trigger": "bad_path_id",
+      "request": {
+        "code": 404,
+        "method": "GET",
+        "path": "/comments/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 404,
+      "body": "{\"message\":\"Comment with id 'nonexistent-id-000000' not found\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

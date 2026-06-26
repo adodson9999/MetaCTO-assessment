@@ -1,0 +1,3 @@
+- [2026-06-25T23:15:07.230233+00:00] run=20260625T231501-713e50 search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-06-25T23:59:54.792793+00:00] run=20260625T235945-0d98cc search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-06-26T00:23:35.521759+00:00] run=20260626T002325-917a75 search-filter run: accuracy=100.0% over 2 collections (28 scenarios)

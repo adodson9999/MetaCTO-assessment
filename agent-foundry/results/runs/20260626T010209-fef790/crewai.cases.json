@@ -1,0 +1,340 @@
+{
+  "agent": "crewai",
+  "run_id": "20260626T010209-fef790",
+  "target": "http://localhost:8899",
+  "upload_contract_correctness_rate_pct": 0.0,
+  "file_integrity_rate_pct": 0.0,
+  "over_size_rejection_rate_pct": 0.0,
+  "invalid_mime_rejection_rate_pct": 0.0,
+  "rates_basis": {
+    "file_integrity_basis": "0/0",
+    "over_size_basis": "0/0",
+    "invalid_mime_basis": "0/0"
+  },
+  "overall_pass": false,
+  "scenarios_total": 42,
+  "scenarios_api_correct": 0,
+  "endpoints": [
+    {
+      "endpoint": "/products/add",
+      "max_size_bytes": 5242880,
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_1kb_status",
+          "ideal": "201",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_1kb_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_max_status",
+          "ideal": "201",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_max_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_over_status",
+          "ideal": "413",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_over_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_invalid_status",
+          "ideal": "415",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "upload_invalid_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_1kb_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_1kb_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_1kb_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_max_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_max_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "scenario": "download_max_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CcQyBLweteLBBoewR7J8g'}"
+    },
+    {
+      "endpoint": "/users/add",
+      "max_size_bytes": 5242880,
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_1kb_status",
+          "ideal": "201",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_1kb_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_max_status",
+          "ideal": "201",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_max_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_over_status",
+          "ideal": "413",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_over_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_invalid_status",
+          "ideal": "415",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "upload_invalid_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_1kb_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_1kb_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_1kb_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_max_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_max_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "scenario": "download_max_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CcQyBMjXXL6TgTGgQDLK3'}"
+    },
+    {
+      "endpoint": "/recipes/add",
+      "max_size_bytes": 5242880,
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_1kb_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_1kb_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_max_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_max_url_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_over_status",
+          "ideal": "413",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_over_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_invalid_status",
+          "ideal": "415",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "upload_invalid_url_absent",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_1kb_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_1kb_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_1kb_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_max_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_max_content_type_jpeg",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "scenario": "download_max_md5_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CcQyBNEnZ2dVEVZyYfqpF'}"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+"""LangGraph enum-value-restriction testing agent.
+
+A StateGraph whose single node turns one endpoint's enum-constrained schema into the
+six-key enum test matrix via the backend (ChatAnthropic under the claude-haiku backend;
+ChatOllama under the air-gapped Ollama backend). Deterministic execution (real HTTP
+sends), recording, and emit are handled by the shared harness
+(agents/common/enum_contract.py); this file's only framework-specific job is LLM
+elicitation through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import enum_contract  # noqa: E402
+from enum_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+MAX_TOKENS = int(os.environ.get("FORGE_MAX_TOKENS", "8192"))
+
+
+def _model():
+    spec = backend_config.resolve(WS)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"], temperature=0, max_tokens=MAX_TOKENS)
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=spec["native"]["model"],
+                      base_url=spec["base_url"].replace("/v1", ""),
+                      temperature=0, format="json")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    llm = _model()
+
+    def generate_node(state: S) -> S:
+        msg = llm.invoke(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(ep: dict) -> dict:
+        brief = enum_contract.endpoint_brief(ep)
+        result = graph.invoke({"brief": brief, "output": ""})
+        out = result["output"]
+        if isinstance(out, list):  # anthropic may return a list of content blocks
+            out = "".join(b.get("text", "") if isinstance(b, dict) else str(b) for b in out)
+        return enum_contract.extract_json(out) or {}
+
+    summary = enum_contract.run_enum_test(AGENT, generate)
+    print(f"[{AGENT}] enum_validation_rate={summary['enum_validation_rate_pct']}% "
+          f"cases={summary['total_cases']}")
+
+
+if __name__ == "__main__":
+    main()

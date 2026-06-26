@@ -1,0 +1,964 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON (authored for contract-testing task)",
+    "version": "1.0.0",
+    "description": "Request-body schemas authored from DummyJSON routes/controllers. The agents parse THIS spec; ground truth is the live API's observed behavior."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "auth_login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "password": {
+                    "type": "string",
+                    "maxLength": 60
+                  },
+                  "expiresInMins": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "username": "emilys",
+                "password": "emilyspass"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/products/add": {
+      "post": {
+        "operationId": "products_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  },
+                  "category": {
+                    "type": "string",
+                    "maxLength": 60
+                  }
+                },
+                "required": [
+                  "title",
+                  "price"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Forge Test Widget",
+                "price": 9.99,
+                "stock": 5,
+                "category": "tools"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "put": {
+        "operationId": "products_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Updated Widget",
+                "price": 12.5
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "products_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "price": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Patched Widget"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/posts/add": {
+      "post": {
+        "operationId": "posts_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "tags": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "title",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "A Forge Post",
+                "body": "hello world",
+                "userId": 1,
+                "tags": [
+                  "a"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "put": {
+        "operationId": "posts_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Updated Post",
+                "body": "edited"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "posts_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Patched Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/todos/add": {
+      "post": {
+        "operationId": "todos_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "todo": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "todo",
+                  "completed",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "todo": "Ship the foundry",
+                "completed": false,
+                "userId": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "put": {
+        "operationId": "todos_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "todo": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "todo"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "todo": "Updated todo",
+                "completed": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "todos_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "todo": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "completed"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "completed": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "operationId": "users_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "age": {
+                    "type": "integer"
+                  },
+                  "email": {
+                    "type": "string",
+                    "maxLength": 120
+                  }
+                },
+                "required": [
+                  "firstName"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "firstName": "Forge",
+                "lastName": "Tester",
+                "age": 30,
+                "email": "f@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "operationId": "users_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "firstName"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "firstName": "Updated",
+                "lastName": "Name"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "users_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "firstName"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "firstName": "Patched"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/recipes/add": {
+      "post": {
+        "operationId": "recipes_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "ingredients": {
+                    "type": "array"
+                  },
+                  "instructions": {
+                    "type": "array"
+                  },
+                  "prepTimeMinutes": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "ingredients"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "name": "Forge Stew",
+                "ingredients": [
+                  "water"
+                ],
+                "instructions": [
+                  "boil"
+                ],
+                "prepTimeMinutes": 10
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/recipes/{id}": {
+      "put": {
+        "operationId": "recipes_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "ingredients": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "name": "Updated Stew",
+                "ingredients": [
+                  "salt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "recipes_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "prepTimeMinutes": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "name": "Patched Stew"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/carts/add": {
+      "post": {
+        "operationId": "carts_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "products": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "userId",
+                  "products"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "userId": 1,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 2
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/carts/{id}": {
+      "put": {
+        "operationId": "carts_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "merge": {
+                    "type": "boolean"
+                  },
+                  "products": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "products"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "merge": true,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 3
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "carts_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "merge": {
+                    "type": "boolean"
+                  },
+                  "products": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "products"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "merge": false,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/comments/add": {
+      "post": {
+        "operationId": "comments_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "postId": {
+                    "type": "integer"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "body",
+                  "postId",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "body": "Nice post",
+                "postId": 1,
+                "userId": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "put": {
+        "operationId": "comments_put",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "type": "string",
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "body"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "body": "Updated comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "comments_patch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "type": "string",
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "body"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "body": "Patched comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "2xx": {
+            "description": "accepted"
+          },
+          "400": {
+            "description": "rejected"
+          }
+        }
+      }
+    }
+  }
+}

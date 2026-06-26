@@ -1,0 +1,6 @@
+{
+  "scenario": "all_delete_2xx",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

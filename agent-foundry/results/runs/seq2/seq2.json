@@ -1,0 +1,11 @@
+{
+  "agent": "seq2",
+  "run_id": "seq2",
+  "metric_name": "concurrency_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/seq2/seq2.cases.json",
+  "ts": "2026-06-25T23:09:23.356056+00:00",
+  "concurrent_request_success_rate_pct": 100.0,
+  "scenarios_total": 10,
+  "db_count_delta": 50
+}

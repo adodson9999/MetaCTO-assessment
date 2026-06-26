@@ -1,0 +1,6 @@
+{
+  "scenario": "all_appear_before_delete",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

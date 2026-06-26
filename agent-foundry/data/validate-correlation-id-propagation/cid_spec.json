@@ -1,0 +1,28 @@
+{
+  "title": "DummyJSON correlation-ID propagation contract (authored for the propagation task)",
+  "description": "A single endpoint carries a known X-Correlation-ID; the contract requires the identical id to appear in the response header, the API server log, and every downstream service log, and a no-header request to auto-generate a UUID v4. Agents construct the propagation test plan from this; ground truth is the live API's observed behavior. DummyJSON is never modified.",
+  "target": "http://localhost:8899",
+  "correlation_id": "corr-abc-12345-test",
+  "header_name": "X-Correlation-ID",
+  "endpoint": {
+    "method": "POST",
+    "path": "/products/add"
+  },
+  "downstream_services": [
+    "inventory-service",
+    "payment-service"
+  ],
+  "uuid_v4_regex": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+  "auth": {
+    "login_endpoint": {
+      "method": "POST",
+      "path": "/auth/login"
+    },
+    "scheme": "Bearer",
+    "creds": {
+      "username": "emilys",
+      "password": "emilyspass"
+    },
+    "token_placeholder": "Bearer <valid_token>"
+  }
+}

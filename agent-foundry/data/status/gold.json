@@ -1,0 +1,563 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "operations": 15,
+    "testable_cases": 26,
+    "correct_exact_match": 23,
+    "empirical_status_code_accuracy_rate_pct": 88.46,
+    "note": "Ground truth = live DummyJSON observed code per documented (endpoint, code) case. Several /add endpoints document 400 but return 201 (no body validation), so the empirical accuracy rate is below 100% by design \u2014 a real QA finding."
+  },
+  "endpoints": [
+    {
+      "slug": "auth_login",
+      "method": "POST",
+      "path": "/auth/login",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        200,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 200,
+          "request": {
+            "code": 200,
+            "method": "POST",
+            "path": "/auth/login",
+            "auth": "none",
+            "body": {
+              "username": "emilys",
+              "password": "emilyspass"
+            }
+          },
+          "actual_code": 200,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/auth/login",
+            "auth": "none",
+            "body": {
+              "password": "emilyspass"
+            }
+          },
+          "actual_code": 400,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "auth_required": true,
+      "is_hook": false,
+      "documented_codes": [
+        200,
+        401,
+        500
+      ],
+      "cases": [
+        {
+          "documented_code": 200,
+          "request": {
+            "code": 200,
+            "method": "GET",
+            "path": "/auth/me",
+            "auth": "valid",
+            "body": null
+          },
+          "actual_code": 200,
+          "passed": true
+        },
+        {
+          "documented_code": 401,
+          "request": {
+            "code": 401,
+            "method": "GET",
+            "path": "/auth/me",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 401,
+          "passed": true
+        },
+        {
+          "documented_code": 500,
+          "request": {
+            "code": 500,
+            "method": "GET",
+            "path": "/auth/me",
+            "auth": "malformed",
+            "body": null
+          },
+          "actual_code": 500,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "products_get",
+      "method": "GET",
+      "path": "/products/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        200,
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 200,
+          "request": {
+            "code": 200,
+            "method": "GET",
+            "path": "/products/1",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 200,
+          "passed": true
+        },
+        {
+          "documented_code": 404,
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/products/999999",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "products_add",
+      "method": "POST",
+      "path": "/products/add",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        201,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 201,
+          "request": {
+            "code": 201,
+            "method": "POST",
+            "path": "/products/add",
+            "auth": "none",
+            "body": {
+              "title": "Forge Widget",
+              "price": 9.99,
+              "stock": 5
+            }
+          },
+          "actual_code": 201,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/products/add",
+            "auth": "none",
+            "body": {
+              "price": 9.99,
+              "stock": 5
+            }
+          },
+          "actual_code": 201,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "slug": "posts_get",
+      "method": "GET",
+      "path": "/posts/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        200,
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 200,
+          "request": {
+            "code": 200,
+            "method": "GET",
+            "path": "/posts/1",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 200,
+          "passed": true
+        },
+        {
+          "documented_code": 404,
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/posts/999999",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "posts_add",
+      "method": "POST",
+      "path": "/posts/add",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        201,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 201,
+          "request": {
+            "code": 201,
+            "method": "POST",
+            "path": "/posts/add",
+            "auth": "none",
+            "body": {
+              "title": "A Forge Post",
+              "userId": 1,
+              "body": "hello"
+            }
+          },
+          "actual_code": 201,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/posts/add",
+            "auth": "none",
+            "body": {
+              "userId": 1,
+              "body": "hello"
+            }
+          },
+          "actual_code": 201,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "slug": "todos_add",
+      "method": "POST",
+      "path": "/todos/add",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        201,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 201,
+          "request": {
+            "code": 201,
+            "method": "POST",
+            "path": "/todos/add",
+            "auth": "none",
+            "body": {
+              "todo": "Ship the foundry",
+              "completed": false,
+              "userId": 1
+            }
+          },
+          "actual_code": 201,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/todos/add",
+            "auth": "none",
+            "body": {
+              "completed": false,
+              "userId": 1
+            }
+          },
+          "actual_code": 201,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "slug": "users_get",
+      "method": "GET",
+      "path": "/users/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        200,
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 200,
+          "request": {
+            "code": 200,
+            "method": "GET",
+            "path": "/users/1",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 200,
+          "passed": true
+        },
+        {
+          "documented_code": 404,
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/users/999999",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "comments_add",
+      "method": "POST",
+      "path": "/comments/add",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        201,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 201,
+          "request": {
+            "code": 201,
+            "method": "POST",
+            "path": "/comments/add",
+            "auth": "none",
+            "body": {
+              "body": "Nice post",
+              "postId": 1,
+              "userId": 1
+            }
+          },
+          "actual_code": 201,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/comments/add",
+            "auth": "none",
+            "body": {
+              "postId": 1,
+              "userId": 1
+            }
+          },
+          "actual_code": 400,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "carts_add",
+      "method": "POST",
+      "path": "/carts/add",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        201,
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 201,
+          "request": {
+            "code": 201,
+            "method": "POST",
+            "path": "/carts/add",
+            "auth": "none",
+            "body": {
+              "userId": 1,
+              "products": [
+                {
+                  "id": 1,
+                  "quantity": 2
+                }
+              ]
+            }
+          },
+          "actual_code": 201,
+          "passed": true
+        },
+        {
+          "documented_code": 400,
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/carts/add",
+            "auth": "none",
+            "body": {
+              "products": [
+                {
+                  "id": 1,
+                  "quantity": 2
+                }
+              ]
+            }
+          },
+          "actual_code": 400,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "http_403",
+      "method": "GET",
+      "path": "/http/403",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        403
+      ],
+      "cases": [
+        {
+          "documented_code": 403,
+          "request": {
+            "code": 403,
+            "method": "GET",
+            "path": "/http/403",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 403,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "http_409",
+      "method": "GET",
+      "path": "/http/409",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        409
+      ],
+      "cases": [
+        {
+          "documented_code": 409,
+          "request": {
+            "code": 409,
+            "method": "GET",
+            "path": "/http/409",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 409,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "http_422",
+      "method": "GET",
+      "path": "/http/422",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        422
+      ],
+      "cases": [
+        {
+          "documented_code": 422,
+          "request": {
+            "code": 422,
+            "method": "GET",
+            "path": "/http/422",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 422,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "http_429",
+      "method": "GET",
+      "path": "/http/429",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        429
+      ],
+      "cases": [
+        {
+          "documented_code": 429,
+          "request": {
+            "code": 429,
+            "method": "GET",
+            "path": "/http/429",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 429,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "slug": "http_500",
+      "method": "GET",
+      "path": "/http/500",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        500
+      ],
+      "cases": [
+        {
+          "documented_code": 500,
+          "request": {
+            "code": 500,
+            "method": "GET",
+            "path": "/http/500",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 500,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

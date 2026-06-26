@@ -1,0 +1,96 @@
+{
+  "agent": "langgraph",
+  "run_id": "smoke1",
+  "target": "http://localhost:8899",
+  "error_clarity_pass_rate_pct": 0.0,
+  "documented_error_cases": 3,
+  "passed_cases": 0,
+  "message_field_present": 3,
+  "code_field_present": 0,
+  "responses_with_internal_leaks": 0,
+  "p1_security_defects": 0,
+  "covered_cases": 3,
+  "cases": [
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "documented_code": 401,
+      "trigger": "no_auth",
+      "covered": true,
+      "sent": {
+        "code": 401,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 401,
+      "body": "{\"message\":\"Access Token is required\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "documented_code": 500,
+      "trigger": "malformed_auth",
+      "covered": true,
+      "sent": {
+        "code": 500,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "malformed",
+        "body": null
+      },
+      "actual_code": 500,
+      "body": "{\"message\":\"invalid token\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_403",
+      "method": "GET",
+      "path": "/http/403",
+      "documented_code": 403,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 403,
+        "method": "GET",
+        "path": "/http/403",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 403,
+      "body": "{\"status\":403,\"title\":\"Forbidden\",\"type\":\"about:blank\",\"detail\":\"Forbidden\",\"message\":\"Forbidden\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    }
+  ]
+}

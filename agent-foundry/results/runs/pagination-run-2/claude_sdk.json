@@ -1,0 +1,13 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "pagination-run-2",
+  "metric_name": "pagination_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/pagination-run-2/claude_sdk.cases.json",
+  "ts": "2026-06-25T21:06:06.601281+00:00",
+  "pagination_correctness_rate_pct": 77.78,
+  "scenarios_total": 108,
+  "fidelity_matches": 108,
+  "fidelity_denominator": 108,
+  "coverage_scenarios": 108
+}

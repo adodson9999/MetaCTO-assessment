@@ -1,0 +1,6 @@
+- [2026-06-25T22:45:44.878822+00:00] run=cn-20260625T223956 content-type-negotiation run: accuracy_rate=30.88% over 36 endpoints (136 scenarios)
+- [2026-06-25T23:14:02.070215+00:00] run=cn-20260625T230851 content-type-negotiation run: accuracy_rate=32.35% over 36 endpoints (136 scenarios)
+- [2026-06-26T00:25:36.448362+00:00] run=cn-20260626T001842 content-type-negotiation run: accuracy_rate=29.41% over 36 endpoints (136 scenarios)
+- [2026-06-26T00:34:54.756828+00:00] run=cn-sdk2 content-type-negotiation run: accuracy_rate=0.0% over 2 endpoints (8 scenarios)
+- [2026-06-26T00:51:00.398776+00:00] run=cn-clismoke content-type-negotiation run: accuracy_rate=25.0% over 2 endpoints (8 scenarios)
+- [2026-06-26T01:25:51.631174+00:00] run=cn-20260626T005746 content-type-negotiation run: accuracy_rate=14.71% over 36 endpoints (136 scenarios)

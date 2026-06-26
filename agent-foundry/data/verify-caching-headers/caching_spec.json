@@ -1,0 +1,33 @@
+{
+  "title": "DummyJSON caching contract (authored for the caching-headers testing task)",
+  "description": "Each collection exposes a cacheable GET /<col>/<id> plus the mutation endpoints POST /<col>/add and PUT/PATCH/DELETE /<col>/<id>. Agents construct the caching test plan from this; ground truth is the live API's observed headers/statuses. DummyJSON's writes are non-persistent (deepFrozen data), so exercising them does not modify the target.",
+  "target": "http://localhost:8899",
+  "id_field": "id",
+  "target_id": 1,
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products"
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts"
+    },
+    {
+      "collection": "/comments",
+      "list_field": "comments"
+    },
+    {
+      "collection": "/todos",
+      "list_field": "todos"
+    },
+    {
+      "collection": "/users",
+      "list_field": "users"
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes"
+    }
+  ]
+}

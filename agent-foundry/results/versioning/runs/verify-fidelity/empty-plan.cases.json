@@ -1,0 +1,411 @@
+{
+  "agent": "empty-plan",
+  "run_id": "verify-fidelity",
+  "target": "http://localhost:8899",
+  "today": "2026-06-25",
+  "version_routing_accuracy_pct": 0.0,
+  "scenarios_total": 52,
+  "scenarios_api_correct": 0,
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "list_field": "products",
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/products",
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/posts",
+      "list_field": "posts",
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/posts",
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/users",
+      "list_field": "users",
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/users",
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/recipes",
+      "list_field": "recipes",
+      "emitted_plan": {},
+      "request_log": [],
+      "scenarios": [
+        {
+          "endpoint": "/recipes",
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    }
+  ]
+}

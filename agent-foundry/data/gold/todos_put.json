@@ -1,0 +1,297 @@
+{
+  "slug": "todos_put",
+  "method": "PUT",
+  "path": "/todos/{id}",
+  "schema": {
+    "fields": {
+      "todo": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "completed": {
+        "type": "boolean"
+      },
+      "userId": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "todo"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": null,
+        "completed": null,
+        "userId": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "todo:key_absent",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "todo:key_present_null",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": null,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:INT_VAL",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": 42,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:FLOAT_VAL",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": 3.14,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:BOOL_TRUE",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": true,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:BOOL_FALSE",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": false,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:LIST_VAL",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": [
+          1,
+          "a",
+          true
+        ],
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:OBJECT_VAL",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": {
+          "key": "value"
+        },
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "todo:NULL_NONE",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": null,
+        "completed": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "todo",
+      "field": "todo",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "todo": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "completed": true
+      }
+    }
+  ]
+}

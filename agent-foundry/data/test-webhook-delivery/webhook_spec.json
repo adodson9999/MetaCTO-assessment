@@ -1,0 +1,14 @@
+{
+  "title": "Webhook-delivery contract (authored for the webhook-delivery testing task)",
+  "description": "Each subject is documented so that registering a receiver at webhooks_path and then creating a resource at resource_path fires a 'resource.created' event delivered to the receiver within delivery_deadline_seconds, carrying the exact event_type, the created resource_id, an ISO-8601 timestamp, and an HMAC-SHA256 signature over the raw body keyed by the registered webhook_secret; a 500 from the receiver is retried. Agents construct the webhook test plan from this; ground truth is the live API's observed behavior. DummyJSON's source is never modified, ships NO webhook subsystem (no POST /webhooks route, no outbound delivery), and its POST /<x>/add endpoints are simulated, so the observed delivery behavior (no registration, no delivery, no signature) is the QA finding.",
+  "target": "http://localhost:8899",
+  "webhooks_path": "/webhooks",
+  "subjects": [
+    { "resource": "products", "resource_path": "/products/add", "resource_body": { "title": "Forge Test Product" } },
+    { "resource": "posts",    "resource_path": "/posts/add",    "resource_body": { "title": "Forge Test Post", "userId": 1 } },
+    { "resource": "comments", "resource_path": "/comments/add", "resource_body": { "body": "Forge test comment", "postId": 1, "userId": 1 } },
+    { "resource": "todos",    "resource_path": "/todos/add",    "resource_body": { "todo": "Forge webhook test", "completed": false, "userId": 1 } },
+    { "resource": "carts",    "resource_path": "/carts/add",    "resource_body": { "userId": 1, "products": [ { "id": 1, "quantity": 1 } ] } },
+    { "resource": "users",    "resource_path": "/users/add",    "resource_body": { "firstName": "Forge", "lastName": "Tester", "age": 30 } }
+  ]
+}

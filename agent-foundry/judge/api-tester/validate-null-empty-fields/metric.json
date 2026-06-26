@@ -1,0 +1,17 @@
+{
+  "task": "api-tester / validate-null-empty-fields",
+  "metric_name": "null_empty_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (slug x category x label) cases where the agent's harness-observed status class equals the gold observed status class. A case the agent did not emit (its request was never sent -> observed 'none'/absent) counts as a mismatch. Denominator = all gold cases (457 across 22 endpoints).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-null-empty-fields/gold.json",
+  "headline_metric": "null_empty_validation_accuracy_pct",
+  "sub_metrics": [
+    "required_invalid_state_rejection_rate_pct",
+    "optional_field_nullable_compliance_rate_pct"
+  ],
+  "rationale": "All four agents send to the same local DummyJSON, so the raw Null & Empty Validation Accuracy (how often the API's real behavior matches the idealized null/empty contract) is a property of the API, not the agent — empirically ~36% because DummyJSON validates auth/login but performs no null/empty validation on resource add/update routes (the genuine QA finding). Fidelity-to-gold instead measures each framework's TEST-CONSTRUCTION quality: did it build the full matrix (7 absent/empty states per required field, 6 per optional field, all/each/pairwise-or-half null combinations, the string-\"null\" probe) with byte-correct bodies, and faithfully exercise every case so its observed token reproduces gold. The headline accuracy + the two task sub-metrics (Required Invalid-State Rejection Rate, Optional Nullable Compliance Rate) are still emitted by every agent as the QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any case uncovered or any body mis-constructed so the observed token diverges from gold)"
+}

@@ -1,0 +1,1 @@
+- [2026-06-25T23:09:56.803859+00:00] run=par1 concurrent-request-handling run: success_rate=90.0% (read_ok=40/50, write_ok=50/50, db_delta=50)

@@ -1,0 +1,1 @@
+- [2026-06-25T23:06:08.539465+00:00] run=20260625T230313-edb61d track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)

@@ -1,0 +1,422 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "20260625T225832-c586d6",
+  "target": "http://localhost:8899",
+  "error_clarity_pass_rate_pct": 0.0,
+  "documented_error_cases": 15,
+  "passed_cases": 0,
+  "message_field_present": 15,
+  "code_field_present": 0,
+  "responses_with_internal_leaks": 0,
+  "p1_security_defects": 0,
+  "covered_cases": 15,
+  "cases": [
+    {
+      "slug": "auth_login",
+      "method": "POST",
+      "path": "/auth/login",
+      "documented_code": 400,
+      "trigger": "missing_field",
+      "covered": true,
+      "sent": {
+        "code": 400,
+        "method": "POST",
+        "path": "/auth/login",
+        "auth": "none",
+        "body": {
+          "password": "emilyspass"
+        }
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Username and password required\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "documented_code": 401,
+      "trigger": "no_auth",
+      "covered": true,
+      "sent": {
+        "code": 401,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 401,
+      "body": "{\"message\":\"Access Token is required\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "documented_code": 500,
+      "trigger": "malformed_auth",
+      "covered": true,
+      "sent": {
+        "code": 500,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "malformed",
+        "body": null
+      },
+      "actual_code": 500,
+      "body": "{\"message\":\"invalid token\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "products_get",
+      "method": "GET",
+      "path": "/products/{id}",
+      "documented_code": 404,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 404,
+        "method": "GET",
+        "path": "/products/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 404,
+      "body": "{\"message\":\"Product with id 'nonexistent-id-000000' not found\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "users_get",
+      "method": "GET",
+      "path": "/users/{id}",
+      "documented_code": 400,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 400,
+        "method": "GET",
+        "path": "/users/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Invalid user id 'nonexistent-id-000000'\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "posts_get",
+      "method": "GET",
+      "path": "/posts/{id}",
+      "documented_code": 400,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 400,
+        "method": "GET",
+        "path": "/posts/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Invalid post id 'nonexistent-id-000000'\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "comments_get",
+      "method": "GET",
+      "path": "/comments/{id}",
+      "documented_code": 404,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 404,
+        "method": "GET",
+        "path": "/comments/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 404,
+      "body": "{\"message\":\"Comment with id 'nonexistent-id-000000' not found\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "todos_get",
+      "method": "GET",
+      "path": "/todos/{id}",
+      "documented_code": 404,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 404,
+        "method": "GET",
+        "path": "/todos/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 404,
+      "body": "{\"message\":\"Todo with id 'nonexistent-id-000000' not found\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "carts_get",
+      "method": "GET",
+      "path": "/carts/{id}",
+      "documented_code": 404,
+      "trigger": "bad_path_id",
+      "covered": true,
+      "sent": {
+        "code": 404,
+        "method": "GET",
+        "path": "/carts/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 404,
+      "body": "{\"message\":\"Cart with id 'nonexistent-id-000000' not found\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "products_list",
+      "method": "GET",
+      "path": "/products",
+      "documented_code": 400,
+      "trigger": "bad_query",
+      "covered": true,
+      "sent": {
+        "code": 400,
+        "method": "GET",
+        "path": "/products?skip=abc",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Invalid 'skip' - must be a number\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_403",
+      "method": "GET",
+      "path": "/http/403",
+      "documented_code": 403,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 403,
+        "method": "GET",
+        "path": "/http/403",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 403,
+      "body": "{\"status\":403,\"title\":\"Forbidden\",\"type\":\"about:blank\",\"detail\":\"Forbidden\",\"message\":\"Forbidden\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_409",
+      "method": "GET",
+      "path": "/http/409",
+      "documented_code": 409,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 409,
+        "method": "GET",
+        "path": "/http/409",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 409,
+      "body": "{\"status\":409,\"title\":\"Conflict\",\"type\":\"about:blank\",\"detail\":\"Conflict\",\"message\":\"Conflict\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_422",
+      "method": "GET",
+      "path": "/http/422",
+      "documented_code": 422,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 422,
+        "method": "GET",
+        "path": "/http/422",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 422,
+      "body": "{\"status\":422,\"title\":\"Unprocessable Entity\",\"type\":\"about:blank\",\"detail\":\"Unprocessable Entity\",\"message\":\"Unprocessable Entity\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_429",
+      "method": "GET",
+      "path": "/http/429",
+      "documented_code": 429,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 429,
+        "method": "GET",
+        "path": "/http/429",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 429,
+      "body": "{\"status\":429,\"title\":\"Too Many Requests\",\"type\":\"about:blank\",\"detail\":\"Too Many Requests\",\"message\":\"Too Many Requests\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    },
+    {
+      "slug": "http_500",
+      "method": "GET",
+      "path": "/http/500",
+      "documented_code": 500,
+      "trigger": "passthrough",
+      "covered": true,
+      "sent": {
+        "code": 500,
+        "method": "GET",
+        "path": "/http/500",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 500,
+      "body": "{\"status\":500,\"title\":\"Internal Server Error\",\"type\":\"about:blank\",\"detail\":\"Internal Server Error\",\"message\":\"Internal Server Error\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      },
+      "passed": false,
+      "error": null
+    }
+  ]
+}

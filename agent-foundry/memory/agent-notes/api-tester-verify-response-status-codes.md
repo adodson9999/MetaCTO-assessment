@@ -1,0 +1,3 @@
+- [2026-06-25T20:13:22.242376+00:00] run=20260625T195452-0c76f3 status-code run: accuracy=80.77% correct=21/26 covered=25 over 15 operations
+- [2026-06-25T20:45:02.009773+00:00] run=evolve-status-api-tester-verify-response-status-codes-base status-code run: accuracy=100.0% correct=5/5 covered=5 over 3 operations
+- [2026-06-25T20:46:05.781058+00:00] run=evolve-status-api-tester-verify-response-status-codes-cand status-code run: accuracy=100.0% correct=5/5 covered=5 over 3 operations

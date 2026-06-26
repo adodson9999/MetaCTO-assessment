@@ -1,0 +1,1 @@
+- [2026-06-26T15:31:57.961041+00:00] run=selftest-n600 test-case-creator run: coverage=76.92% field_accuracy=97.27% (10/13 gold cases)

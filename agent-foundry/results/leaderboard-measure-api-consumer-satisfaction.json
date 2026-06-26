@@ -1,0 +1,38 @@
+{
+  "metric_name": "nps_measurement_plan_fidelity",
+  "direction": "higher_is_better",
+  "agents": {
+    "api-tester-measure-api-consumer-satisfaction": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "claude_sdk": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "crewai": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "langgraph": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    }
+  },
+  "runs": [
+    {
+      "run_id": "20260626T025359-80e41a",
+      "ts": "2026-06-26T02:54:02.910356+00:00",
+      "values": {
+        "api-tester-measure-api-consumer-satisfaction": 0.0,
+        "claude_sdk": 0.0,
+        "crewai": 0.0,
+        "langgraph": 0.0
+      }
+    }
+  ]
+}

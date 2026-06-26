@@ -1,0 +1,3 @@
+- [2026-06-25T22:24:04.677794+00:00] run=20260625T222233-67d967 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-06-25T22:38:52.507190+00:00] run=evolve-idem-api-tester-test-idempotency-of-endpoints-base idempotency-test run: compliance_rate=50.0% (2/4 endpoint cases) over 2 collections (18 scenarios)
+- [2026-06-25T22:39:33.558214+00:00] run=evolve-idem-api-tester-test-idempotency-of-endpoints-cand idempotency-test run: compliance_rate=50.0% (2/4 endpoint cases) over 2 collections (18 scenarios)

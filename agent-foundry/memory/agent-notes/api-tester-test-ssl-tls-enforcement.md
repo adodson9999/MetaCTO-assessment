@@ -1,0 +1,2 @@
+- [2026-06-26T00:12:24.999095+00:00] run=tls-run-1 ssl-tls-enforcement run: enforcement_rate=76.47% (13/17 scenarios) target=https://localhost:9443
+- [2026-06-26T00:20:25.738540+00:00] run=tls-run-2 ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443

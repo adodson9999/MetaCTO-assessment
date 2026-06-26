@@ -1,0 +1,26 @@
+{
+  "title": "Senior Site Reliability Engineer",
+  "company": "Calendly",
+  "location": null,
+  "remote_or_onsite": "unspecified",
+  "employment_type": "full-time",
+  "seniority": "senior",
+  "salary_min": 198025,
+  "salary_max": 287952,
+  "salary_currency": "USD",
+  "years_experience_min": null,
+  "tech_stack": ["GCP", "Kubernetes", "Golang", "Python", "Datadog", "Linux", "Infrastructure as Code"],
+  "must_haves": [
+    "Strong understanding of Linux",
+    "Strong knowledge of cloud infrastructure (especially GCP), distributed systems, and reliability practices",
+    "Deep experience designing/building/running highly-available production infrastructure",
+    "Strong Golang or Python development, especially APIs to orchestrate cloud infrastructure",
+    "Solid Kubernetes patterns (Controllers and Operators)",
+    "Knowledge of networking and cloud networking",
+    "Experience with monitoring tools (especially Datadog)",
+    "US work authorization (no sponsorship)"
+  ],
+  "nice_to_haves": [],
+  "visa_sponsorship": "not_offered",
+  "apply_url": null
+}

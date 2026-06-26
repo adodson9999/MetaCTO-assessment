@@ -1,0 +1,252 @@
+{
+  "subject": "products",
+  "resource_path": "/products/add",
+  "webhooks_path": "/webhooks",
+  "receiver_url": "http://127.0.0.1:58782/hook",
+  "reference_plan": {
+    "resource": "products",
+    "webhooks_path": "/webhooks",
+    "resource_path": "/products/add",
+    "event_type": "resource.created",
+    "register": {
+      "method": "POST",
+      "path": "/webhooks",
+      "body": {
+        "url": "http://127.0.0.1:58782/hook",
+        "events": [
+          "resource.created"
+        ]
+      },
+      "expect_status": 201,
+      "capture": "webhook_secret"
+    },
+    "trigger": {
+      "method": "POST",
+      "path": "/products/add",
+      "body": {
+        "title": "Forge Test Product"
+      },
+      "expect_status": 201,
+      "capture": "resource_id"
+    },
+    "poll": {
+      "interval_ms": 500,
+      "timeout_seconds": 10,
+      "match_field": "resource_id"
+    },
+    "assertions": {
+      "event_type": "resource.created",
+      "resource_id_matches": true,
+      "timestamp_regex": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}",
+      "signature_headers": [
+        "X-Webhook-Signature",
+        "X-Hub-Signature"
+      ],
+      "signature_algorithm": "sha256",
+      "signature_format": "sha256=<hexdigest>"
+    },
+    "retry": {
+      "trigger_status": 500,
+      "wait_seconds": 60,
+      "expect_redelivery": true,
+      "expect_identical_payload": true,
+      "expect_valid_signature": true
+    }
+  },
+  "exec_obs": {
+    "register_status": 404,
+    "resource_status": 201,
+    "resource_id": "195",
+    "delivered": false,
+    "delivery_seconds": null,
+    "delivered_event_type": null,
+    "delivered_resource_id": null,
+    "delivered_timestamp_ok": false,
+    "signature_valid": false,
+    "retry_attempted": false,
+    "retry_redelivered": false
+  },
+  "request_log": [
+    {
+      "step": "register",
+      "path": "/webhooks",
+      "status": 404
+    },
+    {
+      "step": "trigger",
+      "path": "/products/add",
+      "status": 201,
+      "resource_id": "195"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "plan_register_method_post",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_register_path_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_register_events_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_register_url_is_receiver",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_register_expect_201",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_trigger_method_post",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_trigger_path_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_trigger_expect_201",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_poll_interval_500",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_poll_timeout_10",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_event_type",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_resource_id_match",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_timestamp_regex",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_signature_headers",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_signature_algo",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_assert_signature_format",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_retry_trigger_500",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_retry_wait_present",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_retry_expect_redelivery",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_retry_expect_identical",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "exec_registration_accepted",
+      "ideal": "true",
+      "observed_token": "http_404",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_resource_created",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "exec_delivered_within_deadline",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_delivered_event_type_match",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_delivered_resource_id_match",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_delivered_timestamp_iso8601",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_signature_valid",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_retry_redelivered",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "task": "general / bug-reporter",
+  "alias": "n602",
+  "metric_name": "bug_report_fidelity_pct",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (failure x decision_field) cells where the agent's emitted five-key bug-report decision matches the deterministic gold decision. Denominator = failures x 5 fields (here 9 x 5 = 45). A field the agent omitted or got wrong counts as a mismatch. testing_steps is scored on the ordered (tc_id, step fields) tuples; postman_references on the ordered (item_name, exists_in_collection, folder, new_item method/url/test-script) tuples — the load-bearing facts, tolerant of incidental key ordering.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/bug-reporter/gold.json",
+  "headline_metric": "bug_report_completeness_rate_pct",
+  "fields_per_failure": 5,
+  "discriminators": {
+    "rank_key": "fidelity desc, completeness desc, tokens asc, elapsed asc",
+    "completeness_pct": "Bug Report Completeness Rate = sum(complete_artifact_count) / (reports x 10) x 100 — the task's own headline metric, also a tie-breaker.",
+    "efficiency": "total LLM tokens (lower better) then wall-clock elapsed (lower better); tokens=0 (framework didn't expose usage) sorts last among ties."
+  },
+  "rationale": "All four agents triage the SAME local failure fixtures, so the headline Bug Report Completeness Rate (and the file-artifact materialisation behind it) is a property of the fixtures + the harness, not the framework — every agent that decides correctly lands the same ~90% (DB dump null because the air-gapped fixture has no [database]). Bug-Report Fidelity instead measures each framework's analytical quality: did it apply the nine ordered severity rules first-match-wins, map priority from severity, build the title by status, map testing_steps from the registry sorted by tc_id, and emit the correct existing-collection ref vs a correctly-constructed Postman v2.1 new_item for each HTTP test case. Because a deterministic, tightly debate-gated task saturates correctness, completeness + efficiency break ties so the leaderboard stays strictly ranked.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold decision field)",
+  "fail_condition": "fidelity < 100% (any decision field of any failure diverges from gold)",
+  "task_metric_note": "The TASK's own gate metrics: (1) Bug Report Completeness Rate >= 80% (>=8 of 10 artifacts per report on average); (2) Mandatory Field Completeness Rate = 100% (created_at/title/severity/priority never null); (3) Testing Steps Coverage Rate >= 95% (every report maps to >=1 registry test case); (4) Postman Reference Rate >= 90% (HTTP cases already in the collection); (5) CRITICAL/HIGH Exit Code Enforcement = 100% (any CRITICAL/HIGH report forces exit 1). On the fixtures: completeness 90% PASS, mandatory 100% PASS, testing-steps 100% PASS, exit-enforcement satisfied (3 CRITICAL + 3 HIGH -> would_exit_code_1 true); Postman Reference Rate is 72.73% by design — two HTTP cases (tc-pipe-001, tc-webhook-001) are intentionally absent from the collection to exercise the new_item construction path, which surfaces the genuine finding that those new items need manual review in results/bug-reports/new-postman-items.json."
+}

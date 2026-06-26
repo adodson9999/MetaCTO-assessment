@@ -1,0 +1,6 @@
+{
+  "scenario": "read_all_status_200",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

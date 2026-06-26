@@ -1,0 +1,11 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "evolve-sd-claude_sdk-cand",
+  "metric_name": "soft_delete_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/evolve-sd-claude_sdk-cand/claude_sdk.cases.json",
+  "ts": "2026-06-26T03:17:54.922749+00:00",
+  "soft_delete_correctness_rate_pct": 100.0,
+  "scenarios_total": 13,
+  "correct_cases": 3
+}

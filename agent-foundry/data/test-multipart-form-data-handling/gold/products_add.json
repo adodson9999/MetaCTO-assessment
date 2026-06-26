@@ -1,0 +1,117 @@
+{
+  "slug": "products_add",
+  "endpoint": "/products/add",
+  "method": "POST",
+  "request_log": [
+    {
+      "case": "valid_create",
+      "endpoint": "/products/add",
+      "method": "POST",
+      "content_type": "multipart/form-data",
+      "parts": [
+        "title",
+        "category",
+        "document"
+      ],
+      "file_size_bytes": 51200,
+      "status": 201,
+      "text_a": "exact",
+      "text_b": "exact",
+      "document_url": null,
+      "returned_id": 195,
+      "original_md5": "2a6d2d51f6c1e69337c19d604e587a0c"
+    },
+    {
+      "case": "file_md5_roundtrip",
+      "skipped": true,
+      "reason": "create response carried no document_url"
+    },
+    {
+      "case": "persisted_readback",
+      "path": "/products/195",
+      "status": 404,
+      "persisted": false
+    },
+    {
+      "case": "oversized_rejected",
+      "file_size_bytes": 5242881,
+      "status": 400
+    },
+    {
+      "case": "missing_required_field",
+      "omitted_field": "title",
+      "status": 201,
+      "msg_refs_field": false
+    },
+    {
+      "case": "wrong_content_type",
+      "content_type": "application/json",
+      "status": 201
+    }
+  ],
+  "scenarios": [
+    {
+      "endpoint": "/products/add",
+      "scenario": "create_status",
+      "ideal": "201",
+      "observed_token": "201",
+      "api_correct": true
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "text_field_a_exact",
+      "ideal": "exact",
+      "observed_token": "exact",
+      "api_correct": true
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "text_field_b_exact",
+      "ideal": "exact",
+      "observed_token": "exact",
+      "api_correct": true
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "document_url_present",
+      "ideal": "present",
+      "observed_token": "absent",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "file_md5_roundtrip",
+      "ideal": "match",
+      "observed_token": "no_url",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "persisted_readback",
+      "ideal": "persisted",
+      "observed_token": "not_persisted",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "oversized_rejected",
+      "ideal": "413",
+      "observed_token": "400",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "missing_required_field",
+      "ideal": "400",
+      "observed_token": "201",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/products/add",
+      "scenario": "wrong_content_type",
+      "ideal": "415",
+      "observed_token": "201",
+      "api_correct": false
+    }
+  ]
+}

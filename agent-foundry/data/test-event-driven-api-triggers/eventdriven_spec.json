@@ -1,0 +1,103 @@
+{
+  "title": "Event-driven trigger contract (authored for the test-event-driven-api-triggers task)",
+  "description": "Each topic carries a typed event whose payload must contain every required field. A valid event drives resource/<resource_id>.<state_field> from pre_state to expected_state within 5s; a malformed event (the one drop_field omitted) must be ERROR-logged, dead-lettered within 30s, leave the state unchanged, and never crash the consumer. Agents construct the event-trigger test plan from this; ground truth is the live substrate's observed behavior. DummyJSON is never modified and consumes no events, so against DummyJSON the rates are 0% (the QA finding); the local substrate implements the correct consumer so the contract is exercisable.",
+  "target": "http://127.0.0.1:8930",
+  "topics": [
+    {
+      "topic": "order.payment.completed",
+      "resource": "orders",
+      "resource_id": "order-1001",
+      "state_field": "status",
+      "pre_state": "pending",
+      "expected_state": "paid",
+      "event_type": "order.payment.completed",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "amount"
+      ],
+      "field_values": {
+        "event_id": "evt-pay-0001",
+        "event_type": "order.payment.completed",
+        "resource_id": "order-1001",
+        "occurred_at": "2026-06-25T12:00:00Z",
+        "amount": 49.99
+      },
+      "drop_field": "amount"
+    },
+    {
+      "topic": "account.email.verified",
+      "resource": "accounts",
+      "resource_id": "acct-2002",
+      "state_field": "status",
+      "pre_state": "unverified",
+      "expected_state": "verified",
+      "event_type": "account.email.verified",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "email"
+      ],
+      "field_values": {
+        "event_id": "evt-acct-0002",
+        "event_type": "account.email.verified",
+        "resource_id": "acct-2002",
+        "occurred_at": "2026-06-25T12:01:00Z",
+        "email": "user@example.com"
+      },
+      "drop_field": "email"
+    },
+    {
+      "topic": "inventory.item.depleted",
+      "resource": "inventory",
+      "resource_id": "sku-3003",
+      "state_field": "stock_state",
+      "pre_state": "in_stock",
+      "expected_state": "out_of_stock",
+      "event_type": "inventory.item.depleted",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "quantity"
+      ],
+      "field_values": {
+        "event_id": "evt-inv-0003",
+        "event_type": "inventory.item.depleted",
+        "resource_id": "sku-3003",
+        "occurred_at": "2026-06-25T12:02:00Z",
+        "quantity": 0
+      },
+      "drop_field": "quantity"
+    },
+    {
+      "topic": "ticket.issue.resolved",
+      "resource": "tickets",
+      "resource_id": "tkt-4004",
+      "state_field": "status",
+      "pre_state": "open",
+      "expected_state": "resolved",
+      "event_type": "ticket.issue.resolved",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "resolution"
+      ],
+      "field_values": {
+        "event_id": "evt-tkt-0004",
+        "event_type": "ticket.issue.resolved",
+        "resource_id": "tkt-4004",
+        "occurred_at": "2026-06-25T12:03:00Z",
+        "resolution": "fixed"
+      },
+      "drop_field": "resolution"
+    }
+  ]
+}

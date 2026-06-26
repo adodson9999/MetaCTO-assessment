@@ -1,0 +1,117 @@
+{
+  "service": "profile-api",
+  "upstream_timeout_s": 10,
+  "buffer_s": 2,
+  "restore_max_ms": 500,
+  "reference_plan": {
+    "service": "profile-api",
+    "upstream_timeout_s": 10,
+    "buffer_s": 2,
+    "max_wait_s": 12,
+    "restore_max_ms": 500,
+    "delayed": [
+      {
+        "label": "GET /profile",
+        "method": "GET",
+        "path": "/profile"
+      },
+      {
+        "label": "GET /profile/preferences",
+        "method": "GET",
+        "path": "/profile/preferences"
+      }
+    ],
+    "restore": [
+      {
+        "label": "GET /profile",
+        "method": "GET",
+        "path": "/profile"
+      },
+      {
+        "label": "GET /profile/preferences",
+        "method": "GET",
+        "path": "/profile/preferences"
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario": "max_wait_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::delayed_status",
+      "ideal": "504_or_408",
+      "observed_token": "504",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::delayed_within_max_wait",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::delayed_conn_closed",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::delayed_body_safe",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::restore_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile::restore_within_budget",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::delayed_status",
+      "ideal": "504_or_408",
+      "observed_token": "504",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::delayed_within_max_wait",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::delayed_conn_closed",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::delayed_body_safe",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::restore_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "/profile/preferences::restore_within_budget",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

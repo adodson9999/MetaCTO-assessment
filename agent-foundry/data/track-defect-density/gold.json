@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "sprints": 6,
+    "fields_per_sprint": 10,
+    "total_cells": 60,
+    "reference_self_consistency_pct": 100.0,
+    "note": "Ground truth = the deterministic reference record per sprint. The metric ranks agents on how many of the 10 published fields per sprint they reproduce. Fixtures cover: all-clear, density-spike alert, P1-only, alert+P1, improving negative-trend, and an exactly-20%% boundary (alert false) with a heavy test-file-exclusion case."
+  },
+  "sprints": [
+    {
+      "sprint_name": "Sprint-25",
+      "inputs": {
+        "total_defects": 3,
+        "lines_changed_non_test": 2000,
+        "prev_density_1": 1.4,
+        "prev_density_2": 1.6,
+        "prev_density_3": 1.5
+      },
+      "record": {
+        "sprint_name": "Sprint-25",
+        "defect_density": 1.5,
+        "rolling_avg_3_sprint": 1.5,
+        "deviation_pct": 0.0,
+        "alert_flag": false,
+        "p1_count": 0,
+        "p2_count": 1,
+        "p3_count": 1,
+        "p4_count": 1,
+        "trend": "+7.1%"
+      }
+    },
+    {
+      "sprint_name": "Sprint-26",
+      "inputs": {
+        "total_defects": 8,
+        "lines_changed_non_test": 2000,
+        "prev_density_1": 2.0,
+        "prev_density_2": 2.4,
+        "prev_density_3": 2.2
+      },
+      "record": {
+        "sprint_name": "Sprint-26",
+        "defect_density": 4.0,
+        "rolling_avg_3_sprint": 2.2,
+        "deviation_pct": 81.82,
+        "alert_flag": true,
+        "p1_count": 0,
+        "p2_count": 3,
+        "p3_count": 3,
+        "p4_count": 2,
+        "trend": "+100.0%"
+      }
+    },
+    {
+      "sprint_name": "Sprint-27",
+      "inputs": {
+        "total_defects": 4,
+        "lines_changed_non_test": 2500,
+        "prev_density_1": 1.5,
+        "prev_density_2": 1.7,
+        "prev_density_3": 1.6
+      },
+      "record": {
+        "sprint_name": "Sprint-27",
+        "defect_density": 1.6,
+        "rolling_avg_3_sprint": 1.6,
+        "deviation_pct": 0.0,
+        "alert_flag": false,
+        "p1_count": 1,
+        "p2_count": 1,
+        "p3_count": 1,
+        "p4_count": 1,
+        "trend": "+6.7%"
+      }
+    },
+    {
+      "sprint_name": "Sprint-28",
+      "inputs": {
+        "total_defects": 10,
+        "lines_changed_non_test": 2500,
+        "prev_density_1": 2.5,
+        "prev_density_2": 2.7,
+        "prev_density_3": 2.6
+      },
+      "record": {
+        "sprint_name": "Sprint-28",
+        "defect_density": 4.0,
+        "rolling_avg_3_sprint": 2.6,
+        "deviation_pct": 53.85,
+        "alert_flag": true,
+        "p1_count": 2,
+        "p2_count": 4,
+        "p3_count": 3,
+        "p4_count": 1,
+        "trend": "+60.0%"
+      }
+    },
+    {
+      "sprint_name": "Sprint-29",
+      "inputs": {
+        "total_defects": 2,
+        "lines_changed_non_test": 2000,
+        "prev_density_1": 2.0,
+        "prev_density_2": 1.8,
+        "prev_density_3": 1.9
+      },
+      "record": {
+        "sprint_name": "Sprint-29",
+        "defect_density": 1.0,
+        "rolling_avg_3_sprint": 1.9,
+        "deviation_pct": -47.37,
+        "alert_flag": false,
+        "p1_count": 0,
+        "p2_count": 0,
+        "p3_count": 1,
+        "p4_count": 1,
+        "trend": "-50.0%"
+      }
+    },
+    {
+      "sprint_name": "Sprint-30",
+      "inputs": {
+        "total_defects": 6,
+        "lines_changed_non_test": 2500,
+        "prev_density_1": 1.9,
+        "prev_density_2": 2.1,
+        "prev_density_3": 2.0
+      },
+      "record": {
+        "sprint_name": "Sprint-30",
+        "defect_density": 2.4,
+        "rolling_avg_3_sprint": 2.0,
+        "deviation_pct": 20.0,
+        "alert_flag": false,
+        "p1_count": 0,
+        "p2_count": 2,
+        "p3_count": 2,
+        "p4_count": 2,
+        "trend": "+26.3%"
+      }
+    }
+  ]
+}

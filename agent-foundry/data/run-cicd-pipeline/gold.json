@@ -1,0 +1,133 @@
+{
+  "summary": {
+    "ollama_base_url": "http://127.0.0.1:11434",
+    "ollama_health": {
+      "endpoint": "/api/tags",
+      "status": -1,
+      "server_up": false,
+      "note": "<urlopen error [Errno 61] Connection refused>"
+    },
+    "scenarios": 4,
+    "fields_per_scenario": 10,
+    "total_gold_fields": 40,
+    "pass_rates": [
+      {
+        "scenario": "clean_all_pass",
+        "run_id": "2026-06-26T14-30-00",
+        "pass_rate_pct": 100.0,
+        "would_block_deployment": false
+      },
+      {
+        "scenario": "mixed_batch",
+        "run_id": "2026-06-26T15-02-44",
+        "pass_rate_pct": 33.33,
+        "would_block_deployment": true
+      },
+      {
+        "scenario": "disabled_and_empty_stdout",
+        "run_id": "2026-06-26T16-20-10",
+        "pass_rate_pct": 66.67,
+        "would_block_deployment": true
+      },
+      {
+        "scenario": "timeout_precedence",
+        "run_id": "2026-06-26T17-45-00",
+        "pass_rate_pct": 50.0,
+        "would_block_deployment": true
+      }
+    ],
+    "runs_that_must_block_deployment": [
+      "disabled_and_empty_stdout",
+      "mixed_batch",
+      "timeout_precedence"
+    ],
+    "note": "Ground truth = the deterministic ten-field pipeline-summary per scenario (TIMED_OUT > MALFORMED > FAILED > PASSED precedence over the enabled agents). Pipeline Agent Pass Rate is fixture-determined; the genuine finding is which pipeline runs must be BLOCKED for having any non-passing agent (pass = exactly 100%, no tolerance). Framework ranking is Pipeline-Summary Fidelity (agent summary vs gold), which is backend-independent. The Ollama server is never started by this build."
+  },
+  "scenarios": [
+    {
+      "scenario": "clean_all_pass",
+      "note": "Every enabled agent exits 0 with valid-JSON stdout; one disabled agent is present and must be excluded. Pipeline PASSES (100%).",
+      "gold_summary": {
+        "run_id": "2026-06-26T14-30-00",
+        "model": "llama3.1:8b",
+        "model_digest": "42182419e950",
+        "agents_total": 4,
+        "agents_passed": 4,
+        "agents_failed": 0,
+        "failed_agents": [],
+        "malformed_agents": [],
+        "timed_out_agents": [],
+        "timestamp": "2026-06-26T14:33:07+00:00"
+      },
+      "pass_rate_pct": 100.0,
+      "would_block_deployment": false
+    },
+    {
+      "scenario": "mixed_batch",
+      "note": "Six enabled agents across two batches of four: one non-zero exit (FAILED), one zero-exit-but-non-JSON stdout (MALFORMED), one timed out (TIMED_OUT, exit 124), three pass. Pipeline FAILS (33.33%).",
+      "gold_summary": {
+        "run_id": "2026-06-26T15-02-44",
+        "model": "llama3.1:8b",
+        "model_digest": "42182419e950",
+        "agents_total": 6,
+        "agents_passed": 2,
+        "agents_failed": 4,
+        "failed_agents": [
+          "schema-validator",
+          "idempotency-prober"
+        ],
+        "malformed_agents": [
+          "rate-limit-prober"
+        ],
+        "timed_out_agents": [
+          "webhook-delivery-tester"
+        ],
+        "timestamp": "2026-06-26T15:09:31+00:00"
+      },
+      "pass_rate_pct": 33.33,
+      "would_block_deployment": true
+    },
+    {
+      "scenario": "disabled_and_empty_stdout",
+      "note": "Five manifest entries, two disabled (excluded). Of the three enabled: two pass, one exits 0 with EMPTY stdout (MALFORMED \u2014 empty is a parse failure). Pipeline FAILS (66.67%).",
+      "gold_summary": {
+        "run_id": "2026-06-26T16-20-10",
+        "model": "llama3.1:8b",
+        "model_digest": "42182419e950",
+        "agents_total": 3,
+        "agents_passed": 2,
+        "agents_failed": 1,
+        "failed_agents": [],
+        "malformed_agents": [
+          "cors-header-checker"
+        ],
+        "timed_out_agents": [],
+        "timestamp": "2026-06-26T16:24:55+00:00"
+      },
+      "pass_rate_pct": 66.67,
+      "would_block_deployment": true
+    },
+    {
+      "scenario": "timeout_precedence",
+      "note": "Exercises the TIMED_OUT-over-MALFORMED precedence: one agent timed out (exit 124) with empty stdout (would also be a parse failure) and must be TIMED_OUT only; one FAILED, two pass. Pipeline FAILS (50%).",
+      "gold_summary": {
+        "run_id": "2026-06-26T17-45-00",
+        "model": "llama3.1:8b",
+        "model_digest": "42182419e950",
+        "agents_total": 4,
+        "agents_passed": 2,
+        "agents_failed": 2,
+        "failed_agents": [
+          "correlation-id-checker"
+        ],
+        "malformed_agents": [],
+        "timed_out_agents": [
+          "soft-delete-prober"
+        ],
+        "timestamp": "2026-06-26T17:51:18+00:00"
+      },
+      "pass_rate_pct": 50.0,
+      "would_block_deployment": true
+    }
+  ]
+}

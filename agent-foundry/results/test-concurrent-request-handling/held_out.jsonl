@@ -1,0 +1,1 @@
+{"concurrency": 30, "read_endpoint": "/products/2", "test_id_template": "heldout-concurrent-[VU_ID]"}

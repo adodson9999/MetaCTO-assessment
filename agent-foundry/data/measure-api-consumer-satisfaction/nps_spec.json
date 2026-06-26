@@ -1,0 +1,72 @@
+{
+  "contract": {
+    "title": "API Consumer Satisfaction (NPS) survey-measurement contract",
+    "description": "A purpose-built, air-gapped local usage fixture seeded with an api_request_logs table + collected survey responses (DummyJSON is never used or modified). Agents render the documented contract as a measurement plan; ground truth is the canonical plan executed against the seeded fixture.",
+    "target": "tools/satisfaction-fixture (local seeded SQLite)",
+    "recipient_window_days": 90,
+    "survey_questions": [
+      {
+        "id": "nps",
+        "type": "scale_0_10",
+        "text": "On a scale of 0 to 10, how likely are you to recommend this API to a colleague?"
+      },
+      {
+        "id": "painpoint",
+        "type": "open_text",
+        "text": "What is the biggest pain point you experience with this API?"
+      },
+      {
+        "id": "improvement",
+        "type": "open_text",
+        "text": "What feature or improvement would most impact your work?"
+      },
+      {
+        "id": "other",
+        "type": "open_text",
+        "text": "Any other feedback about your experience?"
+      }
+    ],
+    "collection_window_days": 14,
+    "score_bands": {
+      "promoter": [
+        9,
+        10
+      ],
+      "passive": [
+        7,
+        8
+      ],
+      "detractor": [
+        0,
+        6
+      ]
+    },
+    "nps_formula": "round(promoter_pct - detractor_pct)",
+    "validity_min_response_rate_pct": 30,
+    "clustering": {
+      "algorithm": "kmeans",
+      "vectorizer": "tfidf",
+      "k": 10,
+      "select_top": 3,
+      "max_label_words": 5
+    },
+    "dashboard_fields": [
+      "survey_period",
+      "total_recipients",
+      "total_respondents",
+      "response_rate_pct",
+      "promoter_count",
+      "passive_count",
+      "detractor_count",
+      "nps_score",
+      "statistical_validity",
+      "top_3_themes"
+    ]
+  },
+  "datasets": [
+    "current",
+    "q_prev"
+  ],
+  "ranking_dataset": "current",
+  "held_out_dataset": "q_prev"
+}

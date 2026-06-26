@@ -1,0 +1,6 @@
+{
+  "scenario": "allinvalid_db_delta_0",
+  "ideal": "0",
+  "observed_token": "0",
+  "api_correct": true
+}

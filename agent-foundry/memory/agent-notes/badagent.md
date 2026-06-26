@@ -1,0 +1,1 @@
+- [2026-06-26T03:01:41.809226+00:00] run=oracle-wrong graphql-depth run: enforcement=76.92% over 2 endpoints (26 scenarios)

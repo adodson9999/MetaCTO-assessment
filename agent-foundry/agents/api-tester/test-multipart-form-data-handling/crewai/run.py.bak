@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI multipart/form-data handling testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-endpoint
+Task. CrewAI routes the model through LiteLLM, so the claude backend works via an
+"anthropic/<model>" string and the local one via "ollama/<model>". Deterministic
+execution (real multipart POST / GET probes, file building, MD5), recording, and emit
+are the shared harness's job (agents/common/multipart.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import multipart as mp  # noqa: E402
+from multipart_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API multipart/form-data handling testing agent",
+        goal="Convert one upload endpoint's multipart contract into a single JSON multipart test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = mp.endpoint_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object: the endpoint's multipart test plan.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return mp.extract_json(str(out)) or {}
+
+    summary = mp.run_multipart_test(AGENT, generate)
+    print(f"[{AGENT}] multipart_handling_accuracy={summary['multipart_handling_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

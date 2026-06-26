@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / validate-search-and-filter-queries",
+  "metric_name": "search_filter_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 14).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-search-and-filter-queries/gold.json",
+  "headline_metric": "filter_accuracy_pct",
+  "scenarios_per_collection": 14,
+  "rationale": "All four agents hit the same local seeded /resources SUT read-only, so the raw Filter Accuracy Rate (how many scenarios the API satisfies under the documented strict filter contract) is a property of the SUT, not the agent — it is 100% because the SUT is built to the contract. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct five-case filter matrix (the single-filter status=active probe whose 15-record count and all-active membership the harness verifies record-by-record; the two-filter status=active&category=A probe whose 8-record count and exclusion of category-B ids it verifies; the invalid out-of-enum status probe that must be rejected with a 400 referencing 'status'; the unknown bogus_filter probe that must be rejected per the documented strict policy; and the empty status=active&category=C probe that must return 200 with zero records, not a 404), and faithfully exercise every scenario. The headline filter_accuracy_pct is still emitted by every agent as the task's QA finding (100% for a contract-correct SUT; any non-100% row is a genuine SUT/contract defect, not an agent failure).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token; equivalently Filter Accuracy Rate = 100% with every count matching the known DB count)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered, any request mis-constructed, any returned record not matching the applied filters, or any response count diverging from the known DB count)"
+}

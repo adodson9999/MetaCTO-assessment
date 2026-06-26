@@ -1,0 +1,22 @@
+[
+  {
+    "name": "soft-delete-prober",
+    "spec_path": "agents/soft-delete-prober.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "ssl-tls-enforcer",
+    "spec_path": "agents/ssl-tls-enforcer.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "bulk-op-tester",
+    "spec_path": "agents/bulk-op-tester.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "correlation-id-checker",
+    "spec_path": "agents/correlation-id-checker.prompt.md",
+    "enabled": true
+  }
+]

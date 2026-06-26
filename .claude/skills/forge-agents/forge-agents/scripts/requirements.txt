@@ -1,0 +1,16 @@
+# Forge Agents — helper deps. The installer pins these into a .venv.
+# Core foundry scripts (debate_gate, hybrid_search BM25 leg, scan_and_integrate,
+# run_agents, judge_score, init_workspace, backend_config) are stdlib-only and
+# need none of these. These power the built agents and the optional legs.
+
+langgraph
+langchain
+langchain-community
+langchain-anthropic
+crewai
+litellm
+claude-agent-sdk
+sentence-transformers   # local reranker (bge-reranker-v2-m3)
+
+# Vendored separately by /scan-and-integrate (not from PyPI):
+#   EverMind-AI/EverOS, microsoft/SkillOpt, AMAP-ML/SkillClaw

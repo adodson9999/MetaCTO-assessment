@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Wrapper for the Claude Code subagent api-tester-test-timeout-handling.
+
+The agent itself is the real subagent artifact api-tester-test-timeout-handling.md
+(YAML frontmatter + the debate-gated body). When the backend is claude-haiku/cloud,
+this wrapper drives it through the `claude` CLI as a subagent. Under the default
+air-gapped Ollama backend (no cloud access), it executes the SAME subagent body
+through the local OpenAI-compatible endpoint (Ollama /v1), so the agent stays
+measurable on the same footing as the other three. The shared harness
+executes/records/emits.
+"""
+import json
+import os
+import re
+import sys
+import shutil
+import subprocess
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import timeout as harness  # noqa: E402
+from timeout_prompt import user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "api-tester-test-timeout-handling"
+SPEC = backend_config.resolve(WS)
+SUBAGENT_MD = Path(__file__).resolve().parent / "api-tester-test-timeout-handling.md"
+
+
+def _system_prompt() -> str:
+    """The gated body of the subagent file (frontmatter stripped). The SkillOpt gate
+    may override via FORGE_SKILL_DOC to evaluate a candidate skill without touching the
+    artifact."""
+    doc = os.environ.get("FORGE_SKILL_DOC")
+    if doc and Path(doc).exists():
+        return Path(doc).read_text().strip()
+    text = SUBAGENT_MD.read_text()
+    body = re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL)
+    return body.strip()
+
+
+def _via_claude_cli(system: str, brief: str) -> str | None:
+    if SPEC["native"]["kind"] != "anthropic" or not shutil.which("claude"):
+        return None
+    try:
+        proc = subprocess.run(
+            ["claude", "-p", f"{system}\n\n{user_message(brief)}", "--output-format", "text"],
+            cwd=str(WS), capture_output=True, text=True, timeout=180)
+        return proc.stdout if proc.returncode == 0 else None
+    except Exception:  # noqa
+        return None
+
+
+def _via_local(system: str, brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": system},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        return json.loads(r.read())["choices"][0]["message"]["content"]
+
+
+def main():
+    system = _system_prompt()
+
+    def generate(cfg: dict) -> dict:
+        brief = harness.service_brief(cfg)
+        out = _via_claude_cli(system, brief) or _via_local(system, brief)
+        return harness.extract_json(out) or {}
+
+    summary = harness.run_timeout_test(AGENT, generate)
+    print(f"[{AGENT}] enforcement_rate={summary['timeout_enforcement_rate_pct']}% "
+          f"endpoints={summary['endpoints_enforced']}/{summary['endpoints_total']}")
+
+
+if __name__ == "__main__":
+    main()

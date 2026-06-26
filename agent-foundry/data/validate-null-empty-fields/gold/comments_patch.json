@@ -1,0 +1,147 @@
+{
+  "slug": "comments_patch",
+  "method": "PATCH",
+  "path": "/comments/{id}",
+  "schema": {
+    "fields": {
+      "body": {
+        "type": "string",
+        "maxLength": 300
+      }
+    },
+    "required": [
+      "body"
+    ],
+    "optional": []
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "body:key_absent",
+      "field": "body",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {}
+    },
+    {
+      "category": "required_state",
+      "label": "body:json_null",
+      "field": "body",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "body:empty_string",
+      "field": "body",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "body:integer_zero",
+      "field": "body",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "body:boolean_false",
+      "field": "body",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "body:empty_array",
+      "field": "body",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "body:empty_object",
+      "field": "body",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "body",
+      "field": "body",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "body",
+      "field": "body",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "body": "null"
+      }
+    }
+  ]
+}

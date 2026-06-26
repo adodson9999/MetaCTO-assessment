@@ -1,0 +1,15 @@
+{
+  "agent": "langgraph",
+  "ts": "2026-06-26T01:23:20.281695+00:00",
+  "metric": "concurrency_test_fidelity_heldout",
+  "held_out_variant": {
+    "concurrency": 30,
+    "read_endpoint": "/products/2",
+    "test_id_template": "heldout-concurrent-[VU_ID]"
+  },
+  "baseline_fidelity": 0.0,
+  "candidate_fidelity": 0.0,
+  "accepted": false,
+  "candidate_skill_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillopt/test-concurrent-request-handling/langgraph/staged/candidate_skill.md",
+  "note": "STRICT-improvement gate. ACCEPTED candidate is STAGED only \u2014 best_skill.md is NOT overwritten. Adopt manually after review."
+}

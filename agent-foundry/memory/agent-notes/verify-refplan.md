@@ -1,0 +1,1 @@
+- [2026-06-25T22:43:26.977968+00:00] run=verify-plumbing versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)

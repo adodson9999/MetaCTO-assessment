@@ -1,0 +1,55 @@
+{
+  "slug": "auth_me",
+  "method": "GET",
+  "path": "/auth/me",
+  "auth_required": true,
+  "is_hook": false,
+  "documented_codes": [
+    401,
+    500
+  ],
+  "cases": [
+    {
+      "documented_code": 401,
+      "trigger": "no_auth",
+      "request": {
+        "code": 401,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 401,
+      "body": "{\"message\":\"Access Token is required\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    },
+    {
+      "documented_code": 500,
+      "trigger": "malformed_auth",
+      "request": {
+        "code": 500,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "malformed",
+        "body": null
+      },
+      "actual_code": 500,
+      "body": "{\"message\":\"invalid token\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

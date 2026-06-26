@@ -1,0 +1,33 @@
+{
+  "slug": "posts_get",
+  "method": "GET",
+  "path": "/posts/{id}",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    400
+  ],
+  "cases": [
+    {
+      "documented_code": 400,
+      "trigger": "bad_path_id",
+      "request": {
+        "code": 400,
+        "method": "GET",
+        "path": "/posts/nonexistent-id-000000",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Invalid post id 'nonexistent-id-000000'\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

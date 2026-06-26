@@ -1,0 +1,29 @@
+Job Description, ClickHouse QA Engineer, Core Database
+QA Engineer - Core Database (Remote)
+About ClickHouse: Recognized on the 2025 Forbes Cloud 100 list, ClickHouse is one of the most innovative and
+fast-growing private cloud companies, with more than 3,000 customers and ARR that has grown over 250
+percent year over year. ClickHouse leads the market in real-time analytics, data warehousing, observability, and
+AI workloads, validated by a $400M Series D financing round. Customers include Meta, Cursor, Sony, Tesla,
+Capital One, and Airwallex.
+About the Team: The Core Engineering team is responsible for working on the beloved ClickHouse open-source
+project while working cross-functionally across engineering and product teams as we develop and expand our
+Cloud service offering. We are seeking a Senior Software Quality Engineer who will focus on improving the
+efficiency and quality of both our open-source and cloud offerings. You will build out automation of critical
+operational functions that ensure ClickHouse Cloud operates smoothly worldwide and at our massive scale. The
+ideal candidate is someone with strong technical skills and a background in release engineering.
+What will you do? Build and enhance test automation frameworks and develop automated test cases. Try out
+new features and ensure they land smoothly in Production. Test cross-functional implementations across internal
+teams at ClickHouse. Implement new testing strategies and automation for large and complex distributed
+systems. Evaluate the new functionality of ClickHouse for each release, and identify opportunities in the existing
+codebase for improvement. Engineer and improve existing testing infrastructure.
+About you: Extensive knowledge of SQL. Previously worked in a similar SDET, Release Engineering, or QA role
+related to a classical database or distributed system. Have hands-on experience with any programming language
+(Python, Go, C++). Can read C++ code for validation. Working knowledge of Git, Linux and shell scripting.
+Experience with both manual testing and automation testing. Demonstrated ability to work collaboratively,
+including with remote teams. Ability to learn complex technology quickly in a fast-paced, team-driven
+environment. Excellent communication skills and the ability to work well within and across engineering teams.
+Strong problem-solver with solid production debugging skills. You thrive in a fast-paced environment and see
+yourself as a partner with the business.
+Compensation: The typical starting salary for this role in the US is $141,000 to $208,000 USD; in US Premium
+Markets $157,000 to $230,000 USD. Perks include a globally distributed remote-friendly environment, equity,
+flexible time off, and a home office stipend.

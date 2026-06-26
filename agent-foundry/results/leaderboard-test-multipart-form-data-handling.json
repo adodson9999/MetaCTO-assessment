@@ -1,0 +1,38 @@
+{
+  "metric_name": "multipart_handling_test_fidelity",
+  "direction": "higher_is_better",
+  "agents": {
+    "api-tester-test-multipart-form-data-handling": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "claude_sdk": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "crewai": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "langgraph": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    }
+  },
+  "runs": [
+    {
+      "run_id": "20260626T002728-34f4f6",
+      "ts": "2026-06-26T00:27:45.645831+00:00",
+      "values": {
+        "api-tester-test-multipart-form-data-handling": 0.0,
+        "claude_sdk": 0.0,
+        "crewai": 0.0,
+        "langgraph": 0.0
+      }
+    }
+  ]
+}

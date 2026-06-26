@@ -1,0 +1,10 @@
+[
+  {"index": 1, "tc_id": "tc-pg-001", "agent": "api-tester-test-pagination-behavior", "involves_http_call": true, "step_text": "GET /products?limit=10, Asserts response code equals 200."},
+  {"index": 2, "tc_id": "tc-pg-002", "agent": "api-tester-test-pagination-behavior", "involves_http_call": true, "step_text": "GET /products?skip=10 → assert exactly 200."},
+  {"index": 3, "tc_id": "tc-rl-001", "agent": "api-tester-test-rate-limit-enforcement", "involves_http_call": true, "step_text": "GET /rate with Authorization, Asserts is exactly 429."},
+  {"index": 4, "tc_id": "tc-rl-002", "agent": "api-tester-test-rate-limit-enforcement", "involves_http_call": true, "step_text": "POST /rate with a valid body and Authorization, Asserts exactly 201."},
+  {"index": 5, "tc_id": "tc-idem-001", "agent": "api-tester-test-idempotency-of-endpoints", "involves_http_call": true, "step_text": "PUT /carts/1 with Idempotency-Key, with body an update, Asserts response code is exactly 200."},
+  {"index": 6, "tc_id": "tc-idem-002", "agent": "api-tester-test-idempotency-of-endpoints", "involves_http_call": true, "step_text": "DELETE /carts/1 with Idempotency-Key, Asserts exactly 204."},
+  {"index": 7, "tc_id": "tc-pg-x01", "agent": "api-tester-test-pagination-behavior", "involves_http_call": false, "step_text": "Compute the expected total page count locally from the seed data."},
+  {"index": 8, "tc_id": "tc-pg-x02", "agent": "api-tester-test-pagination-behavior", "involves_http_call": false, "step_text": "Render the pagination summary table."}
+]

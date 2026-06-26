@@ -1,0 +1,405 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON (authored for the status-code task)",
+    "version": "1.0.0",
+    "description": "Per-endpoint status-code contract authored from DummyJSON routes/controllers. Agents parse THIS spec; ground truth is the live API's observed code per documented (endpoint, code) case."
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "auth_login",
+        "responses": {
+          "200": {
+            "description": "documented 200"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "password": {
+                    "type": "string",
+                    "maxLength": 60
+                  },
+                  "expiresInMins": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "username": "emilys",
+                "password": "emilyspass"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "auth_me",
+        "responses": {
+          "200": {
+            "description": "documented 200"
+          },
+          "401": {
+            "description": "documented 401"
+          },
+          "500": {
+            "description": "documented 500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "products_get",
+        "responses": {
+          "200": {
+            "description": "documented 200"
+          },
+          "404": {
+            "description": "documented 404"
+          }
+        }
+      }
+    },
+    "/products/add": {
+      "post": {
+        "operationId": "products_add",
+        "responses": {
+          "201": {
+            "description": "documented 201"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Forge Widget",
+                "price": 9.99,
+                "stock": 5
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "operationId": "posts_get",
+        "responses": {
+          "200": {
+            "description": "documented 200"
+          },
+          "404": {
+            "description": "documented 404"
+          }
+        }
+      }
+    },
+    "/posts/add": {
+      "post": {
+        "operationId": "posts_add",
+        "responses": {
+          "201": {
+            "description": "documented 201"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "required": [
+                  "title",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "A Forge Post",
+                "userId": 1,
+                "body": "hello"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos/add": {
+      "post": {
+        "operationId": "todos_add",
+        "responses": {
+          "201": {
+            "description": "documented 201"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "todo": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "todo",
+                  "completed",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "todo": "Ship the foundry",
+                "completed": false,
+                "userId": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "users_get",
+        "responses": {
+          "200": {
+            "description": "documented 200"
+          },
+          "404": {
+            "description": "documented 404"
+          }
+        }
+      }
+    },
+    "/comments/add": {
+      "post": {
+        "operationId": "comments_add",
+        "responses": {
+          "201": {
+            "description": "documented 201"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "postId": {
+                    "type": "integer"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "body",
+                  "postId",
+                  "userId"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "body": "Nice post",
+                "postId": 1,
+                "userId": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/add": {
+      "post": {
+        "operationId": "carts_add",
+        "responses": {
+          "201": {
+            "description": "documented 201"
+          },
+          "400": {
+            "description": "documented 400"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "products": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "userId",
+                  "products"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "userId": 1,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 2
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/http/403": {
+      "get": {
+        "operationId": "http_403",
+        "responses": {
+          "403": {
+            "description": "documented 403"
+          }
+        }
+      }
+    },
+    "/http/409": {
+      "get": {
+        "operationId": "http_409",
+        "responses": {
+          "409": {
+            "description": "documented 409"
+          }
+        }
+      }
+    },
+    "/http/422": {
+      "get": {
+        "operationId": "http_422",
+        "responses": {
+          "422": {
+            "description": "documented 422"
+          }
+        }
+      }
+    },
+    "/http/429": {
+      "get": {
+        "operationId": "http_429",
+        "responses": {
+          "429": {
+            "description": "documented 429"
+          }
+        }
+      }
+    },
+    "/http/500": {
+      "get": {
+        "operationId": "http_500",
+        "responses": {
+          "500": {
+            "description": "documented 500"
+          }
+        }
+      }
+    }
+  }
+}

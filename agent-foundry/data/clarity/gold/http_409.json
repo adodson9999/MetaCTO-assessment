@@ -1,0 +1,33 @@
+{
+  "slug": "http_409",
+  "method": "GET",
+  "path": "/http/409",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    409
+  ],
+  "cases": [
+    {
+      "documented_code": 409,
+      "trigger": "passthrough",
+      "request": {
+        "code": 409,
+        "method": "GET",
+        "path": "/http/409",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 409,
+      "body": "{\"status\":409,\"title\":\"Conflict\",\"type\":\"about:blank\",\"detail\":\"Conflict\",\"message\":\"Conflict\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

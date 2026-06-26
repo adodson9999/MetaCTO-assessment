@@ -1,0 +1,13 @@
+{
+  "agent": "langgraph",
+  "run_id": "cn-20260625T230851",
+  "metric_name": "content_type_negotiation_test_fidelity",
+  "metric_value": 48.53,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/cn-20260625T230851/langgraph.cases.json",
+  "ts": "2026-06-25T23:09:41.091875+00:00",
+  "content_type_negotiation_accuracy_pct": 19.12,
+  "scenarios_total": 136,
+  "fidelity_matches": 66,
+  "fidelity_denominator": 136,
+  "coverage_scenarios": 136
+}

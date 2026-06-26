@@ -1,0 +1,120 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "documented_schemes": [
+      "bearerJWT"
+    ],
+    "protected_endpoint": {
+      "method": "GET",
+      "path": "/auth/me"
+    },
+    "executed_cases": 5,
+    "task_rule_correct_code": 3,
+    "auth_flow_pass_rate_pct": 60.0,
+    "false_acceptance_count": 1,
+    "false_rejection_count": 0,
+    "not_applicable": [
+      {
+        "item": "apiKey",
+        "kind": "scheme",
+        "reason": "no API-key security scheme is documented in DummyJSON",
+        "status": "needs_to_be_built_and_tested"
+      },
+      {
+        "item": "basic",
+        "kind": "scheme",
+        "reason": "no HTTP Basic security scheme is documented in DummyJSON",
+        "status": "needs_to_be_built_and_tested"
+      },
+      {
+        "item": "oauth2",
+        "kind": "scheme",
+        "reason": "no OAuth2 security scheme is documented in DummyJSON",
+        "status": "needs_to_be_built_and_tested"
+      },
+      {
+        "item": "apikey_wrong_location",
+        "kind": "subtest",
+        "reason": "the wrong-location sub-test applies only to an API-key scheme, which DummyJSON does not document",
+        "status": "needs_to_be_built_and_tested"
+      },
+      {
+        "item": "dedicated_revoke_endpoint",
+        "kind": "endpoint",
+        "reason": "DummyJSON exposes no POST /auth/revoke; the revoked sub-test uses POST /auth/logout as the documented equivalent",
+        "status": "needs_to_be_built_and_tested"
+      }
+    ],
+    "note": "Gold actual_class = live DummyJSON behavior. Bearer JWT is stateless with no server-side revocation and the error map omits 'invalid signature', so the empirical pass rate is below 100% BY DESIGN: revoked reuses a still-valid token (200 => critical False Acceptance) and a truncated token trips an unmapped 500 instead of 401."
+  },
+  "cases": [
+    {
+      "scheme": "bearerJWT",
+      "label": "valid",
+      "recipe": {
+        "kind": "valid_token"
+      },
+      "construction_note": "valid token from /auth/login",
+      "task_expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "message": "",
+      "task_rule_pass": true
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "missing",
+      "recipe": {
+        "kind": "no_auth"
+      },
+      "construction_note": "no Authorization header, no cookie",
+      "task_expected_class": "401",
+      "actual_code": 401,
+      "actual_class": "401",
+      "message": "Access Token is required",
+      "task_rule_pass": true
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "malformed",
+      "recipe": {
+        "kind": "truncate_token",
+        "drop_chars": 8
+      },
+      "construction_note": "valid token minus last 8 chars",
+      "task_expected_class": "401",
+      "actual_code": 500,
+      "actual_class": "other_500",
+      "message": "invalid signature",
+      "task_rule_pass": false
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "expired",
+      "recipe": {
+        "kind": "expired_token",
+        "exp_delta_sec": -3600
+      },
+      "construction_note": "re-signed real payload, exp = now -3600s",
+      "task_expected_class": "401",
+      "actual_code": 401,
+      "actual_class": "401",
+      "message": "Token Expired!",
+      "task_rule_pass": true
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "revoked",
+      "recipe": {
+        "kind": "revoked_token",
+        "revoke_via": "POST /auth/logout"
+      },
+      "construction_note": "same token reused after POST /auth/logout",
+      "task_expected_class": "401",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "message": "",
+      "task_rule_pass": false
+    }
+  ]
+}

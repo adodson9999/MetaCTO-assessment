@@ -1,0 +1,90 @@
+{
+  "slug": "users_add",
+  "method": "POST",
+  "path": "/users/add",
+  "request_body": {
+    "firstName": "Forge",
+    "lastName": "Tester",
+    "age": 30,
+    "email": "f@example.com"
+  },
+  "actual_code": 201,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 209,
+    "firstName": "Forge",
+    "lastName": "Tester",
+    "maidenName": "",
+    "age": 30,
+    "gender": "",
+    "email": "f@example.com",
+    "phone": "",
+    "username": "",
+    "password": "",
+    "birthDate": "",
+    "image": "",
+    "bloodGroup": "",
+    "height": null,
+    "weight": null,
+    "eyeColor": "",
+    "hair": {
+      "color": "",
+      "type": ""
+    },
+    "ip": "",
+    "address": {
+      "address": "",
+      "city": "",
+      "state": "",
+      "stateCode": "",
+      "postalCode": "",
+      "coordinates": {
+        "lat": null,
+        "lng": null
+      },
+      "country": ""
+    },
+    "macAddress": "",
+    "university": "",
+    "bank": {
+      "cardExpire": "",
+      "cardNumber": "",
+      "cardType": "",
+      "currency": "",
+      "iban": ""
+    },
+    "company": {
+      "department": "",
+      "name": "",
+      "title": "",
+      "address": {
+        "address": "",
+        "city": "",
+        "state": "",
+        "stateCode": "",
+        "postalCode": "",
+        "coordinates": {
+          "lat": null,
+          "lng": null
+        },
+        "country": ""
+      }
+    },
+    "ein": "",
+    "ssn": "",
+    "userAgent": "",
+    "crypto": {
+      "coin": "",
+      "wallet": "",
+      "network": ""
+    },
+    "role": "user"
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

@@ -1,0 +1,86 @@
+- [2026-06-25T20:04:01.311145+00:00] run=auth-run-1 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-25T20:08:20.189550+00:00] run=20260625T200441-f38507 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-25T20:13:53.341121+00:00] run=20260625T195452-0c76f3 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
+- [2026-06-25T20:17:25.621579+00:00] run=evolve-auth-crewai-base auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-25T20:20:47.930919+00:00] run=evolve-auth-crewai-cand auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-25T20:34:11.772412+00:00] run=evolve-status-crewai-base status-code run: accuracy=0.0% correct=0/5 covered=5 over 3 operations
+- [2026-06-25T20:38:45.582784+00:00] run=evolve-status-crewai-cand status-code run: accuracy=100.0% correct=5/5 covered=5 over 3 operations
+- [2026-06-25T20:50:32.786401+00:00] run=20260625T203537-645a9e schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
+- [2026-06-25T21:00:34.134234+00:00] run=pagination-run-2 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-06-25T22:16:11.363858+00:00] run=qp-run-1 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-06-25T22:22:52.524008+00:00] run=20260625T222233-67d967 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-06-25T22:29:03.918828+00:00] run=20260625T222745-fa6150 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-06-25T22:35:49.173595+00:00] run=qp-run-2 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-06-25T22:37:08.489468+00:00] run=evolve-idem-crewai-base idempotency-test run: compliance_rate=0.0% (0/4 endpoint cases) over 2 collections (18 scenarios)
+- [2026-06-25T22:37:20.639141+00:00] run=evolve-idem-crewai-cand idempotency-test run: compliance_rate=50.0% (2/4 endpoint cases) over 2 collections (18 scenarios)
+- [2026-06-25T22:37:31.944992+00:00] run=smoke-crewai null-empty test run: accuracy=11.11% over 1 endpoints (9 cases); required-rejection=0.0%
+- [2026-06-25T22:38:43.656630+00:00] run=20260625T223813-4b8a83 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-25T22:42:34.406282+00:00] run=cn-20260625T223956 content-type-negotiation run: accuracy_rate=27.94% over 36 endpoints (136 scenarios)
+- [2026-06-25T22:44:35.687556+00:00] run=20260625T224227-6ab0fb rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-06-25T22:45:02.209348+00:00] run=null-run-1-ae1077 null-empty test run: accuracy=36.29% over 22 endpoints (463 cases); required-rejection=35.23%
+- [2026-06-25T22:58:54.580577+00:00] run=20260625T225832-c586d6 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-25T23:04:05.987781+00:00] run=20260625T230313-edb61d track-defect-density run: report_accuracy=70.0% over 6 sprints (60 fields)
+- [2026-06-25T23:06:57.201165+00:00] run=20260625T230432-4f1628 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-06-25T23:09:39.873517+00:00] run=crud-run-1 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-06-25T23:09:51.325603+00:00] run=cn-20260625T230851 content-type-negotiation run: accuracy_rate=17.65% over 36 endpoints (136 scenarios)
+- [2026-06-25T23:11:05.168916+00:00] run=evolve-null-crewai-base null-empty test run: accuracy=20.34% over 2 endpoints (59 cases); required-rejection=0.0%
+- [2026-06-25T23:11:27.657345+00:00] run=qp-run-3 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-06-25T23:12:09.766430+00:00] run=evolve-null-crewai-cand null-empty test run: accuracy=20.34% over 2 endpoints (59 cases); required-rejection=0.0%
+- [2026-06-25T23:14:16.592695+00:00] run=smoke-crew timeout-handling run: enforcement_rate=100.0% over 1 services (2/2 endpoints enforced)
+- [2026-06-25T23:15:17.287332+00:00] run=20260625T231501-713e50 search-filter run: accuracy=100.0% over 2 collections (28 scenarios)
+- [2026-06-25T23:56:40.330284+00:00] run=hp-run-2 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-25T23:56:57.649691+00:00] run=20260625T235636-88b1ee oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-06-25T23:57:21.913920+00:00] run=timeout-run-1 timeout-handling run: enforcement_rate=83.33% over 3 services (5/6 endpoints enforced)
+- [2026-06-25T23:59:58.479811+00:00] run=20260625T235945-0d98cc search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-06-26T00:06:13.654401+00:00] run=20260626T000544-3a508a ip-allowlist-test run: enforcement_rate=93.33% bypass_detected=True over 6 endpoints (30 cases)
+- [2026-06-26T00:09:04.220308+00:00] run=20260626T000833-218de4 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-06-26T00:09:40.084714+00:00] run=crud-run-2 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-06-26T00:09:47.047874+00:00] run=20260626T000905-bcc8fa run-regression-suite run: fidelity=89.29% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-06-26T00:09:47.119497+00:00] run=cid-run-1 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-06-26T00:10:39.026909+00:00] run=20260626T001018-074638 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-06-26T00:12:55.359798+00:00] run=20260626T001226-c33a23 bulk-operation-endpoints run: accuracy=100.0% (cases_passed=3/3, mixed_db_delta=8)
+- [2026-06-26T00:13:34.814670+00:00] run=tls-run-1 ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-06-26T00:15:39.123912+00:00] run=20260626T001510-082eb3 ip-allowlist-test run: enforcement_rate=93.33% bypass_detected=True over 6 endpoints (30 cases)
+- [2026-06-26T00:19:40.733586+00:00] run=evolve-crud-crewai-base crud-integrity run: rate=0.0% passing=0/2 covered_steps=12 over 2 resources
+- [2026-06-26T00:19:55.624268+00:00] run=evolve-cache-crewai-base caching-headers-test run: compliance_rate=0.0% (0/2 cacheable endpoints) over 2 collections (22 scenarios)
+- [2026-06-26T00:19:58.528367+00:00] run=evolve-crud-crewai-cand crud-integrity run: rate=0.0% passing=0/2 covered_steps=12 over 2 resources
+- [2026-06-26T00:20:09.094339+00:00] run=evolve-cache-crewai-cand caching-headers-test run: compliance_rate=0.0% (0/2 cacheable endpoints) over 2 collections (22 scenarios)
+- [2026-06-26T00:20:25.769313+00:00] run=tls-run-2 ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-06-26T00:21:31.931097+00:00] run=cn-20260626T001842 content-type-negotiation run: accuracy_rate=36.76% over 36 endpoints (136 scenarios)
+- [2026-06-26T00:22:40.631602+00:00] run=20260626T002140-95e083 api-gateway-routing run: route_forwarding_accuracy=66.67% over 6 routes (4 forwarded correctly)
+- [2026-06-26T00:23:26.928747+00:00] run=cid-run-2 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-06-26T00:23:47.001582+00:00] run=20260626T002325-917a75 search-filter run: accuracy=100.0% over 2 collections (28 scenarios)
+- [2026-06-26T00:27:45.054718+00:00] run=20260626T002728-34f4f6 multipart-form-data run: accuracy=0.0% over 2 endpoints (18 scenarios)
+- [2026-06-26T00:28:40.955825+00:00] run=20260626T002824-d47a76 run-regression-suite run: fidelity=7.14% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-06-26T00:30:41.750146+00:00] run=20260626T003021-2cae96 rate-limit-test run: correctness_rate=0.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-06-26T00:31:13.117568+00:00] run= audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-06-26T00:32:15.301314+00:00] run=reference-deterministic run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-06-26T00:33:40.232639+00:00] run=concurrency-run-1 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
+- [2026-06-26T00:33:50.696308+00:00] run=oracle-verify audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-06-26T00:34:32.266535+00:00] run=20260626T003415-4a77df event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-06-26T00:34:36.871284+00:00] run=cn-sdk2 content-type-negotiation run: accuracy_rate=0.0% over 2 endpoints (8 scenarios)
+- [2026-06-26T00:41:32.966728+00:00] run=20260626T004112-d69dcb api-gateway-routing run: route_forwarding_accuracy=0.0% over 6 routes (0 forwarded correctly)
+- [2026-06-26T00:49:40.784135+00:00] run=cn-clismoke content-type-negotiation run: accuracy_rate=0.0% over 2 endpoints (8 scenarios)
+- [2026-06-26T00:50:24.965274+00:00] run=harness-check3 rate-limit-test run: correctness_rate=25.0% enforced=False over 1 endpoints (8 scenarios)
+- [2026-06-26T00:53:55.643713+00:00] run=concurrency-run-2 concurrent-request-handling run: success_rate=100.0% (read_ok=50/50, write_ok=50/50, db_delta=50)
+- [2026-06-26T01:02:24.996528+00:00] run=20260626T010209-fef790 file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-06-26T01:03:48.101925+00:00] run=evolve-up-crewai-base file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 1 endpoints (14 scenarios)
+- [2026-06-26T01:03:52.415286+00:00] run=evolve-up-crewai-cand file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 1 endpoints (14 scenarios)
+- [2026-06-26T01:04:05.515086+00:00] run=20260626T010225-35065f api-gateway-routing run: route_forwarding_accuracy=66.67% over 6 routes (4 forwarded correctly)
+- [2026-06-26T01:06:17.486062+00:00] run=cn-20260626T005746 content-type-negotiation run: accuracy_rate=23.53% over 36 endpoints (136 scenarios)
+- [2026-06-26T02:30:14.455888+00:00] run=oracle-nps-1 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-06-26T02:50:40.040336+00:00] run=20260626T025036-f1d31c nps run [current]: nps=22 validity=valid plan_accuracy=38.46% (10/26 scenarios)
+- [2026-06-26T02:54:02.222416+00:00] run=20260626T025359-80e41a nps run [current]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)
+- [2026-06-26T02:54:58.773410+00:00] run=evolve-nps-crewai-base nps run [q_prev]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)
+- [2026-06-26T02:55:05.614044+00:00] run=evolve-nps-crewai-cand nps run [q_prev]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)
+- [2026-06-26T03:01:41.966993+00:00] run=20260626T030138-381271 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-06-26T03:01:58.682650+00:00] run=enum-run-1-3531e1 enum-value-restriction test run: rate=0.0% over 4 endpoints (0 cases); invalid-rejection=None%
+- [2026-06-26T03:04:20.799900+00:00] run=gql-run-1 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-06-26T03:05:42.263210+00:00] run=longpoll-run-1 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-06-26T03:07:24.319307+00:00] run=20260626T030705-58a611 soft-delete-behavior run: correctness_rate=100.0% (correct_cases=5/5, scenarios_ok=13/13)
+- [2026-06-26T03:08:53.030618+00:00] run=evolve-sd-crewai-base soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/3, scenarios_ok=0/13)
+- [2026-06-26T03:09:04.954391+00:00] run=evolve-sd-crewai-cand soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/3, scenarios_ok=0/13)
+- [2026-06-26T03:17:23.418513+00:00] run=evolve-sd-crewai-base soft-delete-behavior run: correctness_rate=100.0% (correct_cases=3/3, scenarios_ok=13/13)
+- [2026-06-26T03:17:35.013025+00:00] run=evolve-sd-crewai-cand soft-delete-behavior run: correctness_rate=100.0% (correct_cases=3/3, scenarios_ok=13/13)
+- [2026-06-26T16:23:58.154298+00:00] run=blocked-35be6b create-postman-collection run: coverage_rate=0.0% (items=0/14, scenarios_ok=2/14, newman=True)
+- [2026-06-26T16:31:08.819442+00:00] run=verify-bug-5b784e bug-reporter run: fidelity=73.33% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)

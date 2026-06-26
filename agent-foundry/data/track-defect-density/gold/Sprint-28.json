@@ -1,0 +1,22 @@
+{
+  "sprint_name": "Sprint-28",
+  "inputs": {
+    "total_defects": 10,
+    "lines_changed_non_test": 2500,
+    "prev_density_1": 2.5,
+    "prev_density_2": 2.7,
+    "prev_density_3": 2.6
+  },
+  "record": {
+    "sprint_name": "Sprint-28",
+    "defect_density": 4.0,
+    "rolling_avg_3_sprint": 2.6,
+    "deviation_pct": 53.85,
+    "alert_flag": true,
+    "p1_count": 2,
+    "p2_count": 4,
+    "p3_count": 3,
+    "p4_count": 1,
+    "trend": "+60.0%"
+  }
+}

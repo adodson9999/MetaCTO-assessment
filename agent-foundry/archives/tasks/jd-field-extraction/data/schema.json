@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ATS Job Record",
+  "description": "Structured fields extracted from a single raw job description. The four agents each emit exactly this object; the judge scores it field-by-field against the gold record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title", "company", "location", "remote_or_onsite", "employment_type",
+    "seniority", "salary_min", "salary_max", "salary_currency",
+    "years_experience_min", "tech_stack", "must_haves", "nice_to_haves",
+    "visa_sponsorship", "apply_url"
+  ],
+  "properties": {
+    "title":            { "type": "string", "description": "The role title as stated." },
+    "company":          { "type": ["string", "null"], "description": "Hiring company; null if not stated." },
+    "location":         { "type": ["string", "null"], "description": "Stated location/region (e.g. 'United States'); null if not stated." },
+    "remote_or_onsite": { "enum": ["remote", "hybrid", "onsite", "unspecified"] },
+    "employment_type":  { "enum": ["full-time", "part-time", "contract", "internship", "unspecified"] },
+    "seniority":        { "enum": ["intern", "junior", "mid", "senior", "lead", "manager", "unspecified"] },
+    "salary_min":       { "type": ["number", "null"], "description": "Annualized USD lower bound; null if no pay stated." },
+    "salary_max":       { "type": ["number", "null"], "description": "Annualized USD upper bound; null if no pay stated." },
+    "salary_currency":  { "type": ["string", "null"], "description": "ISO-ish currency code, e.g. 'USD'; null if no pay stated." },
+    "years_experience_min": { "type": ["number", "null"], "description": "Minimum years of experience as an explicit number; null if not a hard number." },
+    "tech_stack":       { "type": "array", "items": { "type": "string" }, "description": "Concrete named tools/languages/frameworks/platforms." },
+    "must_haves":       { "type": "array", "items": { "type": "string" }, "description": "Required qualifications, short phrases." },
+    "nice_to_haves":    { "type": "array", "items": { "type": "string" }, "description": "Preferred/bonus qualifications; [] if none stated." },
+    "visa_sponsorship": { "enum": ["offered", "not_offered", "unspecified"] },
+    "apply_url":        { "type": ["string", "null"], "description": "Application URL if present IN THE JD TEXT; null otherwise (do not invent)." }
+  }
+}

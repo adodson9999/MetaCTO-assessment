@@ -1,0 +1,81 @@
+{
+  "agent": "langgraph",
+  "run_id": "evolve-conc-langgraph-base",
+  "read_target": "http://localhost:8899",
+  "write_target": "http://127.0.0.1:8910",
+  "concurrent_request_success_rate_pct": 0.0,
+  "read_correct": 0,
+  "write_correct": 0,
+  "requests_total": 0,
+  "db_count_delta": null,
+  "scenarios_total": 10,
+  "scenarios_api_correct": 0,
+  "emitted_plan": {},
+  "request_log": {
+    "read": {},
+    "write": {}
+  },
+  "scenarios": [
+    {
+      "scenario": "read_all_status_200",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "read_all_bodies_identical",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "read_zero_500",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "read_success_count",
+      "ideal": "50",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_all_status_201",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_count_delta",
+      "ideal": "50",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_zero_duplicates",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_zero_missing",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_zero_500",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "write_success_count",
+      "ideal": "50",
+      "observed_token": "missing",
+      "api_correct": false
+    }
+  ],
+  "error": "ConnectError: [Errno 61] Connection refused"
+}

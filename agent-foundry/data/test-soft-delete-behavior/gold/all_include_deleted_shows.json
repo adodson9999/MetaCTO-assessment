@@ -1,0 +1,6 @@
+{
+  "scenario": "all_include_deleted_shows",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "auth_me",
+  "method": "GET",
+  "path": "/auth/me",
+  "auth_required": true,
+  "is_hook": false,
+  "documented_codes": [
+    200,
+    401,
+    500
+  ],
+  "cases": [
+    {
+      "documented_code": 200,
+      "request": {
+        "code": 200,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "valid",
+        "body": null
+      },
+      "actual_code": 200,
+      "passed": true
+    },
+    {
+      "documented_code": 401,
+      "request": {
+        "code": 401,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 401,
+      "passed": true
+    },
+    {
+      "documented_code": 500,
+      "request": {
+        "code": 500,
+        "method": "GET",
+        "path": "/auth/me",
+        "auth": "malformed",
+        "body": null
+      },
+      "actual_code": 500,
+      "passed": true
+    }
+  ]
+}

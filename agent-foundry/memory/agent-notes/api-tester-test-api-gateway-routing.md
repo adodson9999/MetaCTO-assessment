@@ -1,0 +1,5 @@
+- [2026-06-26T00:23:30.497147+00:00] run=20260626T002140-95e083 api-gateway-routing run: route_forwarding_accuracy=66.67% over 6 routes (4 forwarded correctly)
+- [2026-06-26T00:41:52.198630+00:00] run=20260626T004112-d69dcb api-gateway-routing run: route_forwarding_accuracy=0.0% over 6 routes (0 forwarded correctly)
+- [2026-06-26T01:04:56.060686+00:00] run=20260626T010225-35065f api-gateway-routing run: route_forwarding_accuracy=66.67% over 6 routes (4 forwarded correctly)
+- [2026-06-26T01:08:20.710757+00:00] run=evolve-rt-api-tester-test-api-gateway-routing-base api-gateway-routing run: route_forwarding_accuracy=100.0% over 2 routes (2 forwarded correctly)
+- [2026-06-26T01:08:38.154990+00:00] run=evolve-rt-api-tester-test-api-gateway-routing-cand api-gateway-routing run: route_forwarding_accuracy=100.0% over 2 routes (2 forwarded correctly)

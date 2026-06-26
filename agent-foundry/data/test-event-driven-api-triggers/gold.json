@@ -1,0 +1,520 @@
+{
+  "summary": {
+    "target_local_substrate": "http://127.0.0.1:8930",
+    "topics": 4,
+    "scenarios_per_topic": 8,
+    "total_scenarios": 32,
+    "service_correct_scenarios": 32,
+    "gold_contract_correctness_rate_pct": 100.0,
+    "event_processing_success_rate_pct": 100.0,
+    "dead_letter_queue_delivery_rate_pct": 100.0,
+    "dummyjson_finding": {
+      "event_processing_success_rate_pct": 0,
+      "dead_letter_queue_delivery_rate_pct": 0,
+      "note": "DummyJSON consumes no message topics, ships no consumer, no dead-letter queue, and no consumer-liveness signal (only AWS usage is S3 object storage). An event published nowhere changes nothing, so against DummyJSON-as-the-system both rates are 0%. DummyJSON is never modified. The local air-gapped substrate implements the correct consumer so the documented contract is exercisable and the four frameworks are ranked on fidelity-to-this-gold."
+    },
+    "note": "Ground truth = live local-substrate observed token per (topic, scenario). The substrate implements the correct event-driven contract, so a correct test plan yields 100% on both headline rates; gaps in an agent's plan show up as lower fidelity-to-gold."
+  },
+  "topics": [
+    {
+      "topic": "order.payment.completed",
+      "resource": "orders",
+      "resource_id": "order-1001",
+      "state_field": "status",
+      "pre_state": "pending",
+      "expected_state": "paid",
+      "reference_plan": {
+        "topic": "order.payment.completed",
+        "resource": "orders",
+        "resource_id": "order-1001",
+        "state_field": "status",
+        "expected_state": "paid",
+        "event_type": "order.payment.completed",
+        "required_fields": [
+          "event_id",
+          "event_type",
+          "resource_id",
+          "occurred_at",
+          "amount"
+        ],
+        "wellformed_event": {
+          "event_id": "evt-pay-0001",
+          "event_type": "order.payment.completed",
+          "resource_id": "order-1001",
+          "occurred_at": "2026-06-25T12:00:00Z",
+          "amount": 49.99
+        },
+        "malformed_event": {
+          "event_id": "evt-pay-0001",
+          "event_type": "order.payment.completed",
+          "resource_id": "order-1001",
+          "occurred_at": "2026-06-25T12:00:00Z"
+        },
+        "poll": {
+          "interval_ms": 500,
+          "timeout_seconds": 5
+        },
+        "assertions": {
+          "health_after_seconds": 60,
+          "dlq_within_seconds": 30,
+          "error_log_within_seconds": 30,
+          "expect_state_unchanged": true
+        }
+      },
+      "request_log": [
+        {
+          "phase": "wellformed",
+          "message_id": "evt-pay-0001",
+          "state_after": "paid",
+          "elapsed_s": 0.512,
+          "consumer_errors": 0
+        },
+        {
+          "phase": "malformed",
+          "message_id": "evt-pay-0001",
+          "health_ok": true,
+          "error_logged": true,
+          "in_dlq": true,
+          "dlq_consumed": {
+            "topic": "order.payment.completed",
+            "message_id": "evt-pay-0001",
+            "offset": 2,
+            "payload": {
+              "event_id": "evt-pay-0001",
+              "event_type": "order.payment.completed",
+              "resource_id": "order-1001",
+              "occurred_at": "2026-06-25T12:00:00Z"
+            },
+            "reason": "ValueError: schema validation failed: missing required field(s) ['amount'] for topic 'order.payment.completed'"
+          },
+          "state_after": "pending"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "wellformed_state_changed",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_correct_value",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_within_5s",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_no_consumer_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_crash",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_error_logged",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_in_dlq",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_state_change",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        }
+      ]
+    },
+    {
+      "topic": "account.email.verified",
+      "resource": "accounts",
+      "resource_id": "acct-2002",
+      "state_field": "status",
+      "pre_state": "unverified",
+      "expected_state": "verified",
+      "reference_plan": {
+        "topic": "account.email.verified",
+        "resource": "accounts",
+        "resource_id": "acct-2002",
+        "state_field": "status",
+        "expected_state": "verified",
+        "event_type": "account.email.verified",
+        "required_fields": [
+          "event_id",
+          "event_type",
+          "resource_id",
+          "occurred_at",
+          "email"
+        ],
+        "wellformed_event": {
+          "event_id": "evt-acct-0002",
+          "event_type": "account.email.verified",
+          "resource_id": "acct-2002",
+          "occurred_at": "2026-06-25T12:01:00Z",
+          "email": "user@example.com"
+        },
+        "malformed_event": {
+          "event_id": "evt-acct-0002",
+          "event_type": "account.email.verified",
+          "resource_id": "acct-2002",
+          "occurred_at": "2026-06-25T12:01:00Z"
+        },
+        "poll": {
+          "interval_ms": 500,
+          "timeout_seconds": 5
+        },
+        "assertions": {
+          "health_after_seconds": 60,
+          "dlq_within_seconds": 30,
+          "error_log_within_seconds": 30,
+          "expect_state_unchanged": true
+        }
+      },
+      "request_log": [
+        {
+          "phase": "wellformed",
+          "message_id": "evt-acct-0002",
+          "state_after": "verified",
+          "elapsed_s": 0.505,
+          "consumer_errors": 0
+        },
+        {
+          "phase": "malformed",
+          "message_id": "evt-acct-0002",
+          "health_ok": true,
+          "error_logged": true,
+          "in_dlq": true,
+          "dlq_consumed": {
+            "topic": "account.email.verified",
+            "message_id": "evt-acct-0002",
+            "offset": 4,
+            "payload": {
+              "event_id": "evt-acct-0002",
+              "event_type": "account.email.verified",
+              "resource_id": "acct-2002",
+              "occurred_at": "2026-06-25T12:01:00Z"
+            },
+            "reason": "ValueError: schema validation failed: missing required field(s) ['email'] for topic 'account.email.verified'"
+          },
+          "state_after": "unverified"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "wellformed_state_changed",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_correct_value",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_within_5s",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_no_consumer_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_crash",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_error_logged",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_in_dlq",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_state_change",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        }
+      ]
+    },
+    {
+      "topic": "inventory.item.depleted",
+      "resource": "inventory",
+      "resource_id": "sku-3003",
+      "state_field": "stock_state",
+      "pre_state": "in_stock",
+      "expected_state": "out_of_stock",
+      "reference_plan": {
+        "topic": "inventory.item.depleted",
+        "resource": "inventory",
+        "resource_id": "sku-3003",
+        "state_field": "stock_state",
+        "expected_state": "out_of_stock",
+        "event_type": "inventory.item.depleted",
+        "required_fields": [
+          "event_id",
+          "event_type",
+          "resource_id",
+          "occurred_at",
+          "quantity"
+        ],
+        "wellformed_event": {
+          "event_id": "evt-inv-0003",
+          "event_type": "inventory.item.depleted",
+          "resource_id": "sku-3003",
+          "occurred_at": "2026-06-25T12:02:00Z",
+          "quantity": 0
+        },
+        "malformed_event": {
+          "event_id": "evt-inv-0003",
+          "event_type": "inventory.item.depleted",
+          "resource_id": "sku-3003",
+          "occurred_at": "2026-06-25T12:02:00Z"
+        },
+        "poll": {
+          "interval_ms": 500,
+          "timeout_seconds": 5
+        },
+        "assertions": {
+          "health_after_seconds": 60,
+          "dlq_within_seconds": 30,
+          "error_log_within_seconds": 30,
+          "expect_state_unchanged": true
+        }
+      },
+      "request_log": [
+        {
+          "phase": "wellformed",
+          "message_id": "evt-inv-0003",
+          "state_after": "out_of_stock",
+          "elapsed_s": 0.512,
+          "consumer_errors": 0
+        },
+        {
+          "phase": "malformed",
+          "message_id": "evt-inv-0003",
+          "health_ok": true,
+          "error_logged": true,
+          "in_dlq": true,
+          "dlq_consumed": {
+            "topic": "inventory.item.depleted",
+            "message_id": "evt-inv-0003",
+            "offset": 6,
+            "payload": {
+              "event_id": "evt-inv-0003",
+              "event_type": "inventory.item.depleted",
+              "resource_id": "sku-3003",
+              "occurred_at": "2026-06-25T12:02:00Z"
+            },
+            "reason": "ValueError: schema validation failed: missing required field(s) ['quantity'] for topic 'inventory.item.depleted'"
+          },
+          "state_after": "in_stock"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "wellformed_state_changed",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_correct_value",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_within_5s",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_no_consumer_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_crash",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_error_logged",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_in_dlq",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_state_change",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        }
+      ]
+    },
+    {
+      "topic": "ticket.issue.resolved",
+      "resource": "tickets",
+      "resource_id": "tkt-4004",
+      "state_field": "status",
+      "pre_state": "open",
+      "expected_state": "resolved",
+      "reference_plan": {
+        "topic": "ticket.issue.resolved",
+        "resource": "tickets",
+        "resource_id": "tkt-4004",
+        "state_field": "status",
+        "expected_state": "resolved",
+        "event_type": "ticket.issue.resolved",
+        "required_fields": [
+          "event_id",
+          "event_type",
+          "resource_id",
+          "occurred_at",
+          "resolution"
+        ],
+        "wellformed_event": {
+          "event_id": "evt-tkt-0004",
+          "event_type": "ticket.issue.resolved",
+          "resource_id": "tkt-4004",
+          "occurred_at": "2026-06-25T12:03:00Z",
+          "resolution": "fixed"
+        },
+        "malformed_event": {
+          "event_id": "evt-tkt-0004",
+          "event_type": "ticket.issue.resolved",
+          "resource_id": "tkt-4004",
+          "occurred_at": "2026-06-25T12:03:00Z"
+        },
+        "poll": {
+          "interval_ms": 500,
+          "timeout_seconds": 5
+        },
+        "assertions": {
+          "health_after_seconds": 60,
+          "dlq_within_seconds": 30,
+          "error_log_within_seconds": 30,
+          "expect_state_unchanged": true
+        }
+      },
+      "request_log": [
+        {
+          "phase": "wellformed",
+          "message_id": "evt-tkt-0004",
+          "state_after": "resolved",
+          "elapsed_s": 0.509,
+          "consumer_errors": 0
+        },
+        {
+          "phase": "malformed",
+          "message_id": "evt-tkt-0004",
+          "health_ok": true,
+          "error_logged": true,
+          "in_dlq": true,
+          "dlq_consumed": {
+            "topic": "ticket.issue.resolved",
+            "message_id": "evt-tkt-0004",
+            "offset": 8,
+            "payload": {
+              "event_id": "evt-tkt-0004",
+              "event_type": "ticket.issue.resolved",
+              "resource_id": "tkt-4004",
+              "occurred_at": "2026-06-25T12:03:00Z"
+            },
+            "reason": "ValueError: schema validation failed: missing required field(s) ['resolution'] for topic 'ticket.issue.resolved'"
+          },
+          "state_after": "open"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "wellformed_state_changed",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_correct_value",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_within_5s",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "wellformed_no_consumer_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_crash",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_error_logged",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_in_dlq",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        },
+        {
+          "scenario": "malformed_no_state_change",
+          "ideal": "true",
+          "observed_token": "true",
+          "service_correct": true
+        }
+      ]
+    }
+  ]
+}

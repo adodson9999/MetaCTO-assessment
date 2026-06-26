@@ -1,0 +1,105 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "20260626T001226-c33a23",
+  "target": "http://127.0.0.1:8924",
+  "endpoint": "/bulk/products",
+  "bulk_operation_accuracy_pct": 100.0,
+  "cases_passed": 3,
+  "cases_total": 3,
+  "per_case": {
+    "mixed": true,
+    "all_invalid": true,
+    "oversize": true
+  },
+  "mixed_db_delta": 8,
+  "scenarios_total": 11,
+  "scenarios_api_correct": 11,
+  "emitted_plan": {},
+  "request_log": {
+    "mixed": {
+      "items_sent": 10,
+      "batch_status": 207,
+      "db_before": 0,
+      "db_after": 8
+    },
+    "all_invalid": {
+      "items_sent": 10,
+      "batch_status": 207,
+      "db_delta": 0
+    },
+    "oversize": {
+      "items_sent": 101,
+      "batch_status": 413,
+      "db_delta": 0
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "mixed_batch_status_207",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_results_len_10",
+      "ideal": "10",
+      "observed_token": "10",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_valid_2xx_count",
+      "ideal": "8",
+      "observed_token": "8",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_invalid_400_count",
+      "ideal": "2",
+      "observed_token": "2",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_missing_field_named",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_wrongtype_field_named",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "mixed_db_delta_8",
+      "ideal": "8",
+      "observed_token": "8",
+      "api_correct": true
+    },
+    {
+      "scenario": "allinvalid_status_207",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "allinvalid_all_400",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "allinvalid_db_delta_0",
+      "ideal": "0",
+      "observed_token": "0",
+      "api_correct": true
+    },
+    {
+      "scenario": "oversize_rejected",
+      "ideal": "413",
+      "observed_token": "413",
+      "api_correct": true
+    }
+  ],
+  "error": null
+}

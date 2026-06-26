@@ -1,0 +1,502 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "operations": 14,
+    "documented_error_cases": 15,
+    "passed_cases": 0,
+    "error_clarity_pass_rate_pct": 0.0,
+    "message_field_present": 15,
+    "code_field_present": 0,
+    "responses_with_internal_leaks": 0,
+    "p1_security_defects": 0,
+    "note": "Ground truth = live DummyJSON error body + clarity verdict per documented (endpoint, error-code) case. A case PASSES only with a usable 'message' AND a usable 'code'/'error_code' AND zero internal-detail leaks. DummyJSON error bodies carry a clear 'message' and leak nothing, but expose NO machine-readable 'code'/'error_code' field, so the strict pass rate is driven down by the missing-code-field contract gap \u2014 a real QA finding. P1 security defects (stack traces / file paths / exception classes in a body) = 0."
+  },
+  "endpoints": [
+    {
+      "slug": "auth_login",
+      "method": "POST",
+      "path": "/auth/login",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 400,
+          "trigger": "missing_field",
+          "request": {
+            "code": 400,
+            "method": "POST",
+            "path": "/auth/login",
+            "auth": "none",
+            "body": {
+              "password": "emilyspass"
+            }
+          },
+          "actual_code": 400,
+          "body": "{\"message\":\"Username and password required\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "auth_required": true,
+      "is_hook": false,
+      "documented_codes": [
+        401,
+        500
+      ],
+      "cases": [
+        {
+          "documented_code": 401,
+          "trigger": "no_auth",
+          "request": {
+            "code": 401,
+            "method": "GET",
+            "path": "/auth/me",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 401,
+          "body": "{\"message\":\"Access Token is required\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        },
+        {
+          "documented_code": 500,
+          "trigger": "malformed_auth",
+          "request": {
+            "code": 500,
+            "method": "GET",
+            "path": "/auth/me",
+            "auth": "malformed",
+            "body": null
+          },
+          "actual_code": 500,
+          "body": "{\"message\":\"invalid token\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "products_get",
+      "method": "GET",
+      "path": "/products/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 404,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/products/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "body": "{\"message\":\"Product with id 'nonexistent-id-000000' not found\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "users_get",
+      "method": "GET",
+      "path": "/users/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 400,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 400,
+            "method": "GET",
+            "path": "/users/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 400,
+          "body": "{\"message\":\"Invalid user id 'nonexistent-id-000000'\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "posts_get",
+      "method": "GET",
+      "path": "/posts/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 400,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 400,
+            "method": "GET",
+            "path": "/posts/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 400,
+          "body": "{\"message\":\"Invalid post id 'nonexistent-id-000000'\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "comments_get",
+      "method": "GET",
+      "path": "/comments/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 404,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/comments/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "body": "{\"message\":\"Comment with id 'nonexistent-id-000000' not found\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "todos_get",
+      "method": "GET",
+      "path": "/todos/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 404,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/todos/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "body": "{\"message\":\"Todo with id 'nonexistent-id-000000' not found\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "carts_get",
+      "method": "GET",
+      "path": "/carts/{id}",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        404
+      ],
+      "cases": [
+        {
+          "documented_code": 404,
+          "trigger": "bad_path_id",
+          "request": {
+            "code": 404,
+            "method": "GET",
+            "path": "/carts/nonexistent-id-000000",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 404,
+          "body": "{\"message\":\"Cart with id 'nonexistent-id-000000' not found\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "products_list",
+      "method": "GET",
+      "path": "/products",
+      "auth_required": false,
+      "is_hook": false,
+      "documented_codes": [
+        400
+      ],
+      "cases": [
+        {
+          "documented_code": 400,
+          "trigger": "bad_query",
+          "request": {
+            "code": 400,
+            "method": "GET",
+            "path": "/products?skip=abc",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 400,
+          "body": "{\"message\":\"Invalid 'skip' - must be a number\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "http_403",
+      "method": "GET",
+      "path": "/http/403",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        403
+      ],
+      "cases": [
+        {
+          "documented_code": 403,
+          "trigger": "passthrough",
+          "request": {
+            "code": 403,
+            "method": "GET",
+            "path": "/http/403",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 403,
+          "body": "{\"status\":403,\"title\":\"Forbidden\",\"type\":\"about:blank\",\"detail\":\"Forbidden\",\"message\":\"Forbidden\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "http_409",
+      "method": "GET",
+      "path": "/http/409",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        409
+      ],
+      "cases": [
+        {
+          "documented_code": 409,
+          "trigger": "passthrough",
+          "request": {
+            "code": 409,
+            "method": "GET",
+            "path": "/http/409",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 409,
+          "body": "{\"status\":409,\"title\":\"Conflict\",\"type\":\"about:blank\",\"detail\":\"Conflict\",\"message\":\"Conflict\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "http_422",
+      "method": "GET",
+      "path": "/http/422",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        422
+      ],
+      "cases": [
+        {
+          "documented_code": 422,
+          "trigger": "passthrough",
+          "request": {
+            "code": 422,
+            "method": "GET",
+            "path": "/http/422",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 422,
+          "body": "{\"status\":422,\"title\":\"Unprocessable Entity\",\"type\":\"about:blank\",\"detail\":\"Unprocessable Entity\",\"message\":\"Unprocessable Entity\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "http_429",
+      "method": "GET",
+      "path": "/http/429",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        429
+      ],
+      "cases": [
+        {
+          "documented_code": 429,
+          "trigger": "passthrough",
+          "request": {
+            "code": 429,
+            "method": "GET",
+            "path": "/http/429",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 429,
+          "body": "{\"status\":429,\"title\":\"Too Many Requests\",\"type\":\"about:blank\",\"detail\":\"Too Many Requests\",\"message\":\"Too Many Requests\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    },
+    {
+      "slug": "http_500",
+      "method": "GET",
+      "path": "/http/500",
+      "auth_required": false,
+      "is_hook": true,
+      "documented_codes": [
+        500
+      ],
+      "cases": [
+        {
+          "documented_code": 500,
+          "trigger": "passthrough",
+          "request": {
+            "code": 500,
+            "method": "GET",
+            "path": "/http/500",
+            "auth": "none",
+            "body": null
+          },
+          "actual_code": 500,
+          "body": "{\"status\":500,\"title\":\"Internal Server Error\",\"type\":\"about:blank\",\"detail\":\"Internal Server Error\",\"message\":\"Internal Server Error\"}",
+          "verdict": {
+            "valid_json": true,
+            "message_present": true,
+            "code_present": false,
+            "sensitive_found": false,
+            "sensitive_matches": [],
+            "passed": false
+          }
+        }
+      ]
+    }
+  ]
+}

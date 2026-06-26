@@ -1,0 +1,3 @@
+- [2026-06-26T00:09:12.912666+00:00] run=20260626T000905-bcc8fa run-regression-suite run: fidelity=10.71% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-06-26T00:28:31.952899+00:00] run=20260626T002824-d47a76 run-regression-suite run: fidelity=7.14% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-06-26T00:32:22.776707+00:00] run=reference-deterministic run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200

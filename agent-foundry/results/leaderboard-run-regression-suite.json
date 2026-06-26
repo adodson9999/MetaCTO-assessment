@@ -1,0 +1,44 @@
+{
+  "task": "run-regression-suite",
+  "runs": [
+    {
+      "run_id": "reference-deterministic",
+      "ts": "2026-06-26T00:32:22.813826+00:00",
+      "ranking": [
+        {
+          "agent": "api-tester-run-regression-suite",
+          "fidelity": 100.0,
+          "conformance": 100.0,
+          "message_fidelity": 100.0,
+          "tokens": 0,
+          "elapsed": 0.0
+        },
+        {
+          "agent": "claude_sdk",
+          "fidelity": 100.0,
+          "conformance": 100.0,
+          "message_fidelity": 100.0,
+          "tokens": 0,
+          "elapsed": 0.0
+        },
+        {
+          "agent": "crewai",
+          "fidelity": 100.0,
+          "conformance": 100.0,
+          "message_fidelity": 100.0,
+          "tokens": 0,
+          "elapsed": 0.0
+        },
+        {
+          "agent": "langgraph",
+          "fidelity": 100.0,
+          "conformance": 100.0,
+          "message_fidelity": 100.0,
+          "tokens": 0,
+          "elapsed": 0.0
+        }
+      ]
+    }
+  ],
+  "rank_key": "fidelity desc, conformance desc, message_fidelity desc, tokens asc, elapsed asc"
+}

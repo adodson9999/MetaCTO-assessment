@@ -1,0 +1,1 @@
+- [2026-06-26T16:23:51.437583+00:00] run=blocked-35be6b create-postman-collection run: coverage_rate=0.0% (items=0/14, scenarios_ok=2/14, newman=True)

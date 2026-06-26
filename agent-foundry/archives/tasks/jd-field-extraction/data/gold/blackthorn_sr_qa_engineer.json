@@ -1,0 +1,30 @@
+{
+  "title": "Sr. QA Engineer",
+  "company": "Blackthorn",
+  "location": null,
+  "remote_or_onsite": "remote",
+  "employment_type": "full-time",
+  "seniority": "senior",
+  "salary_min": 69000,
+  "salary_max": 84000,
+  "salary_currency": "USD",
+  "years_experience_min": 5,
+  "tech_stack": ["Playwright", "Salesforce", "GitHub Actions", "Cumulus CI", "MetaDeploy"],
+  "must_haves": [
+    "5+ years software testing with test-automation expertise",
+    "3+ years testing on the Salesforce platform",
+    "Experience with Playwright (or similar) automation framework",
+    "Programming for test automation",
+    "CI/CD experience (GitHub Actions, Cumulus CI, MetaDeploy)",
+    "Performance testing experience",
+    "Mobile app testing (emulators/simulators/cloud device farms)",
+    "Test-data lifecycle management",
+    "Excellent English communication; self-directed and adaptable"
+  ],
+  "nice_to_haves": [
+    "Salesforce admin certification",
+    "Blackthorn product experience"
+  ],
+  "visa_sponsorship": "unspecified",
+  "apply_url": null
+}

@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / validate-correlation-id-propagation",
+  "metric_name": "correlation_id_propagation_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of the 10 gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent never let the harness exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all 10 gold scenarios.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-correlation-id-propagation/gold.json",
+  "headline_metric": "correlation_id_propagation_rate_pct",
+  "scenarios_total": 10,
+  "rationale": "All four agents drive the same local DummyJSON + the same captured logs, so the raw Correlation-ID Propagation Rate (how many scenarios the API actually satisfies — the id echoed in the response header, present and unmodified in the API log, present in every downstream log, and a UUID v4 auto-generated for a no-header request) is a property of the API, not the agent. For DummyJSON it is 0%: no X-Correlation-ID is set on responses, the request logger records no headers or correlation id, no downstream services are called, and no UUID is generated. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct eight-key plan (the with-header request carrying the verbatim id under the exact header, the no-header request with no correlation header, the verbatim token placeholder, and the ten ordered assertions) so the harness could observe the true behavior on every scenario. Identical computation across all four agents, deterministic, gold-pinned; doubles as the SkillOpt validation gate. The headline correlation_id_propagation_rate_pct is still emitted by every agent as the task's QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered, the id mis-emitted/modified so the harness cannot observe it, or any request mis-constructed so the observed token diverges from gold)"
+}

@@ -1,0 +1,194 @@
+{
+  "agent": "langgraph",
+  "run_id": "20260626T025036-f1d31c",
+  "dataset": "current",
+  "nps_score": 22,
+  "plan_accuracy_pct": 38.46,
+  "scenarios_total": 26,
+  "scenarios_correct": 10,
+  "emitted_plan": {},
+  "dashboard": {
+    "survey_period": "last 90 days as of 2026-06-25T00:00:00Z",
+    "total_recipients": 40,
+    "total_respondents": 18,
+    "response_rate_pct": 45.0,
+    "promoter_count": 9,
+    "passive_count": 4,
+    "detractor_count": 5,
+    "nps_score": 22,
+    "statistical_validity": "valid",
+    "top_3_themes": [
+      {
+        "theme": "aggressive blocks limit rate requests",
+        "count": 16
+      },
+      {
+        "theme": "confusing documentation endpoints examples follow",
+        "count": 13
+      },
+      {
+        "theme": "endpoints high latency load response",
+        "count": 11
+      }
+    ]
+  },
+  "gen_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CcR7S6LAsQM2expAEFQS2'}",
+  "scenarios": [
+    {
+      "scenario": "recipient_window_days",
+      "ideal": "90",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "survey_question_count",
+      "ideal": "4",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "nps_question_text",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "painpoint_question_text",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "improvement_question_text",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "other_question_text",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "collection_window_days",
+      "ideal": "14",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "promoter_band",
+      "ideal": "9-10",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "passive_band",
+      "ideal": "7-8",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "detractor_band",
+      "ideal": "0-6",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "nps_formula",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "validity_min_response_rate_pct",
+      "ideal": "30",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "clustering_k",
+      "ideal": "10",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "clustering_select_top",
+      "ideal": "3",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "clustering_max_label_words",
+      "ideal": "5",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "dashboard_fields_set",
+      "ideal": "true",
+      "observed_token": "missing",
+      "plan_correct": false
+    },
+    {
+      "scenario": "total_recipients",
+      "ideal": "40",
+      "observed_token": "40",
+      "plan_correct": true
+    },
+    {
+      "scenario": "total_respondents",
+      "ideal": "18",
+      "observed_token": "18",
+      "plan_correct": true
+    },
+    {
+      "scenario": "response_rate_pct",
+      "ideal": "45.0",
+      "observed_token": "45.0",
+      "plan_correct": true
+    },
+    {
+      "scenario": "promoter_count",
+      "ideal": "9",
+      "observed_token": "9",
+      "plan_correct": true
+    },
+    {
+      "scenario": "passive_count",
+      "ideal": "4",
+      "observed_token": "4",
+      "plan_correct": true
+    },
+    {
+      "scenario": "detractor_count",
+      "ideal": "5",
+      "observed_token": "5",
+      "plan_correct": true
+    },
+    {
+      "scenario": "nps_score",
+      "ideal": "22",
+      "observed_token": "22",
+      "plan_correct": true
+    },
+    {
+      "scenario": "statistical_validity",
+      "ideal": "valid",
+      "observed_token": "valid",
+      "plan_correct": true
+    },
+    {
+      "scenario": "top_3_theme_count",
+      "ideal": "3",
+      "observed_token": "3",
+      "plan_correct": true
+    },
+    {
+      "scenario": "top_3_theme_sizes",
+      "ideal": "16,13,11",
+      "observed_token": "16,13,11",
+      "plan_correct": true
+    }
+  ]
+}

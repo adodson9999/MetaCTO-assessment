@@ -1,0 +1,1 @@
+- [2026-06-25T23:09:28.369693+00:00] run=seq2 concurrent-request-handling run: success_rate=100.0% (read_ok=50/50, write_ok=50/50, db_delta=50)

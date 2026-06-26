@@ -1,0 +1,1 @@
+- [2026-06-26T00:12:50.346021+00:00] run=20260626T001226-c33a23 bulk-operation-endpoints run: accuracy=100.0% (cases_passed=3/3, mixed_db_delta=8)

@@ -1,0 +1,6 @@
+{
+  "scenario": "coverage_rate",
+  "ideal": "100.0",
+  "observed_token": "100.0",
+  "api_correct": true
+}

@@ -1,0 +1,6 @@
+{
+  "scenario": "read_all_bodies_identical",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

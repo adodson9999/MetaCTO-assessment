@@ -1,0 +1,6 @@
+- [2026-06-26T03:01:43.659499+00:00] run=20260626T030138-381271 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-06-26T03:07:28.532983+00:00] run=20260626T030705-58a611 soft-delete-behavior run: correctness_rate=100.0% (correct_cases=5/5, scenarios_ok=13/13)
+- [2026-06-26T03:09:38.297127+00:00] run=evolve-sd-api-tester-test-soft-delete-behavior-base soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/3, scenarios_ok=0/13)
+- [2026-06-26T03:09:52.251443+00:00] run=evolve-sd-api-tester-test-soft-delete-behavior-cand soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/3, scenarios_ok=0/13)
+- [2026-06-26T03:18:04.597758+00:00] run=evolve-sd-api-tester-test-soft-delete-behavior-base soft-delete-behavior run: correctness_rate=100.0% (correct_cases=3/3, scenarios_ok=13/13)
+- [2026-06-26T03:18:16.823604+00:00] run=evolve-sd-api-tester-test-soft-delete-behavior-cand soft-delete-behavior run: correctness_rate=100.0% (correct_cases=3/3, scenarios_ok=13/13)

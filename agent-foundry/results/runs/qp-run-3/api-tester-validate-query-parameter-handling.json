@@ -1,0 +1,20 @@
+{
+  "agent": "api-tester-validate-query-parameter-handling",
+  "run_id": "qp-run-3",
+  "metric_name": "query_param_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/qp-run-3/api-tester-validate-query-parameter-handling.cases.json",
+  "ts": "2026-06-25T23:11:08.228302+00:00",
+  "query_param_handling_accuracy_pct": 91.67,
+  "scenarios_total": 48,
+  "elapsed_seconds": 25.118,
+  "tokens_total": 7496,
+  "fidelity_matches": 48,
+  "fidelity_denominator": 48,
+  "coverage_scenarios": 48,
+  "plan_conformance_pct": 100.0,
+  "plan_conformance_earned": 224,
+  "plan_conformance_total": 224,
+  "plan_conformance_issues": [],
+  "headline_accuracy_pct": 91.67
+}

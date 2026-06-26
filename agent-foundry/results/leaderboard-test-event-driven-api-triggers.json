@@ -1,0 +1,38 @@
+{
+  "metric_name": "event_trigger_test_fidelity",
+  "direction": "higher_is_better",
+  "agents": {
+    "api-tester-test-event-driven-api-triggers": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "claude_sdk": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "crewai": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    },
+    "langgraph": {
+      "best": 0.0,
+      "runs": 1,
+      "last": 0.0
+    }
+  },
+  "runs": [
+    {
+      "run_id": "20260626T003415-4a77df",
+      "ts": "2026-06-26T00:34:36.456359+00:00",
+      "values": {
+        "api-tester-test-event-driven-api-triggers": 0.0,
+        "claude_sdk": 0.0,
+        "crewai": 0.0,
+        "langgraph": 0.0
+      }
+    }
+  ]
+}

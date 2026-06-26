@@ -1,0 +1,35 @@
+{
+  "slug": "auth_login",
+  "method": "POST",
+  "path": "/auth/login",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    400
+  ],
+  "cases": [
+    {
+      "documented_code": 400,
+      "trigger": "missing_field",
+      "request": {
+        "code": 400,
+        "method": "POST",
+        "path": "/auth/login",
+        "auth": "none",
+        "body": {
+          "password": "emilyspass"
+        }
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Username and password required\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

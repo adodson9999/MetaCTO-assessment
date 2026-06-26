@@ -1,0 +1,1 @@
+- [2026-06-26T02:54:39.947935+00:00] run=oracle soft-delete-behavior run: correctness_rate=100.0% (correct_cases=5/5, scenarios_ok=13/13)

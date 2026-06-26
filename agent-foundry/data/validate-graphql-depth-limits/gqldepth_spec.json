@@ -1,0 +1,17 @@
+{
+  "title": "Local GraphQL depth-limit contract (authored for the depth-limit task)",
+  "description": "A purpose-built, air-gapped local GraphQL SUT enforcing a documented maximum query depth per endpoint (DummyJSON is never used or modified). Agents construct the depth test plan from the documented max_depth; ground truth is the fixed contract outcomes and the live SUT's observed behavior.",
+  "target": "http://localhost:8940",
+  "depth_unit": "the maximum count of nested field selection sets in a query",
+  "deep_time_budget_s": 1.0,
+  "endpoints": [
+    {
+      "endpoint": "/graphql",
+      "max_depth": 7
+    },
+    {
+      "endpoint": "/graphql-strict",
+      "max_depth": 4
+    }
+  ]
+}

@@ -1,0 +1,938 @@
+{
+  "agent": "crewai",
+  "run_id": "hp-run-2",
+  "target": "http://localhost:8899",
+  "header_propagation_rate_pct": 0.0,
+  "runtime_scenarios_total": 48,
+  "runtime_scenarios_propagated": 0,
+  "scenarios_total": 78,
+  "endpoints": [
+    {
+      "endpoint": "products_add",
+      "method": "POST",
+      "path": "/products/add",
+      "emitted_plan": {
+        "endpoint": "products_add",
+        "method": "POST",
+        "path": "/products/add",
+        "auth_required": true,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "POST",
+          "path": "/products/add",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716",
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "title": "header-propagation-probe"
+          }
+        },
+        "no_header_request": {
+          "method": "POST",
+          "path": "/products/add",
+          "headers": {
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "title": "header-propagation-probe"
+          }
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "products_add",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_add",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "posts_add",
+      "method": "POST",
+      "path": "/posts/add",
+      "emitted_plan": {
+        "endpoint": "posts_add",
+        "method": "POST",
+        "path": "/posts/add",
+        "auth_required": true,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "POST",
+          "path": "/posts/add",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716",
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "title": "header-propagation-probe",
+            "userId": 1
+          }
+        },
+        "no_header_request": {
+          "method": "POST",
+          "path": "/posts/add",
+          "headers": {
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "title": "header-propagation-probe",
+            "userId": 1
+          }
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "posts_add",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "posts_add",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "comments_add",
+      "method": "POST",
+      "path": "/comments/add",
+      "emitted_plan": {
+        "endpoint": "comments_add",
+        "method": "POST",
+        "path": "/comments/add",
+        "auth_required": true,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "POST",
+          "path": "/comments/add",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716",
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "body": "header-propagation-probe",
+            "postId": 1,
+            "userId": 1
+          }
+        },
+        "no_header_request": {
+          "method": "POST",
+          "path": "/comments/add",
+          "headers": {
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "body": "header-propagation-probe",
+            "postId": 1,
+            "userId": 1
+          }
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "comments_add",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "comments_add",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "carts_add",
+      "method": "POST",
+      "path": "/carts/add",
+      "emitted_plan": {
+        "endpoint": "carts_add",
+        "method": "POST",
+        "path": "/carts/add",
+        "auth_required": true,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "POST",
+          "path": "/carts/add",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716",
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "userId": 1,
+            "products": [
+              {
+                "id": 1,
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        "no_header_request": {
+          "method": "POST",
+          "path": "/carts/add",
+          "headers": {
+            "Authorization": "Bearer <valid_token>"
+          },
+          "body": {
+            "userId": 1,
+            "products": [
+              {
+                "id": 1,
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "carts_add",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "carts_add",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "emitted_plan": {
+        "endpoint": "auth_me",
+        "method": "GET",
+        "path": "/auth/me",
+        "auth_required": true,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "GET",
+          "path": "/auth/me",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716",
+            "Authorization": "Bearer <valid_token>"
+          }
+        },
+        "no_header_request": {
+          "method": "GET",
+          "path": "/auth/me",
+          "headers": {
+            "Authorization": "Bearer <valid_token>"
+          }
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "auth_me",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "auth_me",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "products_get",
+      "method": "GET",
+      "path": "/products/1",
+      "emitted_plan": {
+        "endpoint": "products_get",
+        "method": "GET",
+        "path": "/products/1",
+        "auth_required": false,
+        "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+        "header_name": "X-Correlation-ID",
+        "with_header_request": {
+          "method": "GET",
+          "path": "/products/1",
+          "headers": {
+            "X-Correlation-ID": "test-corr-550e8400-e29b-41d4-a716"
+          }
+        },
+        "no_header_request": {
+          "method": "GET",
+          "path": "/products/1",
+          "headers": {}
+        },
+        "assertions": [
+          "resp_header_echo_exact",
+          "api_log_present",
+          "api_log_unmodified",
+          "downstream_services_count",
+          "downstream_log_present",
+          "no_header_uuid_generated",
+          "no_header_uuid_in_api_log",
+          "no_header_uuid_in_downstream"
+        ]
+      },
+      "observations": {
+        "with_header": {
+          "sent_id": "test-corr-550e8400-e29b-41d4-a716",
+          "resp_corr_value": null,
+          "api_log_hits_exact": 0,
+          "api_log_hits_modified": 0
+        },
+        "no_header": {
+          "resp_corr_value": null,
+          "generated_is_uuidv4": false,
+          "api_log_hits_generated": 0
+        },
+        "downstream_services": [],
+        "downstream_all_have_id": null,
+        "downstream_all_have_generated": null
+      },
+      "scenarios": [
+        {
+          "endpoint": "products_get",
+          "scenario": "plan_correlation_id_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "plan_header_name_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "plan_with_header_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "plan_no_header_absent",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "plan_assertions_complete",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "resp_header_echo_exact",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "api_log_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "api_log_unmodified",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "downstream_services_count",
+          "ideal": ">=2",
+          "observed_token": "0",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "downstream_log_present",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "no_header_uuid_generated",
+          "ideal": "true",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "no_header_uuid_in_api_log",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        },
+        {
+          "endpoint": "products_get",
+          "scenario": "no_header_uuid_in_downstream",
+          "ideal": "true",
+          "observed_token": "n/a",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    }
+  ]
+}

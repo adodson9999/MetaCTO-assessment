@@ -1,0 +1,29 @@
+{
+  "slug": "auth_login",
+  "method": "POST",
+  "path": "/auth/login",
+  "request_body": {
+    "username": "emilys",
+    "password": "emilyspass"
+  },
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3ODI0MTk3MzcsImV4cCI6MTc4MjQyMzMzN30.0FhBY-kYQCE7FzjVBKB8vf89pwoZLXk_dnF9msz0-mo",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3ODI0MTk3MzcsImV4cCI6MTc4NTAxMTczN30.yKt1VL6Zz3G7gJD3oGcXt76fshCQGmX_HeNu8l_TtJU",
+    "id": 1,
+    "username": "emilys",
+    "email": "emily.johnson@x.dummyjson.com",
+    "firstName": "Emily",
+    "lastName": "Johnson",
+    "gender": "female",
+    "image": "https://dummyjson.com/icon/emilys/128"
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

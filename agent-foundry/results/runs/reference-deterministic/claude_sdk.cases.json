@@ -1,0 +1,399 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "reference-deterministic",
+  "target": "http://localhost:8899",
+  "deployment_health": {
+    "endpoint": "/health",
+    "status": 200,
+    "deployment_confirmed": true
+  },
+  "regression_report_fidelity_pct": 100.0,
+  "fields_total": 28,
+  "fields_correct": 28,
+  "builds_that_must_block_deployment": [
+    "ci-1043",
+    "gh-2002",
+    "rel-10"
+  ],
+  "elapsed_seconds": 0.0,
+  "tokens": {
+    "total_tokens": 0
+  },
+  "pairs": [
+    {
+      "pair": "newman_junit",
+      "format": "junit_xml",
+      "build_n_nus_1": "ci-1042",
+      "build_n": "ci-1043",
+      "emitted_report": {
+        "build_n_nus_1": "ci-1042",
+        "build_n": "ci-1043",
+        "total_tests_in_suite": 6,
+        "prev_passed_count": 5,
+        "regressions": [
+          {
+            "id": "auth.login.invalid",
+            "failure_message": "Expected 401 but got 500"
+          },
+          {
+            "id": "products.get.byId",
+            "failure_message": "Expected 200 but got 404"
+          }
+        ],
+        "newly_passing": [
+          "users.search.q"
+        ],
+        "overall_status": "fail"
+      },
+      "gold_report": {
+        "build_n_nus_1": "ci-1042",
+        "build_n": "ci-1043",
+        "total_tests_in_suite": 6,
+        "prev_passed_count": 5,
+        "regressions": [
+          {
+            "id": "auth.login.invalid",
+            "failure_message": "Expected 401 but got 500"
+          },
+          {
+            "id": "products.get.byId",
+            "failure_message": "Expected 200 but got 404"
+          }
+        ],
+        "newly_passing": [
+          "users.search.q"
+        ],
+        "overall_status": "fail"
+      },
+      "field_cells": [
+        {
+          "pair": "newman_junit",
+          "field": "build_n_nus_1",
+          "api_correct": true,
+          "gold": "ci-1042"
+        },
+        {
+          "pair": "newman_junit",
+          "field": "build_n",
+          "api_correct": true,
+          "gold": "ci-1043"
+        },
+        {
+          "pair": "newman_junit",
+          "field": "total_tests_in_suite",
+          "api_correct": true,
+          "gold": 6
+        },
+        {
+          "pair": "newman_junit",
+          "field": "prev_passed_count",
+          "api_correct": true,
+          "gold": 5
+        },
+        {
+          "pair": "newman_junit",
+          "field": "regressions",
+          "api_correct": true,
+          "gold": [
+            {
+              "id": "auth.login.invalid",
+              "failure_message": "Expected 401 but got 500"
+            },
+            {
+              "id": "products.get.byId",
+              "failure_message": "Expected 200 but got 404"
+            }
+          ]
+        },
+        {
+          "pair": "newman_junit",
+          "field": "newly_passing",
+          "api_correct": true,
+          "gold": [
+            "users.search.q"
+          ]
+        },
+        {
+          "pair": "newman_junit",
+          "field": "overall_status",
+          "api_correct": true,
+          "gold": "fail"
+        }
+      ],
+      "gold_regression_rate_pct": 40.0,
+      "agent_regression_rate_pct": 40.0,
+      "message_fidelity_pct": 100.0,
+      "error": null
+    },
+    {
+      "pair": "pytest_junit",
+      "format": "junit_xml",
+      "build_n_nus_1": "build-77",
+      "build_n": "build-78",
+      "emitted_report": {
+        "build_n_nus_1": "build-77",
+        "build_n": "build-78",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [],
+        "newly_passing": [
+          "test_known_flaky"
+        ],
+        "overall_status": "pass"
+      },
+      "gold_report": {
+        "build_n_nus_1": "build-77",
+        "build_n": "build-78",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [],
+        "newly_passing": [
+          "test_known_flaky"
+        ],
+        "overall_status": "pass"
+      },
+      "field_cells": [
+        {
+          "pair": "pytest_junit",
+          "field": "build_n_nus_1",
+          "api_correct": true,
+          "gold": "build-77"
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "build_n",
+          "api_correct": true,
+          "gold": "build-78"
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "total_tests_in_suite",
+          "api_correct": true,
+          "gold": 4
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "prev_passed_count",
+          "api_correct": true,
+          "gold": 3
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "regressions",
+          "api_correct": true,
+          "gold": []
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "newly_passing",
+          "api_correct": true,
+          "gold": [
+            "test_known_flaky"
+          ]
+        },
+        {
+          "pair": "pytest_junit",
+          "field": "overall_status",
+          "api_correct": true,
+          "gold": "pass"
+        }
+      ],
+      "gold_regression_rate_pct": 0.0,
+      "agent_regression_rate_pct": 0.0,
+      "message_fidelity_pct": null,
+      "error": null
+    },
+    {
+      "pair": "jest_json",
+      "format": "jest_json",
+      "build_n_nus_1": "gh-2001",
+      "build_n": "gh-2002",
+      "emitted_report": {
+        "build_n_nus_1": "gh-2001",
+        "build_n": "gh-2002",
+        "total_tests_in_suite": 5,
+        "prev_passed_count": 4,
+        "regressions": [
+          {
+            "id": "cart applies discount",
+            "failure_message": "discount computed as NaN"
+          },
+          {
+            "id": "cart total calculates correctly",
+            "failure_message": "expected 150 received 0"
+          }
+        ],
+        "newly_passing": [],
+        "overall_status": "fail"
+      },
+      "gold_report": {
+        "build_n_nus_1": "gh-2001",
+        "build_n": "gh-2002",
+        "total_tests_in_suite": 5,
+        "prev_passed_count": 4,
+        "regressions": [
+          {
+            "id": "cart applies discount",
+            "failure_message": "discount computed as NaN"
+          },
+          {
+            "id": "cart total calculates correctly",
+            "failure_message": "expected 150 received 0"
+          }
+        ],
+        "newly_passing": [],
+        "overall_status": "fail"
+      },
+      "field_cells": [
+        {
+          "pair": "jest_json",
+          "field": "build_n_nus_1",
+          "api_correct": true,
+          "gold": "gh-2001"
+        },
+        {
+          "pair": "jest_json",
+          "field": "build_n",
+          "api_correct": true,
+          "gold": "gh-2002"
+        },
+        {
+          "pair": "jest_json",
+          "field": "total_tests_in_suite",
+          "api_correct": true,
+          "gold": 5
+        },
+        {
+          "pair": "jest_json",
+          "field": "prev_passed_count",
+          "api_correct": true,
+          "gold": 4
+        },
+        {
+          "pair": "jest_json",
+          "field": "regressions",
+          "api_correct": true,
+          "gold": [
+            {
+              "id": "cart applies discount",
+              "failure_message": "discount computed as NaN"
+            },
+            {
+              "id": "cart total calculates correctly",
+              "failure_message": "expected 150 received 0"
+            }
+          ]
+        },
+        {
+          "pair": "jest_json",
+          "field": "newly_passing",
+          "api_correct": true,
+          "gold": []
+        },
+        {
+          "pair": "jest_json",
+          "field": "overall_status",
+          "api_correct": true,
+          "gold": "fail"
+        }
+      ],
+      "gold_regression_rate_pct": 50.0,
+      "agent_regression_rate_pct": 50.0,
+      "message_fidelity_pct": 100.0,
+      "error": null
+    },
+    {
+      "pair": "pytest_json",
+      "format": "pytest_json",
+      "build_n_nus_1": "rel-9",
+      "build_n": "rel-10",
+      "emitted_report": {
+        "build_n_nus_1": "rel-9",
+        "build_n": "rel-10",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [
+          {
+            "id": "tests/contract_test.py::test_api_contract_v2",
+            "failure_message": "schema drift: missing field 'sku'"
+          }
+        ],
+        "newly_passing": [
+          "tests/perf_test.py::test_perf_smoke"
+        ],
+        "overall_status": "fail"
+      },
+      "gold_report": {
+        "build_n_nus_1": "rel-9",
+        "build_n": "rel-10",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [
+          {
+            "id": "tests/contract_test.py::test_api_contract_v2",
+            "failure_message": "schema drift: missing field 'sku'"
+          }
+        ],
+        "newly_passing": [
+          "tests/perf_test.py::test_perf_smoke"
+        ],
+        "overall_status": "fail"
+      },
+      "field_cells": [
+        {
+          "pair": "pytest_json",
+          "field": "build_n_nus_1",
+          "api_correct": true,
+          "gold": "rel-9"
+        },
+        {
+          "pair": "pytest_json",
+          "field": "build_n",
+          "api_correct": true,
+          "gold": "rel-10"
+        },
+        {
+          "pair": "pytest_json",
+          "field": "total_tests_in_suite",
+          "api_correct": true,
+          "gold": 4
+        },
+        {
+          "pair": "pytest_json",
+          "field": "prev_passed_count",
+          "api_correct": true,
+          "gold": 3
+        },
+        {
+          "pair": "pytest_json",
+          "field": "regressions",
+          "api_correct": true,
+          "gold": [
+            {
+              "id": "tests/contract_test.py::test_api_contract_v2",
+              "failure_message": "schema drift: missing field 'sku'"
+            }
+          ]
+        },
+        {
+          "pair": "pytest_json",
+          "field": "newly_passing",
+          "api_correct": true,
+          "gold": [
+            "tests/perf_test.py::test_perf_smoke"
+          ]
+        },
+        {
+          "pair": "pytest_json",
+          "field": "overall_status",
+          "api_correct": true,
+          "gold": "fail"
+        }
+      ],
+      "gold_regression_rate_pct": 33.33,
+      "agent_regression_rate_pct": 33.33,
+      "message_fidelity_pct": 100.0,
+      "error": null
+    }
+  ]
+}

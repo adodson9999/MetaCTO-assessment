@@ -1,0 +1,396 @@
+{
+  "slug": "auth_login",
+  "method": "POST",
+  "path": "/auth/login",
+  "schema": {
+    "fields": {
+      "username": {
+        "type": "string",
+        "maxLength": 40
+      },
+      "password": {
+        "type": "string",
+        "maxLength": 60
+      },
+      "expiresInMins": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "username",
+      "password"
+    ],
+    "optional": [
+      "expiresInMins"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "username:key_absent",
+      "field": "username",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:json_null",
+      "field": "username",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": null,
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:empty_string",
+      "field": "username",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "",
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:integer_zero",
+      "field": "username",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": 0,
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:boolean_false",
+      "field": "username",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": false,
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:empty_array",
+      "field": "username",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": [],
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "username:empty_object",
+      "field": "username",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": {},
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:key_absent",
+      "field": "password",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys"
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:json_null",
+      "field": "password",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:empty_string",
+      "field": "password",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:integer_zero",
+      "field": "password",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:boolean_false",
+      "field": "password",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:empty_array",
+      "field": "password",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "password:empty_object",
+      "field": "password",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": {}
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:key_absent",
+      "field": "expiresInMins",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:json_null",
+      "field": "expiresInMins",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass",
+        "expiresInMins": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:empty_string",
+      "field": "expiresInMins",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass",
+        "expiresInMins": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:integer_zero",
+      "field": "expiresInMins",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass",
+        "expiresInMins": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:empty_array",
+      "field": "expiresInMins",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 500,
+      "actual_class": "other_500",
+      "api_correct": false,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass",
+        "expiresInMins": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "expiresInMins:empty_object",
+      "field": "expiresInMins",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 500,
+      "actual_class": "other_500",
+      "api_correct": false,
+      "payload": {
+        "username": "emilys",
+        "password": "emilyspass",
+        "expiresInMins": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": null,
+        "password": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "username",
+      "field": "username",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": null,
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "password",
+      "field": "password",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": "emilys",
+        "password": null
+      }
+    },
+    {
+      "category": "combo_required_null",
+      "label": "username+password",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "username": null,
+        "password": null
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "username",
+      "field": "username",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": false,
+      "payload": {
+        "username": "null",
+        "password": "emilyspass"
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "password",
+      "field": "password",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": false,
+      "payload": {
+        "username": "emilys",
+        "password": "null"
+      }
+    }
+  ]
+}

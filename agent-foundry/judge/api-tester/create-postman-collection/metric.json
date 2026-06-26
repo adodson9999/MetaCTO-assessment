@@ -1,0 +1,18 @@
+{
+  "task": "api-tester / create-postman-collection",
+  "alias": "n601",
+  "metric_name": "postman_contract_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent's contract did not produce (-> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (14).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/create-postman-collection/gold.json",
+  "headline_metric": "postman_coverage_rate_pct",
+  "scenarios_total": 14,
+  "rationale": "The registry->collection transform (read results/test-case-registry.json, gap pre-check the summary, filter involves_http_call=true, build one Postman v2.1 item per HTTP test case via the contract, group into per-agent folders, assemble + read back + recursively count the request items, write the gaps + summary files, run the Newman dry-run) lives in the shared harness, identical for all four agents, so the raw Postman Coverage Rate is a property of the build given a correct contract. Fidelity-to-gold instead measures each framework's CONTRACT quality: did its LLM reproduce the correct filter_field and group_by (so items are filtered + foldered right and the recursive count matches the registry's HTTP count), the exact method/path/status extraction regexes (so each item's method, url, path array, and test-script status assertion are correct), the four body-trigger substrings (so body mode raw/none is right), the ordered five-entry header-trigger map (so Authorization/X-Correlation-ID/If-None-Match/multipart/Idempotency-Key headers attach correctly), and the five collection variables. A framework whose contract swaps the two status regexes, drops a header trigger, 'corrects' a backslash, or uses a wrong filter_field/group_by diverges from gold and scores lower. The headline postman_coverage_rate_pct (= recursive request-item count / registry HTTP test-case count * 100) is still emitted by every agent as the task's QA finding; against the fixture registry a spec-correct contract yields 100% coverage with gap_count 0.",
+  "headline_pass_threshold": "postman_coverage_rate_pct = 100 (every involves_http_call=true test case has a matching named request item; gap_count = 0) AND the Newman dry-run exits 0 when Newman is installed",
+  "headline_fail_condition": "any HTTP test case with no corresponding named item (gap_count > 0), or a Newman dry-run that exits non-zero (structurally invalid collection)",
+  "rank_pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "rank_fail_condition": "fidelity < 100% (any contract knob mis-constructed so a built-collection token diverges from gold)",
+  "newman_note": "Newman validation is a non-aborting WARNING per the n601 spec: if Newman is not installed the harness records newman_valid=null + a structural_valid stdlib check instead, and fidelity (which does not include the newman token) is unaffected."
+}

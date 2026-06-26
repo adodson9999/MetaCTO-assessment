@@ -1,0 +1,22 @@
+{
+  "sprint_name": "Sprint-27",
+  "inputs": {
+    "total_defects": 4,
+    "lines_changed_non_test": 2500,
+    "prev_density_1": 1.5,
+    "prev_density_2": 1.7,
+    "prev_density_3": 1.6
+  },
+  "record": {
+    "sprint_name": "Sprint-27",
+    "defect_density": 1.6,
+    "rolling_avg_3_sprint": 1.6,
+    "deviation_pct": 0.0,
+    "alert_flag": false,
+    "p1_count": 1,
+    "p2_count": 1,
+    "p3_count": 1,
+    "p4_count": 1,
+    "trend": "+6.7%"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "numTotalTestSuites": 2,
+  "numTotalTests": 5,
+  "numPassedTests": 2,
+  "numFailedTests": 3,
+  "success": false,
+  "testResults": [
+    {
+      "name": "/repo/src/cart.test.js",
+      "status": "failed",
+      "assertionResults": [
+        {"fullName": "cart total calculates correctly", "title": "calculates correctly", "status": "failed", "failureMessages": ["expected 150 received 0"]},
+        {"fullName": "cart applies discount", "title": "applies discount", "status": "failed", "failureMessages": ["discount computed as NaN"]}
+      ]
+    },
+    {
+      "name": "/repo/src/order.test.js",
+      "status": "failed",
+      "assertionResults": [
+        {"fullName": "order persists to db", "title": "persists to db", "status": "passed", "failureMessages": []},
+        {"fullName": "search returns matches", "title": "returns matches", "status": "passed", "failureMessages": []},
+        {"fullName": "legacy export csv", "title": "export csv", "status": "failed", "failureMessages": ["Expected header row, received empty buffer"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+- [2026-06-26T00:00:53.503658+00:00] run=smoke-ipal-1 ip-allowlist-test run: enforcement_rate=90.0% bypass_detected=True over 2 endpoints (10 cases)
+- [2026-06-26T00:07:09.085488+00:00] run=20260626T000544-3a508a ip-allowlist-test run: enforcement_rate=93.33% bypass_detected=True over 6 endpoints (30 cases)
+- [2026-06-26T00:16:29.888588+00:00] run=20260626T001510-082eb3 ip-allowlist-test run: enforcement_rate=93.33% bypass_detected=True over 6 endpoints (30 cases)

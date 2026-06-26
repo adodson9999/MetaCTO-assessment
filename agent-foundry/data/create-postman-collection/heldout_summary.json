@@ -1,0 +1,11 @@
+{
+  "registry_file": "results/test-case-registry.json",
+  "total_test_cases": 8,
+  "http_test_cases": 6,
+  "agents_scanned": 3,
+  "coverage_rate": 100.0,
+  "gaps_found": false,
+  "gap_count": 0,
+  "note": "HELD-OUT registry fixture for the SkillOpt evolution gate — a different agent/case mix than registry_fixture.json so a candidate skill is validated on input it was NOT tuned on.",
+  "timestamp": "2026-06-26T00:00:00Z"
+}

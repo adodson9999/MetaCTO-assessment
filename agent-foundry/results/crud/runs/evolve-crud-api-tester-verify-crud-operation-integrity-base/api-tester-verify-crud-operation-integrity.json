@@ -1,0 +1,12 @@
+{
+  "agent": "api-tester-verify-crud-operation-integrity",
+  "run_id": "evolve-crud-api-tester-verify-crud-operation-integrity-base",
+  "metric_name": "crud_integrity_rate_pct",
+  "metric_value": 0.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/crud/runs/evolve-crud-api-tester-verify-crud-operation-integrity-base/api-tester-verify-crud-operation-integrity.cases.json",
+  "ts": "2026-06-26T00:20:59.580314+00:00",
+  "crud_integrity_rate_pct": 0.0,
+  "resource_types": 2,
+  "resource_types_passing": 0,
+  "covered_step_cells": 12
+}

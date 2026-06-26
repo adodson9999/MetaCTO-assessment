@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK CI/CD-Pipeline-Runner agent.
+
+Standalone program mirroring the other three. Under this task's default air-gapped
+Ollama backend it uses the local Ollama /v1 endpoint. When the backend is flipped to
+claude-haiku, two paths reach Claude:
+
+  - native Claude Agent SDK (claude_agent_sdk.query) — spawns the local `claude` CLI as
+    a subagent. Enabled ONLY when FORGE_USE_CLAUDE_AGENT_SDK is set, so a foundry run
+    launched from inside a Claude Code session does not recursively spawn `claude`.
+  - the documented OpenAI-compatible shim — the central LiteLLM proxy
+    (config.toml [backend].litellm_proxy_url), the default Claude path.
+
+Either way it elicits the pipeline-summary; the shared harness compares it to gold and
+emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import cicd  # noqa: E402
+from cicd_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native_cli(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _via_anthropic_sdk(brief: str) -> str:
+    """Direct Anthropic SDK call on claude-haiku — the documented native path for the
+    Claude Agent SDK agent. Used when the OpenAI-compatible LiteLLM shim is not running
+    (litellm[proxy] absent), so this agent is still measured on the same backend/model."""
+    import anthropic
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model=SPEC["native"]["model"], max_tokens=2048, temperature=0,
+        system=APPROVED_PROMPT,
+        messages=[{"role": "user", "content": user_message(brief)}])
+    return "".join(getattr(b, "text", "") for b in msg.content)
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    # Native Claude Agent SDK CLI path: opt-in only (spawns the local `claude` CLI; off
+    # by default so a run launched from inside a Claude Code session doesn't recurse).
+    if SPEC["native"]["kind"] == "anthropic" and os.environ.get("FORGE_USE_CLAUDE_AGENT_SDK"):
+        try:
+            return asyncio.run(_native_cli(brief))
+        except Exception:  # noqa
+            pass
+    # claude-haiku: prefer the direct Anthropic SDK; fall back to the OpenAI-compat
+    # LiteLLM shim if it is running. ollama: use the OpenAI-compat local endpoint.
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return _via_anthropic_sdk(brief)
+        except Exception:  # noqa  -- SDK unavailable -> try the shim
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(cfg: dict) -> dict:
+        brief = cicd.run_brief(cfg)
+        return cicd.extract_json(_elicit(brief)) or {}
+
+    summary = cicd.run_cicd_test(AGENT, generate)
+    print(f"[{AGENT}] fidelity={summary['pipeline_summary_fidelity_pct']}% "
+          f"fields={summary['fields_correct']}/{summary['fields_total']} "
+          f"block={summary['runs_that_must_block_deployment']}")
+
+
+if __name__ == "__main__":
+    main()

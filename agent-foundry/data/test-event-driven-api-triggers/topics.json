@@ -1,0 +1,68 @@
+{
+  "topics": [
+    {
+      "topic": "order.payment.completed",
+      "event_type": "order.payment.completed",
+      "resource": "orders",
+      "resource_id": "order-1001",
+      "state_field": "status",
+      "pre_state": "pending",
+      "expected_state": "paid",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "amount"
+      ]
+    },
+    {
+      "topic": "account.email.verified",
+      "event_type": "account.email.verified",
+      "resource": "accounts",
+      "resource_id": "acct-2002",
+      "state_field": "status",
+      "pre_state": "unverified",
+      "expected_state": "verified",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "email"
+      ]
+    },
+    {
+      "topic": "inventory.item.depleted",
+      "event_type": "inventory.item.depleted",
+      "resource": "inventory",
+      "resource_id": "sku-3003",
+      "state_field": "stock_state",
+      "pre_state": "in_stock",
+      "expected_state": "out_of_stock",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "quantity"
+      ]
+    },
+    {
+      "topic": "ticket.issue.resolved",
+      "event_type": "ticket.issue.resolved",
+      "resource": "tickets",
+      "resource_id": "tkt-4004",
+      "state_field": "status",
+      "pre_state": "open",
+      "expected_state": "resolved",
+      "required_fields": [
+        "event_id",
+        "event_type",
+        "resource_id",
+        "occurred_at",
+        "resolution"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK IP-allowlist-testing agent.
+
+Standalone program mirroring the other three. Native Claude is used when the backend is
+set to claude-haiku; under the air-gapped Ollama backend the SDK's cloud path is
+unavailable, so it falls back to the OpenAI-compatible local endpoint (Ollama /v1).
+Either way it elicits the IP-allowlist test plan; the shared harness executes it against
+the local gateway and records/emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import ip_allowlist  # noqa: E402
+from ip_allowlist_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native(brief: str) -> str:
+    """Collect ONLY assistant text blocks from the SDK stream. The stream also yields
+    system/hook/result messages whose str() repr contains Python-dict literals ({...}
+    with single quotes); concatenating those would feed extract_json a non-JSON dict repr
+    instead of the model's answer, so we pull text blocks (or a plain string content) only."""
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        content = getattr(msg, "content", None)
+        if isinstance(content, list):
+            for block in content:
+                text = getattr(block, "text", None)
+                if isinstance(text, str):
+                    chunks.append(text)
+        elif isinstance(content, str):
+            chunks.append(content)
+    return "".join(chunks)
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa  -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(cfg: dict) -> dict:
+        brief = ip_allowlist.endpoint_brief(cfg)
+        return ip_allowlist.extract_json(_elicit(brief)) or {}
+
+    summary = ip_allowlist.run_ip_allowlist_test(AGENT, generate)
+    print(f"[{AGENT}] enforcement_rate={summary['ip_allowlist_enforcement_rate_pct']}% "
+          f"bypass={summary['any_nonallowlisted_200_bypass']} "
+          f"cases={summary['cases_correct']}/{summary['cases_total']}")
+
+
+if __name__ == "__main__":
+    main()

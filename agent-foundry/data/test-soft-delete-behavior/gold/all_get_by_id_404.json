@@ -1,0 +1,6 @@
+{
+  "scenario": "all_get_by_id_404",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

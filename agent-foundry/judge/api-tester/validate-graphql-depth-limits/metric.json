@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / validate-graphql-depth-limits",
+  "metric_name": "graphql_depth_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (probe not emitted, or emitted with an unusable depth -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (endpoints x 13).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-graphql-depth-limits/gold.json",
+  "headline_metric": "depth_enforcement_pct",
+  "scenarios_per_endpoint": 13,
+  "rationale": "All four agents hit the same local GraphQL depth SUT read-only, so the raw GraphQL Depth Enforcement Rate (how many scenarios the API satisfies under the documented depth-limit contract) is a property of the SUT, not the agent — it is 100% because the SUT is built to the contract. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct four-probe depth matrix (a depth-3 query that must be accepted with non-null data and no errors; an at-the-limit query at depth = max_depth that must still be accepted; a one-over query at depth = max_depth + 1 that must be rejected with a 400 whose error message mentions 'depth' or 'complexity'; and a deep depth-15 query that must be rejected with that same kind of error AND within one second), correctly deriving at_limit = max_depth and one_over = max_depth + 1 for each endpoint's documented limit. The headline depth_enforcement_pct is still emitted by every agent as the task's QA finding (100% for a contract-correct SUT; any non-100% row — e.g. a too-deep query returning 200, or a depth-15 rejection arriving after one second — is a genuine depth-limit/DoS defect, not an agent failure).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token; equivalently GraphQL Depth Enforcement Rate = 100% with at_limit and one_over correctly derived from max_depth)",
+  "fail_condition": "fidelity < 100% (any probe uncovered, any depth mis-derived so accept/reject flips, any over-limit query returning 200, or the depth-15 rejection arriving after one second)"
+}

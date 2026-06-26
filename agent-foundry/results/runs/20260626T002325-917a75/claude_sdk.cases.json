@@ -1,0 +1,426 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "20260626T002325-917a75",
+  "target": "http://localhost:8931",
+  "filter_accuracy_pct": 100.0,
+  "scenarios_total": 28,
+  "scenarios_api_correct": 28,
+  "collections": [
+    {
+      "collection": "/resources",
+      "list_field": "resources",
+      "emitted_plan": {
+        "collection": "/resources",
+        "list_field": "resources",
+        "id_field": "id",
+        "cases": [
+          {
+            "label": "single_filter",
+            "type": "single",
+            "params": {
+              "status": "active"
+            }
+          },
+          {
+            "label": "multi_filter",
+            "type": "multi",
+            "params": {
+              "status": "active",
+              "category": "A"
+            }
+          },
+          {
+            "label": "invalid_value",
+            "type": "invalid",
+            "params": {
+              "status": "unknown_value"
+            }
+          },
+          {
+            "label": "unknown_param",
+            "type": "unknown",
+            "params": {
+              "bogus_filter": "x"
+            }
+          },
+          {
+            "label": "empty_result",
+            "type": "empty",
+            "params": {
+              "status": "active",
+              "category": "C"
+            }
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "single_filter",
+          "type": "single",
+          "path": "/resources",
+          "params": {
+            "status": "active"
+          },
+          "status": 200,
+          "returned_count": 15,
+          "message": null
+        },
+        {
+          "label": "multi_filter",
+          "type": "multi",
+          "path": "/resources",
+          "params": {
+            "status": "active",
+            "category": "A"
+          },
+          "status": 200,
+          "returned_count": 8,
+          "message": null
+        },
+        {
+          "label": "invalid_value",
+          "type": "invalid",
+          "path": "/resources",
+          "params": {
+            "status": "unknown_value"
+          },
+          "status": 400,
+          "returned_count": null,
+          "message": "Invalid value for the 'status' parameter: 'unknown_value'. Allowed values are ['active', 'inactive']."
+        },
+        {
+          "label": "unknown_param",
+          "type": "unknown",
+          "path": "/resources",
+          "params": {
+            "bogus_filter": "x"
+          },
+          "status": 400,
+          "returned_count": null,
+          "message": "Unknown query parameter 'bogus_filter' is not a recognized filter for this endpoint."
+        },
+        {
+          "label": "empty_result",
+          "type": "empty",
+          "path": "/resources",
+          "params": {
+            "status": "active",
+            "category": "C"
+          },
+          "status": 200,
+          "returned_count": 0,
+          "message": null
+        }
+      ],
+      "scenarios": [
+        {
+          "collection": "/resources",
+          "scenario": "single_filter_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "single_filter_count",
+          "ideal": "15",
+          "observed_token": "15",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "single_filter_match",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "single_filter_exclusion",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "multi_filter_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "multi_filter_count",
+          "ideal": "8",
+          "observed_token": "8",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "multi_filter_match",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "multi_filter_exclusion",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "invalid_value_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "invalid_value_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "unknown_param_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "unknown_param_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "empty_result_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/resources",
+          "scenario": "empty_result_count",
+          "ideal": "0",
+          "observed_token": "0",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "collection": "/widgets",
+      "list_field": "widgets",
+      "emitted_plan": {
+        "collection": "/widgets",
+        "list_field": "widgets",
+        "id_field": "id",
+        "cases": [
+          {
+            "label": "single_filter",
+            "type": "single",
+            "params": {
+              "status": "active"
+            }
+          },
+          {
+            "label": "multi_filter",
+            "type": "multi",
+            "params": {
+              "status": "active",
+              "category": "A"
+            }
+          },
+          {
+            "label": "invalid_value",
+            "type": "invalid",
+            "params": {
+              "status": "unknown_value"
+            }
+          },
+          {
+            "label": "unknown_param",
+            "type": "unknown",
+            "params": {
+              "bogus_filter": "x"
+            }
+          },
+          {
+            "label": "empty_result",
+            "type": "empty",
+            "params": {
+              "status": "active",
+              "category": "C"
+            }
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "single_filter",
+          "type": "single",
+          "path": "/widgets",
+          "params": {
+            "status": "active"
+          },
+          "status": 200,
+          "returned_count": 10,
+          "message": null
+        },
+        {
+          "label": "multi_filter",
+          "type": "multi",
+          "path": "/widgets",
+          "params": {
+            "status": "active",
+            "category": "A"
+          },
+          "status": 200,
+          "returned_count": 6,
+          "message": null
+        },
+        {
+          "label": "invalid_value",
+          "type": "invalid",
+          "path": "/widgets",
+          "params": {
+            "status": "unknown_value"
+          },
+          "status": 400,
+          "returned_count": null,
+          "message": "Invalid value for the 'status' parameter: 'unknown_value'. Allowed values are ['active', 'inactive']."
+        },
+        {
+          "label": "unknown_param",
+          "type": "unknown",
+          "path": "/widgets",
+          "params": {
+            "bogus_filter": "x"
+          },
+          "status": 400,
+          "returned_count": null,
+          "message": "Unknown query parameter 'bogus_filter' is not a recognized filter for this endpoint."
+        },
+        {
+          "label": "empty_result",
+          "type": "empty",
+          "path": "/widgets",
+          "params": {
+            "status": "active",
+            "category": "C"
+          },
+          "status": 200,
+          "returned_count": 0,
+          "message": null
+        }
+      ],
+      "scenarios": [
+        {
+          "collection": "/widgets",
+          "scenario": "single_filter_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "single_filter_count",
+          "ideal": "10",
+          "observed_token": "10",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "single_filter_match",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "single_filter_exclusion",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "multi_filter_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "multi_filter_count",
+          "ideal": "6",
+          "observed_token": "6",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "multi_filter_match",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "multi_filter_exclusion",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "invalid_value_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "invalid_value_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "unknown_param_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "unknown_param_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "empty_result_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "collection": "/widgets",
+          "scenario": "empty_result_count",
+          "ideal": "0",
+          "observed_token": "0",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}

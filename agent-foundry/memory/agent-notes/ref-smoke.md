@@ -1,0 +1,1 @@
+- [2026-06-25T23:06:48.510727+00:00] run=smoke-ref crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources

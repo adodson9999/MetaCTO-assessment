@@ -1,0 +1,318 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DummyJSON content-negotiation contract (authored for the content-type-negotiation task; DummyJSON itself is unmodified)",
+    "version": "1.0.0",
+    "description": "Describes the produces/consumes a properly content-negotiating API would publish for these resources. The live DummyJSON ignores Accept and request Content-Type; the gold records that real behavior, and the gap is the QA finding."
+  },
+  "x-default-produces": "application/json",
+  "x-unsupported-accept-probe": "text/html",
+  "x-unsupported-content-type-probes": [
+    "application/xml",
+    "text/plain"
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "summary": "List/read /products",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/products/1": {
+      "get": {
+        "summary": "List/read /products/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/posts": {
+      "get": {
+        "summary": "List/read /posts",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/posts/1": {
+      "get": {
+        "summary": "List/read /posts/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/todos": {
+      "get": {
+        "summary": "List/read /todos",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/todos/1": {
+      "get": {
+        "summary": "List/read /todos/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "List/read /users",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/users/1": {
+      "get": {
+        "summary": "List/read /users/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/recipes": {
+      "get": {
+        "summary": "List/read /recipes",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/recipes/1": {
+      "get": {
+        "summary": "List/read /recipes/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/carts": {
+      "get": {
+        "summary": "List/read /carts",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/carts/1": {
+      "get": {
+        "summary": "List/read /carts/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/comments": {
+      "get": {
+        "summary": "List/read /comments",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/comments/1": {
+      "get": {
+        "summary": "List/read /comments/1",
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/csv"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "POST /auth/login",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/products/add": {
+      "post": {
+        "summary": "POST /products/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "put": {
+        "summary": "PUT /products/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /products/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/posts/add": {
+      "post": {
+        "summary": "POST /posts/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "put": {
+        "summary": "PUT /posts/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /posts/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/todos/add": {
+      "post": {
+        "summary": "POST /todos/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/todos/{id}": {
+      "put": {
+        "summary": "PUT /todos/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /todos/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/users/add": {
+      "post": {
+        "summary": "POST /users/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "summary": "PUT /users/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /users/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/recipes/add": {
+      "post": {
+        "summary": "POST /recipes/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/recipes/{id}": {
+      "put": {
+        "summary": "PUT /recipes/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /recipes/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/carts/add": {
+      "post": {
+        "summary": "POST /carts/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/carts/{id}": {
+      "put": {
+        "summary": "PUT /carts/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /carts/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/comments/add": {
+      "post": {
+        "summary": "POST /comments/add",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/comments/{id}": {
+      "put": {
+        "summary": "PUT /comments/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "summary": "PATCH /comments/{id}",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  }
+}

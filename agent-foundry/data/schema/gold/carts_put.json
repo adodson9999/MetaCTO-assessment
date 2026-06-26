@@ -1,0 +1,83 @@
+{
+  "slug": "carts_put",
+  "method": "PUT",
+  "path": "/carts/{id}",
+  "request_body": {
+    "merge": true,
+    "products": [
+      {
+        "id": 1,
+        "quantity": 3
+      }
+    ]
+  },
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 1,
+    "products": [
+      {
+        "id": 162,
+        "title": "Blue Frock",
+        "price": 29.99,
+        "quantity": 4,
+        "total": 119.96,
+        "discountPercentage": 12.13,
+        "discountedPrice": 105,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/tops/blue-frock/thumbnail.webp"
+      },
+      {
+        "id": 113,
+        "title": "Generic Motorcycle",
+        "price": 3999.99,
+        "quantity": 3,
+        "total": 11999.97,
+        "discountPercentage": 12.1,
+        "discountedPrice": 10548,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/generic-motorcycle/thumbnail.webp"
+      },
+      {
+        "id": 122,
+        "title": "iPhone 6",
+        "price": 299.99,
+        "quantity": 3,
+        "total": 899.97,
+        "discountPercentage": 6.69,
+        "discountedPrice": 840,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/thumbnail.webp"
+      },
+      {
+        "id": 138,
+        "title": "Baseball Ball",
+        "price": 8.99,
+        "quantity": 2,
+        "total": 17.98,
+        "discountPercentage": 1.71,
+        "discountedPrice": 18,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/baseball-ball/thumbnail.webp"
+      },
+      {
+        "id": 1,
+        "title": "Essence Mascara Lash Princess",
+        "price": 9.99,
+        "quantity": 3,
+        "total": 29.97,
+        "discountPercentage": 10.48,
+        "discountedPrice": 27,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+      }
+    ],
+    "total": 13067.849999999997,
+    "discountedTotal": 11538,
+    "userId": 1,
+    "totalProducts": 5,
+    "totalQuantity": 15
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

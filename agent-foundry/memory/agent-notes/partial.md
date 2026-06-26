@@ -1,0 +1,2 @@
+- [2026-06-26T00:19:40.596484+00:00] run=selftest-partial file-upload-download run: correctness_rate=7.14% integrity=0.0% over413=0.0% invalid415=0.0% over 6 endpoints (84 scenarios)
+- [2026-06-26T00:41:15.451974+00:00] run=st-part file-upload-download run: correctness_rate=14.29% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)

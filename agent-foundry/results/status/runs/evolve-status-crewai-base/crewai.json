@@ -1,0 +1,12 @@
+{
+  "agent": "crewai",
+  "run_id": "evolve-status-crewai-base",
+  "metric_name": "status_code_accuracy_rate_pct",
+  "metric_value": 0.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/status/runs/evolve-status-crewai-base/crewai.cases.json",
+  "ts": "2026-06-25T20:34:06.729632+00:00",
+  "status_code_accuracy_rate_pct": 0.0,
+  "testable": 5,
+  "correct": 0,
+  "covered_cases": 5
+}

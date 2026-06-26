@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""CrewAI test-case-creator agent (n600).
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-agent-spec
+Task. CrewAI routes the model through LiteLLM, so the local Ollama backend works via an
+"ollama/<model>" string. Deterministic manifest read, gold computation, registry write,
+and the count assertion are the shared harness's job (agents/common/testcase.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import testcase  # noqa: E402
+from testcase_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0)
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API test-case-creator agent",
+        goal="Convert one agent specification's How section into a JSON array of structured test-case objects.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> list:
+        brief = testcase.agent_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON array of test-case objects, one per numbered step.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return testcase.extract_json_array(str(out)) or []
+
+    summary = testcase.run_testcase_test(AGENT, generate)
+    print(f"[{AGENT}] coverage_rate={summary['test_case_coverage_rate_pct']}% "
+          f"field_accuracy={summary['test_case_field_accuracy_pct']}% "
+          f"cases={summary['present_tc']}/{summary['gold_tc']}")
+
+
+if __name__ == "__main__":
+    main()

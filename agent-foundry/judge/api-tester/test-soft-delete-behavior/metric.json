@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / test-soft-delete-behavior",
+  "metric_name": "soft_delete_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (step not emitted in its plan -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (13).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-soft-delete-behavior/gold.json",
+  "headline_metric": "soft_delete_correctness_rate_pct",
+  "scenarios_total": 13,
+  "rationale": "The soft-delete execution mechanism (run case_count create->delete->verify lifecycles against the local target, record T_DELETE immediately before each DELETE, then a direct read-only SQLite SELECT for the surviving row / deleted_at / is_deleted / within-tolerance check) lives in the shared harness, identical for all four agents, so the raw Soft Delete Correctness Rate is a property of the target, not the agent. Fidelity-to-gold instead measures each framework's test-PLAN quality: did its LLM construct the correct create descriptor (POST, right endpoint, the known fields), the correct delete descriptor (DELETE, path_template with the verbatim {RESOURCE_ID}, the accepted codes), the get-by-id 404 + no-field-leak check, the collection absent check, the eight-key db_query (right table + column names + the four read expectations + the within-seconds tolerance), and the include_deleted check. A framework whose plan omits a step (e.g. drops db_query or include_deleted), quotes an integer, substitutes a guessed id for {RESOURCE_ID}, or mis-names a column diverges from gold and scores lower. The headline soft_delete_correctness_rate_pct is still emitted by every agent as the task's QA finding (empirically 100% against the contract-correct local target: every soft delete leaves exactly one queryable row with a non-null deleted_at set within 10s and is_deleted=true, GET-by-id returns 404 leaking no field values, the row is absent from the default listing and reappears under ?include_deleted=true).",
+  "headline_pass_threshold": "soft_delete_correctness_rate_pct = 100 (every test case: GET-by-id 404 AND absent from collection AND DB row exists with non-null deleted_at within 10 seconds)",
+  "headline_fail_condition": "any GET-by-id returning non-404, any deleted resource still present in the collection, any DB row missing, any deleted_at null, or any deleted_at set more than 10 seconds after the DELETE",
+  "rank_pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "rank_fail_condition": "fidelity < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold)"
+}

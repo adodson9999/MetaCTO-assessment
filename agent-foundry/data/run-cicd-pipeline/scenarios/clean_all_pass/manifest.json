@@ -1,0 +1,27 @@
+[
+  {
+    "name": "auth-flow-checker",
+    "spec_path": "agents/auth-flow-checker.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "schema-validator",
+    "spec_path": "agents/schema-validator.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "rate-limit-prober",
+    "spec_path": "agents/rate-limit-prober.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "pagination-checker",
+    "spec_path": "agents/pagination-checker.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "legacy-soap-tester",
+    "spec_path": "agents/legacy-soap-tester.prompt.md",
+    "enabled": false
+  }
+]

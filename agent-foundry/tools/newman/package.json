@@ -1,0 +1,8 @@
+{
+  "name": "forge-newman-isolated",
+  "private": true,
+  "description": "Isolated Newman for n601 Postman dry-run validation. Kept out of the DummyJSON project node_modules.",
+  "dependencies": {
+    "newman": "^6.2.2"
+  }
+}

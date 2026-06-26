@@ -1,0 +1,13 @@
+{
+  "agent": "faithful",
+  "run_id": "verify-fidelity",
+  "metric_name": "version_routing_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/versioning/runs/verify-fidelity/faithful.cases.json",
+  "ts": "2026-06-25T22:58:07.795035+00:00",
+  "version_routing_accuracy_pct": 30.77,
+  "scenarios_total": 52,
+  "fidelity_matches": 52,
+  "fidelity_denominator": 52,
+  "coverage_scenarios": 28
+}

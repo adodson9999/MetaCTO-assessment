@@ -1,0 +1,310 @@
+{
+  "slug": "users_put",
+  "method": "PUT",
+  "path": "/users/{id}",
+  "schema": {
+    "fields": {
+      "firstName": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "lastName": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "age": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "firstName"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": null,
+        "age": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "firstName:key_absent",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "firstName:key_present_null",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:INT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": 42,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:FLOAT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": 3.14,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:BOOL_TRUE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": true,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:BOOL_FALSE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": false,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:LIST_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": [
+          1,
+          "a",
+          true
+        ],
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:OBJECT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": {
+          "key": "value"
+        },
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:NULL_NONE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "Name",
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "firstName",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lastName": "Name"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "lastName",
+      "field": "lastName",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Updated",
+        "lastName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ]
+}

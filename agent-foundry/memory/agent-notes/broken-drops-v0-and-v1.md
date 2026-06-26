@@ -1,0 +1,1 @@
+- [2026-06-25T22:58:13.869796+00:00] run=verify-fidelity versioning-behavior run: accuracy=23.08% over 4 endpoints (52 scenarios)

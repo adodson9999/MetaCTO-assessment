@@ -1,0 +1,44 @@
+{
+  "slug": "comments_add",
+  "method": "POST",
+  "path": "/comments/add",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    201,
+    400
+  ],
+  "cases": [
+    {
+      "documented_code": 201,
+      "request": {
+        "code": 201,
+        "method": "POST",
+        "path": "/comments/add",
+        "auth": "none",
+        "body": {
+          "body": "Nice post",
+          "postId": 1,
+          "userId": 1
+        }
+      },
+      "actual_code": 201,
+      "passed": true
+    },
+    {
+      "documented_code": 400,
+      "request": {
+        "code": 400,
+        "method": "POST",
+        "path": "/comments/add",
+        "auth": "none",
+        "body": {
+          "postId": 1,
+          "userId": 1
+        }
+      },
+      "actual_code": 400,
+      "passed": true
+    }
+  ]
+}

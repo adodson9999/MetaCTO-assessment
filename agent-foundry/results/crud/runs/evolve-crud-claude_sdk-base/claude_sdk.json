@@ -1,0 +1,12 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "evolve-crud-claude_sdk-base",
+  "metric_name": "crud_integrity_rate_pct",
+  "metric_value": 0.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/crud/runs/evolve-crud-claude_sdk-base/claude_sdk.cases.json",
+  "ts": "2026-06-26T00:20:07.279603+00:00",
+  "crud_integrity_rate_pct": 0.0,
+  "resource_types": 2,
+  "resource_types_passing": 0,
+  "covered_step_cells": 12
+}

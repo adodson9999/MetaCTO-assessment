@@ -1,0 +1,21 @@
+{
+  "task": "api-tester / run-regression-suite",
+  "metric_name": "regression_report_fidelity_pct",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (build_pair x report_field) cells where the agent's emitted seven-field regression report matches the deterministic gold report. Denominator = build_pairs x 7 fields (here 4 x 7 = 28). A field the agent omitted or got wrong counts as a mismatch. The 'regressions' cell is scored on the REGRESSION-ID SET (the load-bearing detection result); failure-message reproduction is reported as a separate diagnostic.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/run-regression-suite/gold.json",
+  "headline_metric": "regression_rate_pct",
+  "fields_per_pair": 7,
+  "discriminators": {
+    "rank_key": "fidelity desc, report_conformance desc, message_fidelity desc, tokens asc, elapsed asc",
+    "report_conformance_pct": "DETERMINISTIC structural exactness of the RAW emitted report vs gold (exactly the seven keys, native-int counts, regressions as exactly {id,failure_message} objects, verbatim failure messages, canonical lowercase pass/fail) scored BEFORE the tolerant fidelity normalisation — separates frameworks when fidelity ties at 100%.",
+    "message_fidelity_pct": "Of the gold regressions whose IDs the agent flagged, the fraction whose failure_message the agent reproduced (normalised substring).",
+    "efficiency": "total LLM tokens (lower better) then wall-clock elapsed (lower better); tokens=0 (framework didn't expose usage) sorts last among ties."
+  },
+  "rationale": "All four agents compare the SAME local build-pair fixtures, so the headline Regression Rate (pass-in-N-1-then-fail-in-N over prev-passed, per build) is a property of the fixtures, not the agent — it is the same for every agent that computes it correctly (40%, 0%, 50%, 33.33% for ci-1043, build-78, gh-2002, rel-10). Regression-Report Fidelity instead measures each framework's test quality: did it correctly recover PREV_PASSED_IDS, detect exactly the regressions (excluding already-failing and removed tests), find the newly-passing tests, count the suite, and set overall_status — across four reporter formats (Newman JUnit XML, pytest JUnit XML, Jest --json, pytest-json). Because a deterministic, tightly debate-gated task saturates correctness, report_conformance + message_fidelity + efficiency break ties so the leaderboard stays strictly ranked.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold field)",
+  "fail_condition": "fidelity < 100% (any field of any build pair diverges from gold)",
+  "task_metric_note": "The TASK's own gate metric is Regression Rate = (test IDs passed in N-1 and failed in N / total IDs passed in N-1) x 100; pass = exactly 0 (zero regressions), fail = any value > 0 (a single regression blocks deployment, no tolerance). Newly-failing tests already failing in N-1 are NOT regressions. The honest finding from the fixtures: builds ci-1043, gh-2002, and rel-10 MUST be blocked; build-78 may deploy."
+}

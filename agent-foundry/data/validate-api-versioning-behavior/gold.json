@@ -1,0 +1,888 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "today": "2026-06-25",
+    "endpoints": 4,
+    "scenarios_per_endpoint": 13,
+    "total_scenarios": 52,
+    "api_correct_scenarios": 16,
+    "empirical_version_routing_accuracy_pct": 30.77,
+    "qa_findings": [
+      {
+        "endpoint": "/products",
+        "scenario": "current_v2_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "current_v2_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "deprecated_v1_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "deprecated_v1_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "deprecated_v1_deprecation_present",
+        "ideal": "present",
+        "observed": "absent"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "deprecated_v1_deprecation_iso",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "deprecated_v1_deprecation_future",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "schema_diff_field_present_in_v2",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/products",
+        "scenario": "schema_diff_field_absent_in_v1",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "current_v2_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "current_v2_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "deprecated_v1_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "deprecated_v1_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "deprecated_v1_deprecation_present",
+        "ideal": "present",
+        "observed": "absent"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "deprecated_v1_deprecation_iso",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "deprecated_v1_deprecation_future",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "schema_diff_field_present_in_v2",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/posts",
+        "scenario": "schema_diff_field_absent_in_v1",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "current_v2_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "current_v2_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "deprecated_v1_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "deprecated_v1_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "deprecated_v1_deprecation_present",
+        "ideal": "present",
+        "observed": "absent"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "deprecated_v1_deprecation_iso",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "deprecated_v1_deprecation_future",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "schema_diff_field_present_in_v2",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/users",
+        "scenario": "schema_diff_field_absent_in_v1",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "current_v2_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "current_v2_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "deprecated_v1_status",
+        "ideal": "200",
+        "observed": "404"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "deprecated_v1_schema_valid",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "deprecated_v1_deprecation_present",
+        "ideal": "present",
+        "observed": "absent"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "deprecated_v1_deprecation_iso",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "deprecated_v1_deprecation_future",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "schema_diff_field_present_in_v2",
+        "ideal": "true",
+        "observed": "missing"
+      },
+      {
+        "endpoint": "/recipes",
+        "scenario": "schema_diff_field_absent_in_v1",
+        "ideal": "true",
+        "observed": "missing"
+      }
+    ],
+    "note": "Ground truth = live DummyJSON observed token per (endpoint, scenario). DummyJSON implements no API versioning: there is no /vN router and no Deprecation header, so every versioned URL returns 404 with an HTML body. The documented current (v2) and deprecated (v1) versions therefore wrongly 404 (ideal 200) and never carry a Deprecation header; schema and header scenarios score 'missing' for lack of any 200 body. Only the unsupported v0/v99/vbeta scenarios match the ideal (404), and only because every version 404s. That gap is a real QA finding, not an agent failure."
+  },
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "list_field": "products",
+      "schema_diff_field": "apiVersion",
+      "reference_plan": {
+        "endpoint": "/products",
+        "list_field": "products",
+        "schema_diff_field": "apiVersion",
+        "cases": [
+          {
+            "label": "current_v2",
+            "path": "/v2/products",
+            "version": "v2",
+            "version_status": "current"
+          },
+          {
+            "label": "deprecated_v1",
+            "path": "/v1/products",
+            "version": "v1",
+            "version_status": "deprecated"
+          },
+          {
+            "label": "unsupported_v0",
+            "path": "/v0/products",
+            "version": "v0",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_v99",
+            "path": "/v99/products",
+            "version": "v99",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_vbeta",
+            "path": "/vbeta/products",
+            "version": "vbeta",
+            "version_status": "unsupported"
+          }
+        ]
+      },
+      "request_log": {
+        "current_v2": {
+          "path": "/v2/products",
+          "version": "v2",
+          "version_status": "current",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "deprecated_v1": {
+          "path": "/v1/products",
+          "version": "v1",
+          "version_status": "deprecated",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v0": {
+          "path": "/v0/products",
+          "version": "v0",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v99": {
+          "path": "/v99/products",
+          "version": "v99",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_vbeta": {
+          "path": "/vbeta/products",
+          "version": "vbeta",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "absent",
+          "api_correct": true
+        },
+        {
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/posts",
+      "list_field": "posts",
+      "schema_diff_field": "apiVersion",
+      "reference_plan": {
+        "endpoint": "/posts",
+        "list_field": "posts",
+        "schema_diff_field": "apiVersion",
+        "cases": [
+          {
+            "label": "current_v2",
+            "path": "/v2/posts",
+            "version": "v2",
+            "version_status": "current"
+          },
+          {
+            "label": "deprecated_v1",
+            "path": "/v1/posts",
+            "version": "v1",
+            "version_status": "deprecated"
+          },
+          {
+            "label": "unsupported_v0",
+            "path": "/v0/posts",
+            "version": "v0",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_v99",
+            "path": "/v99/posts",
+            "version": "v99",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_vbeta",
+            "path": "/vbeta/posts",
+            "version": "vbeta",
+            "version_status": "unsupported"
+          }
+        ]
+      },
+      "request_log": {
+        "current_v2": {
+          "path": "/v2/posts",
+          "version": "v2",
+          "version_status": "current",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "deprecated_v1": {
+          "path": "/v1/posts",
+          "version": "v1",
+          "version_status": "deprecated",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v0": {
+          "path": "/v0/posts",
+          "version": "v0",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v99": {
+          "path": "/v99/posts",
+          "version": "v99",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_vbeta": {
+          "path": "/vbeta/posts",
+          "version": "vbeta",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "absent",
+          "api_correct": true
+        },
+        {
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/users",
+      "list_field": "users",
+      "schema_diff_field": "apiVersion",
+      "reference_plan": {
+        "endpoint": "/users",
+        "list_field": "users",
+        "schema_diff_field": "apiVersion",
+        "cases": [
+          {
+            "label": "current_v2",
+            "path": "/v2/users",
+            "version": "v2",
+            "version_status": "current"
+          },
+          {
+            "label": "deprecated_v1",
+            "path": "/v1/users",
+            "version": "v1",
+            "version_status": "deprecated"
+          },
+          {
+            "label": "unsupported_v0",
+            "path": "/v0/users",
+            "version": "v0",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_v99",
+            "path": "/v99/users",
+            "version": "v99",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_vbeta",
+            "path": "/vbeta/users",
+            "version": "vbeta",
+            "version_status": "unsupported"
+          }
+        ]
+      },
+      "request_log": {
+        "current_v2": {
+          "path": "/v2/users",
+          "version": "v2",
+          "version_status": "current",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "deprecated_v1": {
+          "path": "/v1/users",
+          "version": "v1",
+          "version_status": "deprecated",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v0": {
+          "path": "/v0/users",
+          "version": "v0",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v99": {
+          "path": "/v99/users",
+          "version": "v99",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_vbeta": {
+          "path": "/vbeta/users",
+          "version": "vbeta",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "absent",
+          "api_correct": true
+        },
+        {
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/recipes",
+      "list_field": "recipes",
+      "schema_diff_field": "apiVersion",
+      "reference_plan": {
+        "endpoint": "/recipes",
+        "list_field": "recipes",
+        "schema_diff_field": "apiVersion",
+        "cases": [
+          {
+            "label": "current_v2",
+            "path": "/v2/recipes",
+            "version": "v2",
+            "version_status": "current"
+          },
+          {
+            "label": "deprecated_v1",
+            "path": "/v1/recipes",
+            "version": "v1",
+            "version_status": "deprecated"
+          },
+          {
+            "label": "unsupported_v0",
+            "path": "/v0/recipes",
+            "version": "v0",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_v99",
+            "path": "/v99/recipes",
+            "version": "v99",
+            "version_status": "unsupported"
+          },
+          {
+            "label": "unsupported_vbeta",
+            "path": "/vbeta/recipes",
+            "version": "vbeta",
+            "version_status": "unsupported"
+          }
+        ]
+      },
+      "request_log": {
+        "current_v2": {
+          "path": "/v2/recipes",
+          "version": "v2",
+          "version_status": "current",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "deprecated_v1": {
+          "path": "/v1/recipes",
+          "version": "v1",
+          "version_status": "deprecated",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v0": {
+          "path": "/v0/recipes",
+          "version": "v0",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_v99": {
+          "path": "/v99/recipes",
+          "version": "v99",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        },
+        "unsupported_vbeta": {
+          "path": "/vbeta/recipes",
+          "version": "vbeta",
+          "version_status": "unsupported",
+          "status": 404,
+          "deprecation": null,
+          "ajv_error_count": null
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "current_v2_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "current_v2_no_deprecation",
+          "ideal": "absent",
+          "observed_token": "absent",
+          "api_correct": true
+        },
+        {
+          "scenario": "deprecated_v1_status",
+          "ideal": "200",
+          "observed_token": "404",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_schema_valid",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_present",
+          "ideal": "present",
+          "observed_token": "absent",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_iso",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "deprecated_v1_deprecation_future",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_present_in_v2",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "schema_diff_field_absent_in_v1",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "scenario": "unsupported_v0_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_v99_404",
+          "ideal": "404",
+          "observed_token": "404",
+          "api_correct": true
+        },
+        {
+          "scenario": "unsupported_vbeta_4xx",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "summary": {
+    "target": "http://localhost:8940",
+    "endpoints": 2,
+    "scenarios_per_endpoint": 13,
+    "total_scenarios": 26,
+    "api_correct_scenarios": 26,
+    "empirical_depth_enforcement_pct": 100.0,
+    "qa_findings": [],
+    "note": "Ground truth = the fixed depth-limit contract outcomes + the live local SUT's observed token per (endpoint, scenario). The SUT is built to the documented contract (depth<=max -> 200+data; depth>max -> 400+depth/complexity error; deep reject < 1s), so empirical Depth Enforcement is expected to be 100% \u2014 a clean positive finding. Any non-100% row is a genuine defect in the SUT or contract, not an agent failure. DummyJSON is never used or modified."
+  },
+  "endpoints": [
+    {
+      "endpoint": "/graphql",
+      "max_depth": 7,
+      "reference_plan": {
+        "endpoint": "/graphql",
+        "max_depth": 7,
+        "cases": [
+          {
+            "label": "depth_3",
+            "type": "accept",
+            "depth": 3
+          },
+          {
+            "label": "at_limit",
+            "type": "accept",
+            "depth": 7
+          },
+          {
+            "label": "one_over",
+            "type": "reject",
+            "depth": 8
+          },
+          {
+            "label": "deep_15",
+            "type": "reject_timed",
+            "depth": 15
+          }
+        ]
+      },
+      "request_log": {
+        "depth_3": {
+          "type": "accept",
+          "path": "/graphql",
+          "sent_depth": 3,
+          "status": 200,
+          "data_present": true,
+          "errors_count": null,
+          "message": null,
+          "elapsed_s": 0.0007
+        },
+        "at_limit": {
+          "type": "accept",
+          "path": "/graphql",
+          "sent_depth": 7,
+          "status": 200,
+          "data_present": true,
+          "errors_count": null,
+          "message": null,
+          "elapsed_s": 0.0006
+        },
+        "one_over": {
+          "type": "reject",
+          "path": "/graphql",
+          "sent_depth": 8,
+          "status": 400,
+          "data_present": false,
+          "errors_count": 1,
+          "message": "Query depth 8 exceeds the maximum allowed depth of 7; the query was rejected for excessive complexity.",
+          "elapsed_s": 0.0005
+        },
+        "deep_15": {
+          "type": "reject_timed",
+          "path": "/graphql",
+          "sent_depth": 15,
+          "status": 400,
+          "data_present": false,
+          "errors_count": 1,
+          "message": "Query depth 15 exceeds the maximum allowed depth of 7; the query was rejected for excessive complexity.",
+          "elapsed_s": 0.0005
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "depth_3_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "depth_3_data",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "depth_3_no_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_data",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_no_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_within_1s",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/graphql-strict",
+      "max_depth": 4,
+      "reference_plan": {
+        "endpoint": "/graphql-strict",
+        "max_depth": 4,
+        "cases": [
+          {
+            "label": "depth_3",
+            "type": "accept",
+            "depth": 3
+          },
+          {
+            "label": "at_limit",
+            "type": "accept",
+            "depth": 4
+          },
+          {
+            "label": "one_over",
+            "type": "reject",
+            "depth": 5
+          },
+          {
+            "label": "deep_15",
+            "type": "reject_timed",
+            "depth": 15
+          }
+        ]
+      },
+      "request_log": {
+        "depth_3": {
+          "type": "accept",
+          "path": "/graphql-strict",
+          "sent_depth": 3,
+          "status": 200,
+          "data_present": true,
+          "errors_count": null,
+          "message": null,
+          "elapsed_s": 0.0006
+        },
+        "at_limit": {
+          "type": "accept",
+          "path": "/graphql-strict",
+          "sent_depth": 4,
+          "status": 200,
+          "data_present": true,
+          "errors_count": null,
+          "message": null,
+          "elapsed_s": 0.0005
+        },
+        "one_over": {
+          "type": "reject",
+          "path": "/graphql-strict",
+          "sent_depth": 5,
+          "status": 400,
+          "data_present": false,
+          "errors_count": 1,
+          "message": "Query depth 5 exceeds the maximum allowed depth of 4; the query was rejected for excessive complexity.",
+          "elapsed_s": 0.0005
+        },
+        "deep_15": {
+          "type": "reject_timed",
+          "path": "/graphql-strict",
+          "sent_depth": 15,
+          "status": 400,
+          "data_present": false,
+          "errors_count": 1,
+          "message": "Query depth 15 exceeds the maximum allowed depth of 4; the query was rejected for excessive complexity.",
+          "elapsed_s": 0.0006
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "depth_3_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "depth_3_data",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "depth_3_no_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_data",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "at_limit_no_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "one_over_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_status",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_errors",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_message",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "deep_15_within_1s",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    }
+  ]
+}

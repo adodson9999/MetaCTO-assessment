@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI long-polling testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-channel
+Task. CrewAI routes the model through LiteLLM, so claude-haiku works via an
+"anthropic/<model>" string (and Ollama via "ollama/<model>" when switched). Deterministic
+execution (raw-socket long-poll probes + background-thread trigger), recording, and emit
+are the shared harness's job (agents/common/longpoll.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import longpoll as harness  # noqa: E402
+from longpoll_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API long-polling testing agent",
+        goal="Convert one channel's documented long-poll contract into a single JSON long-poll test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = harness.channel_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the seven long-poll-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return harness.extract_json(str(out)) or {}
+
+    summary = harness.run_longpoll_test(AGENT, generate)
+    print(f"[{AGENT}] response_accuracy={summary['longpoll_response_accuracy_pct']}% "
+          f"cases={summary['cases_passed']}/{summary['cases_total']}")
+
+
+if __name__ == "__main__":
+    main()

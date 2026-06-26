@@ -1,0 +1,20 @@
+{
+  "scenario": "disabled_and_empty_stdout",
+  "note": "Five manifest entries, two disabled (excluded). Of the three enabled: two pass, one exits 0 with EMPTY stdout (MALFORMED \u2014 empty is a parse failure). Pipeline FAILS (66.67%).",
+  "gold_summary": {
+    "run_id": "2026-06-26T16-20-10",
+    "model": "llama3.1:8b",
+    "model_digest": "42182419e950",
+    "agents_total": 3,
+    "agents_passed": 2,
+    "agents_failed": 1,
+    "failed_agents": [],
+    "malformed_agents": [
+      "cors-header-checker"
+    ],
+    "timed_out_agents": [],
+    "timestamp": "2026-06-26T16:24:55+00:00"
+  },
+  "pass_rate_pct": 66.67,
+  "would_block_deployment": true
+}

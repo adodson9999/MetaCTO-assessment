@@ -1,0 +1,2 @@
+- [2026-06-26T00:09:28.382394+00:00] run=cid-run-1 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-06-26T00:22:58.284381+00:00] run=cid-run-2 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)

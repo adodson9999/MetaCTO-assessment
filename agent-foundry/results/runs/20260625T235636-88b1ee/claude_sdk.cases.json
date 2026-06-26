@@ -1,0 +1,536 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "20260625T235636-88b1ee",
+  "target": "http://localhost:8899",
+  "oauth_flow_completion_rate_pct": 0.0,
+  "flows_complete": 0,
+  "flows_total": 3,
+  "assertion_correctness_rate_pct": 0.0,
+  "stage_pass_counts": {
+    "redirect": 0,
+    "code_receipt": 0,
+    "token_exchange": 0,
+    "access_token_use": 0,
+    "token_refresh": 0
+  },
+  "assertions_total": 57,
+  "assertions_api_correct": 0,
+  "flows": [
+    {
+      "provider": "google",
+      "client_id": "forge-google-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/google",
+      "scope": "openid email profile",
+      "flow_complete": false,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "redirect",
+          "stage_correct": false
+        },
+        {
+          "stage": 2,
+          "name": "code_receipt",
+          "stage_correct": false
+        },
+        {
+          "stage": 3,
+          "name": "token_exchange",
+          "stage_correct": false
+        },
+        {
+          "stage": 4,
+          "name": "access_token_use",
+          "stage_correct": false
+        },
+        {
+          "stage": 5,
+          "name": "token_refresh",
+          "stage_correct": false
+        }
+      ],
+      "emitted_plan": {},
+      "request_log": [],
+      "assertions": [
+        {
+          "provider": "google",
+          "scenario": "s1_status_302",
+          "ideal": "302",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_location_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_has_client_id",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_has_redirect_uri",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_has_scope",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_state_present_min8",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s1_location_https",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s2_callback_code_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s2_state_csrf_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s3_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s3_access_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s3_token_type_bearer",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s3_refresh_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s3_expires_in_positive",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s4_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s4_profile_field_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s5_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s5_new_access_token_diff",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "google",
+          "scenario": "s5_me_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "github",
+      "client_id": "forge-github-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/github",
+      "scope": "read:user user:email",
+      "flow_complete": false,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "redirect",
+          "stage_correct": false
+        },
+        {
+          "stage": 2,
+          "name": "code_receipt",
+          "stage_correct": false
+        },
+        {
+          "stage": 3,
+          "name": "token_exchange",
+          "stage_correct": false
+        },
+        {
+          "stage": 4,
+          "name": "access_token_use",
+          "stage_correct": false
+        },
+        {
+          "stage": 5,
+          "name": "token_refresh",
+          "stage_correct": false
+        }
+      ],
+      "emitted_plan": {},
+      "request_log": [],
+      "assertions": [
+        {
+          "provider": "github",
+          "scenario": "s1_status_302",
+          "ideal": "302",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_location_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_has_client_id",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_has_redirect_uri",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_has_scope",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_state_present_min8",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s1_location_https",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s2_callback_code_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s2_state_csrf_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s3_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s3_access_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s3_token_type_bearer",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s3_refresh_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s3_expires_in_positive",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s4_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s4_profile_field_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s5_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s5_new_access_token_diff",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "github",
+          "scenario": "s5_me_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "facebook",
+      "client_id": "forge-facebook-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/facebook",
+      "scope": "email public_profile",
+      "flow_complete": false,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "redirect",
+          "stage_correct": false
+        },
+        {
+          "stage": 2,
+          "name": "code_receipt",
+          "stage_correct": false
+        },
+        {
+          "stage": 3,
+          "name": "token_exchange",
+          "stage_correct": false
+        },
+        {
+          "stage": 4,
+          "name": "access_token_use",
+          "stage_correct": false
+        },
+        {
+          "stage": 5,
+          "name": "token_refresh",
+          "stage_correct": false
+        }
+      ],
+      "emitted_plan": {},
+      "request_log": [],
+      "assertions": [
+        {
+          "provider": "facebook",
+          "scenario": "s1_status_302",
+          "ideal": "302",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_location_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_has_client_id",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_has_redirect_uri",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_has_scope",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_state_present_min8",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s1_location_https",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s2_callback_code_present",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s2_state_csrf_match",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s3_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s3_access_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s3_token_type_bearer",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s3_refresh_token_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s3_expires_in_positive",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s4_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s4_profile_field_nonempty",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s5_status_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s5_new_access_token_diff",
+          "ideal": "true",
+          "observed_token": "missing",
+          "api_correct": false
+        },
+        {
+          "provider": "facebook",
+          "scenario": "s5_me_200",
+          "ideal": "200",
+          "observed_token": "missing",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    }
+  ]
+}

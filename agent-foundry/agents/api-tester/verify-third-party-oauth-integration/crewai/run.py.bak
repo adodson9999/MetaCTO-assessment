@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""CrewAI OAuth-integration-testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-flow Task.
+CrewAI routes the model through LiteLLM, so claude-haiku works via an "anthropic/<model>"
+string and the air-gapped default works via "ollama/<model>". Deterministic execution
+(drive the real flow against the local target), recording, and emit are the shared
+harness's job (agents/common/oauth.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import oauth  # noqa: E402
+from oauth_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API OAuth-integration-testing agent",
+        goal="Convert one third-party OAuth2 flow's contract into a single JSON 5-stage OAuth test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = oauth.flow_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the eleven OAuth-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return oauth.extract_json(str(out)) or {}
+
+    summary = oauth.run_oauth_test(AGENT, generate)
+    print(f"[{AGENT}] completion_rate={summary['oauth_flow_completion_rate_pct']}% "
+          f"flows={summary['flows_complete']}/{summary['flows_total']} "
+          f"assertions={summary['assertions_api_correct']}/{summary['assertions_total']}")
+
+
+if __name__ == "__main__":
+    main()

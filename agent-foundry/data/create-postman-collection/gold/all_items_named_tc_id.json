@@ -1,0 +1,6 @@
+{
+  "scenario": "all_items_named_tc_id",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

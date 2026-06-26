@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / measure-api-consumer-satisfaction",
+  "metric_name": "nps_measurement_plan_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios (26 per dataset) where the agent's plan-driven, harness-observed token equals the gold observed token. A scenario the agent's plan does not pin (field missing -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios for the ranking dataset (current). Gold = the canonical correct measurement plan executed against the seeded local usage fixture.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/measure-api-consumer-satisfaction/gold.json",
+  "ranking_dataset": "current",
+  "headline_metric": "nps_score",
+  "scenarios_per_dataset": 26,
+  "rationale": "All four agents render the SAME documented NPS-survey-measurement contract into a JSON measurement plan; a single deterministic harness then executes each plan against one local seeded usage fixture (api_request_logs + collected survey responses; DummyJSON is never used or modified) and computes the dashboard. The business KPI -- NPS = round(promoter_pct - detractor_pct) -- is a property of the seeded data once the plan is correct (gold = +22, valid, 45.0% response rate, top-3 theme sizes 16/13/11), so it cannot distinguish the frameworks. Fidelity-to-gold instead measures each framework's test quality: did it pin the 90-day recipient window, the four verbatim survey questions, the 14-day collection window, the promoter/passive/detractor bands, the exact integer NPS formula, the 30% validity threshold, the k-means/TF-IDF top-3 clustering config, and the ten dashboard fields -- and does the resulting plan, when executed, reproduce the gold dashboard (recipient/respondent counts, response rate, band counts, integer NPS, validity verdict, and the three largest theme clusters)? A plan with a wrong band, window, threshold, or clustering config produces a divergent dashboard and a lower score. The headline nps_score is emitted by every agent as the quarter's KPI (target >= +40; alert < +20).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token; equivalently the plan pins every contract value and the executed dashboard equals the gold dashboard, NPS = +22)",
+  "fail_condition": "fidelity < 100% (any plan field unpinned or wrong, or any computed dashboard value diverging from gold)"
+}

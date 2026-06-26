@@ -1,0 +1,800 @@
+{
+  "agent": "langgraph",
+  "run_id": "20260625T224227-6ab0fb",
+  "target": "http://localhost:8899",
+  "rate_limit_contract_correctness_rate_pct": 25.0,
+  "rate_limit_enforced": false,
+  "trigger_precision_overall_pass": false,
+  "rate_limit_trigger_precision": {
+    "/products": "none",
+    "/posts": "none",
+    "/comments": "none",
+    "/todos": "none",
+    "/users": "none",
+    "/recipes": "none"
+  },
+  "scenarios_total": 48,
+  "scenarios_api_correct": 12,
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "api_key_value": "forge-test-key-products",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/products",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-products",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/posts",
+      "api_key_value": "forge-test-key-posts",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/posts",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-posts",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/comments",
+      "api_key_value": "forge-test-key-comments",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/comments",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-comments",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/todos",
+      "api_key_value": "forge-test-key-todos",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/todos",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-todos",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/users",
+      "api_key_value": "forge-test-key-users",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/users",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-users",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/recipes",
+      "api_key_value": "forge-test-key-recipes",
+      "limit_n": 10,
+      "window_seconds": 5,
+      "trigger_ordinal": "none",
+      "emitted_plan": {
+        "endpoint": "/recipes",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 10,
+        "window_seconds": 5,
+        "api_key_header": "x-api-key",
+        "api_key_value": "forge-test-key-recipes",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 10
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 10,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 11,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 200,
+          "retry_after": null
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes",
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "first_429_ordinal",
+          "ideal": "11",
+          "observed_token": "none",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}

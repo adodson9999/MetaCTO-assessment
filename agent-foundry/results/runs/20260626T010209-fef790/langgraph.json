@@ -1,0 +1,17 @@
+{
+  "agent": "langgraph",
+  "run_id": "20260626T010209-fef790",
+  "metric_name": "upload_download_test_fidelity",
+  "metric_value": 42.86,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/20260626T010209-fef790/langgraph.cases.json",
+  "ts": "2026-06-26T01:02:22.904533+00:00",
+  "upload_contract_correctness_rate_pct": 0.0,
+  "file_integrity_rate_pct": 0.0,
+  "over_size_rejection_rate_pct": 0.0,
+  "invalid_mime_rejection_rate_pct": 0.0,
+  "overall_pass": false,
+  "scenarios_total": 42,
+  "fidelity_matches": 18,
+  "fidelity_denominator": 42,
+  "coverage_scenarios": 0
+}

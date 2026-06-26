@@ -1,0 +1,90 @@
+{
+  "title": "Local API-gateway routing contract (authored for the gateway-routing task)",
+  "description": "An API gateway fronts one mock backend per downstream service (the air-gapped local stand-in for WireMock instances behind a Kong/AWS API Gateway). Each documented route must be forwarded to exactly one backend with method, path, headers, and body unchanged, and the backend's response returned to the caller unchanged. Agents construct the routing test plan from this contract; ground truth is each backend's real /__admin/requests journal after the gateway forwards the request.",
+  "target": "http://127.0.0.1:8920",
+  "auth_token": "Bearer routing-test-token-abc123",
+  "services": [
+    "users-mock",
+    "orders-mock",
+    "payments-mock"
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/users/42",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123"
+      },
+      "body": null,
+      "expected_backend": "users-mock",
+      "down_test": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/users",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "name": "Ada Lovelace",
+        "role": "engineer"
+      },
+      "expected_backend": "users-mock",
+      "down_test": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/7",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123"
+      },
+      "body": null,
+      "expected_backend": "orders-mock",
+      "down_test": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/orders",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "item": "widget",
+        "qty": 3
+      },
+      "expected_backend": "orders-mock",
+      "down_test": false
+    },
+    {
+      "method": "PUT",
+      "path": "/api/payments/9",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "amount": 100,
+        "currency": "USD"
+      },
+      "expected_backend": "payments-mock",
+      "down_test": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/payments/9",
+      "headers": {
+        "Authorization": "Bearer routing-test-token-abc123"
+      },
+      "body": null,
+      "expected_backend": "payments-mock",
+      "down_test": true
+    }
+  ],
+  "_services_admin": {
+    "users-mock": "http://127.0.0.1:8921",
+    "orders-mock": "http://127.0.0.1:8922",
+    "payments-mock": "http://127.0.0.1:8923"
+  }
+}

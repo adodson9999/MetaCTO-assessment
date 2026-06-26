@@ -1,0 +1,3166 @@
+{
+  "agent": "api-tester-verify-content-type-negotiation",
+  "run_id": "cn-20260625T230851",
+  "target": "http://localhost:8899",
+  "content_type_negotiation_accuracy_pct": 32.35,
+  "scenarios_total": 136,
+  "scenarios_api_correct": 44,
+  "endpoints": [
+    {
+      "slug": "get_products",
+      "endpoint": "/products",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/products",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "429",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_products_1",
+      "endpoint": "/products/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/products/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/products/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_posts",
+      "endpoint": "/posts",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/posts",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_posts_1",
+      "endpoint": "/posts/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/posts/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_todos",
+      "endpoint": "/todos",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/todos",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "429",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_todos_1",
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/todos/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/todos/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_users",
+      "endpoint": "/users",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/users",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 429,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "429",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_users_1",
+      "endpoint": "/users/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/users/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/users/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_recipes",
+      "endpoint": "/recipes",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/recipes",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_recipes_1",
+      "endpoint": "/recipes/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/recipes/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_carts",
+      "endpoint": "/carts",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/carts",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/carts",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/carts",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_carts_1",
+      "endpoint": "/carts/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/carts/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/carts/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/carts/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_comments",
+      "endpoint": "/comments",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/comments",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "get_comments_1",
+      "endpoint": "/comments/1",
+      "kind": "accept",
+      "method": null,
+      "emitted_plan": {
+        "endpoint": "/comments/1",
+        "kind": "accept",
+        "probes": [
+          {
+            "label": "accept_application_json",
+            "accept": "application/json"
+          },
+          {
+            "label": "accept_application_xml",
+            "accept": "application/xml"
+          },
+          {
+            "label": "accept_text_csv",
+            "accept": "text/csv"
+          },
+          {
+            "label": "accept_text_html_unsupported",
+            "accept": "text/html"
+          },
+          {
+            "label": "accept_wildcard",
+            "accept": "*/*"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "accept_application_json",
+          "accept": "application/json",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        },
+        {
+          "label": "accept_application_xml",
+          "accept": "application/xml",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/xml",
+          "body_valid": false
+        },
+        {
+          "label": "accept_text_csv",
+          "accept": "text/csv",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/csv",
+          "body_valid": true
+        },
+        {
+          "label": "accept_text_html_unsupported",
+          "accept": "text/html",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "text/html",
+          "body_valid": false
+        },
+        {
+          "label": "accept_wildcard",
+          "accept": "*/*",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "requested_format": "application/json",
+          "body_valid": true
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments/1",
+          "kind": "accept",
+          "scenario": "accept_application_json",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments/1",
+          "kind": "accept",
+          "scenario": "accept_application_xml",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/1",
+          "kind": "accept",
+          "scenario": "accept_text_csv",
+          "ideal": "match",
+          "observed_token": "mismatch",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/1",
+          "kind": "accept",
+          "scenario": "accept_text_html_unsupported",
+          "ideal": "406",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/1",
+          "kind": "accept",
+          "scenario": "accept_wildcard",
+          "ideal": "match",
+          "observed_token": "match",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "auth_login",
+      "endpoint": "/auth/login",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/auth/login",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 400
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 400
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/auth/login",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/auth/login",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/auth/login",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "products_add",
+      "endpoint": "/products/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/products/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 201
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 201
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/products/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "201",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "201",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "products_put",
+      "endpoint": "/products/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/products/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "products_patch",
+      "endpoint": "/products/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/products/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/products/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "posts_add",
+      "endpoint": "/posts/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/posts/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 400
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 400
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "posts_put",
+      "endpoint": "/posts/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/posts/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "posts_patch",
+      "endpoint": "/posts/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/posts/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/posts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "todos_add",
+      "endpoint": "/todos/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/todos/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 400
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 400
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/todos/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "todos_put",
+      "endpoint": "/todos/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/todos/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "todos_patch",
+      "endpoint": "/todos/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/todos/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/todos/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "endpoint": "/users/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/users/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 201
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 201
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/users/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "201",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "201",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "users_put",
+      "endpoint": "/users/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/users/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "users_patch",
+      "endpoint": "/users/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/users/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/users/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "endpoint": "/recipes/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/recipes/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "recipes_put",
+      "endpoint": "/recipes/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/recipes/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "recipes_patch",
+      "endpoint": "/recipes/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/recipes/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/recipes/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "carts_add",
+      "endpoint": "/carts/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/carts/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 400
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 400
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/carts/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/carts/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "carts_put",
+      "endpoint": "/carts/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/carts/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "carts_patch",
+      "endpoint": "/carts/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/carts/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/carts/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "comments_add",
+      "endpoint": "/comments/add",
+      "kind": "consumes",
+      "method": "POST",
+      "emitted_plan": {
+        "endpoint": "/comments/add",
+        "kind": "consumes",
+        "method": "POST",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 201
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 400
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 400
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments/add",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/add",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "400",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "comments_put",
+      "endpoint": "/comments/{id}",
+      "kind": "consumes",
+      "method": "PUT",
+      "emitted_plan": {
+        "endpoint": "/comments/{id}",
+        "kind": "consumes",
+        "method": "PUT",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "slug": "comments_patch",
+      "endpoint": "/comments/{id}",
+      "kind": "consumes",
+      "method": "PATCH",
+      "emitted_plan": {
+        "endpoint": "/comments/{id}",
+        "kind": "consumes",
+        "method": "PATCH",
+        "probes": [
+          {
+            "label": "ctype_application_json_supported",
+            "content_type": "application/json"
+          },
+          {
+            "label": "ctype_application_xml_unsupported",
+            "content_type": "application/xml"
+          },
+          {
+            "label": "ctype_text_plain_unsupported",
+            "content_type": "text/plain"
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "ctype_application_json_supported",
+          "content_type": "application/json",
+          "status": 200
+        },
+        {
+          "label": "ctype_application_xml_unsupported",
+          "content_type": "application/xml",
+          "status": 200
+        },
+        {
+          "label": "ctype_text_plain_unsupported",
+          "content_type": "text/plain",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_json_supported",
+          "ideal": "supported",
+          "observed_token": "supported",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_application_xml_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/comments/{id}",
+          "kind": "consumes",
+          "scenario": "ctype_text_plain_unsupported",
+          "ideal": "415",
+          "observed_token": "200",
+          "api_correct": false
+        }
+      ],
+      "error": null
+    }
+  ]
+}

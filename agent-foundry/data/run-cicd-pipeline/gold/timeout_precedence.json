@@ -1,0 +1,22 @@
+{
+  "scenario": "timeout_precedence",
+  "note": "Exercises the TIMED_OUT-over-MALFORMED precedence: one agent timed out (exit 124) with empty stdout (would also be a parse failure) and must be TIMED_OUT only; one FAILED, two pass. Pipeline FAILS (50%).",
+  "gold_summary": {
+    "run_id": "2026-06-26T17-45-00",
+    "model": "llama3.1:8b",
+    "model_digest": "42182419e950",
+    "agents_total": 4,
+    "agents_passed": 2,
+    "agents_failed": 2,
+    "failed_agents": [
+      "correlation-id-checker"
+    ],
+    "malformed_agents": [],
+    "timed_out_agents": [
+      "soft-delete-prober"
+    ],
+    "timestamp": "2026-06-26T17:51:18+00:00"
+  },
+  "pass_rate_pct": 50.0,
+  "would_block_deployment": true
+}

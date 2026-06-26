@@ -1,0 +1,9 @@
+{
+  "task": "general / bug-reporter",
+  "alias": "n602",
+  "fixture": "data/bug-reporter/fixture.json",
+  "fixture_run_id": "20260626T143000-bugfix",
+  "bug_reports_out": "results/bug-reports/",
+  "index_out": "results/bug-reports/index.json",
+  "notes": "n602 is a pure transform over the local results/* JSON fixtures (the n599 pipeline-summary, the n600 test-case-registry, and the n601 postman-collection): for every non-PASSED agent it decides the bug report's judgement fields (title, severity via the nine ordered rules, priority, mapped testing_steps, postman_references) and a separate deterministic program materialises the file artifacts (replay screenshot, asciinema recording, logs; the DB dump is skipped because the air-gapped fixture has no [database]) and assembles results/bug-reports/[BUG_ID].json + index.json. n602 makes NO HTTP calls of its own and NEVER touches DummyJSON. The fixture bundle (data/bug-reporter/fixture.json) is materialised by build_gold.py because the sibling n599/n600/n601 agents are not built here. Each forge agent emits the per-failure DECISION; the shared harness materialises + assembles + scores; the judge ranks fidelity-to-gold + the headline Bug Report Completeness Rate."
+}

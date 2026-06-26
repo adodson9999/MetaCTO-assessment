@@ -1,0 +1,266 @@
+{
+  "agent": "crewai",
+  "run_id": "evolve-sd-crewai-cand",
+  "target": "http://127.0.0.1:8950",
+  "case_count": 3,
+  "soft_delete_correctness_rate_pct": 100.0,
+  "correct_cases": 3,
+  "total_cases": 3,
+  "scenarios_total": 13,
+  "scenarios_api_correct": 13,
+  "emitted_plan": {
+    "case_count": 3,
+    "create": {
+      "method": "POST",
+      "endpoint": "/resources",
+      "fields": {
+        "name": "widget",
+        "sku": "SKU",
+        "color": "octopus-teal"
+      }
+    },
+    "delete": {
+      "method": "DELETE",
+      "path_template": "/resources/{RESOURCE_ID}",
+      "expected_status": [
+        200,
+        204
+      ]
+    },
+    "get_deleted": {
+      "method": "GET",
+      "path_template": "/resources/{RESOURCE_ID}",
+      "expected_status": 404,
+      "assert_no_field_values": true
+    },
+    "collection": {
+      "method": "GET",
+      "endpoint": "/resources",
+      "expected_status": 200,
+      "assert_absent": true
+    },
+    "db_query": {
+      "table": "resources",
+      "id_column": "id",
+      "deleted_at_column": "deleted_at",
+      "is_deleted_column": "is_deleted",
+      "assert_row_exists": true,
+      "assert_deleted_at_not_null": true,
+      "assert_is_deleted_true": true,
+      "deleted_at_within_seconds": 5
+    },
+    "include_deleted": {
+      "method": "GET",
+      "endpoint": "/resources",
+      "query": "include_deleted=true",
+      "expected_status": 200,
+      "assert_present_with_deleted_at": true
+    }
+  },
+  "request_log": {
+    "cases": [
+      {
+        "case": 0,
+        "create": {
+          "status": 201,
+          "id": "res-f3db69a6f258456084f0e019ab603095"
+        },
+        "delete": {
+          "path": "/resources/res-f3db69a6f258456084f0e019ab603095",
+          "status": 200,
+          "t_delete": 1782443854.997323
+        },
+        "get_by_id": {
+          "path": "/resources/res-f3db69a6f258456084f0e019ab603095",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:17:34.997584+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 1,
+        "create": {
+          "status": 201,
+          "id": "res-1c21606b1f8f4b89afdd56a42f3288d8"
+        },
+        "delete": {
+          "path": "/resources/res-1c21606b1f8f4b89afdd56a42f3288d8",
+          "status": 200,
+          "t_delete": 1782443855.003201
+        },
+        "get_by_id": {
+          "path": "/resources/res-1c21606b1f8f4b89afdd56a42f3288d8",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:17:35.003416+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      },
+      {
+        "case": 2,
+        "create": {
+          "status": 201,
+          "id": "res-ba3ef84e58ef4e21b471e59c75c19b35"
+        },
+        "delete": {
+          "path": "/resources/res-ba3ef84e58ef4e21b471e59c75c19b35",
+          "status": 200,
+          "t_delete": 1782443855.0085928
+        },
+        "get_by_id": {
+          "path": "/resources/res-ba3ef84e58ef4e21b471e59c75c19b35",
+          "status": 404
+        },
+        "db": {
+          "row_count": 1,
+          "deleted_at": "2026-06-26T03:17:35.008808+00:00",
+          "is_deleted_raw": 1
+        },
+        "include_deleted": {
+          "status": 200,
+          "present": true
+        }
+      }
+    ],
+    "case_count": 3,
+    "tolerance_s": 5
+  },
+  "case_results": [
+    {
+      "create_status": 201,
+      "appears_before": true,
+      "delete_status": 200,
+      "get_by_id_status": 404,
+      "get_by_id_no_leak": true,
+      "absent_from_collection": true,
+      "db_row_count": 1,
+      "db_deleted_at": "2026-06-26T03:17:34.997584+00:00",
+      "db_within_10s": true,
+      "db_is_deleted": true,
+      "include_deleted_status": 200,
+      "include_deleted_present": true
+    },
+    {
+      "create_status": 201,
+      "appears_before": true,
+      "delete_status": 200,
+      "get_by_id_status": 404,
+      "get_by_id_no_leak": true,
+      "absent_from_collection": true,
+      "db_row_count": 1,
+      "db_deleted_at": "2026-06-26T03:17:35.003416+00:00",
+      "db_within_10s": true,
+      "db_is_deleted": true,
+      "include_deleted_status": 200,
+      "include_deleted_present": true
+    },
+    {
+      "create_status": 201,
+      "appears_before": true,
+      "delete_status": 200,
+      "get_by_id_status": 404,
+      "get_by_id_no_leak": true,
+      "absent_from_collection": true,
+      "db_row_count": 1,
+      "db_deleted_at": "2026-06-26T03:17:35.008808+00:00",
+      "db_within_10s": true,
+      "db_is_deleted": true,
+      "include_deleted_status": 200,
+      "include_deleted_present": true
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "all_create_201",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "create_success_count",
+      "ideal": "3",
+      "observed_token": "3",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_appear_before_delete",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_delete_2xx",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_get_by_id_404",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_get_by_id_no_field_leak",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_absent_from_collection",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_row_exists",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_deleted_at_not_null",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_deleted_at_within_10s",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_db_is_deleted_true",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "all_include_deleted_shows",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "soft_delete_correct_count",
+      "ideal": "3",
+      "observed_token": "3",
+      "api_correct": true
+    }
+  ],
+  "error": null
+}

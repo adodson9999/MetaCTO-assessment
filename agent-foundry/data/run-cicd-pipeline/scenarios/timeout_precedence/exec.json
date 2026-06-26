@@ -1,0 +1,32 @@
+{
+  "scenario": "timeout_precedence",
+  "backend": {
+    "provider": "ollama",
+    "model": "llama3.1:8b"
+  },
+  "model_digest": "42182419e950",
+  "run_id": "2026-06-26T17-45-00",
+  "timestamp": "2026-06-26T17:51:18+00:00",
+  "executions": {
+    "soft-delete-prober": {
+      "exit_code": 124,
+      "timed_out": true,
+      "stdout_file": "stdout/soft-delete-prober.stdout.txt"
+    },
+    "ssl-tls-enforcer": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/ssl-tls-enforcer.stdout.txt"
+    },
+    "bulk-op-tester": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/bulk-op-tester.stdout.txt"
+    },
+    "correlation-id-checker": {
+      "exit_code": 3,
+      "timed_out": false,
+      "stdout_file": "stdout/correlation-id-checker.stdout.txt"
+    }
+  }
+}

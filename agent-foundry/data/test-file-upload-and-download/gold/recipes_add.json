@@ -1,0 +1,206 @@
+{
+  "endpoint": "/recipes/add",
+  "max_size_bytes": 5242880,
+  "allowed_mime_types": [
+    "image/jpeg",
+    "image/png"
+  ],
+  "reference_plan": {
+    "upload_endpoint": "/recipes/add",
+    "max_size_bytes": 5242880,
+    "allowed_mime_types": [
+      "image/jpeg",
+      "image/png"
+    ],
+    "success_code": 200,
+    "over_size_code": 413,
+    "invalid_mime_code": 415,
+    "download_success_code": 200,
+    "uploads": [
+      {
+        "label": "file_1kb",
+        "size_bytes": 1024,
+        "mime_type": "image/jpeg",
+        "expect_code": 201,
+        "expect_url": true
+      },
+      {
+        "label": "file_max",
+        "size_bytes": 5242880,
+        "mime_type": "image/jpeg",
+        "expect_code": 201,
+        "expect_url": true
+      },
+      {
+        "label": "file_over",
+        "size_bytes": 5242881,
+        "mime_type": "image/jpeg",
+        "expect_code": 413,
+        "expect_url": false
+      },
+      {
+        "label": "file_invalid",
+        "size_bytes": 1024,
+        "mime_type": "application/octet-stream",
+        "expect_code": 415,
+        "expect_url": false
+      }
+    ],
+    "downloads": [
+      {
+        "label": "download_1kb",
+        "source": "file_1kb",
+        "expect_code": 200,
+        "expect_content_type_prefix": "image/jpeg",
+        "expect_md5_match": true
+      },
+      {
+        "label": "download_max",
+        "source": "file_max",
+        "expect_code": 200,
+        "expect_content_type_prefix": "image/jpeg",
+        "expect_md5_match": true
+      }
+    ]
+  },
+  "request_log": [
+    {
+      "label": "file_1kb",
+      "endpoint": "/recipes/add",
+      "size_bytes": 1024,
+      "mime": "image/jpeg",
+      "status": 200,
+      "url_in_body": false,
+      "returned_url": null,
+      "original_md5": "bd1990f0835014987cf912ec374a324e"
+    },
+    {
+      "label": "file_max",
+      "endpoint": "/recipes/add",
+      "size_bytes": 5242880,
+      "mime": "image/jpeg",
+      "status": 400,
+      "url_in_body": false,
+      "returned_url": null,
+      "original_md5": "e1e9029703acadd0cf0e6bf5e4c5ae79"
+    },
+    {
+      "label": "file_over",
+      "endpoint": "/recipes/add",
+      "size_bytes": 5242881,
+      "mime": "image/jpeg",
+      "status": 400,
+      "url_in_body": false,
+      "returned_url": null,
+      "original_md5": "e47e20ee8341f1accec600e0ae0f912a"
+    },
+    {
+      "label": "file_invalid",
+      "endpoint": "/recipes/add",
+      "size_bytes": 1024,
+      "mime": "application/octet-stream",
+      "status": 200,
+      "url_in_body": false,
+      "returned_url": null,
+      "original_md5": "271157edddc957445180d862d5cc9d17"
+    },
+    {
+      "label": "download_1kb",
+      "source": "file_1kb",
+      "skipped": true,
+      "reason": "source upload returned no url"
+    },
+    {
+      "label": "download_max",
+      "source": "file_max",
+      "skipped": true,
+      "reason": "source upload returned no url"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "upload_1kb_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "upload_1kb_url_present",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "upload_max_status",
+      "ideal": "200",
+      "observed_token": "400",
+      "api_correct": false
+    },
+    {
+      "scenario": "upload_max_url_present",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "upload_over_status",
+      "ideal": "413",
+      "observed_token": "400",
+      "api_correct": false
+    },
+    {
+      "scenario": "upload_over_url_absent",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "upload_invalid_status",
+      "ideal": "415",
+      "observed_token": "200",
+      "api_correct": false
+    },
+    {
+      "scenario": "upload_invalid_url_absent",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "download_1kb_status",
+      "ideal": "200",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "download_1kb_content_type_jpeg",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "download_1kb_md5_match",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "download_max_status",
+      "ideal": "200",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "download_max_content_type_jpeg",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "download_max_md5_match",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    }
+  ]
+}

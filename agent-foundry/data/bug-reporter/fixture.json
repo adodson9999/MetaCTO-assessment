@@ -1,0 +1,621 @@
+{
+  "db_available": false,
+  "pipeline_summary": {
+    "run_id": "20260626T143000-bugfix",
+    "agents": [
+      {
+        "agent_name": "authentication-flow-tester",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/test-authentication-flows/authentication-flow-tester.prompt.md",
+        "stdout": "{\"agent\": \"authentication-flow-tester\", \"status\": \"fail\", \"checks\": 7}",
+        "stderr": "AssertionError: expected 200 on valid login but got 401\n  at verify_login",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/authentication-flow-tester.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/authentication-flow-tester.stderr.txt"
+      },
+      {
+        "agent_name": "tls-enforcer",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/test-ssl-tls-enforcement/tls-enforcer.prompt.md",
+        "stdout": "{\"agent\": \"tls-enforcer\", \"status\": \"fail\"}",
+        "stderr": "TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/tls-enforcer.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/tls-enforcer.stderr.txt"
+      },
+      {
+        "agent_name": "ci-gatekeeper",
+        "status": "TIMED_OUT",
+        "exit_code": 124,
+        "spec_path": "agents/run-cicd-pipeline/ci-gatekeeper.prompt.md",
+        "stdout": "",
+        "stderr": "",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/ci-gatekeeper.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/ci-gatekeeper.stderr.txt"
+      },
+      {
+        "agent_name": "biometric-far-checker",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/verify-biometric-matching/biometric-far-checker.prompt.md",
+        "stdout": "{\"agent\": \"biometric-far-checker\", \"false_acceptance_rate\": 0.043, \"status\": \"fail\"}",
+        "stderr": "biometric match exceeded tolerance",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/biometric-far-checker.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/biometric-far-checker.stderr.txt"
+      },
+      {
+        "agent_name": "crud-integrity-prober",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/verify-crud-operation-integrity/crud-integrity-prober.prompt.md",
+        "stdout": "{\"agent\": \"crud-integrity-prober\", \"status\": \"error\"}",
+        "stderr": "psycopg2.OperationalError: database connection refused (500) during CRUD write",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/crud-integrity-prober.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/crud-integrity-prober.stderr.txt"
+      },
+      {
+        "agent_name": "schema-response-validator",
+        "status": "MALFORMED",
+        "exit_code": 0,
+        "spec_path": "agents/validate-json-schema-responses/schema-response-validator.prompt.md",
+        "stdout": "Traceback (most recent call last):\n  RuntimeError: validator crashed mid-run",
+        "stderr": "warning: emitted non-JSON to stdout",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/schema-response-validator.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/schema-response-validator.stderr.txt"
+      },
+      {
+        "agent_name": "pagination-checker",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/test-pagination-behavior/pagination-checker.prompt.md",
+        "stdout": "{\"agent\": \"pagination-checker\", \"status\": \"fail\"}",
+        "stderr": "AssertionError: 404 on page 3 \u2014 pagination offset computed incorrectly",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/pagination-checker.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/pagination-checker.stderr.txt"
+      },
+      {
+        "agent_name": "webhook-delivery-tester",
+        "status": "TIMED_OUT",
+        "exit_code": 124,
+        "spec_path": "agents/test-webhook-delivery/webhook-delivery-tester.prompt.md",
+        "stdout": "{\"agent\": \"webhook-delivery-tester\", \"status\": \"in_pro",
+        "stderr": "",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/webhook-delivery-tester.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/webhook-delivery-tester.stderr.txt"
+      },
+      {
+        "agent_name": "error-clarity-checker",
+        "status": "FAILED",
+        "exit_code": 1,
+        "spec_path": "agents/verify-error-message-clarity/error-clarity-checker.prompt.md",
+        "stdout": "{\"agent\": \"error-clarity-checker\", \"status\": \"fail\"}",
+        "stderr": "AssertionError: message wording differs from the expected copy",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/error-clarity-checker.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/error-clarity-checker.stderr.txt"
+      },
+      {
+        "agent_name": "health-check-prober",
+        "status": "PASSED",
+        "exit_code": 0,
+        "spec_path": "agents/verify-response-status-codes/health-check-prober.prompt.md",
+        "stdout": "{\"agent\": \"health-check-prober\", \"status\": \"pass\"}",
+        "stderr": "",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/health-check-prober.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/health-check-prober.stderr.txt"
+      },
+      {
+        "agent_name": "version-checker",
+        "status": "PASSED",
+        "exit_code": 0,
+        "spec_path": "agents/validate-api-versioning-behavior/version-checker.prompt.md",
+        "stdout": "{\"agent\": \"version-checker\", \"status\": \"pass\"}",
+        "stderr": "",
+        "stdout_path": "results/runs/20260626T143000-bugfix/stdout/version-checker.stdout.txt",
+        "stderr_path": "results/runs/20260626T143000-bugfix/stderr/version-checker.stderr.txt"
+      }
+    ]
+  },
+  "registry": [
+    {
+      "index": 1,
+      "tc_id": "tc-auth-001",
+      "agent": "authentication-flow-tester",
+      "step_id": "tc-auth-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "Send POST /auth/login with a valid body and Assert response code equals 200.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 2,
+      "tc_id": "tc-auth-002",
+      "agent": "authentication-flow-tester",
+      "step_id": "tc-auth-002-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "GET /auth/me with Authorization header, Asserts response code is exactly 401 when the token is missing.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 3,
+      "tc_id": "tc-auth-003",
+      "agent": "authentication-flow-tester",
+      "step_id": "tc-auth-003-s1",
+      "involves_http_call": false,
+      "involves_assertion": false,
+      "step_text": "Inspect the in-memory session table for a stale entry.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 4,
+      "tc_id": "tc-tls-001",
+      "agent": "tls-enforcer",
+      "step_id": "tc-tls-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "GET /secure/ping over TLS 1.2 and Assert response code = 200.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 5,
+      "tc_id": "tc-pipe-001",
+      "agent": "ci-gatekeeper",
+      "step_id": "tc-pipe-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "POST /pipeline/run with body = a manifest and Asserts exactly 202.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 6,
+      "tc_id": "tc-bio-001",
+      "agent": "biometric-far-checker",
+      "step_id": "tc-bio-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "POST /biometric/verify with a valid body, Assert response code equals 200.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 7,
+      "tc_id": "tc-crud-001",
+      "agent": "crud-integrity-prober",
+      "step_id": "tc-crud-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "POST /resources with body: a new resource and Asserts exactly 201.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 8,
+      "tc_id": "tc-crud-002",
+      "agent": "crud-integrity-prober",
+      "step_id": "tc-crud-002-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "DELETE /resources/42 with Authorization header, Asserts response code = 204.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 9,
+      "tc_id": "tc-schema-001",
+      "agent": "schema-response-validator",
+      "step_id": "tc-schema-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "GET /products/1 and Assert response code is exactly 200.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 10,
+      "tc_id": "tc-page-001",
+      "agent": "pagination-checker",
+      "step_id": "tc-page-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "GET /products with X-Correlation-ID, Asserts response code equals 200.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 11,
+      "tc_id": "tc-page-002",
+      "agent": "pagination-checker",
+      "step_id": "tc-page-002-s1",
+      "involves_http_call": false,
+      "involves_assertion": false,
+      "step_text": "Compute the expected page boundaries locally.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 12,
+      "tc_id": "tc-webhook-001",
+      "agent": "webhook-delivery-tester",
+      "step_id": "tc-webhook-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "POST /webhooks/register with body = a callback URL and Asserts exactly 201.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    },
+    {
+      "index": 13,
+      "tc_id": "tc-clarity-001",
+      "agent": "error-clarity-checker",
+      "step_id": "tc-clarity-001-s1",
+      "involves_http_call": true,
+      "involves_assertion": true,
+      "step_text": "GET /products/999999 \u2192 assert 404.",
+      "expected_outcome": "The asserted response is returned.",
+      "fail_condition": "The assertion does not hold."
+    }
+  ],
+  "postman_collection": {
+    "info": {
+      "name": "API Test Agent Suite \u2014 2026-06-26",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:8080",
+        "type": "string"
+      }
+    ],
+    "item": [
+      {
+        "name": "authentication-flow-tester",
+        "item": [
+          {
+            "name": "tc-auth-001",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/auth/login",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "login"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "tls-enforcer",
+        "item": [
+          {
+            "name": "tc-tls-001",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/secure/ping",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "secure",
+                  "ping"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "biometric-far-checker",
+        "item": [
+          {
+            "name": "tc-bio-001",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/biometric/verify",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "biometric",
+                  "verify"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "crud-integrity-prober",
+        "item": [
+          {
+            "name": "tc-crud-001",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/resources",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "resources"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "tc-crud-002",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/resources/42",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "resources",
+                  "42"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "schema-response-validator",
+        "item": [
+          {
+            "name": "tc-schema-001",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/products/1",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "products",
+                  "1"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "pagination-checker",
+        "item": [
+          {
+            "name": "tc-page-001",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                },
+                {
+                  "key": "X-Correlation-ID",
+                  "value": "{{corr_id}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/products",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "products"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "error-clarity-checker",
+        "item": [
+          {
+            "name": "tc-clarity-001",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "{{auth_token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/products/999999",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "products",
+                  "999999"
+                ]
+              },
+              "body": {
+                "mode": "none"
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Status code is 404\", function() { pm.response.to.have.status(404); });",
+                    "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

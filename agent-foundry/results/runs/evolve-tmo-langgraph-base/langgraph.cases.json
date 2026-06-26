@@ -1,0 +1,183 @@
+{
+  "agent": "langgraph",
+  "run_id": "evolve-tmo-langgraph-base",
+  "target": "http://127.0.0.1:8911",
+  "timeout_enforcement_rate_pct": 100.0,
+  "endpoints_total": 2,
+  "endpoints_enforced": 2,
+  "scenarios_total": 13,
+  "scenarios_api_correct": 13,
+  "request_log": [
+    {
+      "phase": "delayed",
+      "service": "profile-api",
+      "label": "GET /profile",
+      "method": "GET",
+      "path": "/profile",
+      "status": 504,
+      "elapsed_s": 10.005,
+      "conn_closed": true,
+      "server_connection": "close"
+    },
+    {
+      "phase": "delayed",
+      "service": "profile-api",
+      "label": "GET /profile/preferences",
+      "method": "GET",
+      "path": "/profile/preferences",
+      "status": 504,
+      "elapsed_s": 10.01,
+      "conn_closed": true,
+      "server_connection": "close"
+    },
+    {
+      "phase": "restore",
+      "service": "profile-api",
+      "label": "GET /profile",
+      "method": "GET",
+      "path": "/profile",
+      "status": 200,
+      "elapsed_ms": 1.0
+    },
+    {
+      "phase": "restore",
+      "service": "profile-api",
+      "label": "GET /profile/preferences",
+      "method": "GET",
+      "path": "/profile/preferences",
+      "status": 200,
+      "elapsed_ms": 0.2
+    }
+  ],
+  "services": [
+    {
+      "service": "profile-api",
+      "max_wait_emitted": 12,
+      "emitted_plan": {
+        "service": "profile-api",
+        "upstream_timeout_s": 10,
+        "buffer_s": 2,
+        "max_wait_s": 12,
+        "restore_max_ms": 500,
+        "delayed": [
+          {
+            "label": "GET /profile",
+            "method": "GET",
+            "path": "/profile"
+          },
+          {
+            "label": "GET /profile/preferences",
+            "method": "GET",
+            "path": "/profile/preferences"
+          }
+        ],
+        "restore": [
+          {
+            "label": "GET /profile",
+            "method": "GET",
+            "path": "/profile"
+          },
+          {
+            "label": "GET /profile/preferences",
+            "method": "GET",
+            "path": "/profile/preferences"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "service": "profile-api",
+          "scenario": "max_wait_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "service": "profile-api",
+          "scenario": "/profile/preferences::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}

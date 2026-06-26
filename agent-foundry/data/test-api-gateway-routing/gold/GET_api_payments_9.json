@@ -1,0 +1,77 @@
+{
+  "route": "GET /api/payments/9",
+  "route_path": "/api/payments/9",
+  "method": "GET",
+  "expected_backend": "payments-mock",
+  "down_test": true,
+  "reference_plan": {
+    "route": "/api/payments/9",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer routing-test-token-abc123"
+    },
+    "body": null,
+    "expected_backend": "payments-mock",
+    "other_backends": [
+      "users-mock",
+      "orders-mock"
+    ],
+    "down_test": true
+  },
+  "scenarios": [
+    {
+      "scenario": "plan_method",
+      "ideal": "GET",
+      "observed_token": "GET",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_path",
+      "ideal": "/api/payments/9",
+      "observed_token": "/api/payments/9",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_auth_present",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_body_match",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_expected_backend",
+      "ideal": "payments-mock",
+      "observed_token": "payments-mock",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_other_backends",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_down_test",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "exec_status_503",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "exec_no_backend_received",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

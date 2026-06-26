@@ -1,0 +1,125 @@
+{
+  "topic": "inventory.item.depleted",
+  "resource": "inventory",
+  "resource_id": "sku-3003",
+  "state_field": "stock_state",
+  "pre_state": "in_stock",
+  "expected_state": "out_of_stock",
+  "reference_plan": {
+    "topic": "inventory.item.depleted",
+    "resource": "inventory",
+    "resource_id": "sku-3003",
+    "state_field": "stock_state",
+    "expected_state": "out_of_stock",
+    "event_type": "inventory.item.depleted",
+    "required_fields": [
+      "event_id",
+      "event_type",
+      "resource_id",
+      "occurred_at",
+      "quantity"
+    ],
+    "wellformed_event": {
+      "event_id": "evt-inv-0003",
+      "event_type": "inventory.item.depleted",
+      "resource_id": "sku-3003",
+      "occurred_at": "2026-06-25T12:02:00Z",
+      "quantity": 0
+    },
+    "malformed_event": {
+      "event_id": "evt-inv-0003",
+      "event_type": "inventory.item.depleted",
+      "resource_id": "sku-3003",
+      "occurred_at": "2026-06-25T12:02:00Z"
+    },
+    "poll": {
+      "interval_ms": 500,
+      "timeout_seconds": 5
+    },
+    "assertions": {
+      "health_after_seconds": 60,
+      "dlq_within_seconds": 30,
+      "error_log_within_seconds": 30,
+      "expect_state_unchanged": true
+    }
+  },
+  "request_log": [
+    {
+      "phase": "wellformed",
+      "message_id": "evt-inv-0003",
+      "state_after": "out_of_stock",
+      "elapsed_s": 0.512,
+      "consumer_errors": 0
+    },
+    {
+      "phase": "malformed",
+      "message_id": "evt-inv-0003",
+      "health_ok": true,
+      "error_logged": true,
+      "in_dlq": true,
+      "dlq_consumed": {
+        "topic": "inventory.item.depleted",
+        "message_id": "evt-inv-0003",
+        "offset": 6,
+        "payload": {
+          "event_id": "evt-inv-0003",
+          "event_type": "inventory.item.depleted",
+          "resource_id": "sku-3003",
+          "occurred_at": "2026-06-25T12:02:00Z"
+        },
+        "reason": "ValueError: schema validation failed: missing required field(s) ['quantity'] for topic 'inventory.item.depleted'"
+      },
+      "state_after": "in_stock"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "wellformed_state_changed",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_correct_value",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_within_5s",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_no_consumer_errors",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_no_crash",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_error_logged",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_in_dlq",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_no_state_change",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    }
+  ]
+}

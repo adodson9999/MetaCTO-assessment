@@ -1,0 +1,268 @@
+{
+  "slug": "comments_put",
+  "method": "PUT",
+  "path": "/comments/{id}",
+  "schema": {
+    "fields": {
+      "body": {
+        "type": "string",
+        "maxLength": 300
+      }
+    },
+    "required": [
+      "body"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment"
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "body:key_absent",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {}
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "body:key_present_null",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:INT_VAL",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": 42
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:FLOAT_VAL",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": 3.14
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:BOOL_TRUE",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:BOOL_FALSE",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": false
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:LIST_VAL",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:OBJECT_VAL",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "body:NULL_NONE",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": null
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "Updated comment",
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "body",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ]
+}

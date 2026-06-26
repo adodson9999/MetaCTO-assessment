@@ -1,0 +1,1 @@
+{"provider": "facebook", "note": "held-out OAuth flow for the SkillOpt validation gate; disjoint from the google/github flows used to rank the leaderboard"}

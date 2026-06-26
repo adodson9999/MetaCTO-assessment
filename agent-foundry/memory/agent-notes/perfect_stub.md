@@ -1,0 +1,1 @@
+- [2026-06-25T23:00:30.742899+00:00] run=smoke-test track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)

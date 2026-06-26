@@ -1,0 +1,162 @@
+{
+  "agent": "crewai",
+  "run_id": "blocked-35be6b",
+  "postman_coverage_rate_pct": 0.0,
+  "http_tc_count": 14,
+  "postman_item_count": 0,
+  "gap_count": 14,
+  "missing_tc_ids": [
+    {
+      "tc_id": "tc-auth-001",
+      "agent": "api-tester-test-authentication-flows"
+    },
+    {
+      "tc_id": "tc-auth-002",
+      "agent": "api-tester-test-authentication-flows"
+    },
+    {
+      "tc_id": "tc-auth-003",
+      "agent": "api-tester-test-authentication-flows"
+    },
+    {
+      "tc_id": "tc-cache-001",
+      "agent": "api-tester-verify-caching-headers"
+    },
+    {
+      "tc_id": "tc-cache-002",
+      "agent": "api-tester-verify-caching-headers"
+    },
+    {
+      "tc_id": "tc-cache-003",
+      "agent": "api-tester-verify-caching-headers"
+    },
+    {
+      "tc_id": "tc-cid-001",
+      "agent": "api-tester-validate-correlation-id-propagation"
+    },
+    {
+      "tc_id": "tc-cid-002",
+      "agent": "api-tester-validate-correlation-id-propagation"
+    },
+    {
+      "tc_id": "tc-cid-003",
+      "agent": "api-tester-validate-correlation-id-propagation"
+    },
+    {
+      "tc_id": "tc-bulk-001",
+      "agent": "api-tester-test-bulk-operation-endpoints"
+    },
+    {
+      "tc_id": "tc-bulk-002",
+      "agent": "api-tester-test-bulk-operation-endpoints"
+    },
+    {
+      "tc_id": "tc-bulk-003",
+      "agent": "api-tester-test-bulk-operation-endpoints"
+    },
+    {
+      "tc_id": "tc-bulk-004",
+      "agent": "api-tester-test-bulk-operation-endpoints"
+    },
+    {
+      "tc_id": "tc-search-001",
+      "agent": "api-tester-validate-search-and-filter-queries"
+    }
+  ],
+  "agents_covered": 0,
+  "newman_valid": true,
+  "newman_detail": "postman-collection SDK validated v2.1 (0 request items)",
+  "structural_valid": true,
+  "structural_errors": [],
+  "scenarios_total": 14,
+  "scenarios_api_correct": 2,
+  "emitted_contract": {},
+  "error": "ConnectionError: Failed to connect to OpenAI API: Connection error.",
+  "collection_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/blocked-35be6b/crewai.postman-collection.json",
+  "scenarios": [
+    {
+      "scenario": "gaps_precheck_pass",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "http_tc_count",
+      "ideal": "14",
+      "observed_token": "14",
+      "api_correct": true
+    },
+    {
+      "scenario": "postman_item_count",
+      "ideal": "14",
+      "observed_token": "0",
+      "api_correct": false
+    },
+    {
+      "scenario": "count_matches",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "coverage_rate",
+      "ideal": "100.0",
+      "observed_token": "0.0",
+      "api_correct": false
+    },
+    {
+      "scenario": "gaps_found_false",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "agents_covered",
+      "ideal": "5",
+      "observed_token": "0",
+      "api_correct": false
+    },
+    {
+      "scenario": "all_items_named_tc_id",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "methods_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "paths_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "statuses_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "headers_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "bodies_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "variables_correct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    }
+  ]
+}

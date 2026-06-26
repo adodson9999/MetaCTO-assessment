@@ -1,0 +1,1306 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "endpoints": 6,
+    "scenarios_per_endpoint": 8,
+    "total_scenarios": 48,
+    "api_correct_scenarios": 48,
+    "empirical_rate_limit_contract_correctness_rate_pct": 100.0,
+    "rate_limit_enforced": true,
+    "rate_limit_trigger_precision": {
+      "/products": 101,
+      "/posts": 101,
+      "/comments": 101,
+      "/todos": 101,
+      "/users": 101,
+      "/recipes": 101
+    },
+    "note": "Ground truth = live DummyJSON observed token per (endpoint, scenario). DummyJSON runs a real express-rate-limit limiter (max 100 per 10s per client key, keyed by X-Forwarded-For under trust-proxy), active because the target is booted NODE_ENV=production. It CORRECTLY enforces the documented contract: requests 1..100 -> 200, request 101 -> 429 with Retry-After:10, an in-window probe stays 429, an after-window probe resets to 200. So every scenario matches the idealized contract (~100% correctness) and Headline Rate Limit Trigger Precision = PASS (first 429 on exactly request 101) on every endpoint."
+  },
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "api_key_value": "10.50.1.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/products",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.1.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434297"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434297"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434307"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/posts",
+      "api_key_value": "10.50.2.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/posts",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.2.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434317"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434317"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434327"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/comments",
+      "api_key_value": "10.50.3.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/comments",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.3.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434337"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434337"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434347"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/todos",
+      "api_key_value": "10.50.4.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/todos",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.4.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434357"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434357"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434367"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/users",
+      "api_key_value": "10.50.5.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/users",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.5.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434377"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434377"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434387"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/recipes",
+      "api_key_value": "10.50.6.0",
+      "limit_n": 100,
+      "window_seconds": 10,
+      "trigger_ordinal": 101,
+      "reference_plan": {
+        "endpoint": "/recipes",
+        "method": "GET",
+        "success_code": 200,
+        "limit_n": 100,
+        "window_seconds": 10,
+        "api_key_header": "X-Forwarded-For",
+        "api_key_value": "10.50.6.0",
+        "retry_after_header": "Retry-After",
+        "at_limit": {
+          "label": "at_limit",
+          "count": 100
+        },
+        "over_limit": {
+          "label": "over_limit",
+          "count": 1
+        },
+        "probes": [
+          {
+            "label": "within_window",
+            "offset_seconds": -2
+          },
+          {
+            "label": "after_window",
+            "offset_seconds": 1
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "at_limit",
+          "count": 100,
+          "statuses": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ]
+        },
+        {
+          "label": "over_limit",
+          "ordinal": 101,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434397"
+        },
+        {
+          "label": "within_window",
+          "offset_seconds": -2,
+          "status": 429,
+          "retry_after": "10",
+          "reset_epoch": "1782434397"
+        },
+        {
+          "label": "after_window",
+          "offset_seconds": 1,
+          "status": 200,
+          "retry_after": null,
+          "reset_epoch": "1782434407"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "at_limit_all_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "over_limit_status",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "first_429_ordinal",
+          "ideal": "101",
+          "observed_token": "101",
+          "api_correct": true
+        },
+        {
+          "scenario": "trigger_precision_exact",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_present",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "retry_after_positive_int",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "within_window_still_429",
+          "ideal": "429",
+          "observed_token": "429",
+          "api_correct": true
+        },
+        {
+          "scenario": "after_window_non_429",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    }
+  ]
+}

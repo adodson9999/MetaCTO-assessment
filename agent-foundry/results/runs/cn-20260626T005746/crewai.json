@@ -1,0 +1,13 @@
+{
+  "agent": "crewai",
+  "run_id": "cn-20260626T005746",
+  "metric_name": "content_type_negotiation_test_fidelity",
+  "metric_value": 61.03,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/cn-20260626T005746/crewai.cases.json",
+  "ts": "2026-06-26T01:06:17.484486+00:00",
+  "content_type_negotiation_accuracy_pct": 23.53,
+  "scenarios_total": 136,
+  "fidelity_matches": 83,
+  "fidelity_denominator": 136,
+  "coverage_scenarios": 95
+}

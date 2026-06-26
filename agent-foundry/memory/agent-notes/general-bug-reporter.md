@@ -1,0 +1,1 @@
+- [2026-06-26T16:31:08.809867+00:00] run=verify-bug-5b784e bug-reporter run: fidelity=100.0% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)

@@ -1,0 +1,220 @@
+{
+  "collection": "/posts",
+  "test_user_id": "user-test-001",
+  "reference_plan": {
+    "collection": "/posts",
+    "id_field": "id",
+    "test_user_id": "user-test-001",
+    "operations": [
+      {
+        "label": "create",
+        "action_type": "CREATE",
+        "method": "POST",
+        "path": "/posts/add",
+        "body": {
+          "title": "audit-probe"
+        },
+        "expect_status": [
+          201
+        ]
+      },
+      {
+        "label": "update",
+        "action_type": "UPDATE",
+        "method": "PUT",
+        "path": "/posts/{resource_id}",
+        "body": {
+          "title": "audit-probe-updated"
+        },
+        "expect_status": [
+          200
+        ]
+      },
+      {
+        "label": "delete",
+        "action_type": "DELETE",
+        "method": "DELETE",
+        "path": "/posts/{resource_id}",
+        "body": null,
+        "expect_status": [
+          200,
+          204
+        ]
+      }
+    ],
+    "audit_query": {
+      "filter_user_id": "user-test-001",
+      "window_before_seconds": 5,
+      "window_after_seconds": 10,
+      "expected_entry_count": 3,
+      "required_fields": [
+        "user_id",
+        "action_type",
+        "resource_id",
+        "timestamp",
+        "ip_address"
+      ],
+      "timestamp_tolerance_seconds": 5,
+      "action_types": [
+        "CREATE",
+        "UPDATE",
+        "DELETE"
+      ]
+    }
+  },
+  "resource_id": null,
+  "op_log": [
+    {
+      "label": "create",
+      "action_type": "CREATE",
+      "method": "POST",
+      "path": "/posts/add",
+      "status": 400,
+      "wall_ts": 1782434015.061295,
+      "resource_id": null
+    },
+    {
+      "label": "update",
+      "action_type": "UPDATE",
+      "method": "PUT",
+      "path": "/posts/{resource_id}",
+      "status": 400,
+      "wall_ts": 1782434015.075826,
+      "resource_id": null
+    },
+    {
+      "label": "delete",
+      "action_type": "DELETE",
+      "method": "DELETE",
+      "path": "/posts/{resource_id}",
+      "status": 400,
+      "wall_ts": 1782434015.09025,
+      "resource_id": null
+    }
+  ],
+  "audit_query_result": {
+    "queried": true,
+    "by_op": {
+      "create": {
+        "present": true,
+        "fields_complete": false,
+        "ts_within": true,
+        "user_match": false,
+        "candidate_lines": 1
+      },
+      "update": {
+        "present": true,
+        "fields_complete": false,
+        "ts_within": true,
+        "user_match": false,
+        "candidate_lines": 1
+      },
+      "delete": {
+        "present": true,
+        "fields_complete": false,
+        "ts_within": true,
+        "user_match": false,
+        "candidate_lines": 1
+      }
+    },
+    "count_valid": 0,
+    "all_fields_nonnull": false,
+    "user_scoped": false,
+    "candidate_lines": 3,
+    "detail": [
+      {
+        "op": "create",
+        "method": "POST",
+        "path": "/posts/add",
+        "candidate_lines": 1,
+        "valid_audit_entry": false,
+        "missing_fields": [
+          "user_id",
+          "action_type",
+          "resource_id"
+        ]
+      },
+      {
+        "op": "update",
+        "method": "PUT",
+        "path": "/posts/{resource_id}",
+        "candidate_lines": 1,
+        "valid_audit_entry": false,
+        "missing_fields": [
+          "user_id",
+          "action_type",
+          "resource_id"
+        ]
+      },
+      {
+        "op": "delete",
+        "method": "DELETE",
+        "path": "/posts/{resource_id}",
+        "candidate_lines": 1,
+        "valid_audit_entry": false,
+        "missing_fields": [
+          "user_id",
+          "action_type",
+          "resource_id"
+        ]
+      }
+    ],
+    "expected_entry_count": 3
+  },
+  "scenarios": [
+    {
+      "scenario": "create_status_ok",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "update_status_ok",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "delete_status_ok",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "create_audit_entry_complete",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "update_audit_entry_complete",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "delete_audit_entry_complete",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "audit_entry_count_exactly_3",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "audit_all_fields_nonnull",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "audit_user_scoped",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+Job Description, Affirm Quality Assurance Specialist II
+Quality Assurance Specialist II
+Affirm is reinventing credit to make it more honest and friendly, giving consumers the flexibility to buy now and
+pay later without any hidden fees or compounding interest.
+We're looking for a strategic and analytically driven Quality Assurance professional to join the Customer
+Operations team and support the design of a robust, data-informed QA framework for a defined pod(s) and/or
+line(s) of business. This role will partner closely with cross-functional teams across Ops Enablement, Vendor
+Management, Product, and Compliance to identify systemic quality issues, build feedback loops from audits and
+interaction data, and drive prioritization of improvements that enhance the customer experience and reduce
+recontacts and unresolved issues. This is a high-impact, builder role focused on proactively identifying quality
+signals, designing control strategies and QA programs, and influencing stakeholders to embed quality into
+roadmap and operational planning.
+What you'll do: Design and own the QA program for your area of scope, including frameworks for sampling,
+coverage, audit cadence, and scoring methodology. Build structured feedback loops that synthesize data from
+audits, interaction transcripts and automation outputs to identify systemic quality issues. Translate QA signals
+into clear, data-backed narratives that influence prioritization across Product, Engineering, Operations
+Enablement, and Vendor Management. Develop dashboards and reporting infrastructure to track quality
+exposure, calibration alignment, and remediation progress. Lead calibration and scoring integrity efforts across
+vendor and internal auditors. Create and maintain SOPs, scorecards, and playbooks. Investigate recurring
+failures and run root-cause analyses; define and track prioritized remediation plans. Act as a strategic thought
+partner in cross-functional forums. Drive vendor QA performance through coaching, calibration testing,
+remediation, and escalation. Coach and mentor vendor support staff.
+What you'll need to succeed: Program design expertise designing scalable QA frameworks, audit programs, and
+calibration approaches. Strong analytical fluency exploring datasets, writing queries, and building dashboards
+with analytics/BI tooling. Systems thinking to connect quality signals across processes, tools, vendors, and
+functions. Audit and calibration depth creating scorecards and maintaining scoring integrity. Influence without
+authority. Strategic communication. Operational depth with servicing operations, vendor QA models, and
+compliance. Customer-centric lens (CSAT, recontacts, resolved issues).
+Minimum Qualifications: 5+ years of experience in quality assurance, audit, operational quality, or a closely
+related function in a high-scale or regulated environment. Demonstrated ownership of QA or controls programs
+with measurable impact on process, product, or customer outcomes. Strong data skills, including
+dashboard/reporting development experience. Experience working cross-functionally with Ops Enablement,
+Vendor Management, Product, and Compliance. Exceptional communication and stakeholder engagement skills.
+Experience in financial services or fintech.
+Preferred Qualifications: Prior vendor QA management and calibration program ownership. Experience with
+automation-enabled QA tools (e.g., conversational AI outputs) and integrating automated signals into QA
+workflows. Salary: CA/WA/NY/NJ/CT $90,000 to $110,000; all other US states $80,000 to $100,000.

@@ -1,0 +1,160 @@
+{
+  "slug": "products_add",
+  "method": "POST",
+  "path": "/products/add",
+  "schema": {
+    "fields": {
+      "title": {
+        "type": "string"
+      },
+      "price": {
+        "type": "number"
+      },
+      "availabilityStatus": {
+        "type": "string",
+        "enum": [
+          "IN_STOCK",
+          "LOW_STOCK",
+          "OUT_OF_STOCK"
+        ]
+      }
+    },
+    "required": [
+      "title",
+      "availabilityStatus"
+    ],
+    "enum_fields": [
+      "availabilityStatus"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid_values",
+      "label": "availabilityStatus:IN_STOCK",
+      "field": "availabilityStatus",
+      "value_sent": "IN_STOCK",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": "IN_STOCK"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "availabilityStatus:LOW_STOCK",
+      "field": "availabilityStatus",
+      "value_sent": "LOW_STOCK",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": "LOW_STOCK"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "availabilityStatus:OUT_OF_STOCK",
+      "field": "availabilityStatus",
+      "value_sent": "OUT_OF_STOCK",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": "OUT_OF_STOCK"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "availabilityStatus",
+      "field": "availabilityStatus",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "availabilityStatus",
+      "field": "availabilityStatus",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": ""
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "availabilityStatus",
+      "field": "availabilityStatus",
+      "value_sent": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": null
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "availabilityStatus",
+      "field": "availabilityStatus",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": 0
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "availabilityStatus",
+      "field": "availabilityStatus",
+      "value_sent": "in_stock",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "Forge Widget",
+        "price": 9.99,
+        "availabilityStatus": "in_stock"
+      }
+    }
+  ]
+}

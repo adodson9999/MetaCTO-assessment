@@ -1,0 +1,13 @@
+{
+  "agent": "verify-refplan",
+  "run_id": "verify-plumbing",
+  "metric_name": "version_routing_test_fidelity",
+  "metric_value": 53.85,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/versioning/runs/verify-plumbing/verify-refplan.cases.json",
+  "ts": "2026-06-25T22:43:21.818401+00:00",
+  "version_routing_accuracy_pct": 30.77,
+  "scenarios_total": 52,
+  "fidelity_matches": 28,
+  "fidelity_denominator": 52,
+  "coverage_scenarios": 28
+}

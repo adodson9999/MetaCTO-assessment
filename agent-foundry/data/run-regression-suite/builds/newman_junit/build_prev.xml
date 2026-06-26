@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build N-1 (ci-1042) — Postman/Newman JUnit reporter output. The last passing CI build. -->
+<testsuites name="DummyJSON API collection" tests="6" failures="1" errors="0" time="4.812">
+  <testsuite name="auth" tests="2" failures="0" errors="0" time="1.204">
+    <testcase name="auth.login.valid" classname="auth" time="0.611"/>
+    <testcase name="auth.login.invalid" classname="auth" time="0.593"/>
+  </testsuite>
+  <testsuite name="products" tests="2" failures="0" errors="0" time="1.880">
+    <testcase name="products.list.limit" classname="products" time="0.901"/>
+    <testcase name="products.get.byId" classname="products" time="0.979"/>
+  </testsuite>
+  <testsuite name="carts" tests="1" failures="0" errors="0" time="0.700">
+    <testcase name="carts.add.item" classname="carts" time="0.700"/>
+  </testsuite>
+  <testsuite name="users" tests="1" failures="1" errors="0" time="1.028">
+    <testcase name="users.search.q" classname="users" time="1.028">
+      <failure message="Expected status 200 but got 500">AssertionError: search endpoint 500 on q=ol</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

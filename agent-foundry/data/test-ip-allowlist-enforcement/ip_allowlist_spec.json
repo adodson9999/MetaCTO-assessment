@@ -1,0 +1,51 @@
+{
+  "title": "IP-allowlist contract (authored for the IP-allowlist-enforcement testing task)",
+  "description": "Each restricted endpoint is fronted by an IP allowlist (an AWS-WAF-style IP set). An allowlisted source IP must receive success_code with the resource data; a non-allowlisted source IP must receive forbidden_code with no resource data; the allowlist decision must NOT honor the X-Forwarded-For header; and the management API can add/remove an IP from the set. Agents construct the IP-allowlist test plan from this; ground truth is the live local gateway's observed behavior. DummyJSON is never used or modified \u2014 the target is the local ip-allowlist-gateway.",
+  "target": "http://127.0.0.1:8913",
+  "method": "GET",
+  "success_code": 200,
+  "forbidden_code": 403,
+  "allow_ip": "203.0.113.10",
+  "block_ip": "198.51.100.23",
+  "edge_ip_header": "X-Edge-Verified-IP",
+  "xff_header": "X-Forwarded-For",
+  "mgmt_allowlist_path": "/__waf/allowlist",
+  "endpoints": [
+    {
+      "endpoint": "/restricted/orders",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-orders"
+    },
+    {
+      "endpoint": "/restricted/invoices",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-invoices"
+    },
+    {
+      "endpoint": "/restricted/audit-log",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-audit-log"
+    },
+    {
+      "endpoint": "/restricted/billing",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-billing"
+    },
+    {
+      "endpoint": "/restricted/legacy-reports",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-legacy-reports"
+    },
+    {
+      "endpoint": "/restricted/partner-feed",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "waf_scope": "ipset-restricted-partner-feed"
+    }
+  ]
+}

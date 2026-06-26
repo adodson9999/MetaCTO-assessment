@@ -1,0 +1,144 @@
+{
+  "collection": "/comments",
+  "target_id": 1,
+  "reference_plan": {
+    "collection": "/comments",
+    "id_field": "id",
+    "target_id": 1,
+    "idempotent_requests": [
+      {
+        "label": "put",
+        "method": "PUT",
+        "path": "/comments/1",
+        "body": {
+          "title": "idempotency-probe"
+        },
+        "idempotency_key": "a1111111-1111-4111-8111-111111111111",
+        "replays": 3
+      },
+      {
+        "label": "delete",
+        "method": "DELETE",
+        "path": "/comments/1",
+        "body": null,
+        "idempotency_key": "b2222222-2222-4222-8222-222222222222",
+        "replays": 3
+      }
+    ],
+    "create_request": {
+      "label": "post",
+      "method": "POST",
+      "path": "/comments/add",
+      "body": {
+        "title": "idempotency-probe"
+      },
+      "idempotency_key": "c3333333-3333-4333-8333-333333333333",
+      "second_key": "d4444444-4444-4444-8444-444444444444",
+      "replays": 3
+    }
+  },
+  "request_log": [
+    {
+      "label": "put",
+      "method": "PUT",
+      "path": "/comments/1",
+      "idempotency_key": "a1111111-1111-4111-8111-111111111111",
+      "replays": 3,
+      "codes": [
+        200,
+        200,
+        200
+      ],
+      "bodies_identical": true
+    },
+    {
+      "label": "delete",
+      "method": "DELETE",
+      "path": "/comments/1",
+      "idempotency_key": "b2222222-2222-4222-8222-222222222222",
+      "replays": 3,
+      "codes": [
+        200,
+        200,
+        200
+      ],
+      "bodies_identical": false
+    },
+    {
+      "label": "post",
+      "method": "POST",
+      "path": "/comments/add",
+      "idempotency_key": "c3333333-3333-4333-8333-333333333333",
+      "replays": 3,
+      "codes": [
+        400,
+        400,
+        400
+      ],
+      "bodies_identical": true,
+      "second_key": "d4444444-4444-4444-8444-444444444444",
+      "second_code": 400,
+      "second_distinct_from_first": false
+    }
+  ],
+  "state_probe": {
+    "put_record_count": 1,
+    "delete_record_count": 1
+  },
+  "scenarios": [
+    {
+      "scenario": "put_status_consistent",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "put_body_byte_identical",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "put_single_record",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "delete_status_consistent",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "delete_body_byte_identical",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "delete_single_record",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "post_status_consistent",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "post_body_byte_identical",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "post_new_key_distinct",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    }
+  ]
+}

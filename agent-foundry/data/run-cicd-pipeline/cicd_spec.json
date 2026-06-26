@@ -1,0 +1,268 @@
+{
+  "title": "CI/CD Pipeline Runner \u2014 scenario catalogue (general)",
+  "description": "Each entry is one full pipeline run's captured artifacts: the [backend] config block (provider=ollama, model), the model digest, the run id and timestamp, the manifest.json agent array, and one execution record (exit_code, timed_out, captured stdout) per listed agent. Agents classify exactly the enabled==true agents and emit the ten-field pipeline-summary; ground truth is the deterministic classification in cicd_spec. The Ollama server is probed read-only and NEVER started; DummyJSON is untouched.",
+  "ollama_base_url": "http://127.0.0.1:11434",
+  "scenarios_subdir": "scenarios",
+  "scenarios": [
+    {
+      "scenario": "clean_all_pass",
+      "note": "Every enabled agent exits 0 with valid-JSON stdout; one disabled agent is present and must be excluded. Pipeline PASSES (100%).",
+      "backend": {
+        "provider": "ollama",
+        "model": "llama3.1:8b"
+      },
+      "model_digest": "42182419e950",
+      "run_id": "2026-06-26T14-30-00",
+      "timestamp": "2026-06-26T14:33:07+00:00",
+      "manifest": [
+        {
+          "name": "auth-flow-checker",
+          "spec_path": "agents/auth-flow-checker.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "schema-validator",
+          "spec_path": "agents/schema-validator.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "rate-limit-prober",
+          "spec_path": "agents/rate-limit-prober.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "pagination-checker",
+          "spec_path": "agents/pagination-checker.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "legacy-soap-tester",
+          "spec_path": "agents/legacy-soap-tester.prompt.md",
+          "enabled": false
+        }
+      ],
+      "executions": {
+        "auth-flow-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"auth-flow-checker\", \"status\": \"pass\", \"checks\": 12}"
+        },
+        "schema-validator": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"schema-validator\", \"status\": \"pass\", \"violations\": 0}"
+        },
+        "rate-limit-prober": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"rate-limit-prober\", \"status\": \"pass\", \"limit\": 100}"
+        },
+        "pagination-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"pagination-checker\", \"status\": \"pass\", \"pages\": 3}"
+        },
+        "legacy-soap-tester": {
+          "exit_code": 1,
+          "timed_out": false,
+          "stdout": "this agent is disabled and must not be classified"
+        }
+      }
+    },
+    {
+      "scenario": "mixed_batch",
+      "note": "Six enabled agents across two batches of four: one non-zero exit (FAILED), one zero-exit-but-non-JSON stdout (MALFORMED), one timed out (TIMED_OUT, exit 124), three pass. Pipeline FAILS (33.33%).",
+      "backend": {
+        "provider": "ollama",
+        "model": "llama3.1:8b"
+      },
+      "model_digest": "42182419e950",
+      "run_id": "2026-06-26T15-02-44",
+      "timestamp": "2026-06-26T15:09:31+00:00",
+      "manifest": [
+        {
+          "name": "auth-flow-checker",
+          "spec_path": "agents/auth-flow-checker.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "schema-validator",
+          "spec_path": "agents/schema-validator.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "rate-limit-prober",
+          "spec_path": "agents/rate-limit-prober.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "pagination-checker",
+          "spec_path": "agents/pagination-checker.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "webhook-delivery-tester",
+          "spec_path": "agents/webhook-delivery-tester.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "idempotency-prober",
+          "spec_path": "agents/idempotency-prober.prompt.md",
+          "enabled": true
+        }
+      ],
+      "executions": {
+        "auth-flow-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"auth-flow-checker\", \"status\": \"pass\"}"
+        },
+        "schema-validator": {
+          "exit_code": 1,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"schema-validator\", \"status\": \"fail\", \"violations\": 4}"
+        },
+        "rate-limit-prober": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "Traceback (most recent call last):\n  RuntimeError: backend refused connection"
+        },
+        "pagination-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"pagination-checker\", \"status\": \"pass\"}"
+        },
+        "webhook-delivery-tester": {
+          "exit_code": 124,
+          "timed_out": true,
+          "stdout": "{\"agent\": \"webhook-delivery-tester\", \"status\": \"in_pro"
+        },
+        "idempotency-prober": {
+          "exit_code": 2,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"idempotency-prober\", \"status\": \"error\"}"
+        }
+      }
+    },
+    {
+      "scenario": "disabled_and_empty_stdout",
+      "note": "Five manifest entries, two disabled (excluded). Of the three enabled: two pass, one exits 0 with EMPTY stdout (MALFORMED \u2014 empty is a parse failure). Pipeline FAILS (66.67%).",
+      "backend": {
+        "provider": "ollama",
+        "model": "llama3.1:8b"
+      },
+      "model_digest": "42182419e950",
+      "run_id": "2026-06-26T16-20-10",
+      "timestamp": "2026-06-26T16:24:55+00:00",
+      "manifest": [
+        {
+          "name": "auth-flow-checker",
+          "spec_path": "agents/auth-flow-checker.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "deprecated-v1-tester",
+          "spec_path": "agents/deprecated-v1-tester.prompt.md",
+          "enabled": false
+        },
+        {
+          "name": "schema-validator",
+          "spec_path": "agents/schema-validator.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "experimental-grpc-prober",
+          "spec_path": "agents/experimental-grpc-prober.prompt.md",
+          "enabled": false
+        },
+        {
+          "name": "cors-header-checker",
+          "spec_path": "agents/cors-header-checker.prompt.md",
+          "enabled": true
+        }
+      ],
+      "executions": {
+        "auth-flow-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"auth-flow-checker\", \"status\": \"pass\"}"
+        },
+        "deprecated-v1-tester": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"ignored\": true}"
+        },
+        "schema-validator": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"schema-validator\", \"status\": \"pass\"}"
+        },
+        "experimental-grpc-prober": {
+          "exit_code": 124,
+          "timed_out": true,
+          "stdout": ""
+        },
+        "cors-header-checker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": ""
+        }
+      }
+    },
+    {
+      "scenario": "timeout_precedence",
+      "note": "Exercises the TIMED_OUT-over-MALFORMED precedence: one agent timed out (exit 124) with empty stdout (would also be a parse failure) and must be TIMED_OUT only; one FAILED, two pass. Pipeline FAILS (50%).",
+      "backend": {
+        "provider": "ollama",
+        "model": "llama3.1:8b"
+      },
+      "model_digest": "42182419e950",
+      "run_id": "2026-06-26T17-45-00",
+      "timestamp": "2026-06-26T17:51:18+00:00",
+      "manifest": [
+        {
+          "name": "soft-delete-prober",
+          "spec_path": "agents/soft-delete-prober.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "ssl-tls-enforcer",
+          "spec_path": "agents/ssl-tls-enforcer.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "bulk-op-tester",
+          "spec_path": "agents/bulk-op-tester.prompt.md",
+          "enabled": true
+        },
+        {
+          "name": "correlation-id-checker",
+          "spec_path": "agents/correlation-id-checker.prompt.md",
+          "enabled": true
+        }
+      ],
+      "executions": {
+        "soft-delete-prober": {
+          "exit_code": 124,
+          "timed_out": true,
+          "stdout": ""
+        },
+        "ssl-tls-enforcer": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"ssl-tls-enforcer\", \"status\": \"pass\"}"
+        },
+        "bulk-op-tester": {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"bulk-op-tester\", \"status\": \"pass\"}"
+        },
+        "correlation-id-checker": {
+          "exit_code": 3,
+          "timed_out": false,
+          "stdout": "{\"agent\": \"correlation-id-checker\", \"status\": \"fail\"}"
+        }
+      }
+    }
+  ]
+}

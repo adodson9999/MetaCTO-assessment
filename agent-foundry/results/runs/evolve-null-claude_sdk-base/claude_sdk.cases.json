@@ -1,0 +1,1278 @@
+{
+  "agent": "claude_sdk",
+  "run_id": "evolve-null-claude_sdk-base",
+  "target": "http://localhost:8899",
+  "null_empty_validation_accuracy_pct": 20.34,
+  "required_invalid_state_rejection_rate_pct": 0.0,
+  "optional_field_nullable_compliance_rate_pct": 0.0,
+  "total_cases": 59,
+  "coverage": {
+    "produced_cases": 59
+  },
+  "cases": [
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:key_absent",
+      "field": "firstName",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:json_null",
+      "field": "firstName",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": null,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:empty_string",
+      "field": "firstName",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:integer_zero",
+      "field": "firstName",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": 0,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:boolean_false",
+      "field": "firstName",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": false,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:empty_array",
+      "field": "firstName",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": [],
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "required_state",
+      "label": "firstName:empty_object",
+      "field": "firstName",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": {},
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:key_absent",
+      "field": "lastName",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:json_null",
+      "field": "lastName",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": null,
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:empty_string",
+      "field": "lastName",
+      "state": "empty_string",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:integer_zero",
+      "field": "lastName",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": 0,
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:empty_array",
+      "field": "lastName",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": [],
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "lastName:empty_object",
+      "field": "lastName",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": {},
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:key_absent",
+      "field": "age",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:json_null",
+      "field": "age",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": null,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:empty_string",
+      "field": "age",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": "",
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:integer_zero",
+      "field": "age",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 0,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:empty_array",
+      "field": "age",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": [],
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "age:empty_object",
+      "field": "age",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": {},
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:key_absent",
+      "field": "email",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:json_null",
+      "field": "email",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": null
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:empty_string",
+      "field": "email",
+      "state": "empty_string",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": ""
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:integer_zero",
+      "field": "email",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": 0
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:empty_array",
+      "field": "email",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": []
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "optional_state",
+      "label": "email:empty_object",
+      "field": "email",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": {}
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": null,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "each_required_null",
+      "label": "firstName",
+      "field": "firstName",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "firstName": null,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "category": "string_null",
+      "label": "firstName",
+      "field": "firstName",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "firstName": "null",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:key_absent",
+      "field": "name",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:json_null",
+      "field": "name",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": null,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:empty_string",
+      "field": "name",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:integer_zero",
+      "field": "name",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": 0,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:boolean_false",
+      "field": "name",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": false,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:empty_array",
+      "field": "name",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": [],
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "name:empty_object",
+      "field": "name",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": {},
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:key_absent",
+      "field": "ingredients",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:json_null",
+      "field": "ingredients",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:empty_string",
+      "field": "ingredients",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": "",
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:integer_zero",
+      "field": "ingredients",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": 0,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:boolean_false",
+      "field": "ingredients",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": false,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:empty_array",
+      "field": "ingredients",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "required_state",
+      "label": "ingredients:empty_object",
+      "field": "ingredients",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": {},
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:key_absent",
+      "field": "instructions",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:json_null",
+      "field": "instructions",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": null,
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:empty_string",
+      "field": "instructions",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": "",
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:integer_zero",
+      "field": "instructions",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": 0,
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:empty_array",
+      "field": "instructions",
+      "state": "empty_array",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "instructions:empty_object",
+      "field": "instructions",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": {},
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:key_absent",
+      "field": "prepTimeMinutes",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ]
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:json_null",
+      "field": "prepTimeMinutes",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": null
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_string",
+      "field": "prepTimeMinutes",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": ""
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:integer_zero",
+      "field": "prepTimeMinutes",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 0
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_array",
+      "field": "prepTimeMinutes",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": []
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_object",
+      "field": "prepTimeMinutes",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": {}
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": null,
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "each_required_null",
+      "label": "name",
+      "field": "name",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": null,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "each_required_null",
+      "label": "ingredients",
+      "field": "ingredients",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": "Forge Stew",
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "combo_required_null",
+      "label": "name+ingredients",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "sent_body": {
+        "name": null,
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    },
+    {
+      "slug": "recipes_add",
+      "method": "POST",
+      "path": "/recipes/add",
+      "category": "string_null",
+      "label": "name",
+      "field": "name",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "sent_body": {
+        "name": "null",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      },
+      "error": null
+    }
+  ]
+}

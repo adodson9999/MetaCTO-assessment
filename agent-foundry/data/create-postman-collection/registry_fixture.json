@@ -1,0 +1,18 @@
+[
+  {"index": 1, "tc_id": "tc-auth-001", "agent": "api-tester-test-authentication-flows", "involves_http_call": true, "step_text": "Send POST /auth/login with a valid body and Assert response code equals 200."},
+  {"index": 2, "tc_id": "tc-auth-002", "agent": "api-tester-test-authentication-flows", "involves_http_call": true, "step_text": "GET /auth/me with Authorization header, Asserts response code is exactly 401 when the token is missing."},
+  {"index": 3, "tc_id": "tc-auth-003", "agent": "api-tester-test-authentication-flows", "involves_http_call": true, "step_text": "DELETE /auth/session with Authorization and Idempotency-Key headers, Asserts exactly 204."},
+  {"index": 4, "tc_id": "tc-cache-001", "agent": "api-tester-verify-caching-headers", "involves_http_call": true, "step_text": "GET /products/1 with If-None-Match, Assert response code = 304."},
+  {"index": 5, "tc_id": "tc-cache-002", "agent": "api-tester-verify-caching-headers", "involves_http_call": true, "step_text": "PUT /products/1 with body an updated title, Asserts response code is exactly 200."},
+  {"index": 6, "tc_id": "tc-cache-003", "agent": "api-tester-verify-caching-headers", "involves_http_call": true, "step_text": "PATCH /products/1 → assert exactly 200."},
+  {"index": 7, "tc_id": "tc-cid-001", "agent": "api-tester-validate-correlation-id-propagation", "involves_http_call": true, "step_text": "GET /orders with X-Correlation-ID, Asserts response code equals 200."},
+  {"index": 8, "tc_id": "tc-cid-002", "agent": "api-tester-validate-correlation-id-propagation", "involves_http_call": true, "step_text": "POST /orders, body = an order payload, plus an X-Correlation-ID, Asserts exactly 201."},
+  {"index": 9, "tc_id": "tc-cid-003", "agent": "api-tester-validate-correlation-id-propagation", "involves_http_call": true, "step_text": "POST /files using Content-Type: multipart upload, Asserts response code = 201."},
+  {"index": 10, "tc_id": "tc-bulk-001", "agent": "api-tester-test-bulk-operation-endpoints", "involves_http_call": true, "step_text": "HEAD /bulk/status, Asserts is exactly 200."},
+  {"index": 11, "tc_id": "tc-bulk-002", "agent": "api-tester-test-bulk-operation-endpoints", "involves_http_call": true, "step_text": "Call the resource, body: a payload, Asserts response code is exactly 207."},
+  {"index": 12, "tc_id": "tc-bulk-003", "agent": "api-tester-test-bulk-operation-endpoints", "involves_http_call": true, "step_text": "GET /bulk/items → assert exactly 200."},
+  {"index": 13, "tc_id": "tc-bulk-004", "agent": "api-tester-test-bulk-operation-endpoints", "involves_http_call": true, "step_text": "GET /bulk/health to confirm the service responds."},
+  {"index": 14, "tc_id": "tc-search-001", "agent": "api-tester-validate-search-and-filter-queries", "involves_http_call": true, "step_text": "GET /products/search?q=phone, Asserts response code equals 200."},
+  {"index": 15, "tc_id": "tc-defect-001", "agent": "api-tester-track-defect-density", "involves_http_call": false, "step_text": "Parse the Jira CSV export and compute the sprint defect density."},
+  {"index": 16, "tc_id": "tc-defect-002", "agent": "api-tester-track-defect-density", "involves_http_call": false, "step_text": "Render the density dashboard markdown table from the computed metrics."}
+]

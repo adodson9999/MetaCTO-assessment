@@ -1,0 +1,13 @@
+{
+  "agent": "langgraph",
+  "run_id": "qp-run-1",
+  "metric_name": "query_param_test_fidelity",
+  "metric_value": 100.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/qp-run-1/langgraph.cases.json",
+  "ts": "2026-06-25T22:16:06.971931+00:00",
+  "query_param_handling_accuracy_pct": 91.67,
+  "scenarios_total": 48,
+  "fidelity_matches": 48,
+  "fidelity_denominator": 48,
+  "coverage_scenarios": 48
+}

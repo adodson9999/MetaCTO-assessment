@@ -1,0 +1,4 @@
+- [2026-06-25T22:38:13.604207+00:00] run=smoke-subagent null-empty test run: accuracy=11.11% over 1 endpoints (9 cases); required-rejection=0.0%
+- [2026-06-25T22:50:52.933272+00:00] run=null-run-1-ae1077 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
+- [2026-06-25T23:15:54.915137+00:00] run=evolve-null-api-tester-validate-null-empty-fields-base null-empty test run: accuracy=11.86% over 2 endpoints (59 cases); required-rejection=0.0%
+- [2026-06-25T23:18:22.771674+00:00] run=evolve-null-api-tester-validate-null-empty-fields-cand null-empty test run: accuracy=0.0% over 2 endpoints (59 cases); required-rejection=0.0%

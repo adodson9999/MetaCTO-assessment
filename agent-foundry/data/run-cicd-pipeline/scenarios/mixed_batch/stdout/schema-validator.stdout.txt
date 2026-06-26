@@ -1,0 +1,1 @@
+{"agent": "schema-validator", "status": "fail", "violations": 4}

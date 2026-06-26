@@ -1,0 +1,1 @@
+- [2026-06-26T03:05:42.980259+00:00] run=longpoll-run-1 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)

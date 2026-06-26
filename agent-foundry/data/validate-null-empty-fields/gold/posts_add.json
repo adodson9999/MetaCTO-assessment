@@ -1,0 +1,575 @@
+{
+  "slug": "posts_add",
+  "method": "POST",
+  "path": "/posts/add",
+  "schema": {
+    "fields": {
+      "title": {
+        "type": "string",
+        "maxLength": 150
+      },
+      "body": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "userId": {
+        "type": "integer"
+      },
+      "tags": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "title",
+      "userId"
+    ],
+    "optional": [
+      "body",
+      "tags"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "title:key_absent",
+      "field": "title",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:json_null",
+      "field": "title",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": null,
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:empty_string",
+      "field": "title",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "",
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:integer_zero",
+      "field": "title",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": 0,
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:boolean_false",
+      "field": "title",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": false,
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:empty_array",
+      "field": "title",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": [],
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "title:empty_object",
+      "field": "title",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": {},
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:key_absent",
+      "field": "userId",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:json_null",
+      "field": "userId",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": null,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_string",
+      "field": "userId",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": "",
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:integer_zero",
+      "field": "userId",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 0,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:boolean_false",
+      "field": "userId",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": false,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_array",
+      "field": "userId",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": [],
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_object",
+      "field": "userId",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": {},
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:key_absent",
+      "field": "body",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:json_null",
+      "field": "body",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": null,
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:empty_string",
+      "field": "body",
+      "state": "empty_string",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:integer_zero",
+      "field": "body",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": 0,
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:empty_array",
+      "field": "body",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": [],
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "body:empty_object",
+      "field": "body",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": {},
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:key_absent",
+      "field": "tags",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:json_null",
+      "field": "tags",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:empty_string",
+      "field": "tags",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:integer_zero",
+      "field": "tags",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:empty_array",
+      "field": "tags",
+      "state": "empty_array",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "tags:empty_object",
+      "field": "tags",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": null,
+        "body": "hello world",
+        "userId": null,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "title",
+      "field": "title",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "title": null,
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "userId",
+      "field": "userId",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": null,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "combo_required_null",
+      "label": "title+userId",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "title": null,
+        "body": "hello world",
+        "userId": null,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "title",
+      "field": "title",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "title": "null",
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    }
+  ]
+}

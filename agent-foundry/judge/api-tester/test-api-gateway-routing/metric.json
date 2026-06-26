@@ -1,0 +1,13 @@
+{
+  "task": "api-tester / test-api-gateway-routing",
+  "metric_name": "routing_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (route x scenario) cases where the agent's harness-observed token equals the gold observed token. Route identity is METHOD+path (two routes can share a path). A scenario the agent did not exercise (plan field absent or request unsendable -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (7 plan scenarios per route + 6 exec scenarios for a normal route / 2 for the service-down route).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-api-gateway-routing/gold.json",
+  "headline_metric": "route_forwarding_accuracy_pct",
+  "rationale": "All four agents drive the same local routing-gateway through the same harness, so the headline Route Forwarding Accuracy (routes where the request reached exactly the correct single backend with unmodified body AND the response returned unchanged, or the service-down route returned exactly 503 with no backend receiving it) is a property of the gateway, not the agent. The fixture seeds two real defects — GET /api/orders/7 is misrouted to payments-mock and PUT /api/payments/9 has its body mutated in transit — so that rate is 66.67% (4 of 6 routes) on every agent and is reported as the genuine QA finding. Routing-Test Fidelity instead measures each framework's test quality: did it construct the right request (method/path/headers-incl-Authorization/body copied verbatim), name the right expected backend, compute the right 'every other backend must be zero' set, and copy the down-test flag. The 7 plan_* scenarios per route are framework-attributable; the exec_* scenarios capture the gateway property and are uniform across agents.",
+  "pass_threshold": "Route Forwarding Accuracy = 100% (every route forwarded to exactly the correct single backend, body + response unmodified; per the task's stated metric). Routing-Test Fidelity pass = 100% (agent reproduces every gold observed token).",
+  "fail_condition": "Forwarding: any request reaching a wrong backend, any body modification in transit, or any backend receiving a request intended for another service (the seeded fixture => 66.67%, documented finding). Fidelity: < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold)."
+}

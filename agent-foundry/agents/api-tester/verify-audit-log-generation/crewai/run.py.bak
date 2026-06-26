@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""CrewAI audit-log-verification agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-collection
+Task. CrewAI routes the model through LiteLLM (anthropic/<model> for the Claude backend,
+ollama/<model> for the local one). Deterministic execution (auth, the create/update/
+delete operations, log capture + query), recording, and emit are the shared harness's
+job (agents/common/auditlog.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import auditlog  # noqa: E402
+from auditlog_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API audit-log-verification testing agent",
+        goal="Convert one collection's audit-logging contract into a single JSON audit-verification test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = auditlog.collection_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the five audit-verification-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return auditlog.extract_json(str(out)) or {}
+
+    summary = auditlog.run_auditlog_test(AGENT, generate)
+    print(f"[{AGENT}] coverage_rate={summary['audit_log_coverage_rate_pct']}% "
+          f"correctness={summary['audit_correctness_rate_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

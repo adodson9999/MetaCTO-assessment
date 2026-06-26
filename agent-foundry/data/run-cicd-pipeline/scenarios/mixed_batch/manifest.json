@@ -1,0 +1,32 @@
+[
+  {
+    "name": "auth-flow-checker",
+    "spec_path": "agents/auth-flow-checker.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "schema-validator",
+    "spec_path": "agents/schema-validator.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "rate-limit-prober",
+    "spec_path": "agents/rate-limit-prober.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "pagination-checker",
+    "spec_path": "agents/pagination-checker.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "webhook-delivery-tester",
+    "spec_path": "agents/webhook-delivery-tester.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "idempotency-prober",
+    "spec_path": "agents/idempotency-prober.prompt.md",
+    "enabled": true
+  }
+]

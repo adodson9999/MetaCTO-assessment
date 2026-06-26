@@ -1,0 +1,853 @@
+{
+  "agent": "api-tester-test-ip-allowlist-enforcement",
+  "run_id": "20260626T000544-3a508a",
+  "target": "http://127.0.0.1:8913",
+  "ip_allowlist_enforcement_rate_pct": 93.33,
+  "enforcement_pass": false,
+  "any_nonallowlisted_200_bypass": true,
+  "any_resource_data_leak_on_block": true,
+  "cases_total": 30,
+  "cases_correct": 28,
+  "endpoints": [
+    {
+      "endpoint": "/restricted/orders",
+      "waf_scope": "ipset-restricted-orders",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/orders",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-orders",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/orders",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/orders",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/orders",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/orders",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/orders",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/restricted/invoices",
+      "waf_scope": "ipset-restricted-invoices",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/invoices",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-invoices",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/invoices",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/invoices",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/invoices",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/invoices",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/invoices",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/restricted/audit-log",
+      "waf_scope": "ipset-restricted-audit-log",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/audit-log",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-audit-log",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/audit-log",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/audit-log",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/audit-log",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/audit-log",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/audit-log",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/restricted/billing",
+      "waf_scope": "ipset-restricted-billing",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/billing",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-billing",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/billing",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/billing",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/billing",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/billing",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/billing",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/restricted/legacy-reports",
+      "waf_scope": "ipset-restricted-legacy-reports",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/legacy-reports",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-legacy-reports",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/legacy-reports",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/legacy-reports",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/legacy-reports",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "200:data",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/restricted/legacy-reports",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/legacy-reports",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "endpoint": "/restricted/partner-feed",
+      "waf_scope": "ipset-restricted-partner-feed",
+      "allow_ip": "203.0.113.10",
+      "block_ip": "198.51.100.23",
+      "emitted_plan": {
+        "endpoint": "/restricted/partner-feed",
+        "method": "GET",
+        "success_code": 200,
+        "forbidden_code": 403,
+        "allow_ip": "203.0.113.10",
+        "block_ip": "198.51.100.23",
+        "edge_ip_header": "X-Edge-Verified-IP",
+        "xff_header": "X-Forwarded-For",
+        "mgmt_allowlist_path": "/__waf/allowlist",
+        "waf_scope": "ipset-restricted-partner-feed",
+        "cases": [
+          {
+            "label": "allowlisted_baseline",
+            "source_ip": "allow_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "nonallowlisted_baseline",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "xff_spoof_rejected",
+            "source_ip": "block_ip",
+            "send_xff": "allow_ip",
+            "mgmt_action": "none",
+            "expect_code": 403,
+            "expect_data": false
+          },
+          {
+            "label": "allowlist_add_allows",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "add_block_ip",
+            "expect_code": 200,
+            "expect_data": true
+          },
+          {
+            "label": "allowlist_remove_blocks",
+            "source_ip": "block_ip",
+            "send_xff": null,
+            "mgmt_action": "remove_block_ip",
+            "expect_code": 403,
+            "expect_data": false
+          }
+        ]
+      },
+      "request_log": [
+        {
+          "label": "allowlisted_baseline",
+          "source_ip": "allow_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "nonallowlisted_baseline",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "none",
+          "status": 403,
+          "data_exposed": false
+        },
+        {
+          "label": "xff_spoof_rejected",
+          "source_ip": "block_ip",
+          "sent_xff": "203.0.113.10",
+          "mgmt_action": "none",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_add_allows",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "add_block_ip",
+          "status": 200,
+          "data_exposed": true
+        },
+        {
+          "label": "allowlist_remove_blocks",
+          "source_ip": "block_ip",
+          "sent_xff": null,
+          "mgmt_action": "remove_block_ip",
+          "status": 403,
+          "data_exposed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "endpoint": "/restricted/partner-feed",
+          "scenario": "allowlisted_baseline",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/partner-feed",
+          "scenario": "nonallowlisted_baseline",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/partner-feed",
+          "scenario": "xff_spoof_rejected",
+          "ideal": "403:nodata",
+          "observed_token": "200:data",
+          "api_correct": false
+        },
+        {
+          "endpoint": "/restricted/partner-feed",
+          "scenario": "allowlist_add_allows",
+          "ideal": "200:data",
+          "observed_token": "200:data",
+          "api_correct": true
+        },
+        {
+          "endpoint": "/restricted/partner-feed",
+          "scenario": "allowlist_remove_blocks",
+          "ideal": "403:nodata",
+          "observed_token": "403:nodata",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}
