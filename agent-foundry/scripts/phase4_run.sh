@@ -17,11 +17,17 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"   # so run_agents.py's "python" = venv py
 cd "$FOUNDRY"
 
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 1. Ollama up
-if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
-  say "starting ollama"; nohup ollama serve >/tmp/ollama.log 2>&1 &
-  for i in $(seq 1 20); do curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1 && break; sleep 1; done
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    say "starting ollama"; nohup ollama serve >/tmp/ollama.log 2>&1 &
+    for i in $(seq 1 20); do curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1 && break; sleep 1; done
+  fi
 fi
 
 # 1b. EverOS shared-memory pool up (bound to loopback) so agent notes land in

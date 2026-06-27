@@ -1,0 +1,309 @@
+{
+  "agent": "api-tester-verify-sorting-behavior",
+  "run_id": "RUN-20260626-200550",
+  "target": "http://127.0.0.1:64133",
+  "sorting_accuracy_rate_pct": 100.0,
+  "sort_cases_total": 4,
+  "sort_cases_in_order": 4,
+  "scenario_accuracy_pct": 100.0,
+  "scenarios_total": 12,
+  "scenarios_api_correct": 12,
+  "seed": {
+    "emitted": 20,
+    "distinct": 20
+  },
+  "emitted_plan": {
+    "resource_path": "/resources",
+    "list_field": "resources",
+    "name_field": "name",
+    "timestamp_field": "created_at",
+    "seed": [
+      {
+        "name": "Zebra",
+        "created_at": "2026-06-25T12:00:00Z"
+      },
+      {
+        "name": "Apple",
+        "created_at": "2026-06-25T12:00:02Z"
+      },
+      {
+        "name": "Mango",
+        "created_at": "2026-06-25T12:00:04Z"
+      },
+      {
+        "name": "Quartz",
+        "created_at": "2026-06-25T12:00:06Z"
+      },
+      {
+        "name": "Lemon",
+        "created_at": "2026-06-25T12:00:08Z"
+      },
+      {
+        "name": "Cobalt",
+        "created_at": "2026-06-25T12:00:10Z"
+      },
+      {
+        "name": "Violet",
+        "created_at": "2026-06-25T12:00:12Z"
+      },
+      {
+        "name": "Indigo",
+        "created_at": "2026-06-25T12:00:14Z"
+      },
+      {
+        "name": "Bronze",
+        "created_at": "2026-06-25T12:00:16Z"
+      },
+      {
+        "name": "Walnut",
+        "created_at": "2026-06-25T12:00:18Z"
+      },
+      {
+        "name": "Olive",
+        "created_at": "2026-06-25T12:00:20Z"
+      },
+      {
+        "name": "Falcon",
+        "created_at": "2026-06-25T12:00:22Z"
+      },
+      {
+        "name": "Topaz",
+        "created_at": "2026-06-25T12:00:24Z"
+      },
+      {
+        "name": "Daisy",
+        "created_at": "2026-06-25T12:00:26Z"
+      },
+      {
+        "name": "Saffron",
+        "created_at": "2026-06-25T12:00:28Z"
+      },
+      {
+        "name": "Hazel",
+        "created_at": "2026-06-25T12:00:30Z"
+      },
+      {
+        "name": "Nutmeg",
+        "created_at": "2026-06-25T12:00:32Z"
+      },
+      {
+        "name": "Garnet",
+        "created_at": "2026-06-25T12:00:34Z"
+      },
+      {
+        "name": "Yarrow",
+        "created_at": "2026-06-25T12:00:36Z"
+      },
+      {
+        "name": "Emerald",
+        "created_at": "2026-06-25T12:00:38Z"
+      }
+    ],
+    "sort_cases": [
+      {
+        "label": "asc_by_name",
+        "type": "order",
+        "field": "name",
+        "direction": "asc",
+        "params": {
+          "sort": "name",
+          "order": "asc"
+        },
+        "expect_status": 200
+      },
+      {
+        "label": "desc_by_name",
+        "type": "order",
+        "field": "name",
+        "direction": "desc",
+        "params": {
+          "sort": "name",
+          "order": "desc"
+        },
+        "expect_status": 200
+      },
+      {
+        "label": "asc_by_created_at",
+        "type": "order",
+        "field": "created_at",
+        "direction": "asc",
+        "params": {
+          "sort": "created_at",
+          "order": "asc"
+        },
+        "expect_status": 200
+      },
+      {
+        "label": "desc_by_created_at",
+        "type": "order",
+        "field": "created_at",
+        "direction": "desc",
+        "params": {
+          "sort": "created_at",
+          "order": "desc"
+        },
+        "expect_status": 200
+      },
+      {
+        "label": "invalid_sort_field",
+        "type": "invalid_field",
+        "invalid_field_name": "nonexistent_field",
+        "params": {
+          "sort": "nonexistent_field"
+        },
+        "expect_status": 400
+      },
+      {
+        "label": "invalid_order_direction",
+        "type": "invalid_order",
+        "params": {
+          "sort": "name",
+          "order": "sideways"
+        },
+        "expect_status": 400
+      }
+    ]
+  },
+  "request_log": [
+    {
+      "label": "asc_by_name",
+      "type": "order",
+      "path": "/resources",
+      "params": {
+        "sort": "name",
+        "order": "asc"
+      },
+      "status": 200,
+      "returned_count": 20
+    },
+    {
+      "label": "desc_by_name",
+      "type": "order",
+      "path": "/resources",
+      "params": {
+        "sort": "name",
+        "order": "desc"
+      },
+      "status": 200,
+      "returned_count": 20
+    },
+    {
+      "label": "asc_by_created_at",
+      "type": "order",
+      "path": "/resources",
+      "params": {
+        "sort": "created_at",
+        "order": "asc"
+      },
+      "status": 200,
+      "returned_count": 20
+    },
+    {
+      "label": "desc_by_created_at",
+      "type": "order",
+      "path": "/resources",
+      "params": {
+        "sort": "created_at",
+        "order": "desc"
+      },
+      "status": 200,
+      "returned_count": 20
+    },
+    {
+      "label": "invalid_sort_field",
+      "type": "invalid_field",
+      "path": "/resources",
+      "params": {
+        "sort": "nonexistent_field"
+      },
+      "status": 400,
+      "returned_count": null
+    },
+    {
+      "label": "invalid_order_direction",
+      "type": "invalid_order",
+      "path": "/resources",
+      "params": {
+        "sort": "name",
+        "order": "sideways"
+      },
+      "status": 400,
+      "returned_count": null
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "asc_by_name_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "asc_by_name_ordering",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "desc_by_name_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "desc_by_name_ordering",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "asc_by_created_at_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "asc_by_created_at_ordering",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "desc_by_created_at_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "desc_by_created_at_ordering",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "invalid_sort_field_status",
+      "ideal": "400",
+      "observed_token": "400",
+      "api_correct": true
+    },
+    {
+      "scenario": "invalid_sort_field_message",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "invalid_order_direction_status",
+      "ideal": "400",
+      "observed_token": "400",
+      "api_correct": true
+    },
+    {
+      "scenario": "seed_count",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ],
+  "error": null
+}

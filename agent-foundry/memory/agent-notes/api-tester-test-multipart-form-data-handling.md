@@ -1,1 +1,2 @@
 - [2026-06-26T00:27:40.039425+00:00] run=20260626T002728-34f4f6 multipart-form-data run: accuracy=0.0% over 2 endpoints (18 scenarios)
+- [2026-06-26T21:40:51.059217+00:00] run=RUN-20260626-200550 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)

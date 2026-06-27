@@ -14,7 +14,6 @@ PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 
 # --- backend: Ollama (local, air-gapped) ---
-export FORGE_PROVIDER="ollama"
 export FORGE_TARGET_BASE_URL="$BASE"
 export PATH="$FOUNDRY/.venv/bin:$PATH"   # so run_*.py's "python" = venv python
 # Local single-slot servers saturate under parallelism; default 1, raise with FORGE_CONCURRENCY.
@@ -22,11 +21,17 @@ CONC="${FORGE_CONCURRENCY:-1}"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Ollama must already be running — this script intentionally does NOT start it.
 OLLAMA_URL="$(python -c 'import backend_config as b;print(b.resolve().get("base_url",""))' 2>/dev/null)"
-if ! curl -fsS "${OLLAMA_URL%/v1}/api/tags" >/dev/null 2>&1; then
-  echo "FATAL: Ollama not reachable at ${OLLAMA_URL%/v1} — start it first ('ollama serve'), then re-run."; exit 3
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS "${OLLAMA_URL%/v1}/api/tags" >/dev/null 2>&1; then
+    echo "FATAL: Ollama not reachable at ${OLLAMA_URL%/v1} — start it first ('ollama serve'), then re-run."; exit 3
+  fi
 fi
 
 # EverOS shared-memory pool (best-effort; the harness falls back to local notes).

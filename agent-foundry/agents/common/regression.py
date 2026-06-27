@@ -61,6 +61,46 @@ def _assert_local_target(url: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Deployment health gate (read-only GET /health -> 200)
 # --------------------------------------------------------------------------- #
 def confirm_deployment(_retries: int = 2) -> dict:
@@ -226,6 +266,23 @@ def run_regression_test(agent: str, generate) -> dict:
             "message_fidelity_pct": regression_spec.message_fidelity(report, gold),
             "error": gen_error,
         })
+
+        # G1 staging write — write per-item findings for G1b orchestration
+        _write_staging_findings(
+            agent=agent,
+            item_id=str(cfg["pair"]).strip("/").replace("/", "-").replace(" ", "-") or "pair",
+            item_label=f"build pair {cfg['pair']} ({cfg['prev_build_id']}→{cfg['build_id']})",
+            step_results=[
+                {
+                    "assertion_result": "PASS" if f.get("api_correct") else "FAIL",
+                    "assertion_detail": (
+                        f"field={f.get('field')} gold={f.get('gold')}"
+                    ),
+                    **f,
+                }
+                for f in fields
+            ],
+        )
 
     fidelity = round(100.0 * correct_cells / total_cells, 2) if total_cells else 0.0
     # The genuine QA finding: which build-N deployments must be BLOCKED (any regression).

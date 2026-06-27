@@ -1,0 +1,1 @@
+- [2026-06-26T21:46:13.673687+00:00] run=RUN-20260626-200550 test-case-creator run: coverage=0.0% field_accuracy=0.0% (0/13 gold cases)

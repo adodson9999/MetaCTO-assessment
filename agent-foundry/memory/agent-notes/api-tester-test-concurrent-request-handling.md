@@ -1,2 +1,3 @@
 - [2026-06-26T00:33:50.696256+00:00] run=concurrency-run-1 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
 - [2026-06-26T00:54:38.495490+00:00] run=concurrency-run-2 concurrent-request-handling run: success_rate=100.0% (read_ok=50/50, write_ok=50/50, db_delta=50)
+- [2026-06-26T21:13:10.654186+00:00] run=RUN-20260626-200550 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)

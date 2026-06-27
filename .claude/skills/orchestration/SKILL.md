@@ -27,19 +27,27 @@ rebuilds the knowledge graph, then retests only the affected endpoints.
 All invariants from orchestration-full apply here — the only difference is
 Phase 0 which scopes the endpoint list before testing begins.
 
+All agents live in `agent-foundry/agents/`. All results go into
+`agent-foundry/results/runs/[RUN_ID]/`. Paths are relative to the MetaCTO-Assessment
+project root.
+
 ---
 
 ## Non-negotiable invariants
 
-All 10 invariants from orchestration-full apply identically here. Additionally:
+All 10 invariants from orchestration-full apply identically here, including invariant 1
+(test-case-creator is the sole writer to test-case-registry.json; api-tester agents write
+findings to staging only; G1b enforces the 3-attempt retry before any ERROR sentinel is
+written). Additionally:
 
 11. **Change detection always runs first.** No agent is invoked against any endpoint
-    until all change detection steps (0c through 0g) are complete and the RETEST_ENDPOINTS
+    until all change detection steps (0d through 0h) are complete and the RETEST_ENDPOINTS
     list is finalized. Testing on stale scope is a broken run.
 
 12. **The knowledge graph backup is always made before /understand runs.** Never overwrite
-    the existing `knowledge-graph.json` without first renaming it to
-    `knowledge-graph.[TIMESTAMP].json`. Loss of the prior graph breaks diff capability.
+    the existing `.understand-anything/knowledge-graph.json` without first renaming it to
+    `.understand-anything/knowledge-graph.[TIMESTAMP].json`. Loss of the prior graph breaks
+    diff capability.
 
 13. **The diff determines scope — nothing else.** The RETEST_ENDPOINTS list comes
     exclusively from the /understand-diff output and the cli-factory diff output.
@@ -54,8 +62,34 @@ All 10 invariants from orchestration-full apply identically here. Additionally:
 
 ## Phase 0 — Bootstrap
 
-Identical to orchestration-full Phase 0a and 0b (environment detection + prerequisite
-verification). Generate RUN_ID. Initialize state with `run_type: "smart"`.
+Read backend from `agent-foundry/config.toml`:
+
+```bash
+PROVIDER=$(grep '^provider' agent-foundry/config.toml | head -1 | awk -F'"' '{print $2}')
+
+if [ "$PROVIDER" = "ollama" ]; then
+  ENV_MODE="ollama"
+  OLLAMA_MODEL=$(grep 'ollama_model' agent-foundry/config.toml | head -1 | awk -F'"' '{print $2}')
+  OLLAMA_BASE_URL=$(grep 'ollama_base_url' agent-foundry/config.toml | head -1 | awk -F'"' '{print $2}')
+else
+  if [ -n "$CLAUDE_CODE_SESSION" ] || command -v claude >/dev/null 2>&1; then
+    ENV_MODE="claude-code"
+  else
+    ENV_MODE="ollama"
+  fi
+fi
+
+FORGE_WORKSPACE="$(pwd)/agent-foundry"
+```
+
+Prerequisite checks (identical to orchestration-full Phase 0b):
+- `agent-foundry/agents/` exists
+- `ffmpeg` on PATH
+- `agent-foundry/config.toml` exists
+- If ENV_MODE=ollama: Ollama responds at `${OLLAMA_BASE_URL}/models`
+- Create `agent-foundry/results/runs/` and subdirectory structure
+
+Generate RUN_ID: `RUN-[YYYYMMDD-HHMMSS]`. Initialize state with `run_type: "smart"`.
 
 ---
 
@@ -68,8 +102,8 @@ if [ ! -f ".understand-anything/knowledge-graph.json" ]; then
 fi
 ```
 
-If FIRST_RUN=true: skip to Phase 0h (build full endpoint list), then continue
-to Phase 1 as orchestration-full.
+If FIRST_RUN=true: skip to Phase 0h (build full endpoint list), then proceed as
+orchestration-full for all subsequent phases.
 
 ---
 
@@ -78,26 +112,20 @@ to Phase 1 as orchestration-full.
 Re-run the CLI factory to generate a fresh CLI from the live DummyJSON docs:
 
 ```bash
-# Snapshot the current CLI binary for comparison
+# Snapshot the current CLI for comparison
 cp CLI/dummyjson-pp-cli CLI/dummyjson-pp-cli.prev 2>/dev/null || true
 
-# Re-run cli-factory on the live docs
-# This invokes the cli-factory skill targeting https://dummyjson.com/docs
-# The skill will regenerate the CLI and output to ~/printing-press/library/dummyjson/
+# Invoke cli-factory skill targeting https://dummyjson.com/docs
+# Mode: reprint — regenerates the CLI from the live docs
+# Output: CLI/dummyjson-pp-cli (overwrite after build completes)
 ```
 
-Invoke the `cli-factory` skill with:
-- Target: `https://dummyjson.com/docs`
-- Mode: reprint (use `references/printing-press-reprint/SKILL.md` mode)
-- Output: `CLI/dummyjson-pp-cli` (overwrite in place after build)
-
-After cli-factory completes:
+After cli-factory completes, diff old vs new CLI:
 
 ```bash
-# Diff the old CLI against the new CLI to detect API changes
 CLIFFDIFF=$(diff \
-  <(CLI/dummyjson-pp-cli.prev --list-endpoints --output json 2>/dev/null || echo "{}") \
-  <(CLI/dummyjson-pp-cli --list-endpoints --output json 2>/dev/null || echo "{}") \
+  <(./CLI/dummyjson-pp-cli.prev --list-endpoints --output json 2>/dev/null || echo "{}") \
+  <(./CLI/dummyjson-pp-cli --list-endpoints --output json 2>/dev/null || echo "{}") \
 )
 
 if [ -z "$CLIFFDIFF" ]; then
@@ -105,10 +133,8 @@ if [ -z "$CLIFFDIFF" ]; then
   echo "DummyJSON API: no changes detected in CLI diff."
 else
   CLI_CHANGED=true
-  echo "DummyJSON API: changes detected. Diff:"
-  echo "$CLIFFDIFF"
-  # Save diff for later scope calculation
-  echo "$CLIFFDIFF" > results/runs/${RUN_ID}/cli-diff.txt
+  echo "DummyJSON API: changes detected."
+  echo "$CLIFFDIFF" > agent-foundry/results/runs/${RUN_ID}/cli-diff.txt
 fi
 ```
 
@@ -120,7 +146,7 @@ Extract added, removed, and modified endpoints from the diff into:
   "modified": [{"method": "POST", "path": "/products"}]
 }
 ```
-Save to `results/runs/${RUN_ID}/cli-changes.json`.
+Save to `agent-foundry/results/runs/${RUN_ID}/cli-changes.json`.
 
 ---
 
@@ -134,109 +160,111 @@ cp .understand-anything/knowledge-graph.json "${KG_BACKUP}"
 echo "Backed up knowledge graph to: ${KG_BACKUP}"
 ```
 
-Record `KG_BACKUP` path in state file.
+Record `KG_BACKUP` path in state file. This backup is the baseline for the diff.
 
 ---
 
-## Phase 0f — Run /understand-diff to map impact
+## Phase 0f — Merge .understandignore and run /understand-diff
 
-Run `/understand-diff` to get the exact impact map of what has changed in the
-codebase since the last `/understand` run. This must run BEFORE `/understand`
-so it captures the delta between the backed-up graph and current source files.
+### 0f-i. Merge .understandignore before running diff
 
-### 0f-i. Write .understandignore before running diff
-
-Before invoking `/understand-diff`, write (or overwrite) `.understandignore` at the
-project root to exclude all AI agent directories and run outputs from the analysis.
-These paths change on every run and must never influence the diff scope:
+The `.understandignore` file lives at `.understand-anything/.understandignore` (already
+exists in this project). Merge required entries — never overwrite:
 
 ```bash
-cat > .understandignore << 'EOF'
-# AI agent implementations — excluded from understand-diff scope
-agents/
-agents/api-tester/
-agents/general/
+IGNORE_FILE=".understand-anything/.understandignore"
 
-# Orchestration run outputs — change every run, not meaningful to diff
-results/
-results/runs/
-results/bug-reports/
-results/postman-collection.json
-results/test-case-registry.json
-results/test-case-registry-summary.json
+REQUIRED_ENTRIES=(
+  "agent-foundry/agents/"
+  "agent-foundry/results/"
+  "agent-foundry/memory/"
+  "agent-foundry/tools/"
+  "agent-foundry/evolvers/"
+  "agent-foundry/.venv/"
+  ".understand-anything/intermediate/"
+  ".understand-anything/knowledge-graph.*.json"
+  "CLI/"
+  "node_modules/"
+)
 
-# Understand Anything own intermediate files
-.understand-anything/intermediate/
-.understand-anything/diff-overlay.json
-.understand-anything/knowledge-graph.*.json
-
-# CLI binary — compiled artifact, not source
-CLI/
-EOF
+for entry in "${REQUIRED_ENTRIES[@]}"; do
+  if ! grep -qF "$entry" "$IGNORE_FILE" 2>/dev/null; then
+    echo "$entry" >> "$IGNORE_FILE"
+    echo "Added to .understandignore: $entry"
+  fi
+done
 ```
 
-If `.understandignore` already exists, merge these entries rather than overwriting:
-read the existing file, append any missing entries, write back. Never remove entries
-that were already present.
+Apply this as a post-processing filter to all diff output: any node whose file path
+starts with an ignored prefix is removed from scope before RETEST_ENDPOINTS calculation.
 
 ### 0f-ii. Run /understand-diff
+
+Run `/understand-diff` to get the exact impact map of what changed in the codebase since
+the last `/understand` run. This must run BEFORE `/understand` so it captures the delta
+between the backed-up graph and the current source.
 
 **If ENV_MODE = "claude-code":**
 ```
 /understand-diff
 ```
-Capture the output and save to `results/runs/${RUN_ID}/understand-diff-output.txt`.
+Capture output: `agent-foundry/results/runs/${RUN_ID}/understand-diff-output.txt`
 
 **If ENV_MODE = "ollama":**
 ```bash
 node ~/.understand-anything/repo/src/commands/understand-diff.js \
-  > results/runs/${RUN_ID}/understand-diff-output.txt 2>&1
+  > agent-foundry/results/runs/${RUN_ID}/understand-diff-output.txt 2>&1
 ```
 
 ### 0f-iii. Filter and parse diff output
 
-Parse the raw diff output. Before saving, apply a post-processing filter to strip any
-node whose file path starts with any of the ignored prefixes — this acts as a second
-safety net in case the ignore file was not honored:
+Parse the raw diff output. Apply a post-processing filter to strip any node whose
+file path starts with an ignored prefix:
 
 ```python
 IGNORED_PREFIXES = [
-    "agents/",
-    "results/",
+    "agent-foundry/agents/",
+    "agent-foundry/results/",
+    "agent-foundry/memory/",
+    "agent-foundry/tools/",
+    "agent-foundry/evolvers/",
+    "agent-foundry/.venv/",
     "CLI/",
     ".understand-anything/intermediate/",
     ".understand-anything/knowledge-graph.",
+    "node_modules/",
 ]
 
 def is_ignored(file_path: str) -> bool:
     return any(file_path.startswith(p) for p in IGNORED_PREFIXES)
 
-# Parse diff output into changed_files, changed_functions, affected_paths
-# Filter out any entry where the file_path is ignored
-changed_files   = [f for f in raw_changed_files   if not is_ignored(f)]
+# Filter all entries
+changed_files = [f for f in raw_changed_files if not is_ignored(f)]
 changed_functions = [fn for fn in raw_changed_functions
                      if not is_ignored(fn.get("file", ""))]
+
+# Track what was filtered out for auditability
+ignored_paths_filtered = [f for f in raw_changed_files if is_ignored(f)]
 ```
 
-Save the filtered result to `results/runs/${RUN_ID}/understand-diff-nodes.json`:
+Save filtered result to `agent-foundry/results/runs/${RUN_ID}/understand-diff-nodes.json`:
 ```json
 {
   "changed_files": ["src/products/handler.ts", "src/auth/middleware.ts"],
   "changed_functions": ["getProducts", "validateToken"],
   "affected_paths": ["/products", "/auth"],
-  "ignored_paths_filtered_out": ["agents/api-tester/n299-validate-request-payloads/agent.md"]
+  "ignored_paths_filtered_out": ["agent-foundry/agents/api-tester/validate-request-payloads/subagent/api-tester-validate-request-payloads.md"]
 }
 ```
 
-The `ignored_paths_filtered_out` field lists every path that was present in the raw diff
-but removed by the filter — for auditability. If this list is non-empty, log INFO:
-"[N] agent/result paths removed from diff scope — these are expected and correct."
+If `ignored_paths_filtered_out` is non-empty, log INFO:
+"[N] agent/result paths removed from diff scope — expected and correct."
 
 ---
 
 ## Phase 0g — Run fresh /understand
 
-Now regenerate the knowledge graph with a fresh analysis:
+Regenerate the knowledge graph:
 
 **If ENV_MODE = "claude-code":**
 ```
@@ -246,7 +274,7 @@ Now regenerate the knowledge graph with a fresh analysis:
 **If ENV_MODE = "ollama":**
 ```bash
 node ~/.understand-anything/repo/src/commands/understand.js \
-  > results/runs/${RUN_ID}/understand-output.txt 2>&1
+  > agent-foundry/results/runs/${RUN_ID}/understand-output.txt 2>&1
 ```
 
 Wait for completion. Assert `.understand-anything/knowledge-graph.json` exists and
@@ -263,43 +291,115 @@ new_nodes = {n['id']: n for n in new.get('nodes', [])}
 changed = [nid for nid in set(list(old_nodes) + list(new_nodes))
            if old_nodes.get(nid) != new_nodes.get(nid)]
 print(json.dumps({'changed_node_ids': changed}))
-" > results/runs/${RUN_ID}/kg-diff-nodes.json
+" > agent-foundry/results/runs/${RUN_ID}/kg-diff-nodes.json
 ```
 
 ---
 
 ## Phase 0h — Build RETEST_ENDPOINTS list
 
-Combine the scope from three sources:
+Combine scope from three sources:
 
-1. **CLI diff changed endpoints** — from `cli-changes.json` (added + modified).
-   For each changed endpoint, add its full URL family (all methods on that path).
+1. **CLI diff changed endpoints** — from `agent-foundry/results/runs/${RUN_ID}/cli-changes.json`
+   (added + modified). For each changed endpoint, add all endpoints in its URL family
+   (all methods on that path prefix).
 
-2. **Understand-diff affected paths** — from `understand-diff-nodes.json`.
+2. **Understand-diff affected paths** — from `agent-foundry/results/runs/${RUN_ID}/understand-diff-nodes.json`.
    For each `affected_path`, add all endpoints whose path starts with that prefix.
 
-3. **KG diff changed nodes** — from `kg-diff-nodes.json`.
+3. **KG diff changed nodes** — from `agent-foundry/results/runs/${RUN_ID}/kg-diff-nodes.json`.
    For each changed node, look up which endpoints reference it in the knowledge graph
    and add those endpoints' full URL families.
 
-Deduplicate and sort. Save to `results/runs/${RUN_ID}/retest-endpoints.json`.
+Deduplicate and sort. Save to `agent-foundry/results/runs/${RUN_ID}/retest-endpoints.json`.
 
 **If RETEST_ENDPOINTS is empty and CLI_CHANGED = false:**
-Log: "No changes detected — nothing to retest. Run orchestration-full to force a full run."
+
+```
+No changes detected — nothing to retest.
+Run orchestration-full to force a full run.
+```
 Write final state as completed with 0 endpoints tested. Exit 0.
 
 **If RETEST_ENDPOINTS is empty but CLI_CHANGED = true:**
-Log WARNING: "CLI changed but could not map to specific endpoints — running all endpoints."
+
+```
+WARNING: CLI changed but could not map to specific endpoints — running all endpoints.
+```
 Set RETEST_ENDPOINTS = all endpoints (full scope fallback).
 
-Update `orchestration-state.json` with the RETEST_ENDPOINTS list, each with
-`status: "pending"`.
+Update `orchestration-state.json` with RETEST_ENDPOINTS, each with `status: "pending"`.
 
 ---
 
 ## Phase 1 — Agent list
 
 Identical to orchestration-full Phase 1. All 40 API tester agents + 3 generals, same order.
+
+**40 API tester agents** (exact folder names under `agent-foundry/agents/api-tester/`):
+
+```
+validate-request-payloads
+verify-response-status-codes
+test-authentication-flows
+check-authorization-rules
+validate-json-schema-responses
+test-pagination-behavior
+verify-error-message-clarity
+test-rate-limit-enforcement
+validate-query-parameter-handling
+test-idempotency-of-endpoints
+verify-content-type-negotiation
+validate-null-empty-fields
+test-timeout-handling
+verify-crud-operation-integrity
+test-concurrent-request-handling
+validate-header-propagation
+test-webhook-delivery
+run-regression-suite
+track-defect-density
+validate-api-versioning-behavior
+test-ssl-tls-enforcement
+verify-caching-headers
+validate-correlation-id-propagation
+test-bulk-operation-endpoints
+verify-audit-log-generation
+validate-search-and-filter-queries
+test-file-upload-and-download
+verify-sorting-behavior
+test-event-driven-api-triggers
+test-ip-allowlist-enforcement
+test-api-gateway-routing
+verify-third-party-oauth-integration
+test-multipart-form-data-handling
+validate-retry-after-header-compliance
+test-soft-delete-behavior
+validate-graphql-depth-limits
+test-long-polling-support
+verify-enum-value-restrictions
+measure-api-consumer-satisfaction
+create-postman-collection
+```
+
+**3 general agents** (exact folder names under `agent-foundry/agents/general/`):
+
+```
+test-case-creator
+run-cicd-pipeline
+bug-reporter
+```
+
+**Agent spec file resolution:**
+
+```bash
+# API tester:
+SPEC="agent-foundry/agents/api-tester/${AGENT_NAME}/subagent/api-tester-${AGENT_NAME}.md"
+RUNPY="agent-foundry/agents/api-tester/${AGENT_NAME}/subagent/run.py"
+
+# General:
+SPEC="agent-foundry/agents/general/${GEN_NAME}/subagent/general-${GEN_NAME}.md"
+RUNPY="agent-foundry/agents/general/${GEN_NAME}/subagent/run.py"
+```
 
 ---
 
@@ -308,33 +408,94 @@ Identical to orchestration-full Phase 1. All 40 API tester agents + 3 generals, 
 Identical to orchestration-full Phase 2 in every detail, but applied only to endpoints
 in RETEST_ENDPOINTS rather than all endpoints.
 
-The per-step guardrails (G1 through G4) are identical and non-negotiable.
+The per-step guardrails (G1, G1b, G2, G3, G4) are identical and non-negotiable.
 
-The bug flow (live capture → pause → ffmpeg → reproduce → finalize → resume) is identical.
+G1 (Findings staging): api-tester agents write per-step raw results to
+`agent-foundry/results/runs/${RUN_ID}/staging/${AGENT_NAME}/${E_ID}-findings.json`.
+They do NOT write to test-case-registry.json.
+
+G1b (test-case-creator invocation): fires once after each api-tester agent completes all
+steps for the endpoint. Reads staging file, invokes test-case-creator, validates output
+is a non-empty JSON array. Retries up to 3 times with escalating format enforcement.
+test-case-creator is the ONLY writer to test-case-registry.json. On 3-attempt failure:
+writes one ERROR sentinel, logs CRITICAL, continues.
+
+G2 (Postman collection): `create-postman-collection` runs as one of the 40 agents
+per-endpoint and handles Postman collection creation/update for that endpoint. The
+orchestrator asserts after `create-postman-collection` completes that
+`agent-foundry/results/postman-collection.json` was updated with at least one item
+whose `name` matches a tc_id from this endpoint's test cases.
+
+The bug flow (live capture → pause → ffmpeg → reproduce → finalize → resume) is
+identical to orchestration-full.
+
+Agent invocation (per ENV_MODE):
+
+Create staging directory before each api-tester agent invocation:
+```bash
+mkdir -p "agent-foundry/results/runs/${RUN_ID}/staging/${AGENT_NAME}"
+```
+
+**claude-code:**
+```python
+spec_content = open(SPEC).read()
+staging_path = f"agent-foundry/results/runs/{RUN_ID}/staging/{AGENT_NAME}/{E_ID}-findings.json"
+# Invoke via Agent tool: spec_content = system prompt
+# endpoint_context + staging_path = user message (agent writes findings here, not registry)
+```
+
+**ollama:**
+```bash
+FORGE_WORKSPACE="$(pwd)/agent-foundry" \
+  python3 "${RUNPY}" \
+  > agent-foundry/results/runs/${RUN_ID}/agents/${AGENT_NAME}/${E_ID}-stdout.txt \
+  2> agent-foundry/results/runs/${RUN_ID}/agents/${AGENT_NAME}/${E_ID}-stderr.txt
+```
+
+Timeout: 300 seconds. On non-zero exit or timeout: write synthetic ERROR entry to staging
+(not registry), then still invoke G1b so test-case-creator runs against that staging data.
 
 ---
 
 ## Phase 3 — Finalize run
 
-Identical to orchestration-full Phase 3, with these additions:
+Identical to orchestration-full Phase 3 with these additions:
 
 ### 3e. Write change detection summary
+
 ```json
 {
-  "cli_changed": true/false,
-  "cli_diff_path": "results/runs/[RUN_ID]/cli-diff.txt",
-  "understand_diff_path": "results/runs/[RUN_ID]/understand-diff-output.txt",
+  "cli_changed": true,
+  "cli_diff_path": "agent-foundry/results/runs/[RUN_ID]/cli-diff.txt",
+  "cli_changes_path": "agent-foundry/results/runs/[RUN_ID]/cli-changes.json",
+  "understand_diff_path": "agent-foundry/results/runs/[RUN_ID]/understand-diff-output.txt",
+  "understand_diff_nodes_path": "agent-foundry/results/runs/[RUN_ID]/understand-diff-nodes.json",
   "kg_backup_path": "[KG_BACKUP]",
+  "retest_endpoints_path": "agent-foundry/results/runs/[RUN_ID]/retest-endpoints.json",
   "retest_endpoint_count": N,
   "total_endpoint_count": M,
-  "skipped_endpoint_count": M - N
+  "skipped_endpoint_count": "M - N"
 }
 ```
-Write to `results/runs/${RUN_ID}/change-detection-summary.json`.
+
+Write to `agent-foundry/results/runs/${RUN_ID}/change-detection-summary.json`.
+
+Write full pipeline summary to `agent-foundry/results/runs/${RUN_ID}/pipeline-summary.json`
+(same format as orchestration-full with `"run_type": "smart"`).
+
+Update `agent-foundry/results/test-case-registry.json`.
+Regenerate `agent-foundry/results/bug-reports/index.json`.
+Set `completed: true` in `orchestration-state.json`.
+
+Exit code: any CRITICAL/HIGH bugs → exit 1, else exit 0.
 
 ---
 
 ## Resumption
 
-Same behavior as orchestration-full. If a prior incomplete smart run exists, offer
-Resume or Start Fresh.
+If invoked and `agent-foundry/results/runs/` contains an incomplete smart run
+(`orchestration-state.json` with `"completed": false` and `"run_type": "smart"`), offer:
+1. **Resume** from the last completed agent (skips change detection — uses existing RETEST_ENDPOINTS).
+2. **Start Fresh** with a new RUN_ID (re-runs change detection).
+
+Default to Resume if no input within 10 seconds.

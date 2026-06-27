@@ -6,7 +6,7 @@ Two complementary mechanisms make the agents better over time. They are not redu
 
 SkillOpt treats each agent's skill document as the trainable state of a frozen model and optimizes it with the loop: rollout → reflect → aggregate → select → update → evaluate. A bounded add/delete/replace edit to the skill doc is **accepted only if it strictly improves a held-out validation score**; otherwise it is rejected. The output is a compact `best_skill.md` per agent (in `evolvers/skillopt/<agent>/`).
 
-**The validation-gate metric is the judge's metric** (`judge/metric.json`). The same number that ranks the agents gates their self-improvement — no second, fuzzy metric. The held-out set is `results/held_out.*` so optimization cannot overfit the items used for ranking.
+**The validation-gate metric is the judge's metric** (`judge/<group>/<agent-short-name>/metric.json`). The same number that ranks the agents gates their self-improvement — no second, fuzzy metric. The held-out set is `results/<group>/<agent-short-name>/held_out.*` so optimization cannot overfit the items used for ranking.
 
 SkillOpt-Sleep is the deployment-time companion: a nightly **sleep cycle** that reviews past sessions/runs, replays recurring tasks offline, consolidates validated edits behind the held-out gate, and **stages a proposal for the user to adopt** — never auto-adopts. Its engine is decoupled and runs locally.
 

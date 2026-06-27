@@ -25,12 +25,15 @@ PROXY_PORT="${FORGE_LITELLM_PORT:-4000}"
 export FORGE_TARGET_BASE_URL="$BASE"
 # BACKEND switch: ollama by default (the owner's switch); override per-run with
 # FORGE_PROVIDER=claude-haiku for the Claude path.
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 OLLAMA_BASE="${FORGE_OLLAMA_BASE_URL:-http://127.0.0.1:11434/v1}"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 1. Backend reachability + (Claude only) the OpenAI-compatible shim for claude_sdk +
 #    subagent. Under ollama NO shim is needed — ollama is natively OpenAI-compatible.

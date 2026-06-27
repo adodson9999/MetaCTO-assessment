@@ -2,3 +2,4 @@
 - [2026-06-26T00:13:36.497580+00:00] run=crud-run-2 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
 - [2026-06-26T00:21:04.616524+00:00] run=evolve-crud-api-tester-verify-crud-operation-integrity-base crud-integrity run: rate=0.0% passing=0/2 covered_steps=12 over 2 resources
 - [2026-06-26T00:22:06.814337+00:00] run=evolve-crud-api-tester-verify-crud-operation-integrity-cand crud-integrity run: rate=0.0% passing=0/2 covered_steps=12 over 2 resources
+- [2026-06-26T21:12:34.315916+00:00] run=RUN-20260626-200550 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources

@@ -28,11 +28,14 @@ FOUNDRY="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROXY_PORT="${FORGE_LITELLM_PORT:-4000}"
 DATASET="${FORGE_NPS_DATASET:-current}"
 PROVIDER="${FORGE_PROVIDER:-ollama}"          # <-- Ollama backend for this task (owner switch)
-export FORGE_PROVIDER="$PROVIDER"
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 STARTED_PROXY=0
 if [ "$PROVIDER" = "claude-haiku" ]; then

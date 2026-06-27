@@ -1,3 +1,4 @@
 - [2026-06-26T01:02:21.512065+00:00] run=20260626T010209-fef790 file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
 - [2026-06-26T01:04:01.052199+00:00] run=evolve-up-api-tester-test-file-upload-and-download-base file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 1 endpoints (14 scenarios)
 - [2026-06-26T01:04:02.557411+00:00] run=evolve-up-api-tester-test-file-upload-and-download-cand file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 1 endpoints (14 scenarios)
+- [2026-06-26T21:29:18.126000+00:00] run=RUN-20260626-200550 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)

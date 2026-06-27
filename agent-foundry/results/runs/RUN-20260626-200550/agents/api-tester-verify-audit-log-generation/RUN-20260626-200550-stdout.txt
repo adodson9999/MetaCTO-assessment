@@ -1,0 +1,1 @@
+[api-tester-verify-audit-log-generation] audit_log_coverage_rate_pct=0.0% audit_correctness_rate_pct=3.7%

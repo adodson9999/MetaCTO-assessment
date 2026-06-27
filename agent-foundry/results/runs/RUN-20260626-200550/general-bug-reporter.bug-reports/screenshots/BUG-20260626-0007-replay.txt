@@ -1,0 +1,11 @@
+=== BUG REPORT REPLAY: BUG-20260626-0007 ===
+Agent: pagination-checker
+Status: FAILED
+Exit Code: 1
+Timestamp: 2026-06-26T14:38:01Z
+
+--- STDOUT ---
+{"agent": "pagination-checker", "status": "fail"}
+
+--- STDERR ---
+AssertionError: 404 on page 3 — pagination offset computed incorrectly

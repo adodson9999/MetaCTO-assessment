@@ -67,6 +67,46 @@ def _assert_local_target(url: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Spec loading
 # --------------------------------------------------------------------------- #
 def load_resources() -> list[dict]:
@@ -307,6 +347,28 @@ def run_crud_test(agent: str, generate) -> dict:
         rec["gen_error"] = gen_error
         results.append(rec)
         passed += int(rec["integrity_pass"])
+
+        # G1 staging write — write per-item findings for G1b orchestration
+        _write_staging_findings(
+            agent=agent,
+            item_id=rec["slug"],
+            item_label=f"CRUD {rec['slug']} (table={rec['table']}, integrity_pass={rec['integrity_pass']})",
+            step_results=[
+                {
+                    "assertion_result": (
+                        "PASS" if s.get("covered") and s.get("body_field_match") is not False
+                        else "FAIL"
+                    ),
+                    "assertion_detail": (
+                        f"step={s.get('step')} method={s.get('method')} "
+                        f"path={s.get('sent_path')} code={s.get('actual_code')} "
+                        f"covered={s.get('covered')} body_field_match={s.get('body_field_match')}"
+                    ),
+                    **s,
+                }
+                for s in rec["steps"]
+            ],
+        )
 
     total = len(resources)
     rate = round(100.0 * passed / total, 2) if total else 0.0

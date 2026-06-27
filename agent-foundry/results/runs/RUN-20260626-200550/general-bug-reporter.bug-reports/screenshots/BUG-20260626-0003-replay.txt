@@ -1,0 +1,11 @@
+=== BUG REPORT REPLAY: BUG-20260626-0003 ===
+Agent: ci-gatekeeper
+Status: TIMED_OUT
+Exit Code: 124
+Timestamp: 2026-06-26T14:34:01Z
+
+--- STDOUT ---
+(empty)
+
+--- STDERR ---
+(empty)

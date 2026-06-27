@@ -1,13 +1,13 @@
 # Building the Four Agents
 
-All four implement the **same task** and are **built to be measured**: each must emit its metric as JSON to `results/runs/<run-id>/<agent>.json`. The metric schema is defined by the judge (`judge/metric.json`); every agent emits the same fields so the judge can compare them directly.
+All four implement the **same task** and are **built to be measured**: each must emit its metric as JSON to `results/runs/<run-id>/<agent>.json`. The metric schema is defined by the judge (`judge/<group>/<agent-short-name>/metric.json`, e.g. `judge/api-tester/create-postman-collection/metric.json`); every agent emits the same fields so the judge can compare them directly.
 
 Each agent's instruction lines come from the debate gate (`references/debate-gate.md`) — author them there first, then write the approved prompt into the agent's `subagent/<agent-name>.md` file. Each framework gets a **thin dispatcher** `run.py` that delegates all boilerplate to the shared runner.
 
 ## Shared contract (all four)
 
 Every agent must:
-1. Read the task from `task_spec.md` and the metric contract from `judge/metric.json`.
+1. Read the task from `task_spec.md` and the metric contract from `judge/<group>/<agent-short-name>/metric.json` (e.g. `judge/api-tester/create-postman-collection/metric.json`).
 2. Use the central backend (`scripts/backend_config.py`) — never hardcode a model.
 3. Read/write only inside the workspace sandbox.
 4. Share memory via EverOS using the common `project_id`/`app_id` and its own `agent_id`.

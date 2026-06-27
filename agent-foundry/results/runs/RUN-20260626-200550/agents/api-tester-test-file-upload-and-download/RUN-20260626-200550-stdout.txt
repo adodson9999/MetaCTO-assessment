@@ -1,0 +1,1 @@
+[api-tester-test-file-upload-and-download] file_integrity_rate_pct=0.0% over_size_rejection_rate_pct=0.0% invalid_mime_rejection_rate_pct=0.0%

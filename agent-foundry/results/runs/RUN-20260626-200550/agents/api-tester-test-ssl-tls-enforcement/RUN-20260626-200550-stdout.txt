@@ -1,0 +1,1 @@
+[api-tester-test-ssl-tls-enforcement] tls_enforcement_rate_pct=52.94%

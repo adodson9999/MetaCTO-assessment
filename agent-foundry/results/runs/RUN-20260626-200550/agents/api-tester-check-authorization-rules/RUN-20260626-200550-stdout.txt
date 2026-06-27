@@ -1,0 +1,1 @@
+[api-tester-check-authorization-rules] access_control_accuracy_rate_pct=16.67% core_passed=1/6

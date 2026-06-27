@@ -1,0 +1,1 @@
+[api-tester-verify-caching-headers] caching_header_compliance_rate_pct=0.0% caching_correctness_rate_pct=36.36%

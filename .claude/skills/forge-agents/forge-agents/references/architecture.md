@@ -51,9 +51,25 @@ agent-foundry/
 │   └── skillclaw/              # collective shared skills (local-FS backend)
 │
 ├── results/                    # everything the judge reads/writes
-│   ├── runs/<run-id>/<agent>.json   # each agent's emitted metric, per run
-│   ├── leaderboard.md
-│   └── leaderboard.json
+│   ├── api-tester/             # per-agent result artifacts, grouped by agent group
+│   │   └── <short-name>/       # mirrors agents/api-tester/<short-name>/
+│   │       ├── held_out.jsonl                      # held-out evaluation set
+│   │       ├── leaderboard-<YYYYMMDDTHHMMSS>.json  # timestamped snapshot (machine)
+│   │       └── leaderboard-<YYYYMMDDTHHMMSS>.md    # timestamped snapshot (human)
+│   ├── general/                # per-agent result artifacts for general-* agents
+│   │   └── <short-name>/
+│   │       ├── held_out.jsonl
+│   │       ├── leaderboard-<YYYYMMDDTHHMMSS>.json
+│   │       └── leaderboard-<YYYYMMDDTHHMMSS>.md
+│   ├── _global/                # global/cross-agent artifacts (no single agent owner)
+│   └── runs/                   # flat cross-agent run store (all agents, all tasks)
+│       └── <YYYYMMDDTHHMMSS-xxxxxx>/
+│           ├── langgraph.json          # per-framework result + metric value
+│           ├── langgraph.cases.json
+│           ├── crewai.json
+│           ├── crewai.cases.json
+│           ├── claude_sdk.json
+│           └── claude_sdk.cases.json
 │
 ├── vendor/                     # vendored, pinned upstream repos (scan-and-integrate)
 │   ├── EverOS/   SkillOpt/   SkillClaw/
@@ -66,7 +82,7 @@ agent-foundry/
 1. **Task** → `task_spec.md` (interview).
 2. **Author** → four thin dispatcher `run.py` files written per agent (one per framework), each pointing to the centralized runner in `agents/common/runners/`. The gated system prompt is written directly into `agents/<agent-name>/subagent/<agent-name>.md`.
 3. **Run** → `scripts/run_agents.py` runs all four **in parallel**, each writing its metric to `results/runs/<run-id>/<agent>.json`.
-4. **Judge** → reads those JSONs, applies `judge/metric.json`, updates `results/leaderboard.{md,json}`.
+4. **Judge** → reads those JSONs, applies `judge/<group>/<agent-short-name>/metric.json`, writes `results/<group>/<agent-short-name>/leaderboard-<ts>.{md,json}`.
 5. **Memory** → every run's artifacts written to the shared EverOS pool (common `project_id`/`app_id`, per-agent `agent_id`).
 6. **Evolve** → nightly/manual: SkillOpt sharpens each agent's `best_skill.md` behind the judge-metric gate; SkillClaw distills + shares skills across all agents.
 7. **Self-review** → `SELF_REVIEW.md`.

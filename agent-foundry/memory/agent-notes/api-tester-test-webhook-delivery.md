@@ -1,0 +1,1 @@
+- [2026-06-26T21:19:00.678368+00:00] run=RUN-20260626-200550 webhook-delivery run: contract_correctness=75.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0

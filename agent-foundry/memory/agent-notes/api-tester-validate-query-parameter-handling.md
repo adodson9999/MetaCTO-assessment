@@ -1,3 +1,4 @@
 - [2026-06-25T22:15:55.428364+00:00] run=qp-run-1 query-param-handling run: accuracy=0.0% over 4 collections (48 scenarios)
 - [2026-06-25T22:35:47.091772+00:00] run=qp-run-2 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
 - [2026-06-25T23:11:13.253185+00:00] run=qp-run-3 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-06-26T20:45:28.144851+00:00] run=RUN-20260626-200550 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)

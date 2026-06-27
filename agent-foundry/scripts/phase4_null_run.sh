@@ -15,16 +15,21 @@ TARGET_REPO="$(cd "$FOUNDRY/.." && pwd)"
 PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"                # <-- Ollama backend (local, air-gapped)
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Ollama must already be running — this script does NOT start it.
-if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
-  echo "FATAL: Ollama not reachable at 127.0.0.1:11434. Start it first (e.g. 'ollama serve'); this script will not start it." >&2
-  exit 3
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    echo "FATAL: Ollama not reachable at 127.0.0.1:11434. Start it first (e.g. 'ollama serve'); this script will not start it." >&2
+    exit 3
+  fi
 fi
 
 # 1. EverOS shared-memory pool (best-effort; air-gapped, loopback). Non-fatal if absent

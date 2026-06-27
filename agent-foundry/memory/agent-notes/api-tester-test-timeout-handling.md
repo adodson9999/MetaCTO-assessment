@@ -1,1 +1,2 @@
 - [2026-06-25T23:05:05.889802+00:00] run=timeout-run-1 timeout-handling run: enforcement_rate=83.33% over 3 services (5/6 endpoints enforced)
+- [2026-06-26T21:09:37.622601+00:00] run=RUN-20260626-200550 timeout-handling run: enforcement_rate=0.0% over 3 services (0/6 endpoints enforced)

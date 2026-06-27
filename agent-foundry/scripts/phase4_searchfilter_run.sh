@@ -20,15 +20,22 @@ PORT="${FORGE_TARGET_PORT:-8931}"   # override with FORGE_TARGET_PORT if this co
 BASE="http://localhost:${PORT}"
 PROXY_PORT="${FORGE_LITELLM_PORT:-4000}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="claude-haiku"          # <-- Claude backend for this task only
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
-if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
-  echo "FATAL: ANTHROPIC_API_KEY is not set; the Claude backend cannot run." >&2
-  exit 2
+# 0. Backend precondition (provider-aware; mirrors the other phase4 scripts).
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1 || {
+    echo "FATAL: ollama backend selected but the Ollama server is not running on :11434." >&2
+    echo "       Start it yourself: 'ollama serve' (this script does not start it)." >&2; exit 3; }
+elif [ "$FORGE_PROVIDER" = "claude-haiku" ] && [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+  echo "FATAL: ANTHROPIC_API_KEY is not set, but FORGE_PROVIDER=claude-haiku."; exit 3
 fi
 
 # 1. OpenAI-compatible shim for claude_sdk + subagent.

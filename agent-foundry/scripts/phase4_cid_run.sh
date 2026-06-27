@@ -34,15 +34,21 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 1. Ollama must already be running — this script will NOT start it.
 OLLAMA_BASE="${FORGE_OLLAMA_BASE_URL:-http://127.0.0.1:11434/v1}"
 OLLAMA_ROOT="${OLLAMA_BASE%/v1}"
-if ! curl -fsS "${OLLAMA_ROOT}/api/tags" >/dev/null 2>&1; then
-  echo "FATAL: Ollama is not reachable at ${OLLAMA_ROOT}. Start it separately" >&2
-  echo "       (\`ollama serve\` and \`ollama pull qwen2.5:14b-instruct\`); this script" >&2
-  echo "       does NOT start the Ollama server for you." >&2
-  exit 2
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS "${OLLAMA_ROOT}/api/tags" >/dev/null 2>&1; then
+    echo "FATAL: Ollama is not reachable at ${OLLAMA_ROOT}. Start it separately" >&2
+    echo "       (\`ollama serve\` and \`ollama pull qwen2.5:14b-instruct\`); this script" >&2
+    echo "       does NOT start the Ollama server for you." >&2
+    exit 2
+  fi
 fi
 
 # 2. Target API up with request logging ON, captured to the workspace log file.

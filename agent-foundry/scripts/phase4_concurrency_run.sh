@@ -25,7 +25,6 @@ READ_BASE="http://localhost:${READ_PORT}"
 WRITE_BASE="http://127.0.0.1:${WRITE_PORT}"
 DB_PATH="$FOUNDRY/data/test-concurrent-request-handling/records.db"
 
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"   # Ollama backend (Claude had no credit)
 export FORGE_READ_BASE_URL="$READ_BASE"
 export FORGE_WRITE_BASE_URL="$WRITE_BASE"
 export CONCURRENCY_TARGET_PORT="$WRITE_PORT"
@@ -34,6 +33,10 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 if [ "$FORGE_PROVIDER" = "claude-haiku" ] && [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   echo "FATAL: FORGE_PROVIDER=claude-haiku but ANTHROPIC_API_KEY is not set."; exit 3

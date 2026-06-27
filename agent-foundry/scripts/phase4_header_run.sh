@@ -16,11 +16,14 @@ BASE="http://localhost:${PORT}"
 SERVER_LOG="${FORGE_SERVER_LOG:-/tmp/forge-hp-dummyjson-${PORT}.log}"
 export FORGE_TARGET_BASE_URL="$BASE"
 export FORGE_SERVER_LOG="$SERVER_LOG"
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"   # Ollama backend (local, air-gapped)
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend reachability NOTE — never starts the server (per build policy).
 #    For Ollama, ensure it is already running (`ollama serve`). For claude-haiku,

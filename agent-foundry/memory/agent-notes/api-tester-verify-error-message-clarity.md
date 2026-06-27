@@ -1,2 +1,3 @@
 - [2026-06-25T22:41:03.954046+00:00] run=20260625T223813-4b8a83 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
 - [2026-06-25T23:00:26.244577+00:00] run=20260625T225832-c586d6 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-26T20:40:53.869570+00:00] run=RUN-20260626-200550 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations

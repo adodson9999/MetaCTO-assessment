@@ -19,6 +19,17 @@ These hold in every phase. If any instruction you are about to write would viola
 4. **Agents are built to be measured.** Each agent must emit its metric in an obvious, machine-readable way (structured JSON to `results/`). If you cannot see how a built agent would emit its number, the build is wrong.
 5. **Local and air-gapped.** Memory is EverOS only (Markdown + SQLite + LanceDB on Ollama). Backend is swappable between Ollama and Claude Haiku via one central config. Nothing calls a non-local service unless the user explicitly opts into a cloud backend.
 6. **Sandbox.** All agent read/write/exec is confined to the workspace folder. Never let a generated agent act outside it.
+7. **Single-source LLM config — never hardcode a provider.** Every shell script
+   the foundry generates MUST follow this exact pattern and no other:
+   - `config.toml [backend].provider` is always `"auto"` (never `"ollama"` or `"claude-haiku"`)
+   - Every `phase4_*.sh` script resolves the provider via exactly:
+     `eval "$(python scripts/llm_config.py --export)"`
+   - No script contains a bare `export FORGE_PROVIDER="..."` assignment
+   - Every ollama health-check (`curl …/api/tags`) is wrapped in:
+     `if [ "$FORGE_PROVIDER" = "ollama" ]; then … fi`
+   - After generating or editing any shell script, run:
+     `python scripts/verify_llm_config.py`
+     and fix all failures before proceeding. A non-zero exit is a build defect.
 
 ## Phases
 

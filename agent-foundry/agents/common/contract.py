@@ -61,6 +61,46 @@ def _assert_local_target(url: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Spec loading
 # --------------------------------------------------------------------------- #
 def load_endpoints() -> list[dict]:
@@ -222,6 +262,7 @@ def run_contract_test(agent: str, generate) -> dict:
     invalid_sent = invalid_rejected = 0
 
     for ep in endpoints:
+        _ep_case_start = len(cases)
         try:
             out = generate(ep) or {}
             gen_error = None
@@ -251,6 +292,25 @@ def run_contract_test(agent: str, generate) -> dict:
                           "expected_class": None, "actual_code": None,
                           "actual_class": "none", "sent_body": None,
                           "error": gen_error or "no payloads produced"})
+
+        # G1 staging write — write per-item findings for G1b orchestration
+        _write_staging_findings(
+            agent=agent,
+            item_id=ep["slug"],
+            item_label=f"{ep['method']} {ep['path']}",
+            step_results=[
+                {
+                    "assertion_result": "PASS" if c.get("actual_class") == c.get("expected_class") else "FAIL",
+                    "assertion_detail": (
+                        f"category={c['category']} label={c.get('label','')} "
+                        f"sent HTTP {c['method']} {c['path']} → "
+                        f"status {c['actual_code']} (class={c['actual_class']}, expected={c['expected_class']})"
+                    ),
+                    **c,
+                }
+                for c in cases[_ep_case_start:]
+            ],
+        )
 
     rejection_rate = round(100.0 * invalid_rejected / invalid_sent, 2) if invalid_sent else 0.0
     produced_cases = sum(1 for c in cases if c["category"] != "_none_")

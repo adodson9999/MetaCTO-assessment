@@ -1,0 +1,125 @@
+{
+  "agent": "general-test-case-creator",
+  "run_id": "RUN-20260626-200550",
+  "test_case_coverage_rate_pct": 0.0,
+  "test_case_field_accuracy_pct": 0.0,
+  "gold_tc": 13,
+  "present_tc": 0,
+  "emitted_tc": 0,
+  "missing_tc": [
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "1",
+      "tc_id": "api-tester-demo-crud-step-1",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "2",
+      "tc_id": "api-tester-demo-crud-step-2",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "3a",
+      "tc_id": "api-tester-demo-crud-step-3a",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "3b",
+      "tc_id": "api-tester-demo-crud-step-3b",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "4",
+      "tc_id": "api-tester-demo-crud-step-4",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-crud",
+      "step_id": "5",
+      "tc_id": "api-tester-demo-crud-step-5",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-metrics",
+      "step_id": "1",
+      "tc_id": "api-tester-demo-metrics-step-1",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-metrics",
+      "step_id": "2",
+      "tc_id": "api-tester-demo-metrics-step-2",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-metrics",
+      "step_id": "3",
+      "tc_id": "api-tester-demo-metrics-step-3",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-pagination",
+      "step_id": "1",
+      "tc_id": "api-tester-demo-pagination-step-1",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-pagination",
+      "step_id": "2",
+      "tc_id": "api-tester-demo-pagination-step-2",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-pagination",
+      "step_id": "3",
+      "tc_id": "api-tester-demo-pagination-step-3",
+      "reason": "extraction_failure"
+    },
+    {
+      "agent": "api-tester-demo-pagination",
+      "step_id": "4",
+      "tc_id": "api-tester-demo-pagination-step-4",
+      "reason": "extraction_failure"
+    }
+  ],
+  "field_mismatches": [],
+  "per_agent_spec": [
+    {
+      "agent_spec": "api-tester-demo-pagination",
+      "emitted_count": 0,
+      "error": null
+    },
+    {
+      "agent_spec": "api-tester-demo-crud",
+      "emitted_count": 0,
+      "error": null
+    },
+    {
+      "agent_spec": "api-tester-demo-metrics",
+      "emitted_count": 0,
+      "error": null
+    },
+    {
+      "agent_spec": "api-tester-demo-noop",
+      "emitted_count": 0,
+      "error": null
+    }
+  ],
+  "deliverable_summary": {
+    "agents_processed": 4,
+    "agents_parse_error": 1,
+    "total_steps_extracted": 13,
+    "total_test_cases_created": 13,
+    "coverage_rate": 100.0,
+    "http_call_count": 4,
+    "db_query_count": 2,
+    "file_write_count": 3,
+    "assertion_count": 6,
+    "gaps_found": false,
+    "gap_count": 0
+  }
+}

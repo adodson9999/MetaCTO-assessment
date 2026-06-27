@@ -1,2 +1,3 @@
 - [2026-06-25T23:58:14.641527+00:00] run=20260625T235636-88b1ee oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
 - [2026-06-26T00:11:22.860498+00:00] run=20260626T001018-074638 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-06-26T21:40:10.438431+00:00] run=RUN-20260626-200550 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions

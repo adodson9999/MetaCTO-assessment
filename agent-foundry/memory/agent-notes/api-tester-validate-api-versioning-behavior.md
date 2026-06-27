@@ -1,0 +1,1 @@
+- [2026-06-26T21:22:05.069476+00:00] run=RUN-20260626-200550 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)

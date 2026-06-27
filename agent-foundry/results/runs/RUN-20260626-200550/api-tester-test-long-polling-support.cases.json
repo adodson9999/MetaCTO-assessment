@@ -1,0 +1,341 @@
+{
+  "agent": "api-tester-test-long-polling-support",
+  "run_id": "RUN-20260626-200550",
+  "target": "http://localhost:8899",
+  "longpoll_response_accuracy_pct": 0.0,
+  "cases_total": 6,
+  "cases_passed": 0,
+  "scenarios_total": 30,
+  "scenarios_api_correct": 9,
+  "request_log": [
+    {
+      "channel": "orders",
+      "case": "no_event",
+      "status": 404,
+      "content_length": 2064,
+      "elapsed_s": 0.012
+    },
+    {
+      "channel": "orders",
+      "case": "event",
+      "status": 404,
+      "elapsed_s": 0.001,
+      "response_after_event_s": 0.0,
+      "event_offset_s": 1.514
+    },
+    {
+      "channel": "inventory",
+      "case": "no_event",
+      "status": 404,
+      "content_length": 2064,
+      "elapsed_s": 0.008
+    },
+    {
+      "channel": "inventory",
+      "case": "event",
+      "status": 404,
+      "elapsed_s": 0.001,
+      "response_after_event_s": 0.0,
+      "event_offset_s": 1.513
+    },
+    {
+      "channel": "profile",
+      "case": "no_event",
+      "status": 404,
+      "content_length": 2064,
+      "elapsed_s": 0.004
+    },
+    {
+      "channel": "profile",
+      "case": "event",
+      "status": 404,
+      "elapsed_s": 0.001,
+      "response_after_event_s": 0.0,
+      "event_offset_s": 1.506
+    }
+  ],
+  "channels": [
+    {
+      "channel": "orders",
+      "emitted_plan": {
+        "channel": "orders",
+        "poll_path": "/poll/orders",
+        "trigger_path": "/publish/orders",
+        "poll_timeout_s": 5,
+        "expected_event_type": "order.created",
+        "client_max_time_s": 10,
+        "cases": [
+          {
+            "label": "no_event",
+            "kind": "no_event"
+          },
+          {
+            "label": "event",
+            "kind": "event"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "channel": "orders",
+          "scenario": "ne_status",
+          "ideal": "204",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ne_not_early",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ne_within_window",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "orders",
+          "scenario": "ne_body_empty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ev_status",
+          "ideal": "200",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ev_within_2s",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "orders",
+          "scenario": "ev_valid_json",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ev_event_type_match",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "ev_secondary_nonempty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "orders",
+          "scenario": "client_max_time_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "channel": "inventory",
+      "emitted_plan": {
+        "channel": "inventory",
+        "poll_path": "/poll/inventory",
+        "trigger_path": "/publish/inventory",
+        "poll_timeout_s": 5,
+        "expected_event_type": "inventory.updated",
+        "client_max_time_s": 10,
+        "cases": [
+          {
+            "label": "no_event",
+            "kind": "no_event"
+          },
+          {
+            "label": "event",
+            "kind": "event"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "channel": "inventory",
+          "scenario": "ne_status",
+          "ideal": "204",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ne_not_early",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ne_within_window",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ne_body_empty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ev_status",
+          "ideal": "200",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ev_within_2s",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ev_valid_json",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ev_event_type_match",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "ev_secondary_nonempty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "inventory",
+          "scenario": "client_max_time_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "channel": "profile",
+      "emitted_plan": {
+        "channel": "profile",
+        "poll_path": "/poll/profile",
+        "trigger_path": "/publish/profile",
+        "poll_timeout_s": 5,
+        "expected_event_type": "profile.updated",
+        "client_max_time_s": 10,
+        "cases": [
+          {
+            "label": "no_event",
+            "kind": "no_event"
+          },
+          {
+            "label": "event",
+            "kind": "event"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "channel": "profile",
+          "scenario": "ne_status",
+          "ideal": "204",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ne_not_early",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ne_within_window",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "profile",
+          "scenario": "ne_body_empty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ev_status",
+          "ideal": "200",
+          "observed_token": "other_404",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ev_within_2s",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "channel": "profile",
+          "scenario": "ev_valid_json",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ev_event_type_match",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "ev_secondary_nonempty",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "channel": "profile",
+          "scenario": "client_max_time_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}

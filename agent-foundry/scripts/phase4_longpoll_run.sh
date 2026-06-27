@@ -16,11 +16,14 @@ PORT="${FORGE_TARGET_PORT:-8921}"
 BASE="http://127.0.0.1:${PORT}"
 export FORGE_TARGET_BASE_URL="$BASE"
 # OLLAMA backend for this build (override only; global config.toml stays ollama).
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"
 PY="$FOUNDRY/.venv/bin/python"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend precondition. This script NEVER starts the LLM server.
 if [ "$FORGE_PROVIDER" = "ollama" ]; then

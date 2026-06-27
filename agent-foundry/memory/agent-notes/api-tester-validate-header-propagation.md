@@ -1,1 +1,2 @@
 - [2026-06-25T23:57:31.179070+00:00] run=hp-run-2 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-26T21:15:14.320313+00:00] run=RUN-20260626-200550 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)

@@ -1,0 +1,12 @@
+=== BUG REPORT REPLAY: BUG-20260626-0001 ===
+Agent: authentication-flow-tester
+Status: FAILED
+Exit Code: 1
+Timestamp: 2026-06-26T14:32:01Z
+
+--- STDOUT ---
+{"agent": "authentication-flow-tester", "status": "fail", "checks": 7}
+
+--- STDERR ---
+AssertionError: expected 200 on valid login but got 401
+  at verify_login

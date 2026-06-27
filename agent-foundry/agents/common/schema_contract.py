@@ -64,6 +64,71 @@ def _assert_local_target(url: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+def _stage_schema_op(agent: str, op: dict, op_cases: list[dict]) -> None:
+    """Stage the single case this op produced (covered or not) for G1b orchestration."""
+    _write_staging_findings(
+        agent=agent,
+        item_id=op["slug"],
+        item_label=f"{op['method']} {op['path']}",
+        step_results=[
+            {
+                "assertion_result": (
+                    "PASS" if c.get("covered") and c.get("schema_claim_correct")
+                    and c.get("conformance") != "fail" else "FAIL"
+                ),
+                "assertion_detail": (
+                    f"covered={c.get('covered')} actual_code={c.get('actual_code')} "
+                    f"matched_key={c.get('matched_response_key')} "
+                    f"documented_schema={c.get('documented_schema')} "
+                    f"conformance={c.get('conformance')}"
+                ),
+                **c,
+            }
+            for c in op_cases
+        ],
+    )
+
+
+# --------------------------------------------------------------------------- #
 # Spec loading
 # --------------------------------------------------------------------------- #
 def _classify(code: int) -> str:
@@ -245,6 +310,7 @@ def run_schema_test(agent: str, generate) -> dict:
     validated = conformant = 0
 
     for op in ops:
+        _op_case_start = len(cases)
         try:
             out = generate(op) or {}
             gen_error = None
@@ -264,6 +330,7 @@ def run_schema_test(agent: str, generate) -> dict:
                           "schema_claim_correct": False, "fields_validated": 0,
                           "validation_error_count": 0, "conformance": None,
                           "error": gen_error})
+            _stage_schema_op(agent, op, cases[_op_case_start:])
             continue
 
         actual_code, body = send(req, token)
@@ -293,6 +360,9 @@ def run_schema_test(agent: str, generate) -> dict:
             "fields_validated": fields, "validation_error_count": err_count,
             "validation_errors": errors, "conformance": conformance, "error": None,
         })
+
+        # G1 staging write — write per-item findings for G1b orchestration
+        _stage_schema_op(agent, op, cases[_op_case_start:])
 
     rate = round(100.0 * conformant / validated, 2) if validated else None
     covered_n = sum(1 for c in cases if c["covered"])

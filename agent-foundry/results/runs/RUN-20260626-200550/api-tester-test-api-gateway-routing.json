@@ -1,0 +1,11 @@
+{
+  "agent": "api-tester-test-api-gateway-routing",
+  "run_id": "RUN-20260626-200550",
+  "metric_name": "route_forwarding_accuracy_pct",
+  "metric_value": 0.0,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/RUN-20260626-200550/api-tester-test-api-gateway-routing.cases.json",
+  "ts": "2026-06-26T21:38:40.428794+00:00",
+  "route_forwarding_accuracy_pct": 0.0,
+  "routes_total": 6,
+  "routes_forwarded": 0
+}

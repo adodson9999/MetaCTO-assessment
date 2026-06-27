@@ -1,0 +1,11 @@
+=== BUG REPORT REPLAY: BUG-20260626-0004 ===
+Agent: biometric-far-checker
+Status: FAILED
+Exit Code: 1
+Timestamp: 2026-06-26T14:35:01Z
+
+--- STDOUT ---
+{"agent": "biometric-far-checker", "false_acceptance_rate": 0.043, "status": "fail"}
+
+--- STDERR ---
+biometric match exceeded tolerance

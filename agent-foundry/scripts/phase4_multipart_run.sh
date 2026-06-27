@@ -14,16 +14,21 @@ TARGET_REPO="$(cd "$FOUNDRY/.." && pwd)"
 PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"   # <-- Ollama backend (local, air-gapped), not Claude (per user)
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Ollama must already be serving on :11434. We do NOT start it (per user instruction).
-if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
-  echo "WARNING: ollama backend selected but the server is not reachable at http://127.0.0.1:11434"
-  echo "         not starting it (per instruction). Start it yourself with 'ollama serve', then re-run."
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    echo "WARNING: ollama backend selected but the server is not reachable at http://127.0.0.1:11434"
+    echo "         not starting it (per instruction). Start it yourself with 'ollama serve', then re-run."
+  fi
 fi
 
 # 1. EverOS shared-memory pool up (loopback). Best-effort; the harness degrades gracefully.

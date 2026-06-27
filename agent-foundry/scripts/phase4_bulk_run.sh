@@ -23,11 +23,14 @@ PORT="${BULK_TARGET_PORT:-8924}"
 BASE="http://127.0.0.1:${PORT}"
 export FORGE_BULK_BASE_URL="$BASE"
 export BULK_TARGET_PORT="$PORT"
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"   # <-- Ollama (air-gapped) for this task
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Claude backend needs an API key; Ollama needs a running local server. Guard each.
 if [ "$FORGE_PROVIDER" = "claude-haiku" ] && [ -z "${ANTHROPIC_API_KEY:-}" ]; then

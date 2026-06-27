@@ -1,0 +1,1 @@
+[api-tester-measure-api-consumer-satisfaction] nps_score=22 plan_accuracy_pct=100.0%

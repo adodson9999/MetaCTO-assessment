@@ -24,19 +24,24 @@ PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 OLLAMA_URL="${FORGE_OLLAMA_BASE_URL:-http://127.0.0.1:11434}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"          # <-- local Ollama backend for this task
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 1. Ollama must already be running (we do NOT start it). Read-only reachability check.
-if curl -fsS "${OLLAMA_URL}/api/tags" >/dev/null 2>&1; then
-  say "Ollama reachable at ${OLLAMA_URL} (local, air-gapped)"
-else
-  echo "FATAL: Ollama is not reachable at ${OLLAMA_URL}. Start it yourself with" >&2
-  echo "       'ollama serve' (this script does not start the server), then re-run." >&2
-  exit 2
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if curl -fsS "${OLLAMA_URL}/api/tags" >/dev/null 2>&1; then
+    say "Ollama reachable at ${OLLAMA_URL} (local, air-gapped)"
+  else
+    echo "FATAL: Ollama is not reachable at ${OLLAMA_URL}. Start it yourself with" >&2
+    echo "       'ollama serve' (this script does not start the server), then re-run." >&2
+    exit 2
+  fi
 fi
 
 # 2. Target API up (the "deployed build N" test environment). Read-only /health gate.

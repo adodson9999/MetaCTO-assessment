@@ -47,6 +47,46 @@ def _assert_sandbox(path: Path) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Spec loading + the brief handed to the model
 # --------------------------------------------------------------------------- #
 def load_security() -> dict:
@@ -185,6 +225,25 @@ def run_auth_test(agent: str, generate) -> dict:
                       "expected_class": None, "actual_code": None,
                       "actual_class": "none", "message": "", "task_rule_pass": False,
                       "error": gen_error or "no executable sub-tests produced"})
+
+    # G1 staging write — write per-item findings for G1b orchestration
+    _write_staging_findings(
+        agent=agent,
+        item_id=f"{ep['method']}-auth-me".lower(),
+        item_label=f"{ep['method']} {ep['path']}",
+        step_results=[
+            {
+                "assertion_result": "PASS" if c.get("task_rule_pass") else "FAIL",
+                "assertion_detail": (
+                    f"scheme={c.get('scheme')} label={c.get('label')} "
+                    f"expected_class={c.get('expected_class')} "
+                    f"actual_code={c.get('actual_code')} actual_class={c.get('actual_class')}"
+                ),
+                **c,
+            }
+            for c in cases
+        ],
+    )
 
     pass_rate = round(100.0 * correct / executed, 2) if executed else 0.0
     far = round(100.0 * false_accept / executed, 2) if executed else 0.0

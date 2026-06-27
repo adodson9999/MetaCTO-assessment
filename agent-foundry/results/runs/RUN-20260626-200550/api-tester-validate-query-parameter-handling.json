@@ -1,0 +1,12 @@
+{
+  "agent": "api-tester-validate-query-parameter-handling",
+  "run_id": "RUN-20260626-200550",
+  "metric_name": "query_param_handling_accuracy_pct",
+  "metric_value": 91.67,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/RUN-20260626-200550/api-tester-validate-query-parameter-handling.cases.json",
+  "ts": "2026-06-26T20:45:28.141785+00:00",
+  "query_param_handling_accuracy_pct": 91.67,
+  "scenarios_total": 48,
+  "elapsed_seconds": 131.118,
+  "tokens_total": 0
+}

@@ -18,6 +18,10 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend precondition (read provider from config.toml; do NOT start the LLM server here).
 PROVIDER="$(python -c 'import tomllib,pathlib;print(tomllib.loads(pathlib.Path("config.toml").read_text())["backend"]["provider"])' 2>/dev/null || echo ollama)"

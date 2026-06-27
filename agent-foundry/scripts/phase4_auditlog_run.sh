@@ -27,16 +27,21 @@ RUN_ID="${1:-$("$PYBIN" -c 'import uuid,datetime;print(datetime.datetime.utcnow(
 AUDIT_LOG="/tmp/dummyjson_audit_${RUN_ID}.log"
 
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"                 # <-- local/air-gapped LLM (config.toml default)
 export FORGE_AUDIT_LOG="$AUDIT_LOG"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Ollama must already be running (this script does NOT start it). Preflight only.
 OLLAMA_URL="$("$PYBIN" -c 'import tomllib;print(tomllib.load(open("config.toml","rb"))["backend"]["ollama_base_url"])' 2>/dev/null || echo "http://127.0.0.1:11434/v1")"
-if ! curl -fsS "${OLLAMA_URL%/v1}/api/tags" >/dev/null 2>&1; then
-  echo "FATAL: Ollama not reachable at ${OLLAMA_URL%/v1}. Start it first: 'ollama serve' (+ 'ollama pull qwen2.5:14b-instruct'). This script does not start the server."; exit 3
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS "${OLLAMA_URL%/v1}/api/tags" >/dev/null 2>&1; then
+    echo "FATAL: Ollama not reachable at ${OLLAMA_URL%/v1}. Start it first: 'ollama serve' (+ 'ollama pull qwen2.5:14b-instruct'). This script does not start the server."; exit 3
+  fi
 fi
 
 # 1. EverOS shared-memory pool up (loopback, best-effort)

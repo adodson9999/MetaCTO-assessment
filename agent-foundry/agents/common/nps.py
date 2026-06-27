@@ -56,6 +56,46 @@ def _assert_sandbox(path: Path) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Spec loading + briefing
 # --------------------------------------------------------------------------- #
 def load_spec() -> dict:
@@ -204,6 +244,24 @@ def run_nps_test(agent: str, generate) -> dict:
                           "observed_token": tok, "plan_correct": ok})
         total += 1
         correct += 1 if ok else 0
+
+    # G1 staging write — write per-item findings for G1b orchestration
+    _write_staging_findings(
+        agent=agent,
+        item_id=str(DATASET).strip().replace("/", "-").replace(" ", "-") or "dataset",
+        item_label=f"NPS dataset={DATASET}",
+        step_results=[
+            {
+                "assertion_result": "PASS" if s.get("plan_correct") else "FAIL",
+                "assertion_detail": (
+                    f"scenario={s.get('scenario')} ideal={s.get('ideal')} "
+                    f"observed={s.get('observed_token')}"
+                ),
+                **s,
+            }
+            for s in scenarios
+        ],
+    )
 
     plan_accuracy = round(100.0 * correct / total, 2) if total else 0.0
     nps_score = dashboard.get("nps_score")

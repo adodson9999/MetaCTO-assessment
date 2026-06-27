@@ -2,3 +2,4 @@
 - [2026-06-25T22:44:38.496933+00:00] run=20260625T224227-6ab0fb rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
 - [2026-06-25T23:07:34.730650+00:00] run=20260625T230432-4f1628 rate-limit-test run: correctness_rate=31.25% enforced=True over 6 endpoints (48 scenarios)
 - [2026-06-26T00:30:51.411205+00:00] run=20260626T003021-2cae96 rate-limit-test run: correctness_rate=0.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-06-26T20:43:16.929650+00:00] run=RUN-20260626-200550 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)

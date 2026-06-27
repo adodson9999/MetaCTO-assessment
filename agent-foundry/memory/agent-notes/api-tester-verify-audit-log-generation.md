@@ -1,2 +1,3 @@
 - [2026-06-26T00:31:31.101821+00:00] run= audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
 - [2026-06-26T00:34:01.298249+00:00] run=oracle-verify audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-06-26T21:27:13.499696+00:00] run=RUN-20260626-200550 audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)

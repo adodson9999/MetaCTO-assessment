@@ -19,18 +19,23 @@ PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 OLLAMA_URL="${FORGE_OLLAMA_URL:-http://127.0.0.1:11434}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"                 # <-- local Ollama backend
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Ollama must already be running — we do NOT start it here (by request).
-if ! curl -fsS "$OLLAMA_URL/api/tags" >/dev/null 2>&1; then
-  echo "FATAL: Ollama is not running at $OLLAMA_URL. Start it yourself (e.g. 'ollama serve'),"
-  echo "       pull the model from config.toml ([backend].ollama_model), then re-run. This"
-  echo "       script intentionally does not launch the server."
-  exit 3
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS "$OLLAMA_URL/api/tags" >/dev/null 2>&1; then
+    echo "FATAL: Ollama is not running at $OLLAMA_URL. Start it yourself (e.g. 'ollama serve'),"
+    echo "       pull the model from config.toml ([backend].ollama_model), then re-run. This"
+    echo "       script intentionally does not launch the server."
+    exit 3
+  fi
 fi
 
 # 1. EverOS shared-memory pool up (loopback, best-effort)

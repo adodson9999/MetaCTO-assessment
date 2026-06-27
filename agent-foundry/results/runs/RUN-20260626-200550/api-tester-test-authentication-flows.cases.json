@@ -1,0 +1,108 @@
+{
+  "agent": "api-tester-test-authentication-flows",
+  "run_id": "RUN-20260626-200550",
+  "target": "http://localhost:8899",
+  "auth_flow_pass_rate_pct": 60.0,
+  "false_acceptance_rate_pct": 20.0,
+  "false_rejection_rate_pct": 0.0,
+  "false_acceptance_count": 1,
+  "false_rejection_count": 0,
+  "executed_cases": 5,
+  "not_applicable_enumerated": [
+    {
+      "item": "apiKey",
+      "status": "needs_to_be_built_and_tested"
+    },
+    {
+      "item": "basic",
+      "status": "needs_to_be_built_and_tested"
+    },
+    {
+      "item": "oauth2",
+      "status": "needs_to_be_built_and_tested"
+    },
+    {
+      "item": "apikey_wrong_location",
+      "status": "needs_to_be_built_and_tested"
+    },
+    {
+      "item": "dedicated_revoke_endpoint",
+      "status": "needs_to_be_built_and_tested"
+    }
+  ],
+  "cases": [
+    {
+      "scheme": "bearerJWT",
+      "label": "valid",
+      "recipe": {
+        "kind": "valid_token"
+      },
+      "construction_note": "valid token from /auth/login",
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "message": "",
+      "task_rule_pass": true,
+      "error": null
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "missing",
+      "recipe": {
+        "kind": "no_auth"
+      },
+      "construction_note": "no Authorization header, no cookie",
+      "expected_class": "401",
+      "actual_code": 401,
+      "actual_class": "401",
+      "message": "Access Token is required",
+      "task_rule_pass": true,
+      "error": null
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "malformed",
+      "recipe": {
+        "kind": "truncate_token",
+        "drop_chars": 8
+      },
+      "construction_note": "valid token minus last 8 chars",
+      "expected_class": "401",
+      "actual_code": 500,
+      "actual_class": "other_500",
+      "message": "invalid signature",
+      "task_rule_pass": false,
+      "error": null
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "expired",
+      "recipe": {
+        "kind": "expired_token",
+        "exp_delta_sec": -3600
+      },
+      "construction_note": "re-signed real payload, exp = now -3600s",
+      "expected_class": "401",
+      "actual_code": 401,
+      "actual_class": "401",
+      "message": "Token Expired!",
+      "task_rule_pass": true,
+      "error": null
+    },
+    {
+      "scheme": "bearerJWT",
+      "label": "revoked",
+      "recipe": {
+        "kind": "revoked_token",
+        "revoke_via": "POST /auth/logout"
+      },
+      "construction_note": "same token reused after POST /auth/logout",
+      "expected_class": "401",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "message": "",
+      "task_rule_pass": false,
+      "error": null
+    }
+  ]
+}

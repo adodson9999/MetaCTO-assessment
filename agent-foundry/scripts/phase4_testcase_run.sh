@@ -16,6 +16,10 @@ FOUNDRY="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend sanity: this build uses ollama. Confirm provider + that the server is
 #    ALREADY up. We do not launch it.

@@ -1,1 +1,2 @@
 - [2026-06-26T03:04:18.377230+00:00] run=gql-run-1 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-06-26T21:41:44.693972+00:00] run=RUN-20260626-200550 graphql-depth run: enforcement=23.08% over 2 endpoints (26 scenarios)

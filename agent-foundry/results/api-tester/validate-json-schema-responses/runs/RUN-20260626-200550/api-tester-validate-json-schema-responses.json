@@ -1,0 +1,13 @@
+{
+  "agent": "api-tester-validate-json-schema-responses",
+  "run_id": "RUN-20260626-200550",
+  "metric_name": "schema_conformance_rate_pct",
+  "metric_value": null,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/schema/runs/RUN-20260626-200550/api-tester-validate-json-schema-responses.cases.json",
+  "ts": "2026-06-26T20:37:47.826008+00:00",
+  "schema_conformance_rate_pct": null,
+  "responses_validated": 0,
+  "responses_conformant": 0,
+  "endpoints_covered": 22,
+  "endpoints_total": 22
+}

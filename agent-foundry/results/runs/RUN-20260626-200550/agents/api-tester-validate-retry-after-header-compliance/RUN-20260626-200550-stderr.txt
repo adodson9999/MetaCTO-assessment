@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/api-tester/validate-retry-after-header-compliance/subagent/run.py", line 38, in <module>
+    main()
+  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/api-tester/validate-retry-after-header-compliance/subagent/run.py", line 33, in main
+    summary = retryafter.run_retryafter_test(AGENT, generate)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/common/retryafter.py", line 334, in run_retryafter_test
+    cfgs = endpoint_cfgs()
+           ^^^^^^^^^^^^^^^
+  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/common/retryafter.py", line 96, in endpoint_cfgs
+    spec = load_spec()
+           ^^^^^^^^^^^
+  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/common/retryafter.py", line 92, in load_spec
+    return json.loads(SPEC_PATH.read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexdodson/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexdodson/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/data/validate-retry-after-header-compliance/retryafter_spec.json'

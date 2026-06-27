@@ -1,0 +1,1 @@
+[api-tester-test-api-gateway-routing] route_forwarding_accuracy=0.0% routes=0/6

@@ -1,0 +1,1 @@
+[api-tester-validate-query-parameter-handling] accuracy=91.67% scenarios=44/48 tokens=0

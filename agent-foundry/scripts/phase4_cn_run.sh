@@ -20,12 +20,15 @@ export FORGE_TARGET_BASE_URL="$BASE"
 # four agents now elicit plans from the local Ollama endpoint. This script NEVER starts
 # a model server — start Ollama yourself (`ollama serve`) before running.
 # Optional: FORGE_PROVIDER=claude-cli (subscription shim) or claude-haiku (funded key).
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"
 export FORGE_CLAUDE_CLI_SHIM_URL="http://127.0.0.1:${SHIM_PORT}/v1"
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Backend reachability. We do NOT start any model server here.
 if [ "$FORGE_PROVIDER" = "ollama" ]; then

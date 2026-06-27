@@ -24,10 +24,13 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Provider comes from config.toml unless explicitly overridden in the environment.
 CFG_PROVIDER="$(python -c "import tomllib,pathlib;print(tomllib.loads(pathlib.Path('config.toml').read_text()).get('backend',{}).get('provider','ollama'))" 2>/dev/null || echo ollama)"
-export FORGE_PROVIDER="${FORGE_PROVIDER:-$CFG_PROVIDER}"
 export FORGE_CLAUDE_CLI_SHIM_URL="http://127.0.0.1:${SHIM_PORT}/v1"
 say "backend provider = $FORGE_PROVIDER (from ${FORGE_PROVIDER:+env or }config.toml)"
 

@@ -1,0 +1,1 @@
+[api-tester-validate-correlation-id-propagation] propagation_rate=0.0% propagated=0/10

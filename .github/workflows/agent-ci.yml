@@ -1,0 +1,180 @@
+name: "Agent CI — chunked parallel jobs by position (G1/G1b guardrails)"
+
+on:
+  push:
+    branches: ["main", "develop"]
+    paths:
+      - "agent-foundry/**"
+      - ".github/workflows/agent-ci.yml"
+  pull_request:
+    branches: ["main", "develop"]
+    paths:
+      - "agent-foundry/**"
+      - ".github/workflows/agent-ci.yml"
+  workflow_dispatch:
+    inputs:
+      run_general:
+        description: "Run general agents (test-case-creator, run-cicd-pipeline, bug-reporter)"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION:   "20"
+  CHUNK_SIZE:     "20"
+
+jobs:
+  # -----------------------------------------------------------------------
+  # POSITION: api-tester
+  # Setup job: discover all api-tester agent directories and compute chunk
+  # indices. Output is a JSON array consumed by the matrix below.
+  # -----------------------------------------------------------------------
+  setup-api-tester:
+    name: "api-tester / setup (compute chunks)"
+    runs-on: ubuntu-latest
+    outputs:
+      chunks: ${{ steps.gen.outputs.chunks }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - id: gen
+        env:
+          FORGE_WORKSPACE: ${{ github.workspace }}/agent-foundry
+        run: |
+          CHUNKS=$(python agent-foundry/scripts/ci_gen_chunks.py api-tester ${{ env.CHUNK_SIZE }})
+          echo "chunks=$CHUNKS" >> $GITHUB_OUTPUT
+          echo "Chunk array: $CHUNKS"
+
+  # -----------------------------------------------------------------------
+  # POSITION: api-tester
+  # One GHA job per chunk. Each job runs 20 agents sequentially via
+  # ci_run_chunk.py: G1 (harness) → G1b (scoped test-case-creator) → gate.
+  # fail-fast: false — all chunks always complete regardless of failures.
+  # timeout-minutes: 90 — 20 agents × ~4 min each + startup overhead.
+  # -----------------------------------------------------------------------
+  api-tester:
+    name: "api-tester / chunk-${{ matrix.chunk_index }}"
+    needs: setup-api-tester
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk_index: ${{ fromJson(needs.setup-api-tester.outputs.chunks) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Python dependencies
+        run: pip install litellm --break-system-packages
+
+      - name: Install DummyJSON server dependencies
+        run: npm ci --prefix agent-foundry/dummyjson
+
+      - name: Start DummyJSON API server (port 8888)
+        run: node agent-foundry/dummyjson/server.js &
+
+      - name: Start LiteLLM proxy (port 4000)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: litellm --model anthropic/claude-haiku-4-5 --port 4000 &
+
+      - name: Wait for services (ports 8888 and 4000)
+        run: |
+          for PORT in 8888 4000; do
+            for I in $(seq 1 20); do
+              nc -z 127.0.0.1 $PORT 2>/dev/null && echo "port $PORT ready" && break
+              sleep 2
+            done
+          done
+
+      # ------------------------------------------------------------------
+      # Run the chunk: G1 → G1b → gate for each of the 20 agents.
+      # ci_run_chunk.py discovers the agent list from the filesystem,
+      # slices chunk_index*20 : chunk_index*20+20, and runs each agent.
+      # ------------------------------------------------------------------
+      - name: "Run chunk ${{ matrix.chunk_index }} (api-tester, ${{ env.CHUNK_SIZE }} agents)"
+        env:
+          FORGE_WORKSPACE:   ${{ github.workspace }}/agent-foundry
+          FORGE_RUN_ID:      ${{ github.run_id }}
+          FORGE_KIND:        api-tester
+          FORGE_CHUNK_INDEX: ${{ matrix.chunk_index }}
+          FORGE_CHUNK_SIZE:  ${{ env.CHUNK_SIZE }}
+          FORGE_PROVIDER:    claude-haiku
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python agent-foundry/scripts/ci_run_chunk.py
+
+      - name: "Upload results for chunk ${{ matrix.chunk_index }}"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: "results-api-tester-chunk-${{ matrix.chunk_index }}"
+          path: |
+            agent-foundry/results/runs/${{ github.run_id }}/staging/
+            agent-foundry/results/general/test-case-creator/
+          retention-days: 7
+
+  # -----------------------------------------------------------------------
+  # POSITION: general
+  # Skipped on every automatic trigger (push / pull_request).
+  # Only runs when workflow_dispatch is used with run_general=true.
+  # General agents do not have domain harnesses and do not write staging
+  # files, so the G1/G1b guardrail flow does not apply to them.
+  # -----------------------------------------------------------------------
+  general:
+    name: "general (skipped unless manually triggered)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: pip install litellm --break-system-packages
+      - run: npm ci --prefix agent-foundry/dummyjson
+      - run: node agent-foundry/dummyjson/server.js &
+      - name: Start LiteLLM proxy
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: litellm --model anthropic/claude-haiku-4-5 --port 4000 &
+      - name: Wait for services
+        run: |
+          for PORT in 8888 4000; do
+            for I in $(seq 1 20); do
+              nc -z 127.0.0.1 $PORT 2>/dev/null && break; sleep 2; done; done
+      - name: Run general agents
+        env:
+          FORGE_WORKSPACE:   ${{ github.workspace }}/agent-foundry
+          FORGE_RUN_ID:      ${{ github.run_id }}
+          FORGE_PROVIDER:    claude-haiku
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          for AGENT in test-case-creator run-cicd-pipeline bug-reporter; do
+            echo "── general/$AGENT"
+            python agent-foundry/agents/general/$AGENT/subagent/run.py || true
+          done
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-general
+          path: agent-foundry/results/
+          retention-days: 7

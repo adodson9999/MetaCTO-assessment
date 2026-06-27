@@ -1,0 +1,10 @@
+{
+  "agent": "api-tester-test-multipart-form-data-handling",
+  "run_id": "RUN-20260626-200550",
+  "metric_name": "multipart_handling_accuracy_pct",
+  "metric_value": 33.33,
+  "raw_output_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/results/runs/RUN-20260626-200550/api-tester-test-multipart-form-data-handling.cases.json",
+  "ts": "2026-06-26T21:40:51.056766+00:00",
+  "multipart_handling_accuracy_pct": 33.33,
+  "scenarios_total": 18
+}

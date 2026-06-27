@@ -15,11 +15,14 @@ TARGET_REPO="$(cd "$FOUNDRY/.." && pwd)"
 PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"   # local Ollama; not Claude
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend preflight: Claude needs a key; Ollama needs the daemon ALREADY running
 #    (this script never starts it, per the build's "do not start the server" rule).

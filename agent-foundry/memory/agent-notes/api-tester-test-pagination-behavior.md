@@ -1,2 +1,3 @@
 - [2026-06-25T20:16:35.492087+00:00] run=smoke-llm pagination-test run: correctness_rate=77.78% over 2 collections (36 scenarios)
 - [2026-06-25T21:05:51.582624+00:00] run=pagination-run-2 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-06-26T20:39:41.106911+00:00] run=RUN-20260626-200550 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)

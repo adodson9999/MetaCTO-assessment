@@ -13,6 +13,10 @@ PY="$FOUNDRY/.venv/bin/python"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 1. Timeout-gateway up (the local WireMock+Toxiproxy stand-in). Start if needed.
 STARTED_GW=0
@@ -28,10 +32,12 @@ curl -fsS "$BASE/__health" >/dev/null 2>&1 || { echo "FATAL: gateway not up"; ex
 # 1a. Ollama backend must be running (NOT started here — start it separately per the
 #     config note: `ollama serve`, with the ollama_model pulled). The four agents elicit
 #     plans from the local Ollama endpoint; gold + harness validation need no LLM.
-if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
-  echo "FATAL: Ollama not reachable at http://127.0.0.1:11434 — start it first:" >&2
-  echo "       ollama serve   (then: ollama pull qwen2.5:14b-instruct)" >&2
-  exit 3
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    echo "FATAL: Ollama not reachable at http://127.0.0.1:11434 — start it first:" >&2
+    echo "       ollama serve   (then: ollama pull qwen2.5:14b-instruct)" >&2
+    exit 3
+  fi
 fi
 
 # 1b. EverOS shared-memory pool (best-effort; harness degrades to file notes if absent)

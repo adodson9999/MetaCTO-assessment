@@ -1,0 +1,1 @@
+[api-tester-test-bulk-operation-endpoints] bulk_operation_accuracy_pct=0.0% mixed_db_delta=0

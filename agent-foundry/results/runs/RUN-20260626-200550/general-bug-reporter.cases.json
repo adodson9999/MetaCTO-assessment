@@ -1,0 +1,1044 @@
+{
+  "agent": "general-bug-reporter",
+  "run_id": "RUN-20260626-200550",
+  "bug_report_fidelity_pct": 82.22,
+  "fields_total": 45,
+  "fields_correct": 37,
+  "bug_count": 9,
+  "metrics": {
+    "bug_report_completeness_rate_pct": 90.0,
+    "mandatory_field_completeness_rate_pct": 100.0,
+    "testing_steps_coverage_rate_pct": 100.0,
+    "postman_reference_rate_pct": 66.67,
+    "has_critical_or_high": true,
+    "would_exit_code_1": true
+  },
+  "index": {
+    "run_id": "RUN-20260626-200550",
+    "generated_at": "2026-06-26T21:51:30.094056+00:00Z",
+    "bug_count": 9,
+    "critical_count": 4,
+    "high_count": 2,
+    "medium_count": 3,
+    "low_count": 0,
+    "fully_complete_count": 0,
+    "bugs": [
+      {
+        "bug_id": "BUG-20260626-0001",
+        "agent_name": "authentication-flow-tester",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "created_at": "2026-06-26T14:32:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0001.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0002",
+        "agent_name": "tls-enforcer",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "created_at": "2026-06-26T14:33:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0002.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0003",
+        "agent_name": "ci-gatekeeper",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "created_at": "2026-06-26T14:34:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0003.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0004",
+        "agent_name": "biometric-far-checker",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "created_at": "2026-06-26T14:35:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0004.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0005",
+        "agent_name": "crud-integrity-prober",
+        "severity": "HIGH",
+        "priority": "P2",
+        "created_at": "2026-06-26T14:36:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0005.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0006",
+        "agent_name": "schema-response-validator",
+        "severity": "HIGH",
+        "priority": "P2",
+        "created_at": "2026-06-26T14:37:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0006.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0007",
+        "agent_name": "pagination-checker",
+        "severity": "MEDIUM",
+        "priority": "P3",
+        "created_at": "2026-06-26T14:38:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0007.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0008",
+        "agent_name": "webhook-delivery-tester",
+        "severity": "MEDIUM",
+        "priority": "P3",
+        "created_at": "2026-06-26T14:39:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0008.json"
+      },
+      {
+        "bug_id": "BUG-20260626-0009",
+        "agent_name": "error-clarity-checker",
+        "severity": "MEDIUM",
+        "priority": "P3",
+        "created_at": "2026-06-26T14:40:01Z",
+        "complete_artifact_count": 9,
+        "report_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/BUG-20260626-0009.json"
+      }
+    ]
+  },
+  "elapsed_seconds": 253.971,
+  "tokens": {
+    "total_tokens": 0
+  },
+  "gen_errors": [],
+  "field_cells": [
+    {
+      "bug_id": "BUG-20260626-0001",
+      "agent_name": "authentication-flow-tester",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0001",
+      "agent_name": "authentication-flow-tester",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0001",
+      "agent_name": "authentication-flow-tester",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0001",
+      "agent_name": "authentication-flow-tester",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0001",
+      "agent_name": "authentication-flow-tester",
+      "field": "postman_references",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "agent_name": "tls-enforcer",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "agent_name": "tls-enforcer",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "agent_name": "tls-enforcer",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "agent_name": "tls-enforcer",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "agent_name": "tls-enforcer",
+      "field": "postman_references",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "agent_name": "ci-gatekeeper",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "agent_name": "ci-gatekeeper",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "agent_name": "ci-gatekeeper",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "agent_name": "ci-gatekeeper",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "agent_name": "ci-gatekeeper",
+      "field": "postman_references",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "agent_name": "biometric-far-checker",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "agent_name": "biometric-far-checker",
+      "field": "severity",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "agent_name": "biometric-far-checker",
+      "field": "priority",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "agent_name": "biometric-far-checker",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "agent_name": "biometric-far-checker",
+      "field": "postman_references",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "agent_name": "crud-integrity-prober",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "agent_name": "crud-integrity-prober",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "agent_name": "crud-integrity-prober",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "agent_name": "crud-integrity-prober",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "agent_name": "crud-integrity-prober",
+      "field": "postman_references",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "agent_name": "schema-response-validator",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "agent_name": "schema-response-validator",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "agent_name": "schema-response-validator",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "agent_name": "schema-response-validator",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "agent_name": "schema-response-validator",
+      "field": "postman_references",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "agent_name": "pagination-checker",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "agent_name": "pagination-checker",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "agent_name": "pagination-checker",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "agent_name": "pagination-checker",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "agent_name": "pagination-checker",
+      "field": "postman_references",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "agent_name": "webhook-delivery-tester",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "agent_name": "webhook-delivery-tester",
+      "field": "severity",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "agent_name": "webhook-delivery-tester",
+      "field": "priority",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "agent_name": "webhook-delivery-tester",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "agent_name": "webhook-delivery-tester",
+      "field": "postman_references",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "agent_name": "error-clarity-checker",
+      "field": "title",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "agent_name": "error-clarity-checker",
+      "field": "severity",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "agent_name": "error-clarity-checker",
+      "field": "priority",
+      "api_correct": false
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "agent_name": "error-clarity-checker",
+      "field": "testing_steps",
+      "api_correct": true
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "agent_name": "error-clarity-checker",
+      "field": "postman_references",
+      "api_correct": true
+    }
+  ],
+  "reports": [
+    {
+      "bug_id": "BUG-20260626-0001",
+      "created_at": "2026-06-26T14:32:01Z",
+      "title": "[authentication-flow-tester] AssertionError: expected 200 on valid login but got 401",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "agent_name": "authentication-flow-tester",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-auth-001",
+            "step_id": "tc-auth-001-s1",
+            "step_text": "Send POST /auth/login with a valid body and Assert response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-auth-002",
+            "step_id": "tc-auth-002-s1",
+            "step_text": "GET /auth/me with Authorization header, Asserts response code is exactly 401 when the token is missing.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-auth-003",
+            "step_id": "tc-auth-003-s1",
+            "step_text": "Inspect the in-memory session table for a stale entry.",
+            "involves_http_call": false,
+            "involves_assertion": false,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "authentication-flow-tester",
+            "item_name": "tc-auth-001",
+            "new_item": null
+          },
+          {
+            "exists_in_collection": false,
+            "folder": "authentication-flow-tester",
+            "item_name": "tc-auth-002",
+            "new_item": {
+              "name": "tc-auth-002",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "me"
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "none"
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function() { pm.response.to.have.status(401); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0001-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0001.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0001.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0002",
+      "created_at": "2026-06-26T14:33:01Z",
+      "title": "[tls-enforcer] TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "agent_name": "tls-enforcer",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-tls-001",
+            "step_id": "tc-tls-001-s1",
+            "step_text": "GET /secure/ping over TLS 1.2 and Assert response code = 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "tls-enforcer",
+            "item_name": "tc-tls-001",
+            "new_item": null
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0002-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0002.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0002.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0003",
+      "created_at": "2026-06-26T14:34:01Z",
+      "title": "[ci-gatekeeper] Agent timed out after 300 seconds \u2014 no output produced",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "agent_name": "ci-gatekeeper",
+      "agent_status": "TIMED_OUT",
+      "agent_exit_code": 124,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-pipe-001",
+            "step_id": "tc-pipe-001-s1",
+            "step_text": "POST /pipeline/run with body = a manifest and Asserts exactly 202.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": false,
+            "folder": "ci-gatekeeper",
+            "item_name": "tc-pipe-001",
+            "new_item": {
+              "name": "tc-pipe-001",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "{{base_url}}/pipeline/run",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pipeline",
+                    "run"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 202\", function() { pm.response.to.have.status(202); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0003-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0003.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0003.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0004",
+      "created_at": "2026-06-26T14:35:01Z",
+      "title": "[biometric-far-checker] biometric match exceeded tolerance",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "agent_name": "biometric-far-checker",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-bio-001",
+            "step_id": "tc-bio-001-s1",
+            "step_text": "POST /biometric/verify with a valid body, Assert response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "biometric-far-checker",
+            "item_name": "tc-bio-001",
+            "new_item": null
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0004-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0004.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0004.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0005",
+      "created_at": "2026-06-26T14:36:01Z",
+      "title": "[crud-integrity-prober] psycopg2.OperationalError: database connection refused (500) during CRUD write",
+      "severity": "HIGH",
+      "priority": "P2",
+      "agent_name": "crud-integrity-prober",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-crud-001",
+            "step_id": "tc-crud-001-s1",
+            "step_text": "POST /resources with body: a new resource and Asserts exactly 201.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-crud-002",
+            "step_id": "tc-crud-002-s1",
+            "step_text": "DELETE /resources/42 with Authorization header, Asserts response code = 204.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "crud-integrity-prober",
+            "item_name": "tc-crud-001",
+            "new_item": null
+          },
+          {
+            "exists_in_collection": true,
+            "folder": "crud-integrity-prober",
+            "item_name": "tc-crud-002",
+            "new_item": null
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0005-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0005.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0005.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0006",
+      "created_at": "2026-06-26T14:37:01Z",
+      "title": "[schema-response-validator] Agent exited 0 but stdout was not valid JSON",
+      "severity": "HIGH",
+      "priority": "P2",
+      "agent_name": "schema-response-validator",
+      "agent_status": "MALFORMED",
+      "agent_exit_code": 0,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-schema-001",
+            "step_id": "tc-schema-001-s1",
+            "step_text": "GET /products/1 and Assert response code is exactly 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "schema-response-validator",
+            "item_name": "tc-schema-001",
+            "new_item": null
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0006-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0006.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0006.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0007",
+      "created_at": "2026-06-26T14:38:01Z",
+      "title": "[pagination-checker] AssertionError: 404 on page 3 \u2014 pagination offset computed incorrectly",
+      "severity": "MEDIUM",
+      "priority": "P3",
+      "agent_name": "pagination-checker",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-page-001",
+            "step_id": "tc-page-001-s1",
+            "step_text": "GET /products with X-Correlation-ID, Asserts response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-page-002",
+            "step_id": "tc-page-002-s1",
+            "step_text": "Compute the expected page boundaries locally.",
+            "involves_http_call": false,
+            "involves_assertion": false,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "pagination-checker",
+            "item_name": "tc-page-001",
+            "new_item": null
+          },
+          {
+            "exists_in_collection": false,
+            "folder": "pagination-checker",
+            "item_name": "tc-page-002",
+            "new_item": {
+              "name": "tc-page-002",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{base_url}}/unknown",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": []
+                },
+                "body": {
+                  "mode": "none"
+                },
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  }
+                ]
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0007-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0007.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0007.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0008",
+      "created_at": "2026-06-26T14:39:01Z",
+      "title": "[webhook-delivery-tester] Agent timed out after 300 seconds \u2014 no output produced",
+      "severity": "MEDIUM",
+      "priority": "P3",
+      "agent_name": "webhook-delivery-tester",
+      "agent_status": "TIMED_OUT",
+      "agent_exit_code": 124,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-webhook-001",
+            "step_id": "tc-webhook-001-s1",
+            "step_text": "POST /webhooks/register with body = a callback URL and Asserts exactly 201.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": false,
+            "folder": "webhook-delivery-tester",
+            "item_name": "tc-webhook-001",
+            "new_item": {
+              "name": "tc-webhook-001",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "{{base_url}}/webhooks/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "webhooks",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function() { pm.response.to.have.status(201); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0008-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0008.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0008.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    },
+    {
+      "bug_id": "BUG-20260626-0009",
+      "created_at": "2026-06-26T14:40:01Z",
+      "title": "[error-clarity-checker] AssertionError: message wording differs from the expected copy",
+      "severity": "MEDIUM",
+      "priority": "P3",
+      "agent_name": "error-clarity-checker",
+      "agent_status": "FAILED",
+      "agent_exit_code": 1,
+      "run_id": "RUN-20260626-200550",
+      "artifacts": {
+        "testing_steps": [
+          {
+            "tc_id": "tc-clarity-001",
+            "step_id": "tc-clarity-001-s1",
+            "step_text": "GET /products/999999 \u2192 assert 404.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "error-clarity-checker",
+            "item_name": "tc-clarity-001",
+            "new_item": null
+          }
+        ],
+        "screenshot_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/screenshots/BUG-20260626-0009-replay.txt",
+        "recording_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/recordings/BUG-20260626-0009.cast",
+        "log_path": "results/runs/RUN-20260626-200550/general-bug-reporter.bug-reports/logs/BUG-20260626-0009.log",
+        "db_dump_path": null
+      },
+      "artifact_completeness": {
+        "testing_steps": true,
+        "postman_references": true,
+        "screenshot": true,
+        "recording": true,
+        "logs": true,
+        "db_dump": false,
+        "created_at": true,
+        "title": true,
+        "severity": true,
+        "priority": true
+      },
+      "complete_artifact_count": 9
+    }
+  ]
+}

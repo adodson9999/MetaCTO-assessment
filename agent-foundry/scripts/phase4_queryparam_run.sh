@@ -22,17 +22,22 @@ PORT="${FORGE_TARGET_PORT:-8899}"
 BASE="http://localhost:${PORT}"
 OLLAMA_URL="${FORGE_OLLAMA_URL:-http://127.0.0.1:11434}"
 export FORGE_TARGET_BASE_URL="$BASE"
-export FORGE_PROVIDER="ollama"                # <-- local Ollama backend (air-gapped)
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Ollama must already be running — this script will NOT start it.
-if ! curl -fsS "${OLLAMA_URL}/api/tags" >/dev/null 2>&1; then
-  echo "FATAL: Ollama is not reachable at ${OLLAMA_URL}. Start it first (\`ollama serve\`)" >&2
-  echo "       and pull the model (\`ollama pull qwen2.5:14b-instruct\`). Not started here." >&2
-  exit 2
+if [ "$FORGE_PROVIDER" = "ollama" ]; then
+  if ! curl -fsS "${OLLAMA_URL}/api/tags" >/dev/null 2>&1; then
+    echo "FATAL: Ollama is not reachable at ${OLLAMA_URL}. Start it first (\`ollama serve\`)" >&2
+    echo "       and pull the model (\`ollama pull qwen2.5:14b-instruct\`). Not started here." >&2
+    exit 2
+  fi
 fi
 
 # 1. Target API up (air-gapped: no Mongo). Only started if not already running.

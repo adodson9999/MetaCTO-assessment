@@ -13,6 +13,10 @@ FOUNDRY="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$FOUNDRY/.venv/bin:$PATH"
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # 0. Backend sanity: this build requires claude-haiku (no ollama).
 PROVIDER="$(python -c 'import sys;sys.path.insert(0,"scripts");import backend_config as b;print(b.resolve(".")["provider"])' 2>/dev/null)"

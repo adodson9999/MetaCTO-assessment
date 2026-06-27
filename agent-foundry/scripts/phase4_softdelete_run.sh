@@ -24,7 +24,6 @@ SUT_PORT="${SOFTDELETE_TARGET_PORT:-8950}"
 SUT_BASE="http://127.0.0.1:${SUT_PORT}"
 DB_PATH="$FOUNDRY/data/test-soft-delete-behavior/resources.db"
 
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"   # Ollama backend per the user (local/air-gapped)
 export FORGE_BASE_URL="$SUT_BASE"
 export SOFTDELETE_TARGET_PORT="$SUT_PORT"
 export SOFTDELETE_DB_PATH="$DB_PATH"
@@ -32,6 +31,10 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 if [ "$FORGE_PROVIDER" = "claude-haiku" ] && [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   echo "FATAL: FORGE_PROVIDER=claude-haiku but ANTHROPIC_API_KEY is not set."; exit 3

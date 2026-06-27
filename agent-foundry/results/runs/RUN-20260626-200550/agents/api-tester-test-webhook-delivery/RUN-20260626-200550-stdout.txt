@@ -1,0 +1,1 @@
+[api-tester-test-webhook-delivery] webhook_contract_correctness_rate_pct=75.0% webhook_delivery_success_rate_pct=0.0%

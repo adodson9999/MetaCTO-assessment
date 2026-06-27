@@ -1,1 +1,2 @@
 - [2026-06-26T03:02:00.681173+00:00] run=enum-run-1-3531e1 enum-value-restriction test run: rate=0.0% over 4 endpoints (0 cases); invalid-rejection=None%
+- [2026-06-26T21:44:24.774572+00:00] run=RUN-20260626-200550 enum-value-restriction test run: rate=40.48% over 4 endpoints (42 cases); invalid-rejection=0.0%

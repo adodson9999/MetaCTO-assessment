@@ -104,6 +104,12 @@ def agent_cfgs() -> list[dict]:
     if only:
         wanted = {x.strip() for x in only.split(",") if x.strip()}
         out = [c for c in out if c["name"] in wanted]
+    # D1: CI scoping — when FORGE_TESTCASE_AGENT is set, return only that agent's config.
+    # The env var value must match cfg["name"] exactly
+    # (e.g. "api-tester-validate-request-payloads").
+    target = os.environ.get("FORGE_TESTCASE_AGENT", "").strip()
+    if target:
+        out = [c for c in out if c["name"] == target]
     return out
 
 
@@ -115,13 +121,26 @@ def _metric_line(spec_text: str) -> str:
 
 
 def agent_brief(cfg: dict) -> str:
-    """Compact, unambiguous per-agent brief handed to the LLM."""
-    return "\n".join([
+    """Compact, unambiguous per-agent brief handed to the LLM.
+
+    If cfg contains 'retry_prefix' (str), it is prepended to the brief.
+    retry_prefix is injected by run_testcase_test() on retry attempts 2 and 3
+    to enforce JSON array output format. It is never present on attempt 1.
+    """
+    parts = [
         f"agent_name: {cfg['name']}",
         "how_text: |",
         *[f"  {line}" for line in cfg["how_text"].splitlines()],
         f"metric_line: {cfg['metric_line']}",
-    ])
+    ]
+    brief = "\n".join(parts)
+    # staging_prefix carries actual observations from the G1 harness run (set by D3).
+    # retry_prefix is injected on attempt 2 and 3 to enforce JSON format (set by B2).
+    # Order in the prompt: staging context first, then format correction, then the brief.
+    staging_prefix = cfg.get("staging_prefix", "")
+    retry_prefix   = cfg.get("retry_prefix", "")
+    combined = "\n\n".join(p for p in [staging_prefix, retry_prefix] if p)
+    return f"{combined}\n\n{brief}" if combined else brief
 
 
 # --------------------------------------------------------------------------- #
@@ -206,6 +225,16 @@ def run_testcase_test(agent: str, generate) -> dict:
     registry, and (once) writes the deterministic n600 deliverable. generate may raise;
     recorded per agent.
     """
+    # D3a: Import staging module if available. Failures are silently suppressed —
+    # the staging brief is optional evidence; test-case-creator works without it.
+    _staging_mod = None
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(WORKSPACE / "agents" / "common"))
+        import staging as _staging_mod  # type: ignore[import]
+    except Exception:  # noqa: BLE001
+        pass
+
     cfgs = agent_cfgs()
 
     # The deterministic, gap-free deliverable consumed by n601 (written every run; idempotent).
@@ -213,17 +242,78 @@ def run_testcase_test(agent: str, generate) -> dict:
 
     emitted_registry: list[dict] = []
     per_agent = []
+    _RETRY_PREFIXES = [
+        "",   # attempt 1: no prefix
+        (
+            "CRITICAL: Your previous response was not a valid JSON array. "
+            "Output ONLY a JSON array. Start with [ and end with ]. "
+            "No other text, no markdown fences, no explanation."
+        ),
+        (
+            "MANDATORY FORMAT — your response must be exactly this structure:\n"
+            '[{"tc_id":"TC-1","agent":"<agent_name>","description":"...","steps":[...]}]\n'
+            "Output ONLY the JSON array. Nothing else."
+        ),
+    ]
+    MAX_ATTEMPTS = 3
+
     for cfg in cfgs:
-        try:
-            cases = generate(cfg) or []
-            if not isinstance(cases, list):
-                cases = []
-            gen_error = None
-        except Exception as e:  # noqa
-            cases, gen_error = [], f"{type(e).__name__}: {e}"
+        cases: list = []
+        gen_error: str | None = None
+
+        # D3b: Load staged findings for this agent and inject as staging_prefix.
+        # staging_brief() returns "" if no staging files exist for this agent.
+        if _staging_mod is not None:
+            try:
+                _stage_text = _staging_mod.staging_brief(cfg["name"])
+                if _stage_text:
+                    cfg = dict(cfg, staging_prefix=_stage_text)
+            except Exception:  # noqa: BLE001
+                pass
+
+        for attempt in range(MAX_ATTEMPTS):
+            attempt_cfg = dict(cfg)
+            if attempt > 0:
+                attempt_cfg["retry_prefix"] = _RETRY_PREFIXES[attempt]
+
+            try:
+                result = generate(attempt_cfg) or []
+                if not isinstance(result, list):
+                    result = []
+            except Exception as e:  # noqa
+                gen_error = f"{type(e).__name__}: {e}"
+                break  # exception is unrecoverable for this cfg; do not retry
+
+            if result:
+                cases = result
+                gen_error = None
+                break
+
+            gen_error = f"empty output on attempt {attempt + 1} of {MAX_ATTEMPTS}"
+
+        if not cases:
+            sentinel = {
+                "tc_id": f"TC-ERR-{cfg['name']}",
+                "agent": cfg["name"],
+                "run_id": RUN_ID,
+                "outcome": "ERROR",
+                "error": (
+                    gen_error or
+                    f"test-case-creator returned empty/unparseable output "
+                    f"after {MAX_ATTEMPTS} attempts"
+                ),
+                "pass": False,
+                "fail": False,
+            }
+            emitted_registry.append(sentinel)
+
         emitted_registry.extend([c for c in cases if isinstance(c, dict)])
-        per_agent.append({"agent_spec": cfg["name"], "emitted_count": len(cases),
-                          "error": gen_error})
+        per_agent.append({
+            "agent_spec": cfg["name"],
+            "emitted_count": len(cases),
+            "attempts": attempt + 1,
+            "error": gen_error,
+        })
 
     scored = tcspec.score_registry(emitted_registry, gold["registry"])
     coverage = scored["coverage_rate_pct"]

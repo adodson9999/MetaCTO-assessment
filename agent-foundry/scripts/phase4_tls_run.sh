@@ -24,6 +24,10 @@ FX="$FOUNDRY/data/test-ssl-tls-enforcement/tls_fixture.py"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # Backend preflight (does NOT start anything). For the local Ollama backend, just confirm
 # the server is reachable; for an explicit claude-haiku override, require the API key.

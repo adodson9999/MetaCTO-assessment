@@ -50,6 +50,46 @@ def _assert_sandbox(path: Path) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# G1 staging write
+# --------------------------------------------------------------------------- #
+def _write_staging_findings(
+    agent: str,
+    item_id: str,
+    item_label: str,
+    step_results: list[dict],
+) -> None:
+    """Write per-item step findings to the G1 staging directory.
+
+    Path: results/runs/{RUN_ID}/staging/{agent}/{item_id}-findings.json
+
+    Called once per item (endpoint / collection / scenario) after all steps
+    for that item are complete. The G1b orchestration step reads these files
+    and passes them to test-case-creator as evidence of what this agent observed.
+    """
+    staging_dir = WORKSPACE / "results" / "runs" / RUN_ID / "staging" / agent
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    out_path = staging_dir / f"{item_id}-findings.json"
+    _assert_sandbox(out_path)
+
+    findings = []
+    for i, r in enumerate(step_results, start=1):
+        findings.append({
+            "step_number": i,
+            "item_id": item_id,
+            "item_label": item_label,
+            **r,
+        })
+
+    out_path.write_text(json.dumps({
+        "agent": agent,
+        "item_id": item_id,
+        "item_label": item_label,
+        "run_id": RUN_ID,
+        "findings": findings,
+    }, indent=2))
+
+
+# --------------------------------------------------------------------------- #
 # Fixture loading + briefing
 # --------------------------------------------------------------------------- #
 def load_spec() -> dict:
@@ -161,6 +201,24 @@ def run_defectdensity_test(agent: str, generate) -> dict:
             correct += 1 if ok else 0
         all_cases.append({"sprint": cfg["sprint_name"], "emitted_report": emitted,
                           "gold_record": gold, "fields": fields, "error": gen_error})
+
+        # G1 staging write — write per-item findings for G1b orchestration
+        _write_staging_findings(
+            agent=agent,
+            item_id=str(cfg["sprint_name"]).strip().replace("/", "-").replace(" ", "-") or "sprint",
+            item_label=str(cfg["sprint_name"]),
+            step_results=[
+                {
+                    "assertion_result": "PASS" if f.get("correct") else "FAIL",
+                    "assertion_detail": (
+                        f"field={f.get('field')} gold={f.get('gold')} "
+                        f"emitted={f.get('emitted')}"
+                    ),
+                    **f,
+                }
+                for f in fields
+            ],
+        )
 
     rate = round(100.0 * correct / total, 2) if total else 0.0
     raw = {"agent": agent, "run_id": RUN_ID,

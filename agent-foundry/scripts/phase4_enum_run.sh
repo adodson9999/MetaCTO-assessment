@@ -21,12 +21,15 @@ export PATH="$FOUNDRY/.venv/bin:$PATH"
 
 cd "$FOUNDRY"
 say(){ printf "\033[1;36m▸ %s\033[0m\n" "$*"; }
+# ── LLM provider (single source: scripts/llm_config.py) ──────────────────
+eval "$(python scripts/llm_config.py --export)"
+say "LLM backend: $FORGE_PROVIDER  model: $FORGE_MODEL"
+# ──────────────────────────────────────────────────────────────
 
 # BACKEND = OLLAMA (local, air-gapped). Switched from Claude on owner request. The shared
 # config.toml [backend].provider switch is already "ollama"; we export it explicitly so
 # every agent/judge/evolver resolves the local model. An explicit Claude override is still
 # honoured (FORGE_PROVIDER=claude-haiku/claude-cli) for a future funded re-run.
-export FORGE_PROVIDER="${FORGE_PROVIDER:-ollama}"
 say "backend provider = $FORGE_PROVIDER"
 
 # 0a. Ollama must ALREADY be running — this script does NOT start it (owner instruction).

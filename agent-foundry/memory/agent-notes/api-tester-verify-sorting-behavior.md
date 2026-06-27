@@ -1,0 +1,1 @@
+- [2026-06-26T21:30:37.093198+00:00] run=RUN-20260626-200550 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%

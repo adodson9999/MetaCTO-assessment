@@ -11,7 +11,7 @@
 # with ollama_model pulled) before running any scripts/phase4_*_run.sh
 # (e.g. scripts/phase4_ip_allowlist_run.sh). Flip to claude-haiku, or FORGE_PROVIDER=claude-haiku
 # per-run, to use the cloud backend instead.
-provider = "ollama"
+provider = "auto"
 ollama_base_url = "http://127.0.0.1:11434/v1"
 ollama_model = "qwen2.5:14b-instruct"
 claude_model = "claude-haiku-4-5"

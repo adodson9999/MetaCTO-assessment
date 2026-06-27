@@ -1,0 +1,1 @@
+[api-tester-validate-header-propagation] header_propagation_rate_pct=0.0%

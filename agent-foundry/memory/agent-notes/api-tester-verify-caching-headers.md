@@ -1,3 +1,4 @@
 - [2026-06-26T00:11:10.851192+00:00] run=20260626T000833-218de4 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
 - [2026-06-26T00:21:26.090789+00:00] run=evolve-cache-api-tester-verify-caching-headers-base caching-headers-test run: compliance_rate=0.0% (0/2 cacheable endpoints) over 2 collections (22 scenarios)
 - [2026-06-26T00:22:19.927654+00:00] run=evolve-cache-api-tester-verify-caching-headers-cand caching-headers-test run: compliance_rate=0.0% (0/2 cacheable endpoints) over 2 collections (22 scenarios)
+- [2026-06-26T21:24:23.420418+00:00] run=RUN-20260626-200550 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
