@@ -1,0 +1,338 @@
+{
+  "slug": "carts_put",
+  "method": "PUT",
+  "path": "/carts/{id}",
+  "schema": {
+    "fields": {
+      "merge": {
+        "type": "boolean"
+      },
+      "products": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "products"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": null,
+        "products": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "products:key_absent",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "products:key_present_null",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": null
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:INT_VAL",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": 42
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:FLOAT_VAL",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": 3.14
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:BOOL_TRUE",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": true
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:BOOL_FALSE",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": false
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:STRING_VAL",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:CHAR_VAL",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": "x"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:OBJECT_VAL",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "products:NULL_NONE",
+      "field": "products",
+      "expected_class": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "payload": {
+        "merge": true,
+        "products": null
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ],
+        "extra_field": null
+      }
+    }
+  ]
+}

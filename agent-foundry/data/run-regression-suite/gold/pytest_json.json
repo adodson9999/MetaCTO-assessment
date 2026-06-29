@@ -1,0 +1,23 @@
+{
+  "pair": "pytest_json",
+  "format": "pytest_json",
+  "note": "pytest-json-report output (a prev-passed test is removed in build N).",
+  "gold_report": {
+    "build_n_nus_1": "rel-9",
+    "build_n": "rel-10",
+    "total_tests_in_suite": 4,
+    "prev_passed_count": 3,
+    "regressions": [
+      {
+        "id": "tests/contract_test.py::test_api_contract_v2",
+        "failure_message": "schema drift: missing field 'sku'"
+      }
+    ],
+    "newly_passing": [
+      "tests/perf_test.py::test_perf_smoke"
+    ],
+    "overall_status": "fail"
+  },
+  "regression_rate_pct": 33.33,
+  "would_block_deployment": true
+}

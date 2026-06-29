@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / track-defect-density",
+  "metric_name": "defect_density_report_accuracy",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (sprint x field) cells where the agent's emitted dashboard field equals the deterministic gold field. Numeric fields (defect_density, rolling_avg_3_sprint, deviation_pct) match within 0.005; integer counts and alert_flag match exactly; sprint_name and trend match as exact strings. A field the agent omitted counts as a mismatch. Denominator = sprints x 10 fields.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/track-defect-density/gold.json",
+  "held_out_path": "results/track-defect-density/held_out.jsonl",
+  "headline_metric": "defect_density_report_accuracy_pct",
+  "fields_per_sprint": 10,
+  "rationale": "Every agent receives the same six sprint fixtures (Jira bug list + git numstat + three preceding densities) and must compute the exact published dashboard record. Unlike the contract-testing tasks, here the agent does the arithmetic, so the metric measures which framework most reliably produces the correct defect-density report: counting P1-P4 by exact priority, excluding *test.go/*test.py/*.spec.ts before summing changed lines, dividing for density, rolling-averaging, computing the deviation, applying the strictly-greater-than-20% alert rule, and formatting the signed trend. The fixtures deliberately span an all-clear sprint, a density-spike alert, a P1-only escalation, a combined alert+P1, an improving negative-trend sprint, and an exactly-20%% boundary (alert false) with heavy test-file exclusion, so a framework that fumbles any rule loses cells.",
+  "pass_threshold": "accuracy = 100% (agent reproduces every gold field on every sprint)",
+  "fail_condition": "accuracy < 100% (any miscount, mis-filtered line, rounding/sign error, boundary mistake, or omitted field)"
+}

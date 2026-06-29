@@ -1,0 +1,47 @@
+{
+  "title": "DummyJSON versioning contract (authored for the versioning-behavior task)",
+  "description": "Each endpoint is documented as exposing a current version (v2) and a deprecated version (v1), with v0/v99/vbeta unsupported. The v2 response schema declares one field (schema_diff_field) the v1 schema omits. Agents construct the versioning test plan from this; ground truth is the live API's observed behavior. DummyJSON is read-only and never modified, and in fact implements no versioning \u2014 the genuine QA finding this task surfaces.",
+  "target": "http://localhost:8899",
+  "schema_diff_field": "apiVersion",
+  "documented_deprecation_date": "2099-01-01",
+  "supported_versions": [
+    {
+      "version": "v2",
+      "status": "current"
+    },
+    {
+      "version": "v1",
+      "status": "deprecated"
+    }
+  ],
+  "unsupported_versions": [
+    "v0",
+    "v99",
+    "vbeta"
+  ],
+  "per_version_response_schemas": {
+    "note": "Authored per (version, endpoint) by versioning_spec.schema_for at run time; v2 adds the schema_diff_field, v1 omits it."
+  },
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "list_field": "products",
+      "schema_diff_field": "apiVersion"
+    },
+    {
+      "endpoint": "/posts",
+      "list_field": "posts",
+      "schema_diff_field": "apiVersion"
+    },
+    {
+      "endpoint": "/users",
+      "list_field": "users",
+      "schema_diff_field": "apiVersion"
+    },
+    {
+      "endpoint": "/recipes",
+      "list_field": "recipes",
+      "schema_diff_field": "apiVersion"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "title": "DummyJSON audit-logging contract (authored for the audit-log-verification task)",
+  "description": "Each collection exposes POST /<col>/add (create), PUT /<col>/<id> (update), and DELETE /<col>/<id> (delete). The agent builds an audit-verification plan from this; ground truth is the live API's observed behavior + its captured log. DummyJSON's writes are non-persistent (deepFrozen) and it has no audit-log system, so exercising it does not modify the target and produces no audit entries.",
+  "target": "http://localhost:8904",
+  "id_field": "id",
+  "test_user_id": "user-test-001",
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products"
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts"
+    },
+    {
+      "collection": "/comments",
+      "list_field": "comments"
+    },
+    {
+      "collection": "/todos",
+      "list_field": "todos"
+    },
+    {
+      "collection": "/users",
+      "list_field": "users"
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes"
+    }
+  ]
+}

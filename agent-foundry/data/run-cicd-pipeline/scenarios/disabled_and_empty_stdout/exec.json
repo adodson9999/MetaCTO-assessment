@@ -1,0 +1,37 @@
+{
+  "scenario": "disabled_and_empty_stdout",
+  "backend": {
+    "provider": "ollama",
+    "model": "llama3.1:8b"
+  },
+  "model_digest": "42182419e950",
+  "run_id": "2026-06-26T16-20-10",
+  "timestamp": "2026-06-26T16:24:55+00:00",
+  "executions": {
+    "auth-flow-checker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/auth-flow-checker.stdout.txt"
+    },
+    "deprecated-v1-tester": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/deprecated-v1-tester.stdout.txt"
+    },
+    "schema-validator": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/schema-validator.stdout.txt"
+    },
+    "experimental-grpc-prober": {
+      "exit_code": 124,
+      "timed_out": true,
+      "stdout_file": "stdout/experimental-grpc-prober.stdout.txt"
+    },
+    "cors-header-checker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/cors-header-checker.stdout.txt"
+    }
+  }
+}

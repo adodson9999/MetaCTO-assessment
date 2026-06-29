@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON (authored for the auth-flow testing task)",
+    "version": "1.0.0",
+    "description": "Authored from DummyJSON's real auth middleware/routes. The agents parse THIS security section; ground truth is the live API's observed behavior. Only bearerJWT is implemented; other schemes are flagged not_applicable."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerJWT": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerJWT": []
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "auth_login",
+        "security": [],
+        "summary": "obtain accessToken (username+password)"
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "auth_me",
+        "security": [
+          {
+            "bearerJWT": []
+          }
+        ],
+        "summary": "protected: current user"
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "operationId": "auth_logout",
+        "security": [
+          {
+            "bearerJWT": []
+          }
+        ],
+        "summary": "clear cookies (does NOT revoke a stateless JWT)"
+      }
+    }
+  },
+  "x-not-implemented": [
+    "apiKey",
+    "basic",
+    "oauth2",
+    "apikey_wrong_location",
+    "dedicated_revoke_endpoint"
+  ]
+}

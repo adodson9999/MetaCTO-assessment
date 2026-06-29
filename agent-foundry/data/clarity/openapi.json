@@ -1,0 +1,244 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON (authored for the error-message-clarity task)",
+    "version": "1.0.0",
+    "description": "Per-endpoint documented error contract authored from DummyJSON routes/controllers. Each operation lists the error codes it returns and the named trigger that provokes each. Agents parse THIS spec; ground truth is the live API's observed body + clarity verdict per documented (endpoint, error-code) case."
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "auth_login",
+        "responses": {
+          "400": {
+            "description": "documented error 400"
+          }
+        },
+        "x-error-triggers": {
+          "400": "missing_field"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "password": {
+                    "type": "string",
+                    "maxLength": 60
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "username": "emilys",
+                "password": "emilyspass"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "auth_me",
+        "responses": {
+          "401": {
+            "description": "documented error 401"
+          },
+          "500": {
+            "description": "documented error 500"
+          }
+        },
+        "x-error-triggers": {
+          "401": "no_auth",
+          "500": "malformed_auth"
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "products_get",
+        "responses": {
+          "404": {
+            "description": "documented error 404"
+          }
+        },
+        "x-error-triggers": {
+          "404": "bad_path_id"
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "users_get",
+        "responses": {
+          "400": {
+            "description": "documented error 400"
+          }
+        },
+        "x-error-triggers": {
+          "400": "bad_path_id"
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "operationId": "posts_get",
+        "responses": {
+          "400": {
+            "description": "documented error 400"
+          }
+        },
+        "x-error-triggers": {
+          "400": "bad_path_id"
+        }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "operationId": "comments_get",
+        "responses": {
+          "404": {
+            "description": "documented error 404"
+          }
+        },
+        "x-error-triggers": {
+          "404": "bad_path_id"
+        }
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "operationId": "todos_get",
+        "responses": {
+          "404": {
+            "description": "documented error 404"
+          }
+        },
+        "x-error-triggers": {
+          "404": "bad_path_id"
+        }
+      }
+    },
+    "/carts/{id}": {
+      "get": {
+        "operationId": "carts_get",
+        "responses": {
+          "404": {
+            "description": "documented error 404"
+          }
+        },
+        "x-error-triggers": {
+          "404": "bad_path_id"
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "operationId": "products_list",
+        "responses": {
+          "400": {
+            "description": "documented error 400"
+          }
+        },
+        "x-error-triggers": {
+          "400": "bad_query"
+        },
+        "x-bad-query": "?skip=abc"
+      }
+    },
+    "/http/403": {
+      "get": {
+        "operationId": "http_403",
+        "responses": {
+          "403": {
+            "description": "documented error 403"
+          }
+        },
+        "x-error-triggers": {
+          "403": "passthrough"
+        }
+      }
+    },
+    "/http/409": {
+      "get": {
+        "operationId": "http_409",
+        "responses": {
+          "409": {
+            "description": "documented error 409"
+          }
+        },
+        "x-error-triggers": {
+          "409": "passthrough"
+        }
+      }
+    },
+    "/http/422": {
+      "get": {
+        "operationId": "http_422",
+        "responses": {
+          "422": {
+            "description": "documented error 422"
+          }
+        },
+        "x-error-triggers": {
+          "422": "passthrough"
+        }
+      }
+    },
+    "/http/429": {
+      "get": {
+        "operationId": "http_429",
+        "responses": {
+          "429": {
+            "description": "documented error 429"
+          }
+        },
+        "x-error-triggers": {
+          "429": "passthrough"
+        }
+      }
+    },
+    "/http/500": {
+      "get": {
+        "operationId": "http_500",
+        "responses": {
+          "500": {
+            "description": "documented error 500"
+          }
+        },
+        "x-error-triggers": {
+          "500": "passthrough"
+        }
+      }
+    }
+  }
+}

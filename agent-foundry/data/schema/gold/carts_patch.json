@@ -1,0 +1,43 @@
+{
+  "slug": "carts_patch",
+  "method": "PATCH",
+  "path": "/carts/{id}",
+  "request_body": {
+    "merge": false,
+    "products": [
+      {
+        "id": 1,
+        "quantity": 1
+      }
+    ]
+  },
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 1,
+    "products": [
+      {
+        "id": 1,
+        "title": "Essence Mascara Lash Princess",
+        "price": 9.99,
+        "quantity": 1,
+        "total": 9.99,
+        "discountPercentage": 10.48,
+        "discountedPrice": 9,
+        "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+      }
+    ],
+    "total": 9.99,
+    "discountedTotal": 9,
+    "userId": 1,
+    "totalProducts": 1,
+    "totalQuantity": 1
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

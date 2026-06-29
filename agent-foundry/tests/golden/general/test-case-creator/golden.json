@@ -1,0 +1,75 @@
+{
+  "agent": "general/test-case-creator",
+  "alias": "n600",
+  "metric_name": "test_case_coverage_rate_pct",
+  "headline_metric": "quality_score",
+  "baseline": {
+    "coverage_pct": 92.31,
+    "field_accuracy_pct": 87.12,
+    "quality_score": 80.42,
+    "tolerance": 15.0,
+    "direction": "higher_is_better",
+    "derived_from": "ACCEPT-FULL-20260628T152726 (subagent, ollama qwen2.5:14b-instruct, temp 0)",
+    "note": "Post-update measured best on the local backend. The HARD invariant is the oracle (G4/G8/G9), which is exact and deterministic; the live floor carries a generous tolerance because the LLM backend is stochastic across model/provider (CI uses claude-haiku). The deterministic reference ceiling is 100. Re-derive the floor after the next full run if the accepted best rises."
+  },
+  "cases": [
+    {
+      "id": "metric-coverage",
+      "kind": "metric",
+      "desc": "The agent's latest authoritative coverage must be >= baseline.coverage_pct - tolerance (G10)."
+    },
+    {
+      "id": "metric-field-accuracy",
+      "kind": "metric",
+      "desc": "The agent's latest authoritative field-accuracy must be >= baseline.field_accuracy_pct - tolerance (G10)."
+    },
+    {
+      "id": "oracle-reference-saturates",
+      "kind": "structure",
+      "assert": "G4: scoring the gold registry against itself yields quality_score=100 (coverage=100, field-accuracy=100, zero extras).",
+      "passed": true
+    },
+    {
+      "id": "oracle-empty-scores-floor",
+      "kind": "structure",
+      "assert": "G4: an empty [] emission scores quality_score=0 — empty output is never credited (the saturation trap is closed).",
+      "passed": true
+    },
+    {
+      "id": "oracle-malformed-and-sentinels-score-floor",
+      "kind": "structure",
+      "assert": "G4/G5: a single malformed {} object and the all-TC-ERR-sentinel set (the 0/13 collapse) each score quality_score=0; malformed cases are dropped, never counted as covered.",
+      "passed": true
+    },
+    {
+      "id": "oracle-single-knob-mutations-lower-score",
+      "kind": "structure",
+      "assert": "G4: dropping a step (coverage), flipping one involves_* (field-accuracy), blanking an Assert clause (field-accuracy), and inventing an extra case (set-equality) each strictly lower quality_score below 100.",
+      "passed": true
+    },
+    {
+      "id": "oracle-gold-determinism",
+      "kind": "structure",
+      "assert": "G8: rebuilding the reference registry twice from the manifest is byte-identical.",
+      "passed": true
+    },
+    {
+      "id": "oracle-denominator-intact",
+      "kind": "structure",
+      "assert": "G9: gold_tc (13) equals the sum of numbered steps over the enabled agent specs; every gold tc_id is reproduced or explained by a logged failure sentinel.",
+      "passed": true
+    },
+    {
+      "id": "harness-expected-empty-is-success",
+      "kind": "structure",
+      "assert": "CHANGE 1: an agent whose How section has zero numbered steps (demo-noop) emits [] with NO retry and NO failure sentinel — [] is the correct answer for a zero-step spec.",
+      "passed": true
+    },
+    {
+      "id": "harness-empty-with-steps-fails-loudly",
+      "kind": "structure",
+      "assert": "CHANGE 1: an agent with numbered steps that returns nothing after 3 escalating attempts emits a TC-ERR-<agent> sentinel (reason=extraction_failure, fail=true); never silent, never credited.",
+      "passed": true
+    }
+  ]
+}

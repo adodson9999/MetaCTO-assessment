@@ -1,0 +1,28 @@
+Title: [Auth] accessToken expires after 60 minutes by default when expiresInMins is omitted
+
+Environment:
+  OS: macOS 14.6
+  Browser/App Version: dummyjson-pp-cli 4.24.0
+  Device: MacBook Pro
+  Build/Version: dummyjson@1.0.0
+  Environment: local
+
+Steps to Reproduce:
+  1. POST /auth/login without passing expiresInMins
+  2. Wait 31 minutes
+  3. Call GET /auth/me with the issued accessToken
+
+Expected Result:
+  Token still valid — it should expire after 30 minutes
+
+Actual Result:
+  Token remained valid past 31 minutes and only expired at 60 minutes
+
+Severity: Medium
+Priority: P3
+
+Evidence:
+  - Screenshot:
+  - Logs: token decoded exp = iat + 3600s
+
+Notes / Workaround: agent=general-documentation-reviewer; reproduced with all four frameworks

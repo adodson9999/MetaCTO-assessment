@@ -1,0 +1,42 @@
+{
+  "scenario": "mixed_batch",
+  "backend": {
+    "provider": "ollama",
+    "model": "llama3.1:8b"
+  },
+  "model_digest": "42182419e950",
+  "run_id": "2026-06-26T15-02-44",
+  "timestamp": "2026-06-26T15:09:31+00:00",
+  "executions": {
+    "auth-flow-checker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/auth-flow-checker.stdout.txt"
+    },
+    "schema-validator": {
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_file": "stdout/schema-validator.stdout.txt"
+    },
+    "rate-limit-prober": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/rate-limit-prober.stdout.txt"
+    },
+    "pagination-checker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_file": "stdout/pagination-checker.stdout.txt"
+    },
+    "webhook-delivery-tester": {
+      "exit_code": 124,
+      "timed_out": true,
+      "stdout_file": "stdout/webhook-delivery-tester.stdout.txt"
+    },
+    "idempotency-prober": {
+      "exit_code": 2,
+      "timed_out": false,
+      "stdout_file": "stdout/idempotency-prober.stdout.txt"
+    }
+  }
+}

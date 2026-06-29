@@ -1,0 +1,17 @@
+{
+  "task": "api-tester / test-idempotency-of-endpoints",
+  "metric_name": "idempotency_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 9).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-idempotency-of-endpoints/gold.json",
+  "headline_metric": "idempotency_compliance_rate_pct",
+  "secondary_metric": "idempotency_correctness_rate_pct",
+  "scenarios_per_collection": 9,
+  "rationale": "All four agents drive the same local DummyJSON, so the raw Idempotency Compliance Rate (idempotent endpoint cases whose three replays return identical code AND byte-for-byte identical body AND leave exactly one record) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct PUT and DELETE replay probes (right method, right /<collection>/<target_id> path, the same Idempotency-Key reused across all three replays, replays = 3), the POST add probe with a primary key plus a distinct fresh key, and faithfully exercise every scenario. The headline idempotency_compliance_rate_pct is still emitted by every agent as the task's QA finding (empirically 50%: PUT is fully idempotent; DELETE is NOT byte-for-byte idempotent because each response embeds a fresh `deletedOn` timestamp). The secondary idempotency_correctness_rate_pct (empirically 77.78%) also credits the POST finding that a fresh Idempotency-Key does not create a distinct record (the header is ignored).",
+  "headline_value_empirical_pct": 50.0,
+  "secondary_value_empirical_pct": 77.78,
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)"
+}

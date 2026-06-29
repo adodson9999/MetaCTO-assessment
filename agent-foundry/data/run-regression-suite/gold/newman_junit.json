@@ -1,0 +1,27 @@
+{
+  "pair": "newman_junit",
+  "format": "junit_xml",
+  "note": "Postman/Newman JUnit reporter output.",
+  "gold_report": {
+    "build_n_nus_1": "ci-1042",
+    "build_n": "ci-1043",
+    "total_tests_in_suite": 6,
+    "prev_passed_count": 5,
+    "regressions": [
+      {
+        "id": "auth.login.invalid",
+        "failure_message": "Expected 401 but got 500"
+      },
+      {
+        "id": "products.get.byId",
+        "failure_message": "Expected 200 but got 404"
+      }
+    ],
+    "newly_passing": [
+      "users.search.q"
+    ],
+    "overall_status": "fail"
+  },
+  "regression_rate_pct": 40.0,
+  "would_block_deployment": true
+}

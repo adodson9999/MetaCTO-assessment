@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build N (ci-1043) — Postman/Newman JUnit reporter output for the new build under test. -->
+<testsuites name="DummyJSON API collection" tests="6" failures="2" errors="0" time="4.733">
+  <testsuite name="auth" tests="2" failures="1" errors="0" time="1.310">
+    <testcase name="auth.login.valid" classname="auth" time="0.620"/>
+    <testcase name="auth.login.invalid" classname="auth" time="0.690">
+      <failure message="Expected 401 but got 500">AssertionError: invalid-login should 401, got 500</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="products" tests="2" failures="1" errors="0" time="1.700">
+    <testcase name="products.list.limit" classname="products" time="0.880"/>
+    <testcase name="products.get.byId" classname="products" time="0.820">
+      <failure message="Expected 200 but got 404">AssertionError: GET /products/1 returned 404</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="carts" tests="1" failures="0" errors="0" time="0.690">
+    <testcase name="carts.add.item" classname="carts" time="0.690"/>
+  </testsuite>
+  <testsuite name="users" tests="1" failures="0" errors="0" time="1.033">
+    <testcase name="users.search.q" classname="users" time="1.033"/>
+  </testsuite>
+</testsuites>

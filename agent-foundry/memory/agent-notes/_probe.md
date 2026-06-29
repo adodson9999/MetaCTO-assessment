@@ -1,0 +1,4 @@
+- [2026-06-26T03:00:04.796587+00:00] run=selftest-ref long-polling run: response_accuracy=66.67% over 3 channels (4/6 cases passed)
+- [2026-06-26T03:00:25.869256+00:00] run=selftest-degraded long-polling run: response_accuracy=50.0% over 3 channels (3/6 cases passed)
+- [2026-06-26T03:17:47.357345+00:00] run=selftest-ref long-polling run: response_accuracy=66.67% over 3 channels (4/6 cases passed)
+- [2026-06-26T03:18:08.428409+00:00] run=selftest-degraded long-polling run: response_accuracy=50.0% over 3 channels (3/6 cases passed)

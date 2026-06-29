@@ -1,0 +1,6 @@
+{
+  "scenario": "oversize_rejected",
+  "ideal": "413",
+  "observed_token": "413",
+  "api_correct": true
+}

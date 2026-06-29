@@ -1,0 +1,27 @@
+{
+  "title": "Quality Assurance Specialist II",
+  "company": "Affirm",
+  "location": null,
+  "remote_or_onsite": "unspecified",
+  "employment_type": "full-time",
+  "seniority": "mid",
+  "salary_min": 80000,
+  "salary_max": 110000,
+  "salary_currency": "USD",
+  "years_experience_min": 5,
+  "tech_stack": ["SQL", "BI/analytics tools"],
+  "must_haves": [
+    "5+ years in quality assurance/audit/operational quality in a high-scale or regulated environment",
+    "Demonstrated ownership of QA or controls programs with measurable impact",
+    "Strong data skills including dashboard/reporting development",
+    "Cross-functional experience (Ops Enablement, Vendor Management, Product, Compliance)",
+    "Exceptional communication and stakeholder engagement",
+    "Experience in financial services or fintech"
+  ],
+  "nice_to_haves": [
+    "Prior vendor QA management and calibration program ownership",
+    "Experience with automation-enabled QA tools (e.g., conversational AI outputs)"
+  ],
+  "visa_sponsorship": "unspecified",
+  "apply_url": null
+}

@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-webhook-delivery",
+  "metric_name": "webhook_plan_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (subject x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (key not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (subjects x 28).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-webhook-delivery/gold.json",
+  "headline_metric": "webhook_delivery_success_rate_pct",
+  "secondary_metric": "retry_delivery_rate_pct",
+  "scenarios_per_subject": 28,
+  "rationale": "All four agents hit the same local DummyJSON via the same harness, so the headline Webhook Delivery Success Rate (deliveries arriving within 10s with all required payload fields present and a valid HMAC-SHA256 signature) is a property of the API, not the agent. DummyJSON ships no webhook subsystem, so that rate is 0% on every agent and is reported as the genuine QA finding (no POST /webhooks route, no outbound delivery, no signature). Plan fidelity-to-gold instead measures each framework's test quality: did it construct the correct registration body (POST to webhooks_path with the receiver_url and the events array), the correct resource-creation trigger (POST to resource_path with the resource_body, expecting 201), the correct poll window (500ms interval, 10s deadline), the correct six payload/HMAC assertions (event_type, resource_id match, ISO-8601 timestamp regex, the two signature header names, sha256 algorithm, sha256=<hexdigest> format), and the correct retry spec (500 trigger, wait, redelivery + identical-payload + valid-signature expectations). The 20 plan_* scenarios are framework-attributable; the 8 exec_* scenarios capture the API property and are uniform across agents.",
+  "pass_threshold": "Webhook Delivery Success Rate = 100% within 10s with valid HMAC-SHA256 signature AND Retry Delivery Rate = 100% (per the task's stated metric). Plan fidelity pass = 100% (agent reproduces every gold observed token).",
+  "fail_condition": "Delivery: arrival after 10s, any missing payload field, or any invalid HMAC signature (DummyJSON => 0%, documented finding). Fidelity: < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold)."
+}

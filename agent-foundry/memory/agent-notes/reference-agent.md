@@ -1,0 +1,1 @@
+- [2026-06-25T23:07:47.757676+00:00] run=smoke-1782428863 search-filter run: accuracy=100.0% over 2 collections (28 scenarios)

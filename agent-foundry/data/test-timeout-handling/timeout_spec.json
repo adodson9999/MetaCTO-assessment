@@ -1,0 +1,56 @@
+{
+  "title": "Local timeout-gateway contract (authored for the timeout-handling task)",
+  "description": "Each service calls an upstream service and is documented to enforce an upstream timeout of upstream_timeout_s seconds, returning 504/408 (not hanging) when the upstream is slow, then recovering to <restore_max_ms once the upstream is healthy. Agents construct the timeout test plan from this; ground truth is the gateway's real observed behavior under an injected 60-second upstream delay. The gateway is the air-gapped local stand-in for a WireMock upstream stub fronted by a Toxiproxy latency toxic.",
+  "target": "http://127.0.0.1:8911",
+  "injected_delay_s": 60,
+  "services": [
+    {
+      "service": "orders-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/orders"
+        },
+        {
+          "method": "GET",
+          "path": "/orders/recent"
+        }
+      ]
+    },
+    {
+      "service": "inventory-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/inventory"
+        },
+        {
+          "method": "GET",
+          "path": "/inventory/low-stock"
+        }
+      ]
+    },
+    {
+      "service": "profile-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/profile"
+        },
+        {
+          "method": "GET",
+          "path": "/profile/preferences"
+        }
+      ]
+    }
+  ]
+}

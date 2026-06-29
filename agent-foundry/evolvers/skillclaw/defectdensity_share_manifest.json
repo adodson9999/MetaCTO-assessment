@@ -1,0 +1,13 @@
+{
+  "shared_skill": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillclaw/defectdensity-shared/SKILL.md",
+  "ts": "2026-06-25T23:11:15.786565+00:00",
+  "offered_to": [
+    "langgraph",
+    "crewai",
+    "claude_sdk",
+    "api-tester-track-defect-density"
+  ],
+  "backend": "local_filesystem",
+  "air_gapped": true,
+  "note": "Shared skill available to all agents; adoption is the user's call."
+}

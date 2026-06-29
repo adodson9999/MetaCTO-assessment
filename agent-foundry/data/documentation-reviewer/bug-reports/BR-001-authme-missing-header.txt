@@ -1,0 +1,28 @@
+Title: [Auth] /auth/me returns 200 when the Authorization header is omitted
+
+Environment:
+  OS: macOS 14.6
+  Browser/App Version: dummyjson-pp-cli 4.24.0
+  Device: MacBook Pro
+  Build/Version: dummyjson@1.0.0
+  Environment: local
+
+Steps to Reproduce:
+  1. Obtain no token (skip login)
+  2. Send GET /auth/me with no Authorization header
+  3. Observe the response status and body
+
+Expected Result:
+  401 Unauthorized
+
+Actual Result:
+  200 OK with the full user object returned
+
+Severity: High
+Priority: P2
+
+Evidence:
+  - Screenshot:
+  - Logs: response status 200, body contains id/username/email
+
+Notes / Workaround: agent=general-documentation-reviewer; reproduced with all four frameworks

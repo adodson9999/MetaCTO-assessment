@@ -1,0 +1,202 @@
+[
+  {
+    "name": "api-tester-validate-request-payloads",
+    "spec_path": "data/test-case-creator/agent-how/validate-request-payloads.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-response-status-codes",
+    "spec_path": "data/test-case-creator/agent-how/verify-response-status-codes.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-authentication-flows",
+    "spec_path": "data/test-case-creator/agent-how/test-authentication-flows.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-check-authorization-rules",
+    "spec_path": "data/test-case-creator/agent-how/check-authorization-rules.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-json-schema-responses",
+    "spec_path": "data/test-case-creator/agent-how/validate-json-schema-responses.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-pagination-behavior",
+    "spec_path": "data/test-case-creator/agent-how/test-pagination-behavior.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-error-message-clarity",
+    "spec_path": "data/test-case-creator/agent-how/verify-error-message-clarity.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-rate-limit-enforcement",
+    "spec_path": "data/test-case-creator/agent-how/test-rate-limit-enforcement.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-query-parameter-handling",
+    "spec_path": "data/test-case-creator/agent-how/validate-query-parameter-handling.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-idempotency-of-endpoints",
+    "spec_path": "data/test-case-creator/agent-how/test-idempotency-of-endpoints.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-content-type-negotiation",
+    "spec_path": "data/test-case-creator/agent-how/verify-content-type-negotiation.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-null-empty-fields",
+    "spec_path": "data/test-case-creator/agent-how/validate-null-empty-fields.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-timeout-handling",
+    "spec_path": "data/test-case-creator/agent-how/test-timeout-handling.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-crud-operation-integrity",
+    "spec_path": "data/test-case-creator/agent-how/verify-crud-operation-integrity.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-concurrent-request-handling",
+    "spec_path": "data/test-case-creator/agent-how/test-concurrent-request-handling.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-header-propagation",
+    "spec_path": "data/test-case-creator/agent-how/validate-header-propagation.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-webhook-delivery",
+    "spec_path": "data/test-case-creator/agent-how/test-webhook-delivery.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-run-regression-suite",
+    "spec_path": "data/test-case-creator/agent-how/run-regression-suite.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-track-defect-density",
+    "spec_path": "data/test-case-creator/agent-how/track-defect-density.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-api-versioning-behavior",
+    "spec_path": "data/test-case-creator/agent-how/validate-api-versioning-behavior.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-ssl-tls-enforcement",
+    "spec_path": "data/test-case-creator/agent-how/test-ssl-tls-enforcement.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-caching-headers",
+    "spec_path": "data/test-case-creator/agent-how/verify-caching-headers.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-correlation-id-propagation",
+    "spec_path": "data/test-case-creator/agent-how/validate-correlation-id-propagation.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-bulk-operation-endpoints",
+    "spec_path": "data/test-case-creator/agent-how/test-bulk-operation-endpoints.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-audit-log-generation",
+    "spec_path": "data/test-case-creator/agent-how/verify-audit-log-generation.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-search-and-filter-queries",
+    "spec_path": "data/test-case-creator/agent-how/validate-search-and-filter-queries.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-file-upload-and-download",
+    "spec_path": "data/test-case-creator/agent-how/test-file-upload-and-download.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-sorting-behavior",
+    "spec_path": "data/test-case-creator/agent-how/verify-sorting-behavior.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-event-driven-api-triggers",
+    "spec_path": "data/test-case-creator/agent-how/test-event-driven-api-triggers.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-ip-allowlist-enforcement",
+    "spec_path": "data/test-case-creator/agent-how/test-ip-allowlist-enforcement.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-api-gateway-routing",
+    "spec_path": "data/test-case-creator/agent-how/test-api-gateway-routing.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-third-party-oauth-integration",
+    "spec_path": "data/test-case-creator/agent-how/verify-third-party-oauth-integration.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-multipart-form-data-handling",
+    "spec_path": "data/test-case-creator/agent-how/test-multipart-form-data-handling.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-retry-after-header-compliance",
+    "spec_path": "data/test-case-creator/agent-how/validate-retry-after-header-compliance.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-soft-delete-behavior",
+    "spec_path": "data/test-case-creator/agent-how/test-soft-delete-behavior.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-validate-graphql-depth-limits",
+    "spec_path": "data/test-case-creator/agent-how/validate-graphql-depth-limits.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-test-long-polling-support",
+    "spec_path": "data/test-case-creator/agent-how/test-long-polling-support.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-verify-enum-value-restrictions",
+    "spec_path": "data/test-case-creator/agent-how/verify-enum-value-restrictions.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-measure-api-consumer-satisfaction",
+    "spec_path": "data/test-case-creator/agent-how/measure-api-consumer-satisfaction.md",
+    "enabled": true
+  },
+  {
+    "name": "api-tester-create-postman-collection",
+    "spec_path": "data/test-case-creator/agent-how/create-postman-collection.md",
+    "enabled": true
+  }
+]

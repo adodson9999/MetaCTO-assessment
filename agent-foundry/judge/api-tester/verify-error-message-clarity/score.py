@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Judge scorer + leaderboard for the Verify-Error-Message-Clarity task.
+
+The agents emit blind test results (they never see the gold). This step reads each
+agent's recorded cases for a run, compares them to data/clarity/gold.json under the
+contract in judge/clarity/metric.json, computes Error-Clarity Test Fidelity, writes
+that number back as each agent's metric_value, applies the documented tie-breakers,
+and updates results/clarity/leaderboard.{json,md} (tracking best-so-far over time).
+
+A case matches gold only when the agent covered it AND its observed status code
+equals gold's AND its clarity verdict tuple (message_present, code_present,
+sensitive_found) equals gold's.
+
+Usage:
+    python judge/clarity/score.py --workspace . --run-id <id>
+"""
+from __future__ import annotations
+import argparse
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+def _load(p: Path, default=None):
+    try:
+        return json.loads(p.read_text())
+    except Exception:  # noqa
+        return default
+
+
+def _verdict_tuple(v: dict | None):
+    if not isinstance(v, dict):
+        return None
+    return (bool(v.get("message_present")), bool(v.get("code_present")),
+            bool(v.get("sensitive_found")))
+
+
+def gold_truth(ws: Path) -> dict:
+    """(slug, documented_code) -> (gold actual_code, gold verdict tuple)."""
+    gold = _load(ws / "data" / "clarity" / "gold.json", {"endpoints": []})
+    truth = {}
+    for ep in gold["endpoints"]:
+        for c in ep["cases"]:
+            truth[(ep["slug"], c["documented_code"])] = (
+                c["actual_code"], _verdict_tuple(c.get("verdict")))
+    return truth
+
+
+def agent_observed(cases_doc: dict) -> dict:
+    """(slug, documented_code) -> (observed actual_code, verdict tuple) for covered."""
+    obs = {}
+    for c in cases_doc.get("cases", []):
+        if not c.get("covered"):
+            continue
+        obs[(c["slug"], c["documented_code"])] = (
+            c.get("actual_code"), _verdict_tuple(c.get("verdict")))
+    return obs
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--workspace", default=".")
+    ap.add_argument("--run-id", required=True)
+    a = ap.parse_args()
+    ws = Path(a.workspace).resolve()
+
+    metric = _load(ws / "judge" / "clarity" / "metric.json", {})
+    metric_name = metric.get("metric_name", "error_clarity_test_fidelity")
+    truth = gold_truth(ws)
+    denom = len(truth)
+    run_dir = ws / "results" / "clarity" / "runs" / a.run_id
+
+    rows = []
+    for jf in sorted(run_dir.glob("*.json")):
+        if jf.name.endswith(".cases.json"):
+            continue
+        meta = _load(jf, {})
+        agent = meta.get("agent", jf.stem)
+        cases_doc = _load(Path(meta.get("raw_output_path", "")), {"cases": []})
+        obs = agent_observed(cases_doc)
+
+        matches = sum(1 for key, gold_val in truth.items() if obs.get(key) == gold_val)
+        fidelity = round(100.0 * matches / denom, 2) if denom else 0.0
+        covered = len(obs)
+
+        meta["metric_name"] = metric_name
+        meta["metric_value"] = fidelity
+        meta["fidelity_matches"] = matches
+        meta["fidelity_denominator"] = denom
+        meta["coverage_cases"] = covered
+        meta["p1_security_defects"] = cases_doc.get("p1_security_defects", 0)
+        jf.write_text(json.dumps(meta, indent=2))
+        rows.append({"agent": agent, "fidelity": fidelity, "matches": matches,
+                     "coverage": covered, "p1": cases_doc.get("p1_security_defects", 0),
+                     "pass_rate": cases_doc.get("error_clarity_pass_rate_pct")})
+
+    # rank by fidelity, then tie-breakers: coverage -> fewer p1 leaks -> agent name
+    rows.sort(key=lambda r: (r["fidelity"], r["coverage"], -r["p1"]), reverse=True)
+
+    # leaderboard over time
+    lb_path = ws / "results" / "clarity" / "leaderboard.json"
+    lb = _load(lb_path, {"metric_name": metric_name, "direction": "higher_is_better",
+                         "agents": {}, "runs": []})
+    this_run = {r["agent"]: r["fidelity"] for r in rows}
+    for r in rows:
+        rec = lb["agents"].get(r["agent"], {"best": None, "runs": 0})
+        rec["runs"] += 1
+        rec["last"] = r["fidelity"]
+        if rec["best"] is None or r["fidelity"] > rec["best"]:
+            rec["best"] = r["fidelity"]
+        lb["agents"][r["agent"]] = rec
+    lb["runs"].append({"run_id": a.run_id, "ts": datetime.now(timezone.utc).isoformat(),
+                       "values": this_run})
+    lb_path.write_text(json.dumps(lb, indent=2))
+
+    md = [f"# Leaderboard — {metric_name} (higher_is_better)",
+          f"Metric: Error-Clarity Test Fidelity vs gold  ·  Updated: {datetime.now(timezone.utc).isoformat()}  ·  run: {a.run_id}",
+          f"Denominator = {denom} documented gold error cases.  Headline = Error Clarity Pass Rate (API property).",
+          "",
+          "| Rank | Agent | Fidelity% | This-run best | Runs | Coverage | PassRate% (API) | P1 leaks |",
+          "|------|-------|-----------|---------------|------|----------|-----------------|----------|"]
+    for i, r in enumerate(rows, 1):
+        rec = lb["agents"][r["agent"]]
+        md.append(f"| {i} | {r['agent']} | {r['fidelity']:g} | {rec['best']:g} | {rec['runs']} | "
+                  f"{r['coverage']}/{denom} | {r['pass_rate']} | {r['p1']} |")
+    (ws / "results" / "clarity" / "leaderboard.md").write_text("\n".join(md) + "\n")
+
+    print("\n".join(md))
+    if not rows:
+        print("\n[warn] no agent results found for this run.")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

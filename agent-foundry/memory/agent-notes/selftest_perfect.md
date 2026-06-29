@@ -1,0 +1,1 @@
+- [2026-06-26T00:26:24.097098+00:00] run=selftest-mp multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)

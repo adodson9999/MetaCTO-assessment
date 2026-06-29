@@ -1,0 +1,366 @@
+{
+  "summary": {
+    "target": "http://127.0.0.1:8911",
+    "services": 3,
+    "endpoints_total": 6,
+    "endpoints_enforced": 5,
+    "empirical_timeout_enforcement_rate_pct": 83.33,
+    "total_scenarios": 39,
+    "api_correct_scenarios": 36,
+    "empirical_scenario_correctness_rate_pct": 92.31,
+    "note": "Ground truth = the local timeout-gateway's real observed token per (service, scenario) under a 60s injected upstream delay. One endpoint (GET /inventory/low-stock) is non-compliant (500 + leaky body + open connection), so the enforcement rate is below 100% by design \u2014 that gap is a real QA finding, not an agent failure."
+  },
+  "services": [
+    {
+      "service": "orders-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "reference_plan": {
+        "service": "orders-api",
+        "upstream_timeout_s": 10,
+        "buffer_s": 2,
+        "max_wait_s": 12,
+        "restore_max_ms": 500,
+        "delayed": [
+          {
+            "label": "GET /orders",
+            "method": "GET",
+            "path": "/orders"
+          },
+          {
+            "label": "GET /orders/recent",
+            "method": "GET",
+            "path": "/orders/recent"
+          }
+        ],
+        "restore": [
+          {
+            "label": "GET /orders",
+            "method": "GET",
+            "path": "/orders"
+          },
+          {
+            "label": "GET /orders/recent",
+            "method": "GET",
+            "path": "/orders/recent"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "scenario": "max_wait_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/orders/recent::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "service": "inventory-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "reference_plan": {
+        "service": "inventory-api",
+        "upstream_timeout_s": 10,
+        "buffer_s": 2,
+        "max_wait_s": 12,
+        "restore_max_ms": 500,
+        "delayed": [
+          {
+            "label": "GET /inventory",
+            "method": "GET",
+            "path": "/inventory"
+          },
+          {
+            "label": "GET /inventory/low-stock",
+            "method": "GET",
+            "path": "/inventory/low-stock"
+          }
+        ],
+        "restore": [
+          {
+            "label": "GET /inventory",
+            "method": "GET",
+            "path": "/inventory"
+          },
+          {
+            "label": "GET /inventory/low-stock",
+            "method": "GET",
+            "path": "/inventory/low-stock"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "scenario": "max_wait_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory/low-stock::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "500",
+          "api_correct": false
+        },
+        {
+          "scenario": "/inventory/low-stock::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory/low-stock::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "/inventory/low-stock::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "/inventory/low-stock::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/inventory/low-stock::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "service": "profile-api",
+      "upstream_timeout_s": 10,
+      "buffer_s": 2,
+      "restore_max_ms": 500,
+      "reference_plan": {
+        "service": "profile-api",
+        "upstream_timeout_s": 10,
+        "buffer_s": 2,
+        "max_wait_s": 12,
+        "restore_max_ms": 500,
+        "delayed": [
+          {
+            "label": "GET /profile",
+            "method": "GET",
+            "path": "/profile"
+          },
+          {
+            "label": "GET /profile/preferences",
+            "method": "GET",
+            "path": "/profile/preferences"
+          }
+        ],
+        "restore": [
+          {
+            "label": "GET /profile",
+            "method": "GET",
+            "path": "/profile"
+          },
+          {
+            "label": "GET /profile/preferences",
+            "method": "GET",
+            "path": "/profile/preferences"
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "scenario": "max_wait_correct",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::delayed_status",
+          "ideal": "504_or_408",
+          "observed_token": "504",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::delayed_within_max_wait",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::delayed_conn_closed",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::delayed_body_safe",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::restore_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "/profile/preferences::restore_within_budget",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        }
+      ]
+    }
+  ]
+}

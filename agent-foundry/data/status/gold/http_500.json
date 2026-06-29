@@ -1,0 +1,24 @@
+{
+  "slug": "http_500",
+  "method": "GET",
+  "path": "/http/500",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    500
+  ],
+  "cases": [
+    {
+      "documented_code": 500,
+      "request": {
+        "code": 500,
+        "method": "GET",
+        "path": "/http/500",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 500,
+      "passed": true
+    }
+  ]
+}

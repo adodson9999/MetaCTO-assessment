@@ -1,0 +1,1 @@
+- [2026-06-26T02:55:40.814146+00:00] run=ref-validate-perfect enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%

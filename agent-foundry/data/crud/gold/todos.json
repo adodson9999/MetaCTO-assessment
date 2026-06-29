@@ -1,0 +1,146 @@
+{
+  "slug": "todos",
+  "table": "todos",
+  "auth_required": false,
+  "field_count": 3,
+  "changed_field_count": 2,
+  "kept_fields": [
+    "userId"
+  ],
+  "create_body": {
+    "todo": "Test todo 001",
+    "completed": false,
+    "userId": 1
+  },
+  "update_body": {
+    "todo": "Test todo 001 - updated",
+    "completed": true
+  },
+  "steps": [
+    {
+      "step": "CREATE",
+      "method": "POST",
+      "sent_path": "/todos/add",
+      "actual_code": 201,
+      "body_field_match": true,
+      "captured_id": 255
+    },
+    {
+      "step": "READ",
+      "method": "GET",
+      "sent_path": "/todos/255",
+      "actual_code": 404,
+      "body_field_match": null,
+      "captured_id": null
+    },
+    {
+      "step": "UPDATE",
+      "method": "PUT",
+      "sent_path": "/todos/255",
+      "actual_code": 404,
+      "body_field_match": false,
+      "captured_id": null
+    },
+    {
+      "step": "READ_AFTER_UPDATE",
+      "method": "GET",
+      "sent_path": "/todos/255",
+      "actual_code": 404,
+      "body_field_match": false,
+      "captured_id": null
+    },
+    {
+      "step": "DELETE",
+      "method": "DELETE",
+      "sent_path": "/todos/255",
+      "actual_code": 404,
+      "body_field_match": null,
+      "captured_id": null
+    },
+    {
+      "step": "READ_AFTER_DELETE",
+      "method": "GET",
+      "sent_path": "/todos/255",
+      "actual_code": 404,
+      "body_field_match": null,
+      "captured_id": null
+    }
+  ],
+  "db_checkpoints": [
+    {
+      "checkpoint": "DB_AFTER_CREATE",
+      "resource_id": 255,
+      "db_state": "absent"
+    },
+    {
+      "checkpoint": "DB_AFTER_READ",
+      "resource_id": 255,
+      "db_state": "absent"
+    },
+    {
+      "checkpoint": "DB_AFTER_UPDATE",
+      "resource_id": 255,
+      "db_state": "absent"
+    },
+    {
+      "checkpoint": "DB_FINAL",
+      "resource_id": 255,
+      "db_state": "absent"
+    }
+  ],
+  "integrity_pass": false,
+  "integrity_detail": {
+    "CREATE": {
+      "actual_code": 201,
+      "http_ok": true,
+      "body_ok": true,
+      "pass": true
+    },
+    "READ": {
+      "actual_code": 404,
+      "http_ok": false,
+      "body_ok": true,
+      "pass": false
+    },
+    "UPDATE": {
+      "actual_code": 404,
+      "http_ok": false,
+      "body_ok": false,
+      "pass": false
+    },
+    "READ_AFTER_UPDATE": {
+      "actual_code": 404,
+      "http_ok": false,
+      "body_ok": false,
+      "pass": false
+    },
+    "DELETE": {
+      "actual_code": 404,
+      "http_ok": false,
+      "body_ok": true,
+      "pass": false
+    },
+    "READ_AFTER_DELETE": {
+      "actual_code": 404,
+      "http_ok": true,
+      "body_ok": true,
+      "pass": true
+    },
+    "DB_AFTER_CREATE": {
+      "db_state": "absent",
+      "pass": false
+    },
+    "DB_AFTER_READ": {
+      "db_state": "absent",
+      "pass": false
+    },
+    "DB_AFTER_UPDATE": {
+      "db_state": "absent",
+      "pass": false
+    },
+    "DB_FINAL": {
+      "db_state": "absent",
+      "pass": true
+    }
+  }
+}

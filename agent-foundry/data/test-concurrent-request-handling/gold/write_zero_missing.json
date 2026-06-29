@@ -1,0 +1,6 @@
+{
+  "scenario": "write_zero_missing",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

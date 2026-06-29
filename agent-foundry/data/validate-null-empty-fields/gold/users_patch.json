@@ -1,0 +1,235 @@
+{
+  "slug": "users_patch",
+  "method": "PATCH",
+  "path": "/users/{id}",
+  "schema": {
+    "fields": {
+      "firstName": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "age": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "firstName"
+    ],
+    "optional": [
+      "age"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "firstName:key_absent",
+      "field": "firstName",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {}
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:json_null",
+      "field": "firstName",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:empty_string",
+      "field": "firstName",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:integer_zero",
+      "field": "firstName",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:boolean_false",
+      "field": "firstName",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:empty_array",
+      "field": "firstName",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "firstName:empty_object",
+      "field": "firstName",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": {}
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:key_absent",
+      "field": "age",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "firstName": "Patched"
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:json_null",
+      "field": "age",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": "Patched",
+        "age": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:empty_string",
+      "field": "age",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": "Patched",
+        "age": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:integer_zero",
+      "field": "age",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "firstName": "Patched",
+        "age": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:empty_array",
+      "field": "age",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": "Patched",
+        "age": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "age:empty_object",
+      "field": "age",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": "Patched",
+        "age": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "firstName",
+      "field": "firstName",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "firstName": null
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "firstName",
+      "field": "firstName",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "firstName": "null"
+      }
+    }
+  ]
+}

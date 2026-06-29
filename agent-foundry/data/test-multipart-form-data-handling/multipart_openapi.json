@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DummyJSON multipart/form-data upload contract (authored for the multipart-form-data-handling task; DummyJSON itself is unmodified)",
+    "version": "1.0.0",
+    "description": "Describes the multipart upload contract a properly implemented API would publish for these create routes. The live DummyJSON parses multipart and preserves recognized text fields, but does not store the file, expose a document_url, persist the resource, validate required fields, return 413 for a single over-limit file, or return 415 for a wrong Content-Type; the gold records that real behavior and each gap is a QA finding."
+  },
+  "x-file-size-bytes": 51200,
+  "paths": {
+    "/products/add": {
+      "post": {
+        "summary": "POST /products/add (multipart upload)",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "category",
+                  "document"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "document": {
+                    "type": "string",
+                    "format": "binary",
+                    "x-max-bytes": 5242880
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created; body echoes the text fields and a document_url"
+          },
+          "400": {
+            "description": "a required text part is missing"
+          },
+          "413": {
+            "description": "the file exceeds x-max-bytes"
+          },
+          "415": {
+            "description": "the request Content-Type is not multipart/form-data"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "read back /products/{id}",
+        "responses": {
+          "200": {
+            "description": "the persisted resource incl. the text fields and document_url"
+          }
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "summary": "POST /users/add (multipart upload)",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "document"
+                ],
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "document": {
+                    "type": "string",
+                    "format": "binary",
+                    "x-max-bytes": 5242880
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created; body echoes the text fields and a document_url"
+          },
+          "400": {
+            "description": "a required text part is missing"
+          },
+          "413": {
+            "description": "the file exceeds x-max-bytes"
+          },
+          "415": {
+            "description": "the request Content-Type is not multipart/form-data"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "read back /users/{id}",
+        "responses": {
+          "200": {
+            "description": "the persisted resource incl. the text fields and document_url"
+          }
+        }
+      }
+    }
+  }
+}

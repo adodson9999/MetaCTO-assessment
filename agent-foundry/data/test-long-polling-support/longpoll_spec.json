@@ -1,0 +1,29 @@
+{
+  "title": "Local longpoll-target contract (authored for the long-polling task)",
+  "description": "Each channel exposes a long-poll GET (poll_path) that is documented to hold an event-less connection open for poll_timeout_s seconds and then close with 204 and an empty body, and to close with 200 and the event the moment one is published via a separate POST to trigger_path. Agents construct the long-poll test plan from this; ground truth is the fixture's real observed behavior when the harness opens the connections and triggers events at real wall-clock timing. The fixture is the air-gapped local stand-in for a real long-poll/hanging-GET backend; DummyJSON has no long-poll endpoint and is not used or modified.",
+  "target": "http://127.0.0.1:8921",
+  "poll_timeout_s": 5,
+  "channels": [
+    {
+      "channel": "orders",
+      "poll_path": "/poll/orders",
+      "trigger_path": "/publish/orders",
+      "poll_timeout_s": 5,
+      "expected_event_type": "order.created"
+    },
+    {
+      "channel": "inventory",
+      "poll_path": "/poll/inventory",
+      "trigger_path": "/publish/inventory",
+      "poll_timeout_s": 5,
+      "expected_event_type": "inventory.updated"
+    },
+    {
+      "channel": "profile",
+      "poll_path": "/poll/profile",
+      "trigger_path": "/publish/profile",
+      "poll_timeout_s": 5,
+      "expected_event_type": "profile.updated"
+    }
+  ]
+}

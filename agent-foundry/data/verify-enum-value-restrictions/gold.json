@@ -1,0 +1,936 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "endpoints": 4,
+    "total_cases": 47,
+    "headline_enum_validation_rate_pct": 38.3,
+    "invalid_value_cases": 24,
+    "invalid_value_rejection_rate_pct": 0.0,
+    "valid_value_cases": 17,
+    "valid_value_acceptance_rate_pct": 100.0,
+    "note": "Ground truth = live DummyJSON observed codes per labeled case. DummyJSON performs NO enum validation on add/update bodies (it echoes any value and returns 2xx), so the headline Enum Validation Rate and the Invalid-Value Rejection Rate are expected to be well below 100% by design \u2014 that gap is the genuine QA finding, not an agent fault. The agents are ranked instead on Enum-Test Fidelity (faithful reproduction of this observed table)."
+  },
+  "endpoints": [
+    {
+      "slug": "products_add",
+      "method": "POST",
+      "path": "/products/add",
+      "schema": {
+        "fields": {
+          "title": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "availabilityStatus": {
+            "type": "string",
+            "enum": [
+              "IN_STOCK",
+              "LOW_STOCK",
+              "OUT_OF_STOCK"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "availabilityStatus"
+        ],
+        "enum_fields": [
+          "availabilityStatus"
+        ]
+      },
+      "cases": [
+        {
+          "category": "valid_values",
+          "label": "availabilityStatus:IN_STOCK",
+          "field": "availabilityStatus",
+          "value_sent": "IN_STOCK",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": "IN_STOCK"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "availabilityStatus:LOW_STOCK",
+          "field": "availabilityStatus",
+          "value_sent": "LOW_STOCK",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": "LOW_STOCK"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "availabilityStatus:OUT_OF_STOCK",
+          "field": "availabilityStatus",
+          "value_sent": "OUT_OF_STOCK",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": "OUT_OF_STOCK"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "availabilityStatus",
+          "field": "availabilityStatus",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "availabilityStatus",
+          "field": "availabilityStatus",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": ""
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "availabilityStatus",
+          "field": "availabilityStatus",
+          "value_sent": null,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": null
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "availabilityStatus",
+          "field": "availabilityStatus",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": 0
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "availabilityStatus",
+          "field": "availabilityStatus",
+          "value_sent": "in_stock",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "Forge Widget",
+            "price": 9.99,
+            "availabilityStatus": "in_stock"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "users_add",
+      "method": "POST",
+      "path": "/users/add",
+      "schema": {
+        "fields": {
+          "firstName": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "MODERATOR",
+              "USER"
+            ]
+          }
+        },
+        "required": [
+          "firstName",
+          "gender"
+        ],
+        "enum_fields": [
+          "gender",
+          "role"
+        ]
+      },
+      "cases": [
+        {
+          "category": "valid_values",
+          "label": "gender:MALE",
+          "field": "gender",
+          "value_sent": "MALE",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "gender:FEMALE",
+          "field": "gender",
+          "value_sent": "FEMALE",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "FEMALE",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "gender:OTHER",
+          "field": "gender",
+          "value_sent": "OTHER",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "OTHER",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "role:ADMIN",
+          "field": "role",
+          "value_sent": "ADMIN",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "ADMIN"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "role:MODERATOR",
+          "field": "role",
+          "value_sent": "MODERATOR",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "MODERATOR"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "role:USER",
+          "field": "role",
+          "value_sent": "USER",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "gender",
+          "field": "gender",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "role",
+          "field": "role",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "gender",
+          "field": "gender",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "role",
+          "field": "role",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": ""
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "gender",
+          "field": "gender",
+          "value_sent": null,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": null,
+            "role": "USER"
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "role",
+          "field": "role",
+          "value_sent": null,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": null
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "gender",
+          "field": "gender",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": 0,
+            "role": "USER"
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "role",
+          "field": "role",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": 0
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "gender",
+          "field": "gender",
+          "value_sent": "male",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "male",
+            "role": "USER"
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "role",
+          "field": "role",
+          "value_sent": "admin",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "firstName": "Forge",
+            "gender": "MALE",
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "todos_add",
+      "method": "POST",
+      "path": "/todos/add",
+      "schema": {
+        "fields": {
+          "todo": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          }
+        },
+        "required": [
+          "todo",
+          "priority"
+        ],
+        "enum_fields": [
+          "priority"
+        ]
+      },
+      "cases": [
+        {
+          "category": "valid_values",
+          "label": "priority:LOW",
+          "field": "priority",
+          "value_sent": "LOW",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": "LOW"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "priority:MEDIUM",
+          "field": "priority",
+          "value_sent": "MEDIUM",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": "MEDIUM"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "priority:HIGH",
+          "field": "priority",
+          "value_sent": "HIGH",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": "HIGH"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "priority",
+          "field": "priority",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "priority",
+          "field": "priority",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": ""
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "priority",
+          "field": "priority",
+          "value_sent": null,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": null
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "priority",
+          "field": "priority",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": 0
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "priority",
+          "field": "priority",
+          "value_sent": "low",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "todo": "Ship the foundry",
+            "completed": false,
+            "userId": 1,
+            "priority": "low"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "posts_add",
+      "method": "POST",
+      "path": "/posts/add",
+      "schema": {
+        "fields": {
+          "title": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PUBLISHED",
+              "ARCHIVED"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "PUBLIC",
+              "PRIVATE"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "title",
+          "status"
+        ],
+        "enum_fields": [
+          "status",
+          "visibility"
+        ]
+      },
+      "cases": [
+        {
+          "category": "valid_values",
+          "label": "status:DRAFT",
+          "field": "status",
+          "value_sent": "DRAFT",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "DRAFT",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "status:PUBLISHED",
+          "field": "status",
+          "value_sent": "PUBLISHED",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "status:ARCHIVED",
+          "field": "status",
+          "value_sent": "ARCHIVED",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "ARCHIVED",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "visibility:PUBLIC",
+          "field": "visibility",
+          "value_sent": "PUBLIC",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "valid_values",
+          "label": "visibility:PRIVATE",
+          "field": "visibility",
+          "value_sent": "PRIVATE",
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": "PRIVATE"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "status",
+          "field": "status",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "unknown_string",
+          "label": "visibility",
+          "field": "visibility",
+          "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "status",
+          "field": "status",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "empty_string",
+          "label": "visibility",
+          "field": "visibility",
+          "value_sent": "",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": ""
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "status",
+          "field": "status",
+          "value_sent": null,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": null,
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "null_value",
+          "label": "visibility",
+          "field": "visibility",
+          "value_sent": null,
+          "ideal_token": "2xx",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": true,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": null
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "status",
+          "field": "status",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": 0,
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "wrong_type",
+          "label": "visibility",
+          "field": "visibility",
+          "value_sent": 0,
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": 0
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "status",
+          "field": "status",
+          "value_sent": "draft",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "draft",
+            "visibility": "PUBLIC"
+          }
+        },
+        {
+          "category": "case_variant",
+          "label": "visibility",
+          "field": "visibility",
+          "value_sent": "public",
+          "ideal_token": "400",
+          "actual_code": 201,
+          "actual_class": "2xx",
+          "message_has_field": null,
+          "api_correct": false,
+          "payload": {
+            "title": "A Forge Post",
+            "userId": 1,
+            "status": "PUBLISHED",
+            "visibility": "public"
+          }
+        }
+      ]
+    }
+  ]
+}

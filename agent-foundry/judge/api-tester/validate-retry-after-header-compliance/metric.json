@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / validate-retry-after-header-compliance",
+  "metric_name": "retry_after_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (endpoints x 6).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-retry-after-header-compliance/gold.json",
+  "headline_metric": "retry_after_accuracy_pct",
+  "headline_definition": "Retry-After Accuracy = (rate-limit test endpoints where the 429's Retry-After header is present AND has a positive value AND a request after the advertised duration succeeds) / (total rate-limit test endpoints) x 100. Positive value = a positive-integer number of seconds OR an RFC 7231 HTTP-date whose delta from T_429 is > 0. Pass = 100%. Fail = absent Retry-After on any 429, a zero or negative Retry-After value, or a post-window request still returning 429. Empirically DummyJSON PASSES: request 101 -> 429 with Retry-After present and positive (windowMs/1000 = 10), and a request after the advertised duration succeeds -> Retry-After Accuracy = 100%.",
+  "scenarios_per_endpoint": 6,
+  "rationale": "DummyJSON runs a real express-rate-limit limiter (max 100 requests per 10s window, keyed by X-Forwarded-For under trust-proxy), active because the target is booted NODE_ENV=production. All four agents exercise the same limiter, each under its own isolated client-key bucket, so the raw Retry-After Accuracy is identical for every faithful agent (present + positive + honored -> 100%). That headline is a property of the target API, not the agent, and is emitted by every agent as the task's QA finding. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct request sequence (an at_limit burst of exactly limit_n=100 requests, the single over_limit request N+1=101 that should 429, the Retry-After inspection, and the two probes correctly anchored on the retry_after_deadline at -1s/+1s) and faithfully exercise every scenario. Because the headline is identical across faithful agents, fidelity-to-gold is what ranks the four. Note: express-rate-limit's Retry-After is the constant windowMs (= 10), which slightly overstates the true remaining time by the burst duration; the still-limited probe at deadline-1s is recorded honestly and is a diagnostic, not part of the headline pass/fail.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)",
+  "tie_breakers": ["coverage (scenarios exercised)", "endpoints driven to 429", "wall-clock seconds"]
+}

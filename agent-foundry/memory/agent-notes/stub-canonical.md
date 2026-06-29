@@ -1,0 +1,1 @@
+- [2026-06-25T20:01:47.061354+00:00] run=smoke-auth auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance

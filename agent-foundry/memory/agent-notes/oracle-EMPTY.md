@@ -1,0 +1,2 @@
+- [2026-06-28T00:38:00.932366+00:00] run=selftest-EMPTY documentation-reviewer run: verdict_accuracy=0.0% over 4 reports; source-of-truth match=0.0%
+- [2026-06-28T00:38:00.941327+00:00] run=selftest-EMPTY documentation-reviewer run: verdict_accuracy=0.0% over 4 reports; source-of-truth match=0.0%

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build N (build-78) — pytest junitxml output for the new build under test. -->
+<testsuites>
+  <testsuite name="pytest" tests="4" failures="0" errors="0" skipped="0" time="2.005">
+    <testcase classname="tests.smoke" name="test_health_ok" time="0.198"/>
+    <testcase classname="tests.contract" name="test_products_schema" time="0.505"/>
+    <testcase classname="tests.contract" name="test_pagination_skip" time="0.471"/>
+    <testcase classname="tests.flaky" name="test_known_flaky" time="0.831"/>
+  </testsuite>
+</testsuites>

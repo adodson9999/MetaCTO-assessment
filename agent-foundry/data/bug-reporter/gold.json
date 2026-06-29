@@ -1,0 +1,484 @@
+{
+  "task": "general / bug-reporter",
+  "alias": "n602",
+  "built_at": "2026-06-26T16:19:44.201972+00:00",
+  "fixture": "data/bug-reporter/fixture.json",
+  "failures": 9,
+  "fields_per_failure": 5,
+  "total_gold_fields": 45,
+  "severity_counts": {
+    "CRITICAL": 3,
+    "HIGH": 3,
+    "MEDIUM": 2,
+    "LOW": 1
+  },
+  "has_critical_or_high": true,
+  "must_exit_code_1": true,
+  "gold_decisions": [
+    {
+      "bug_index": 1,
+      "agent_name": "authentication-flow-tester",
+      "status": "FAILED",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "title": "[authentication-flow-tester] AssertionError: expected 200 on valid login but got 401",
+      "decision": {
+        "title": "[authentication-flow-tester] AssertionError: expected 200 on valid login but got 401",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "testing_steps": [
+          {
+            "tc_id": "tc-auth-001",
+            "step_id": "tc-auth-001-s1",
+            "step_text": "Send POST /auth/login with a valid body and Assert response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-auth-002",
+            "step_id": "tc-auth-002-s1",
+            "step_text": "GET /auth/me with Authorization header, Asserts response code is exactly 401 when the token is missing.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-auth-003",
+            "step_id": "tc-auth-003-s1",
+            "step_text": "Inspect the in-memory session table for a stale entry.",
+            "involves_http_call": false,
+            "involves_assertion": false,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "authentication-flow-tester",
+            "item_name": "tc-auth-001",
+            "new_item": null
+          },
+          {
+            "exists_in_collection": false,
+            "folder": "authentication-flow-tester",
+            "item_name": "tc-auth-002",
+            "new_item": {
+              "name": "tc-auth-002",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "me"
+                  ]
+                },
+                "body": {
+                  "mode": "none"
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 2,
+      "agent_name": "tls-enforcer",
+      "status": "FAILED",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "title": "[tls-enforcer] TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+      "decision": {
+        "title": "[tls-enforcer] TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "testing_steps": [
+          {
+            "tc_id": "tc-tls-001",
+            "step_id": "tc-tls-001-s1",
+            "step_text": "GET /secure/ping over TLS 1.2 and Assert response code = 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "tls-enforcer",
+            "item_name": "tc-tls-001",
+            "new_item": null
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 3,
+      "agent_name": "ci-gatekeeper",
+      "status": "TIMED_OUT",
+      "severity": "CRITICAL",
+      "priority": "P1",
+      "title": "[ci-gatekeeper] Agent timed out after 300 seconds \u2014 no output produced",
+      "decision": {
+        "title": "[ci-gatekeeper] Agent timed out after 300 seconds \u2014 no output produced",
+        "severity": "CRITICAL",
+        "priority": "P1",
+        "testing_steps": [
+          {
+            "tc_id": "tc-pipe-001",
+            "step_id": "tc-pipe-001-s1",
+            "step_text": "POST /pipeline/run with body = a manifest and Asserts exactly 202.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": false,
+            "folder": "ci-gatekeeper",
+            "item_name": "tc-pipe-001",
+            "new_item": {
+              "name": "tc-pipe-001",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pipeline/run",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pipeline",
+                    "run"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 4,
+      "agent_name": "biometric-far-checker",
+      "status": "FAILED",
+      "severity": "HIGH",
+      "priority": "P2",
+      "title": "[biometric-far-checker] biometric match exceeded tolerance",
+      "decision": {
+        "title": "[biometric-far-checker] biometric match exceeded tolerance",
+        "severity": "HIGH",
+        "priority": "P2",
+        "testing_steps": [
+          {
+            "tc_id": "tc-bio-001",
+            "step_id": "tc-bio-001-s1",
+            "step_text": "POST /biometric/verify with a valid body, Assert response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "biometric-far-checker",
+            "item_name": "tc-bio-001",
+            "new_item": null
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 5,
+      "agent_name": "crud-integrity-prober",
+      "status": "FAILED",
+      "severity": "HIGH",
+      "priority": "P2",
+      "title": "[crud-integrity-prober] psycopg2.OperationalError: database connection refused (500) during CRUD write",
+      "decision": {
+        "title": "[crud-integrity-prober] psycopg2.OperationalError: database connection refused (500) during CRUD write",
+        "severity": "HIGH",
+        "priority": "P2",
+        "testing_steps": [
+          {
+            "tc_id": "tc-crud-001",
+            "step_id": "tc-crud-001-s1",
+            "step_text": "POST /resources with body: a new resource and Asserts exactly 201.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-crud-002",
+            "step_id": "tc-crud-002-s1",
+            "step_text": "DELETE /resources/42 with Authorization header, Asserts response code = 204.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "crud-integrity-prober",
+            "item_name": "tc-crud-001",
+            "new_item": null
+          },
+          {
+            "exists_in_collection": true,
+            "folder": "crud-integrity-prober",
+            "item_name": "tc-crud-002",
+            "new_item": null
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 6,
+      "agent_name": "schema-response-validator",
+      "status": "MALFORMED",
+      "severity": "HIGH",
+      "priority": "P2",
+      "title": "[schema-response-validator] Agent exited 0 but stdout was not valid JSON",
+      "decision": {
+        "title": "[schema-response-validator] Agent exited 0 but stdout was not valid JSON",
+        "severity": "HIGH",
+        "priority": "P2",
+        "testing_steps": [
+          {
+            "tc_id": "tc-schema-001",
+            "step_id": "tc-schema-001-s1",
+            "step_text": "GET /products/1 and Assert response code is exactly 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "schema-response-validator",
+            "item_name": "tc-schema-001",
+            "new_item": null
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 7,
+      "agent_name": "pagination-checker",
+      "status": "FAILED",
+      "severity": "MEDIUM",
+      "priority": "P3",
+      "title": "[pagination-checker] AssertionError: 404 on page 3 \u2014 pagination offset computed incorrectly",
+      "decision": {
+        "title": "[pagination-checker] AssertionError: 404 on page 3 \u2014 pagination offset computed incorrectly",
+        "severity": "MEDIUM",
+        "priority": "P3",
+        "testing_steps": [
+          {
+            "tc_id": "tc-page-001",
+            "step_id": "tc-page-001-s1",
+            "step_text": "GET /products with X-Correlation-ID, Asserts response code equals 200.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          },
+          {
+            "tc_id": "tc-page-002",
+            "step_id": "tc-page-002-s1",
+            "step_text": "Compute the expected page boundaries locally.",
+            "involves_http_call": false,
+            "involves_assertion": false,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "pagination-checker",
+            "item_name": "tc-page-001",
+            "new_item": null
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 8,
+      "agent_name": "webhook-delivery-tester",
+      "status": "TIMED_OUT",
+      "severity": "MEDIUM",
+      "priority": "P3",
+      "title": "[webhook-delivery-tester] Agent timed out after 300 seconds \u2014 no output produced",
+      "decision": {
+        "title": "[webhook-delivery-tester] Agent timed out after 300 seconds \u2014 no output produced",
+        "severity": "MEDIUM",
+        "priority": "P3",
+        "testing_steps": [
+          {
+            "tc_id": "tc-webhook-001",
+            "step_id": "tc-webhook-001-s1",
+            "step_text": "POST /webhooks/register with body = a callback URL and Asserts exactly 201.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": false,
+            "folder": "webhook-delivery-tester",
+            "item_name": "tc-webhook-001",
+            "new_item": {
+              "name": "tc-webhook-001",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{auth_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/webhooks/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "webhooks",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                      "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "bug_index": 9,
+      "agent_name": "error-clarity-checker",
+      "status": "FAILED",
+      "severity": "LOW",
+      "priority": "P4",
+      "title": "[error-clarity-checker] AssertionError: message wording differs from the expected copy",
+      "decision": {
+        "title": "[error-clarity-checker] AssertionError: message wording differs from the expected copy",
+        "severity": "LOW",
+        "priority": "P4",
+        "testing_steps": [
+          {
+            "tc_id": "tc-clarity-001",
+            "step_id": "tc-clarity-001-s1",
+            "step_text": "GET /products/999999 \u2192 assert 404.",
+            "involves_http_call": true,
+            "involves_assertion": true,
+            "expected_outcome": "The asserted response is returned.",
+            "fail_condition": "The assertion does not hold."
+          }
+        ],
+        "postman_references": [
+          {
+            "exists_in_collection": true,
+            "folder": "error-clarity-checker",
+            "item_name": "tc-clarity-001",
+            "new_item": null
+          }
+        ]
+      }
+    }
+  ],
+  "note": "Ground truth = the deterministic five-key decision per failure (title, severity via the nine ordered rules, priority, mapped testing_steps, and postman_references). Framework ranking is Bug-Report Fidelity (agent decision vs gold), which is backend-independent. The headline Bug Report Completeness Rate is fixture+harness-determined (~90% with the DB dump null because the fixture has no [database]). DummyJSON untouched; no server started."
+}

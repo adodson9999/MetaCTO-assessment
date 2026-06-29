@@ -1,0 +1,14 @@
+{
+  "created": 1718986400.0,
+  "exitcode": 1,
+  "root": "/repo",
+  "summary": {"total": 4, "passed": 3, "failed": 1, "collected": 4},
+  "tests": [
+    {"nodeid": "tests/contract_test.py::test_api_contract_v1", "outcome": "passed"},
+    {"nodeid": "tests/contract_test.py::test_api_contract_v2", "outcome": "failed",
+     "call": {"crash": {"message": "schema drift: missing field 'sku'"},
+              "longrepr": "schema drift: missing field 'sku'"}},
+    {"nodeid": "tests/perf_test.py::test_perf_smoke", "outcome": "passed"},
+    {"nodeid": "tests/security_test.py::test_new_security_test", "outcome": "passed"}
+  ]
+}

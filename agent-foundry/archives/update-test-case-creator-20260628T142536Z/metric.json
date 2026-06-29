@@ -1,0 +1,16 @@
+{
+  "task": "general / test-case-creator (n600)",
+  "metric_name": "test_case_coverage_rate",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold test cases (one per numbered step across every enabled agent spec in the build manifest) that the agent's emitted registry reproduces under a matching tc_id of the form [agent]-step-[step_id]. A gold case with no matching emitted tc_id counts as a gap. Denominator = total steps extracted from all enabled agent specs by the deterministic reference (agents/common/testcase_spec.py).",
+  "tiebreaker_metric": "test_case_field_accuracy_pct",
+  "tiebreaker_how_computed": "Over the gold cases the agent DID reproduce, the percentage of the eleven registry fields (tc_id, agent, step_id, step_ext, the five involves_* booleans, expected_outcome, fail_condition) that exactly equal the deterministic gold field. Booleans match exactly; string fields match verbatim. A field the agent omitted counts as a mismatch.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-case-creator/gold.json",
+  "deliverable_path": "results/test-case-registry.json",
+  "headline_metric": "test_case_coverage_rate_pct",
+  "rationale": "Every framework receives the same build manifest and the same agent-node spec cards and must reproduce the exact per-step test-case registry: extracting every numbered step (including sub-lettered steps like 3b), forming the [agent]-step-[step_id] tc_id, copying step_ext verbatim, and computing the five case-sensitive involves_* substring flags, the capital-'Assert ' expected_outcome clauses, and the 'Fail:' fail_condition off the Metric line. The fixtures deliberately span HTTP/DB/file-write/assert/metric flag triggers, sub-lettered steps, an Assert-clause step, a '÷'/'rate' metric step, a PARSE_ERROR node with no How section, and a disabled node that must be excluded, so a framework that fumbles any rule loses cases or cells. The deterministic n600 deliverable (results/test-case-registry.json) is gap-free by construction and is what n601 (Postman Collection Creator) consumes; this metric ranks which framework most reliably reproduces it.",
+  "pass_threshold": "coverage_rate = 100% (gaps_found = false, gap_count = 0)",
+  "fail_condition": "Fail: any step from any enabled agent spec that is absent from the registry — gap_count > 0 makes the registry incomplete; a registry with gaps_found = true must not be consumed by n601 until the gap is resolved and n600 is re-run to 100%."
+}

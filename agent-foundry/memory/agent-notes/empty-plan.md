@@ -1,0 +1,2 @@
+- [2026-06-25T22:58:16.419233+00:00] run=verify-fidelity versioning-behavior run: accuracy=0.0% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:14:17.546667+00:00] run=upg versioning-behavior run: accuracy=0.0% over 4 endpoints (52 scenarios)

@@ -1,0 +1,14 @@
+{
+  "title": "SSL/TLS-enforcement contract (authored for the SSL/TLS-enforcement testing task)",
+  "description": "The target must refuse plain HTTP (redirect to HTTPS, no API data), refuse TLS 1.0/1.1, accept TLS 1.2/1.3 and serve the endpoint, present a non-expired CA-signed cert whose CN/SAN matches the host (chain of trust ok, not self-signed), and offer no weak cipher suite (RC4/DES/3DES/EXPORT/NULL). Agents construct the TLS test plan from this contract; ground truth is the live fixture's observed behavior. The DummyJSON app is NEVER modified: a local, air-gapped TLS terminator (tls_fixture.py) stands in front of the untouched DummyJSON and is the system under test for TLS enforcement. All probing is handshake + read-only GET only.",
+  "documented_min_tls": "1.2",
+  "target": {
+    "host": "localhost",
+    "tls_port": 9443,
+    "http_port": 9080,
+    "endpoint_path": "/test",
+    "ca_bundle": "data/test-ssl-tls-enforcement/tls_fixture/ca.pem",
+    "upstream": "http://localhost:8899",
+    "note": "tls_fixture.py terminates TLS (1.2/1.3 only, strong ciphers, CA-signed leaf) and forwards read-only GETs to the unmodified DummyJSON upstream; its plaintext listener 301-redirects to HTTPS."
+  }
+}

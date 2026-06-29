@@ -1,0 +1,28 @@
+{
+  "title": "File-upload contract (authored for the file-upload-and-download testing task)",
+  "description": "Each upload endpoint is documented to accept a file up to max_size_bytes of an allowed MIME type, returning success_code with a response 'url'; a file of max_size_bytes+1 is rejected with over_size_code and no 'url'; a disallowed-MIME file is rejected with invalid_mime_code and no 'url'; each accepted file is downloadable at its 'url' with download_success_code, Content-Type image/jpeg, and bytes identical to what was uploaded. Agents construct the upload/download test plan from this; ground truth is the live API's observed behavior. The DummyJSON fork is tested as-is and never modified; its multipart handling enforces a 5 MiB per-file limit but returns no downloadable 'url', returns 400 (not 413) for an over-limit file, and has no MIME filter, so the observed divergences are the QA findings.",
+  "target": "http://localhost:8899",
+  "max_size_bytes": 5242880,
+  "allowed_mime_types": [
+    "image/jpeg",
+    "image/png"
+  ],
+  "success_code": 201,
+  "over_size_code": 413,
+  "invalid_mime_code": 415,
+  "download_success_code": 200,
+  "endpoints": [
+    {
+      "upload_endpoint": "/products/add",
+      "success_code": 201
+    },
+    {
+      "upload_endpoint": "/users/add",
+      "success_code": 201
+    },
+    {
+      "upload_endpoint": "/recipes/add",
+      "success_code": 200
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "pair": "pytest_junit",
+  "format": "junit_xml",
+  "note": "pytest --junitxml output (clean build: zero regressions).",
+  "gold_report": {
+    "build_n_nus_1": "build-77",
+    "build_n": "build-78",
+    "total_tests_in_suite": 4,
+    "prev_passed_count": 3,
+    "regressions": [],
+    "newly_passing": [
+      "test_known_flaky"
+    ],
+    "overall_status": "pass"
+  },
+  "regression_rate_pct": 0.0,
+  "would_block_deployment": false
+}

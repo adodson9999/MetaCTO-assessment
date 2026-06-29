@@ -1,0 +1,235 @@
+{
+  "slug": "recipes_patch",
+  "method": "PATCH",
+  "path": "/recipes/{id}",
+  "schema": {
+    "fields": {
+      "name": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "prepTimeMinutes": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "optional": [
+      "prepTimeMinutes"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "name:key_absent",
+      "field": "name",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {}
+    },
+    {
+      "category": "required_state",
+      "label": "name:json_null",
+      "field": "name",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "name:empty_string",
+      "field": "name",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "name:integer_zero",
+      "field": "name",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "name:boolean_false",
+      "field": "name",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "name:empty_array",
+      "field": "name",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "name:empty_object",
+      "field": "name",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": {}
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:key_absent",
+      "field": "prepTimeMinutes",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "name": "Patched Stew"
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:json_null",
+      "field": "prepTimeMinutes",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": "Patched Stew",
+        "prepTimeMinutes": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_string",
+      "field": "prepTimeMinutes",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": "Patched Stew",
+        "prepTimeMinutes": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:integer_zero",
+      "field": "prepTimeMinutes",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "name": "Patched Stew",
+        "prepTimeMinutes": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_array",
+      "field": "prepTimeMinutes",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": "Patched Stew",
+        "prepTimeMinutes": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "prepTimeMinutes:empty_object",
+      "field": "prepTimeMinutes",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": "Patched Stew",
+        "prepTimeMinutes": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "name",
+      "field": "name",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "name": null
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "name",
+      "field": "name",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "name": "null"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "http_429",
+  "method": "GET",
+  "path": "/http/429",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    429
+  ],
+  "cases": [
+    {
+      "documented_code": 429,
+      "trigger": "passthrough",
+      "request": {
+        "code": 429,
+        "method": "GET",
+        "path": "/http/429",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 429,
+      "body": "{\"status\":429,\"title\":\"Too Many Requests\",\"type\":\"about:blank\",\"detail\":\"Too Many Requests\",\"message\":\"Too Many Requests\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

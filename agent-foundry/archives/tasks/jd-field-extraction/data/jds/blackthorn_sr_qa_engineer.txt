@@ -1,0 +1,31 @@
+Job Description, Blackthorn.io Sr. QA Engineer
+Sr. QA Engineer
+Description: As a Senior QA Engineer at Blackthorn, you will be part of an elite team, testing solutions that solve
+our most critical business priorities. You will work closely with various departments to understand our customers'
+most pressing needs and provide technical expertise to optimize our testing, prevent issues, and ensure we
+deliver high quality products. This role requires advanced skills in test automation, performance testing, and
+mentoring junior team members. Base Salary: $5,750 to $7,000 USD per month.
+What you'll do: Create detailed, comprehensive, and well-structured test plans and test cases. Review tickets
+(bugs, enhancements, new features) and other technical documents to engage in each phase of the software
+development lifecycle. Create, run, repair manual and automated tests using frameworks like Playwright. Plan
+and build automated testing frameworks that integrate with development workflows, determining what to
+automate (regression tests, API endpoints, critical user flows) and when to run which tests. Estimate, prioritize,
+plan, coordinate, and perform quality testing activities. Collaborate closely with cross-functional scrum teams and
+across the larger company. Demonstrate best practices including meaningful test coverage and maintainability.
+Mentor junior QA team members and advocate for quality standards. Design and maintain test data strategies,
+including creating hundreds of thousands of Salesforce records for performance testing, managing data versions,
+and ensuring clean test environments. Design and execute performance testing strategies to identify system
+bottlenecks, load limits, and optimization opportunities. Integrate automated tests into CI/CD pipelines (GitHub
+Actions, Cumulus CI, MetaDeploy) to provide fast feedback and act as deployment gates.
+What we look for: 5+ years of software testing experience with demonstrated expertise in test automation. 3+
+years of testing on the Salesforce platform with a deep understanding of platform limitations. Experience with test
+automation frameworks, particularly Playwright. Proficiency in programming languages for test automation.
+Experience with CI/CD tools and processes (GitHub Actions, Cumulus CI, MetaDeploy preferred). Performance
+testing experience with relevant tools. Experience testing mobile applications using emulators, simulators, or
+cloud device farms with automation frameworks. Experience managing test data lifecycles and keeping test
+environments synchronized with code deployments through version control systems. Excellent English
+communication skills. Self-directed and adaptable. Bonus: Salesforce admin or Blackthorn product experience.
+About Blackthorn: Blackthorn turns any organization's Salesforce CRM into event planning software powered by
+their connected data. We're a growing, distributed team building Salesforce-native tools that help teams create
+events, engage attendees, process payments, and measure success, all without leaving their CRM. Fully remote
+global team, stock options for every employee, flexible work week.

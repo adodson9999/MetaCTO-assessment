@@ -1,0 +1,27 @@
+{
+  "slug": "products_add",
+  "method": "POST",
+  "path": "/products/add",
+  "request_body": {
+    "title": "Forge Test Widget",
+    "price": 9.99,
+    "stock": 5,
+    "category": "tools"
+  },
+  "actual_code": 201,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 195,
+    "title": "Forge Test Widget",
+    "price": 9.99,
+    "stock": 5,
+    "category": "tools"
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Third-party OAuth2 authorization-code contract (authored for the verify-third-party-oauth-integration testing task)",
+  "description": "Each flow is documented to run the OAuth2 authorization-code flow in five stages: (1) authorize 302-redirect to the provider with client_id/redirect_uri/scope/state; (2) approval returns to the callback with code+state (CSRF); (3) token exchange -> 200 with access_token/token_type Bearer/refresh_token/expires_in; (4) userinfo -> 200 with a non-empty profile field; (5) refresh -> 200 with a new access_token, and userinfo with it -> 200. Agents construct the 5-stage test plan from this; ground truth is the live API's observed behavior. DummyJSON is tested as-is and never modified, and ships no OAuth authorization-code flow, so the observed behavior is the QA finding.",
+  "target": "http://localhost:8899",
+  "authorize_endpoint": "/auth/oauth/<provider>",
+  "callback_endpoint": "/auth/callback",
+  "token_endpoint": "/auth/token",
+  "userinfo_endpoint": "/me",
+  "refresh_endpoint": "/auth/refresh",
+  "state_min_length": 8,
+  "flows": [
+    {
+      "provider": "google",
+      "authorize_endpoint": "/auth/oauth/google",
+      "callback_endpoint": "/auth/callback",
+      "token_endpoint": "/auth/token",
+      "userinfo_endpoint": "/me",
+      "refresh_endpoint": "/auth/refresh",
+      "client_id": "forge-google-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/google",
+      "scope": "openid email profile"
+    },
+    {
+      "provider": "github",
+      "authorize_endpoint": "/auth/oauth/github",
+      "callback_endpoint": "/auth/callback",
+      "token_endpoint": "/auth/token",
+      "userinfo_endpoint": "/me",
+      "refresh_endpoint": "/auth/refresh",
+      "client_id": "forge-github-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/github",
+      "scope": "read:user user:email"
+    },
+    {
+      "provider": "facebook",
+      "authorize_endpoint": "/auth/oauth/facebook",
+      "callback_endpoint": "/auth/callback",
+      "token_endpoint": "/auth/token",
+      "userinfo_endpoint": "/me",
+      "refresh_endpoint": "/auth/refresh",
+      "client_id": "forge-facebook-client-id",
+      "redirect_uri": "https://app.forge.local/auth/callback/facebook",
+      "scope": "email public_profile"
+    }
+  ]
+}

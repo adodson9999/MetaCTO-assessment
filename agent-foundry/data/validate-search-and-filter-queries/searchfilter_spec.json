@@ -1,0 +1,78 @@
+{
+  "title": "Local seeded /resources filter contract (authored for the search-and-filter task)",
+  "description": "A purpose-built, air-gapped local SUT seeded with exactly the task's 20 records (DummyJSON is never used or modified). Agents construct the filter test plan from the documented contract; ground truth is the seed-derived known counts and the live SUT's observed behavior.",
+  "target": "http://localhost:8931",
+  "id_field": "id",
+  "documented_filters": [
+    {
+      "name": "status",
+      "type": "enum",
+      "required": false,
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "note": "out-of-enum value -> 400 referencing 'status'"
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "required": false,
+      "enum": null,
+      "note": "free-form exact match; unmatched value -> 200 with an empty result list"
+    }
+  ],
+  "unknown_param_policy": "reject_400",
+  "collections": [
+    {
+      "collection": "/resources",
+      "list_field": "resources",
+      "expected_counts": {
+        "single_filter": 15,
+        "multi_filter": 8,
+        "empty_result": 0
+      },
+      "forbidden": {
+        "inactive_ids": [
+          "inactive-001",
+          "inactive-002",
+          "inactive-003",
+          "inactive-004",
+          "inactive-005"
+        ],
+        "category_b_ids": [
+          "active-009",
+          "active-010",
+          "active-011",
+          "active-012",
+          "active-013",
+          "active-014",
+          "active-015"
+        ]
+      }
+    },
+    {
+      "collection": "/widgets",
+      "list_field": "widgets",
+      "expected_counts": {
+        "single_filter": 10,
+        "multi_filter": 6,
+        "empty_result": 0
+      },
+      "forbidden": {
+        "inactive_ids": [
+          "inactive-001",
+          "inactive-002",
+          "inactive-003",
+          "inactive-004"
+        ],
+        "category_b_ids": [
+          "active-007",
+          "active-008",
+          "active-009",
+          "active-010"
+        ]
+      }
+    }
+  ]
+}

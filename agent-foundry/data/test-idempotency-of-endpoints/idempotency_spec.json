@@ -1,0 +1,34 @@
+{
+  "title": "DummyJSON idempotency contract (authored for the idempotency-testing task)",
+  "description": "Each collection exposes PUT /<col>/<id>, DELETE /<col>/<id>, and POST /<col>/add. Agents construct the idempotency test plan from this; ground truth is the live API's observed behavior. DummyJSON's writes are non-persistent (deepFrozen data), so exercising them does not modify the target.",
+  "target": "http://localhost:8899",
+  "id_field": "id",
+  "target_id": 1,
+  "header_name": "Idempotency-Key",
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products"
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts"
+    },
+    {
+      "collection": "/comments",
+      "list_field": "comments"
+    },
+    {
+      "collection": "/todos",
+      "list_field": "todos"
+    },
+    {
+      "collection": "/users",
+      "list_field": "users"
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes"
+    }
+  ]
+}

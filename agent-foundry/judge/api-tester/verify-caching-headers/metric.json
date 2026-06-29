@@ -1,0 +1,17 @@
+{
+  "task": "api-tester / verify-caching-headers",
+  "metric_name": "caching_header_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 11).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-caching-headers/gold.json",
+  "headline_metric": "caching_header_compliance_rate_pct",
+  "secondary_metric": "caching_correctness_rate_pct",
+  "scenarios_per_collection": 11,
+  "rationale": "All four agents drive the same local DummyJSON, so the raw Caching Header Compliance Rate (cacheable endpoints whose Cache-Control has a positive max-age AND ETag is non-empty AND the conditional GET returns 304 with an empty body AND the post-update ETag changes) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct cacheable GET probe, the conditional GET re-using the recorded ETag, the PUT update that changes a field, the re-GET that captures the new ETag, the stale-ETag conditional GET, and the four mutation probes (POST/PUT/PATCH/DELETE) checked for no-store, and faithfully record every observed token. The headline caching_header_compliance_rate_pct is still emitted by every agent as the task's QA finding (empirically 0%: DummyJSON ships no Cache-Control header and its non-persistent writes leave the ETag unchanged after an update). The secondary caching_correctness_rate_pct credits the scenarios DummyJSON does satisfy (a non-empty ETag and a 304-with-empty-body conditional GET).",
+  "headline_value_empirical_pct": 0.0,
+  "secondary_value_empirical_pct": 36.36,
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)"
+}

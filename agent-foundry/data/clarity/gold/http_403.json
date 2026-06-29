@@ -1,0 +1,33 @@
+{
+  "slug": "http_403",
+  "method": "GET",
+  "path": "/http/403",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    403
+  ],
+  "cases": [
+    {
+      "documented_code": 403,
+      "trigger": "passthrough",
+      "request": {
+        "code": 403,
+        "method": "GET",
+        "path": "/http/403",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 403,
+      "body": "{\"status\":403,\"title\":\"Forbidden\",\"type\":\"about:blank\",\"detail\":\"Forbidden\",\"message\":\"Forbidden\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

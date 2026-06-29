@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-concurrent-request-handling",
+  "concurrency": 50,
+  "read_endpoint": "/products/1",
+  "read_base_url": "http://localhost:8899",
+  "read_expected_status": 200,
+  "write_endpoint": "/records",
+  "write_base_url": "http://127.0.0.1:8910",
+  "write_expected_status": 201,
+  "test_id_field": "test_id",
+  "test_id_template": "concurrent-test-[VU_ID]",
+  "db_path": "data/test-concurrent-request-handling/records.db",
+  "db_table": "records",
+  "notes": "READ target = DummyJSON (left untouched, read-only GET). WRITE target = local SQLite-backed endpoint (tools/concurrency_target/app.py) because DummyJSON never persists. The harness namespaces each agent's materialized test_ids with run_id + agent so the four agents can run in parallel against one DB without colliding."
+}

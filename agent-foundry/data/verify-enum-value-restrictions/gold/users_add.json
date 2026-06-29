@@ -1,0 +1,294 @@
+{
+  "slug": "users_add",
+  "method": "POST",
+  "path": "/users/add",
+  "schema": {
+    "fields": {
+      "firstName": {
+        "type": "string"
+      },
+      "gender": {
+        "type": "string",
+        "enum": [
+          "MALE",
+          "FEMALE",
+          "OTHER"
+        ]
+      },
+      "role": {
+        "type": "string",
+        "enum": [
+          "ADMIN",
+          "MODERATOR",
+          "USER"
+        ]
+      }
+    },
+    "required": [
+      "firstName",
+      "gender"
+    ],
+    "enum_fields": [
+      "gender",
+      "role"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid_values",
+      "label": "gender:MALE",
+      "field": "gender",
+      "value_sent": "MALE",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "gender:FEMALE",
+      "field": "gender",
+      "value_sent": "FEMALE",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "FEMALE",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "gender:OTHER",
+      "field": "gender",
+      "value_sent": "OTHER",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "OTHER",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "role:ADMIN",
+      "field": "role",
+      "value_sent": "ADMIN",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "role:MODERATOR",
+      "field": "role",
+      "value_sent": "MODERATOR",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "MODERATOR"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "role:USER",
+      "field": "role",
+      "value_sent": "USER",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "gender",
+      "field": "gender",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "role",
+      "field": "role",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "gender",
+      "field": "gender",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "role",
+      "field": "role",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": ""
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "gender",
+      "field": "gender",
+      "value_sent": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": null,
+        "role": "USER"
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "role",
+      "field": "role",
+      "value_sent": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": null
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "gender",
+      "field": "gender",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": 0,
+        "role": "USER"
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "role",
+      "field": "role",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": 0
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "gender",
+      "field": "gender",
+      "value_sent": "male",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "male",
+        "role": "USER"
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "role",
+      "field": "role",
+      "value_sent": "admin",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "firstName": "Forge",
+        "gender": "MALE",
+        "role": "admin"
+      }
+    }
+  ]
+}

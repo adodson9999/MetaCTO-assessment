@@ -1,0 +1,6 @@
+{
+  "scenario": "all_absent_from_collection",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

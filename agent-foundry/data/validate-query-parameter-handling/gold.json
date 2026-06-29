@@ -1,0 +1,1031 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "collections": 4,
+    "scenarios_per_collection": 12,
+    "total_scenarios": 48,
+    "api_correct_scenarios": 44,
+    "empirical_query_param_handling_accuracy_pct": 91.67,
+    "qa_findings": [
+      {
+        "collection": "/products",
+        "scenario": "missing_required_q",
+        "ideal": "400",
+        "observed": "200"
+      },
+      {
+        "collection": "/posts",
+        "scenario": "missing_required_q",
+        "ideal": "400",
+        "observed": "200"
+      },
+      {
+        "collection": "/users",
+        "scenario": "missing_required_q",
+        "ideal": "400",
+        "observed": "200"
+      },
+      {
+        "collection": "/recipes",
+        "scenario": "missing_required_q",
+        "ideal": "400",
+        "observed": "200"
+      }
+    ],
+    "note": "Ground truth = live DummyJSON observed token per (collection, scenario). DummyJSON is strict on parameter TYPE (non-numeric limit/skip and an out-of-enum order with sortBy all -> 400) but lenient on parameter PRESENCE: the /search route does not require its `q` parameter, so an absent-required-param request returns 200 instead of 400. That gap is a real QA finding, not an agent failure."
+  },
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products",
+      "search_path": "/products/search",
+      "reference_plan": {
+        "collection": "/products",
+        "list_field": "products",
+        "id_field": "id",
+        "search_path": "/products/search",
+        "cases": [
+          {
+            "label": "missing_required_q",
+            "route": "search",
+            "type": "missing",
+            "params": {}
+          },
+          {
+            "label": "wrongtype_limit_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "limit": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_skip_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "skip": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_order_badenum",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "sortBy": "id",
+              "order": "NOT_A_VALID_VALUE"
+            }
+          },
+          {
+            "label": "valid_limit",
+            "route": "list",
+            "type": "valid",
+            "filter": "limit",
+            "filter_value": "5",
+            "params": {
+              "limit": "5"
+            }
+          },
+          {
+            "label": "valid_select",
+            "route": "list",
+            "type": "valid",
+            "filter": "select",
+            "filter_value": "id",
+            "params": {
+              "select": "id"
+            }
+          },
+          {
+            "label": "valid_order",
+            "route": "list",
+            "type": "valid",
+            "filter": "order",
+            "filter_value": "desc",
+            "params": {
+              "sortBy": "id",
+              "order": "desc"
+            }
+          },
+          {
+            "label": "valid_q",
+            "route": "search",
+            "type": "valid",
+            "params": {
+              "q": "e"
+            }
+          },
+          {
+            "label": "undocumented_ignored",
+            "route": "list",
+            "type": "undocumented",
+            "params": {
+              "unexpected_param": "test123"
+            }
+          }
+        ]
+      },
+      "request_log": {
+        "missing_required_q": {
+          "route": "search",
+          "path": "/products/search",
+          "params": {},
+          "status": 200,
+          "returned_count": 30
+        },
+        "wrongtype_limit_nonnumeric": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "limit": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_skip_nonnumeric": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "skip": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_order_badenum": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "sortBy": "id",
+            "order": "NOT_A_VALID_VALUE"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "valid_limit": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "limit": "5"
+          },
+          "status": 200,
+          "returned_count": 5
+        },
+        "valid_select": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "select": "id"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_order": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "sortBy": "id",
+            "order": "desc"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_q": {
+          "route": "search",
+          "path": "/products/search",
+          "params": {
+            "q": "e"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "undocumented_ignored": {
+          "route": "list",
+          "path": "/products",
+          "params": {
+            "unexpected_param": "test123"
+          },
+          "status": 200,
+          "returned_count": 30
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "missing_required_q",
+          "ideal": "400",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "scenario": "wrongtype_limit_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_skip_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_order_badenum",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_q_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "undocumented_ignored",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts",
+      "search_path": "/posts/search",
+      "reference_plan": {
+        "collection": "/posts",
+        "list_field": "posts",
+        "id_field": "id",
+        "search_path": "/posts/search",
+        "cases": [
+          {
+            "label": "missing_required_q",
+            "route": "search",
+            "type": "missing",
+            "params": {}
+          },
+          {
+            "label": "wrongtype_limit_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "limit": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_skip_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "skip": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_order_badenum",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "sortBy": "id",
+              "order": "NOT_A_VALID_VALUE"
+            }
+          },
+          {
+            "label": "valid_limit",
+            "route": "list",
+            "type": "valid",
+            "filter": "limit",
+            "filter_value": "5",
+            "params": {
+              "limit": "5"
+            }
+          },
+          {
+            "label": "valid_select",
+            "route": "list",
+            "type": "valid",
+            "filter": "select",
+            "filter_value": "id",
+            "params": {
+              "select": "id"
+            }
+          },
+          {
+            "label": "valid_order",
+            "route": "list",
+            "type": "valid",
+            "filter": "order",
+            "filter_value": "desc",
+            "params": {
+              "sortBy": "id",
+              "order": "desc"
+            }
+          },
+          {
+            "label": "valid_q",
+            "route": "search",
+            "type": "valid",
+            "params": {
+              "q": "e"
+            }
+          },
+          {
+            "label": "undocumented_ignored",
+            "route": "list",
+            "type": "undocumented",
+            "params": {
+              "unexpected_param": "test123"
+            }
+          }
+        ]
+      },
+      "request_log": {
+        "missing_required_q": {
+          "route": "search",
+          "path": "/posts/search",
+          "params": {},
+          "status": 200,
+          "returned_count": 30
+        },
+        "wrongtype_limit_nonnumeric": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "limit": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_skip_nonnumeric": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "skip": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_order_badenum": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "sortBy": "id",
+            "order": "NOT_A_VALID_VALUE"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "valid_limit": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "limit": "5"
+          },
+          "status": 200,
+          "returned_count": 5
+        },
+        "valid_select": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "select": "id"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_order": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "sortBy": "id",
+            "order": "desc"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_q": {
+          "route": "search",
+          "path": "/posts/search",
+          "params": {
+            "q": "e"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "undocumented_ignored": {
+          "route": "list",
+          "path": "/posts",
+          "params": {
+            "unexpected_param": "test123"
+          },
+          "status": 200,
+          "returned_count": 30
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "missing_required_q",
+          "ideal": "400",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "scenario": "wrongtype_limit_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_skip_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_order_badenum",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_q_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "undocumented_ignored",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "collection": "/users",
+      "list_field": "users",
+      "search_path": "/users/search",
+      "reference_plan": {
+        "collection": "/users",
+        "list_field": "users",
+        "id_field": "id",
+        "search_path": "/users/search",
+        "cases": [
+          {
+            "label": "missing_required_q",
+            "route": "search",
+            "type": "missing",
+            "params": {}
+          },
+          {
+            "label": "wrongtype_limit_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "limit": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_skip_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "skip": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_order_badenum",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "sortBy": "id",
+              "order": "NOT_A_VALID_VALUE"
+            }
+          },
+          {
+            "label": "valid_limit",
+            "route": "list",
+            "type": "valid",
+            "filter": "limit",
+            "filter_value": "5",
+            "params": {
+              "limit": "5"
+            }
+          },
+          {
+            "label": "valid_select",
+            "route": "list",
+            "type": "valid",
+            "filter": "select",
+            "filter_value": "id",
+            "params": {
+              "select": "id"
+            }
+          },
+          {
+            "label": "valid_order",
+            "route": "list",
+            "type": "valid",
+            "filter": "order",
+            "filter_value": "desc",
+            "params": {
+              "sortBy": "id",
+              "order": "desc"
+            }
+          },
+          {
+            "label": "valid_q",
+            "route": "search",
+            "type": "valid",
+            "params": {
+              "q": "e"
+            }
+          },
+          {
+            "label": "undocumented_ignored",
+            "route": "list",
+            "type": "undocumented",
+            "params": {
+              "unexpected_param": "test123"
+            }
+          }
+        ]
+      },
+      "request_log": {
+        "missing_required_q": {
+          "route": "search",
+          "path": "/users/search",
+          "params": {},
+          "status": 200,
+          "returned_count": 30
+        },
+        "wrongtype_limit_nonnumeric": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "limit": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_skip_nonnumeric": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "skip": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_order_badenum": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "sortBy": "id",
+            "order": "NOT_A_VALID_VALUE"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "valid_limit": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "limit": "5"
+          },
+          "status": 200,
+          "returned_count": 5
+        },
+        "valid_select": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "select": "id"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_order": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "sortBy": "id",
+            "order": "desc"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_q": {
+          "route": "search",
+          "path": "/users/search",
+          "params": {
+            "q": "e"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "undocumented_ignored": {
+          "route": "list",
+          "path": "/users",
+          "params": {
+            "unexpected_param": "test123"
+          },
+          "status": 200,
+          "returned_count": 30
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "missing_required_q",
+          "ideal": "400",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "scenario": "wrongtype_limit_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_skip_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_order_badenum",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_q_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "undocumented_ignored",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        }
+      ]
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes",
+      "search_path": "/recipes/search",
+      "reference_plan": {
+        "collection": "/recipes",
+        "list_field": "recipes",
+        "id_field": "id",
+        "search_path": "/recipes/search",
+        "cases": [
+          {
+            "label": "missing_required_q",
+            "route": "search",
+            "type": "missing",
+            "params": {}
+          },
+          {
+            "label": "wrongtype_limit_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "limit": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_skip_nonnumeric",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "skip": "abc"
+            }
+          },
+          {
+            "label": "wrongtype_order_badenum",
+            "route": "list",
+            "type": "wrong_type",
+            "params": {
+              "sortBy": "id",
+              "order": "NOT_A_VALID_VALUE"
+            }
+          },
+          {
+            "label": "valid_limit",
+            "route": "list",
+            "type": "valid",
+            "filter": "limit",
+            "filter_value": "5",
+            "params": {
+              "limit": "5"
+            }
+          },
+          {
+            "label": "valid_select",
+            "route": "list",
+            "type": "valid",
+            "filter": "select",
+            "filter_value": "id",
+            "params": {
+              "select": "id"
+            }
+          },
+          {
+            "label": "valid_order",
+            "route": "list",
+            "type": "valid",
+            "filter": "order",
+            "filter_value": "desc",
+            "params": {
+              "sortBy": "id",
+              "order": "desc"
+            }
+          },
+          {
+            "label": "valid_q",
+            "route": "search",
+            "type": "valid",
+            "params": {
+              "q": "e"
+            }
+          },
+          {
+            "label": "undocumented_ignored",
+            "route": "list",
+            "type": "undocumented",
+            "params": {
+              "unexpected_param": "test123"
+            }
+          }
+        ]
+      },
+      "request_log": {
+        "missing_required_q": {
+          "route": "search",
+          "path": "/recipes/search",
+          "params": {},
+          "status": 200,
+          "returned_count": 30
+        },
+        "wrongtype_limit_nonnumeric": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "limit": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_skip_nonnumeric": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "skip": "abc"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "wrongtype_order_badenum": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "sortBy": "id",
+            "order": "NOT_A_VALID_VALUE"
+          },
+          "status": 400,
+          "returned_count": null
+        },
+        "valid_limit": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "limit": "5"
+          },
+          "status": 200,
+          "returned_count": 5
+        },
+        "valid_select": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "select": "id"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_order": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "sortBy": "id",
+            "order": "desc"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "valid_q": {
+          "route": "search",
+          "path": "/recipes/search",
+          "params": {
+            "q": "e"
+          },
+          "status": 200,
+          "returned_count": 30
+        },
+        "undocumented_ignored": {
+          "route": "list",
+          "path": "/recipes",
+          "params": {
+            "unexpected_param": "test123"
+          },
+          "status": 200,
+          "returned_count": 30
+        }
+      },
+      "scenarios": [
+        {
+          "scenario": "missing_required_q",
+          "ideal": "400",
+          "observed_token": "200",
+          "api_correct": false
+        },
+        {
+          "scenario": "wrongtype_limit_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_skip_nonnumeric",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "wrongtype_order_badenum",
+          "ideal": "400",
+          "observed_token": "400",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_limit_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_select_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_order_filter",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "valid_q_status",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        },
+        {
+          "scenario": "undocumented_ignored",
+          "ideal": "200",
+          "observed_token": "200",
+          "api_correct": true
+        }
+      ]
+    }
+  ]
+}

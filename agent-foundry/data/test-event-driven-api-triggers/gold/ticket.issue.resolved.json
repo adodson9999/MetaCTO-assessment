@@ -1,0 +1,125 @@
+{
+  "topic": "ticket.issue.resolved",
+  "resource": "tickets",
+  "resource_id": "tkt-4004",
+  "state_field": "status",
+  "pre_state": "open",
+  "expected_state": "resolved",
+  "reference_plan": {
+    "topic": "ticket.issue.resolved",
+    "resource": "tickets",
+    "resource_id": "tkt-4004",
+    "state_field": "status",
+    "expected_state": "resolved",
+    "event_type": "ticket.issue.resolved",
+    "required_fields": [
+      "event_id",
+      "event_type",
+      "resource_id",
+      "occurred_at",
+      "resolution"
+    ],
+    "wellformed_event": {
+      "event_id": "evt-tkt-0004",
+      "event_type": "ticket.issue.resolved",
+      "resource_id": "tkt-4004",
+      "occurred_at": "2026-06-25T12:03:00Z",
+      "resolution": "fixed"
+    },
+    "malformed_event": {
+      "event_id": "evt-tkt-0004",
+      "event_type": "ticket.issue.resolved",
+      "resource_id": "tkt-4004",
+      "occurred_at": "2026-06-25T12:03:00Z"
+    },
+    "poll": {
+      "interval_ms": 500,
+      "timeout_seconds": 5
+    },
+    "assertions": {
+      "health_after_seconds": 60,
+      "dlq_within_seconds": 30,
+      "error_log_within_seconds": 30,
+      "expect_state_unchanged": true
+    }
+  },
+  "request_log": [
+    {
+      "phase": "wellformed",
+      "message_id": "evt-tkt-0004",
+      "state_after": "resolved",
+      "elapsed_s": 0.509,
+      "consumer_errors": 0
+    },
+    {
+      "phase": "malformed",
+      "message_id": "evt-tkt-0004",
+      "health_ok": true,
+      "error_logged": true,
+      "in_dlq": true,
+      "dlq_consumed": {
+        "topic": "ticket.issue.resolved",
+        "message_id": "evt-tkt-0004",
+        "offset": 8,
+        "payload": {
+          "event_id": "evt-tkt-0004",
+          "event_type": "ticket.issue.resolved",
+          "resource_id": "tkt-4004",
+          "occurred_at": "2026-06-25T12:03:00Z"
+        },
+        "reason": "ValueError: schema validation failed: missing required field(s) ['resolution'] for topic 'ticket.issue.resolved'"
+      },
+      "state_after": "open"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "wellformed_state_changed",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_correct_value",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_within_5s",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "wellformed_no_consumer_errors",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_no_crash",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_error_logged",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_in_dlq",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    },
+    {
+      "scenario": "malformed_no_state_change",
+      "ideal": "true",
+      "observed_token": "true",
+      "service_correct": true
+    }
+  ]
+}

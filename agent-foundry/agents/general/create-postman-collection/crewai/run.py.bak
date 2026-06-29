@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""CrewAI create-postman-collection agent ("n601").
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-run Task.
+CrewAI routes the model through LiteLLM, so the Claude backend works via an
+"anthropic/<model>" string (and Ollama via "ollama/<model>"). Deterministic execution
+(apply the contract to the registry, build + count the collection, run Newman, score),
+recording, and emit are the shared harness's job (agents/common/postman.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import postman  # noqa: E402
+from postman_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    kind = spec["native"]["kind"]
+    if kind == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    if kind == "openai-cli":
+        os.environ.setdefault("OPENAI_API_KEY", "local-shim")
+        return LLM(model=f"openai/{spec['native']['model']}",
+                   base_url=spec["base_url"], api_key="local-shim", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API Postman-collection-generation agent (n601)",
+        goal="Convert one n601 brief into a single JSON Postman Generation Contract.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        b = postman.brief(cfg)
+        task = Task(description=user_message(b), agent=worker,
+                    expected_output="A single JSON object with the thirteen Postman-contract keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return postman.extract_json(str(out)) or {}
+
+    s = postman.run_postman_test(AGENT, generate)
+    print(f"[{AGENT}] coverage_rate={s['postman_coverage_rate_pct']}% "
+          f"items={s['postman_item_count']}/{s['http_tc_count']} "
+          f"scenarios={s['scenarios_api_correct']}/{s['scenarios_total']} "
+          f"newman={s['newman_valid']}")
+
+
+if __name__ == "__main__":
+    main()

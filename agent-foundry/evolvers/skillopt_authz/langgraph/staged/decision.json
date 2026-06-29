@@ -1,0 +1,15 @@
+{
+  "agent": "langgraph",
+  "ts": "2026-06-25T20:40:50.104249+00:00",
+  "metric": "authorization_test_fidelity_heldout",
+  "held_out_sub_tests": [
+    "VIEWER_ADMIN_ENDPOINT",
+    "NO_TOKEN_GET",
+    "BAD_TOKEN_GET"
+  ],
+  "baseline_fidelity": 100.0,
+  "candidate_fidelity": 100.0,
+  "accepted": false,
+  "candidate_skill_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillopt_authz/langgraph/staged/candidate_skill.md",
+  "note": "STRICT-improvement gate. ACCEPTED candidate is STAGED only \u2014 best_skill.md is NOT overwritten. Adopt manually after review."
+}

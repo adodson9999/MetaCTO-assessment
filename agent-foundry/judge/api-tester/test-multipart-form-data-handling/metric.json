@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / test-multipart-form-data-handling",
+  "metric_name": "multipart_handling_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (case not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (2 upload endpoints x 9 scenarios = 18).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-multipart-form-data-handling/gold.json",
+  "headline_metric": "multipart_handling_accuracy_pct",
+  "scenarios_total": 18,
+  "rationale": "All four agents hit the same local DummyJSON, so the raw Multipart Handling Accuracy (how many scenarios the API satisfies under the idealized multipart contract) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct multipart plan (two text parts copied exactly, one file part of the right size/media type, the right max-byte limit and readback path, and all nine fixed-label cases in order) so the harness exercises every scenario and reproduces the gold observed token. The headline multipart_handling_accuracy_pct is still emitted by every agent as the task's QA finding: empirically ~33% — DummyJSON parses multipart and preserves recognized text fields EXACTLY (so create_status=201 and both text_field_*_exact pass), but ships no file storage (no document_url, no MD5 round-trip), does not persist its simulated /add writes (readback not found), does no required-field validation (a missing text part still returns 201, not 400), returns 400 (multer parse error) rather than 413 for a single over-limit file, and returns 201 rather than 415 for an application/json body.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold)"
+}

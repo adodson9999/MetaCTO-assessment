@@ -1,0 +1,312 @@
+{
+  "slug": "carts_add",
+  "method": "POST",
+  "path": "/carts/add",
+  "schema": {
+    "fields": {
+      "userId": {
+        "type": "integer"
+      },
+      "products": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "userId",
+      "products"
+    ],
+    "optional": []
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "userId:key_absent",
+      "field": "userId",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:json_null",
+      "field": "userId",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": null,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_string",
+      "field": "userId",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": "",
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:integer_zero",
+      "field": "userId",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 0,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:boolean_false",
+      "field": "userId",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": false,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_array",
+      "field": "userId",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": [],
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "userId:empty_object",
+      "field": "userId",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": {},
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:key_absent",
+      "field": "products",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:json_null",
+      "field": "products",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_string",
+      "field": "products",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:integer_zero",
+      "field": "products",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:boolean_false",
+      "field": "products",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_array",
+      "field": "products",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_object",
+      "field": "products",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": null,
+        "products": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "userId",
+      "field": "userId",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": null,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "products",
+      "field": "products",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": 1,
+        "products": null
+      }
+    },
+    {
+      "category": "combo_required_null",
+      "label": "userId+products",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "userId": null,
+        "products": null
+      }
+    }
+  ]
+}

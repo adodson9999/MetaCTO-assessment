@@ -1,0 +1,44 @@
+{
+  "sub_test": "VIEWER_ADMIN_ENDPOINT",
+  "requesting_role": "viewer",
+  "method": "GET",
+  "endpoint": "/auth/users",
+  "resource_owner": "none",
+  "expected_code": 403,
+  "leakage": {
+    "forbidden_fields": [
+      "id",
+      "title",
+      "body",
+      "tags",
+      "reactions",
+      "views",
+      "userId"
+    ],
+    "forbidden_substrings": [
+      "stack",
+      "Error:",
+      ".js:",
+      ".ts:",
+      "/src/",
+      "/Users/",
+      "node_modules",
+      "SELECT ",
+      "INSERT ",
+      "UPDATE ",
+      "WHERE ",
+      "Traceback",
+      "at Object.",
+      "at async"
+    ]
+  },
+  "expect_resource_data": false,
+  "list_must_exclude": null,
+  "body_snippet": "{\"users\":[{\"id\":1,\"firstName\":\"Emily\",\"lastName\":\"Johnson\",\"maidenName\":\"Smith\",\"age\":29,\"gender\":\"female\",\"email\":\"emily.johnson@x.dummyjson.com\",\"phone\":\"+81 965-431-3024\",\"username\":\"emilys\",\"passw",
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "data_exposed": false,
+  "data_present": null,
+  "leak_safe": true,
+  "pass": false
+}

@@ -1,0 +1,20 @@
+Job Description, Calendly Senior Site Reliability Engineer
+Senior Site Reliability Engineer (Calendly, Engineering)
+We are looking for a Site Reliability Engineer who will design, build, maintain, and operate our next-generation
+infrastructure platform. SREs build their own tools, deploy open-source solutions, and consume cloud services to
+extend the platform. You'll empower application engineering teams, evangelize monitoring best practices, and
+advise on optimal infrastructure use. Reports to a Senior Manager of Engineering.
+On a typical day: Building tools and applications to extend Calendly's infrastructure platform. Evaluating and
+deploying cloud native open source tools. Exercising expertise in cloud infrastructure concepts and patterns.
+Instituting resilient infrastructure through Infrastructure as Code. Maintaining and improving observability and
+offering patterns for application teams. Participating in an on-call rotation. Defining standard practices around
+new services, changes, incidents, postmortems, and capacity management.
+What we need: An eagerness to learn and mentor others. Creative problem-solving and attention to detail.
+Comfort working with internal-facing customers. A strong understanding of Linux. Strong technical knowledge of
+cloud infrastructure (especially GCP), distributed systems, and reliability practices. Deep experience designing,
+building, and running highly-available production infrastructure. Strong Golang or Python development
+experience, especially writing APIs to build and orchestrate cloud infrastructure. Solid knowledge of Kubernetes
+patterns (Controllers and Operators). Robust knowledge of networking and cloud networking. Extensive
+experience with monitoring tools (especially Datadog). US work authorization required (no sponsorship).
+Salary: Tier 1 $237,630 to $287,952; Tier 2 $217,828 to $263,956; Tier 3 $198,025 to $239,960 USD, plus bonus
+and equity.

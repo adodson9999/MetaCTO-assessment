@@ -1,0 +1,29 @@
+{
+  "slug": "comments_add",
+  "method": "POST",
+  "path": "/comments/add",
+  "request_body": {
+    "body": "Nice post",
+    "postId": 1,
+    "userId": 1
+  },
+  "actual_code": 201,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 341,
+    "body": "Nice post",
+    "postId": 1,
+    "user": {
+      "id": 1,
+      "username": "emilys",
+      "fullName": "Emily Johnson"
+    }
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

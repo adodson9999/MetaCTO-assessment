@@ -1,0 +1,90 @@
+{
+  "slug": "get_todos_1",
+  "endpoint": "/todos/1",
+  "kind": "accept",
+  "method": null,
+  "request_log": [
+    {
+      "label": "accept_application_json",
+      "accept": "application/json",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_valid": true,
+      "requested_format": "application/json"
+    },
+    {
+      "label": "accept_application_xml",
+      "accept": "application/xml",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_valid": false,
+      "requested_format": "application/xml"
+    },
+    {
+      "label": "accept_text_csv",
+      "accept": "text/csv",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_valid": true,
+      "requested_format": "text/csv"
+    },
+    {
+      "label": "accept_text_html_unsupported",
+      "accept": "text/html",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_valid": false,
+      "requested_format": "text/html"
+    },
+    {
+      "label": "accept_wildcard",
+      "accept": "*/*",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "body_valid": true,
+      "requested_format": "application/json"
+    }
+  ],
+  "scenarios": [
+    {
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "scenario": "accept_application_json",
+      "ideal": "match",
+      "observed_token": "match",
+      "api_correct": true
+    },
+    {
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "scenario": "accept_application_xml",
+      "ideal": "match",
+      "observed_token": "mismatch",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "scenario": "accept_text_csv",
+      "ideal": "match",
+      "observed_token": "mismatch",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "scenario": "accept_text_html_unsupported",
+      "ideal": "406",
+      "observed_token": "200",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/todos/1",
+      "kind": "accept",
+      "scenario": "accept_wildcard",
+      "ideal": "match",
+      "observed_token": "match",
+      "api_correct": true
+    }
+  ]
+}

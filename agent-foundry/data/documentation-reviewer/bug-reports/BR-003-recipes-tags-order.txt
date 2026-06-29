@@ -1,0 +1,27 @@
+Title: [Recipes] GET /recipes/tags returns tags in an unsorted order
+
+Environment:
+  OS: Windows 11
+  Browser/App Version: dummyjson-pp-cli 4.24.0
+  Device: Surface
+  Build/Version: dummyjson@1.0.0
+  Environment: local
+
+Steps to Reproduce:
+  1. Send GET /recipes/tags
+  2. Inspect the order of the returned tag strings
+
+Expected Result:
+  Tags sorted alphabetically (ascending)
+
+Actual Result:
+  Tags returned in insertion order, not alphabetical
+
+Severity: Low
+Priority: P4
+
+Evidence:
+  - Screenshot:
+  - Logs: ["Pakistani","Indian","Asian","Beef",...]
+
+Notes / Workaround: agent=general-documentation-reviewer; reproduced with all four frameworks

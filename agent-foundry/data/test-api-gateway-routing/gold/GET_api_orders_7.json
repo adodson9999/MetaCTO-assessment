@@ -1,0 +1,101 @@
+{
+  "route": "GET /api/orders/7",
+  "route_path": "/api/orders/7",
+  "method": "GET",
+  "expected_backend": "orders-mock",
+  "down_test": false,
+  "reference_plan": {
+    "route": "/api/orders/7",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer routing-test-token-abc123"
+    },
+    "body": null,
+    "expected_backend": "orders-mock",
+    "other_backends": [
+      "users-mock",
+      "payments-mock"
+    ],
+    "down_test": false
+  },
+  "scenarios": [
+    {
+      "scenario": "plan_method",
+      "ideal": "GET",
+      "observed_token": "GET",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_path",
+      "ideal": "/api/orders/7",
+      "observed_token": "/api/orders/7",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_auth_present",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_body_match",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_expected_backend",
+      "ideal": "orders-mock",
+      "observed_token": "orders-mock",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_other_backends",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "plan_down_test",
+      "ideal": "false",
+      "observed_token": "false",
+      "api_correct": true
+    },
+    {
+      "scenario": "exec_correct_backend",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_only_expected",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_body_verbatim",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_auth_forwarded",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_response_unchanged",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "exec_status_2xx",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

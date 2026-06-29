@@ -1,0 +1,49 @@
+{
+  "slug": "users_add",
+  "endpoint": "/users/add",
+  "kind": "consumes",
+  "method": "POST",
+  "request_log": [
+    {
+      "label": "ctype_application_json_supported",
+      "content_type": "application/json",
+      "status": 201
+    },
+    {
+      "label": "ctype_application_xml_unsupported",
+      "content_type": "application/xml",
+      "status": 201
+    },
+    {
+      "label": "ctype_text_plain_unsupported",
+      "content_type": "text/plain",
+      "status": 201
+    }
+  ],
+  "scenarios": [
+    {
+      "endpoint": "/users/add",
+      "kind": "consumes",
+      "scenario": "ctype_application_json_supported",
+      "ideal": "supported",
+      "observed_token": "supported",
+      "api_correct": true
+    },
+    {
+      "endpoint": "/users/add",
+      "kind": "consumes",
+      "scenario": "ctype_application_xml_unsupported",
+      "ideal": "415",
+      "observed_token": "201",
+      "api_correct": false
+    },
+    {
+      "endpoint": "/users/add",
+      "kind": "consumes",
+      "scenario": "ctype_text_plain_unsupported",
+      "ideal": "415",
+      "observed_token": "201",
+      "api_correct": false
+    }
+  ]
+}

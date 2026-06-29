@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""LangGraph Measure-API-Consumer-Satisfaction agent.
+
+A StateGraph whose single node turns the documented NPS-survey-measurement contract into
+the JSON measurement plan via the central backend (ChatAnthropic when the backend is
+claude-haiku, ChatOllama when air-gapped). Deterministic execution (seeded-fixture query,
+dashboard computation, scenario scoring) and emit are handled by the shared harness
+(agents/common/nps.py) so this file's only framework-specific job is LLM elicitation
+through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import nps  # noqa: E402
+from nps_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+
+
+def _model():
+    spec = backend_config.resolve(WS)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"], temperature=0)
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=spec["native"]["model"],
+                      base_url=spec["base_url"].replace("/v1", ""),
+                      temperature=0, format="json")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    llm = _model()
+
+    def generate_node(state: S) -> S:
+        msg = llm.invoke(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(brief: str) -> dict:
+        result = graph.invoke({"brief": brief, "output": ""})
+        return nps.extract_json(result["output"]) or {}
+
+    summary = nps.run_nps_test(AGENT, generate)
+    print(f"[{AGENT}] nps={summary['nps_score']} "
+          f"plan_accuracy={summary['plan_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,18 @@
+{
+  "task": "api-tester / create-postman-collection",
+  "alias": "n601",
+  "registry_path": "results/test-case-registry.json",
+  "summary_path": "results/test-case-registry-summary.json",
+  "registry_fixture": "data/create-postman-collection/registry_fixture.json",
+  "summary_fixture": "data/create-postman-collection/registry_summary_fixture.json",
+  "collection_out": "results/postman-collection.json",
+  "gaps_out": "results/postman-collection-gaps.json",
+  "summary_out": "results/postman-collection-summary.json",
+  "base_url": "http://localhost:8080",
+  "collection_name_prefix": "API Test Agent Suite",
+  "filter_field": "involves_http_call",
+  "group_by": "agent",
+  "gold_date": "2026-06-26",
+  "gold_uuid": "00000000-0000-4000-8000-000000000601",
+  "notes": "n601 is a pure registry->Postman-collection transform: it reads results/test-case-registry.json (the n600 output) + the summary, filters involves_http_call=true, and emits results/postman-collection.json. It makes NO HTTP calls of its own and NEVER touches DummyJSON. For the forge, results/test-case-registry.json + results/test-case-registry-summary.json are seeded from the *_fixture files above (the phase4 script copies them) because the sibling n600 agent is not built here. Each forge agent emits a Postman Generation Contract; the shared harness applies it; the judge scores fidelity-to-gold + the headline Postman Coverage Rate."
+}

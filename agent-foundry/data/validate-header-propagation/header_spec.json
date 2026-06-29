@@ -1,0 +1,68 @@
+{
+  "title": "DummyJSON correlation-header propagation contract (authored for the task)",
+  "description": "Send the fixed correlation_id under header_name and assert it propagates byte-for-byte into the response header, the API server log, and every downstream service log; a second request with no correlation header must trigger an auto-generated UUID v4 that also propagates. Agents construct the propagation test plan from this; ground truth is the live API's observed behavior. DummyJSON is never modified.",
+  "target": "http://localhost:8899",
+  "correlation_id": "test-corr-550e8400-e29b-41d4-a716",
+  "header_name": "X-Correlation-ID",
+  "token_placeholder": "<valid_token>",
+  "downstream_services": [],
+  "endpoints": [
+    {
+      "name": "products_add",
+      "method": "POST",
+      "path": "/products/add",
+      "auth": true,
+      "body": {
+        "title": "header-propagation-probe"
+      }
+    },
+    {
+      "name": "posts_add",
+      "method": "POST",
+      "path": "/posts/add",
+      "auth": true,
+      "body": {
+        "title": "header-propagation-probe",
+        "userId": 1
+      }
+    },
+    {
+      "name": "comments_add",
+      "method": "POST",
+      "path": "/comments/add",
+      "auth": true,
+      "body": {
+        "body": "header-propagation-probe",
+        "postId": 1,
+        "userId": 1
+      }
+    },
+    {
+      "name": "carts_add",
+      "method": "POST",
+      "path": "/carts/add",
+      "auth": true,
+      "body": {
+        "userId": 1,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "auth_me",
+      "method": "GET",
+      "path": "/auth/me",
+      "auth": true
+    },
+    {
+      "name": "products_get",
+      "method": "GET",
+      "path": "/products/1",
+      "auth": false
+    }
+  ]
+}

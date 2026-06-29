@@ -1,0 +1,25 @@
+{
+  "slug": "todos_add",
+  "method": "POST",
+  "path": "/todos/add",
+  "request_body": {
+    "todo": "Ship the foundry",
+    "completed": false,
+    "userId": 1
+  },
+  "actual_code": 201,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 255,
+    "todo": "Ship the foundry",
+    "completed": false,
+    "userId": 1
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

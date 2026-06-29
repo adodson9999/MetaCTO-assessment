@@ -1,0 +1,13 @@
+{
+  "policy": "Every api-tester writes its executor output to the STANDARD path results/runs/<RUN_ID>/api-tester-<agent>.cases.json (and <agent>.json metric). Bespoke per-task bucket directories are forbidden.",
+  "standard_cases_path": "results/runs/{run_id}/api-tester-{agent}.cases.json",
+  "standard_run_dir_expr": "WORKSPACE / \"results\" / \"runs\" / RUN_ID",
+  "forbidden_bucket_dirs": ["authz", "clarity", "crud", "schema", "status"],
+  "agents_that_must_use_standard_path": {
+    "authz_contract.py": "check-authorization-rules",
+    "clarity_contract.py": "verify-error-message-clarity",
+    "crud_contract.py": "verify-crud-operation-integrity",
+    "schema_contract.py": "validate-json-schema-responses",
+    "status_contract.py": "verify-response-status-codes"
+  }
+}

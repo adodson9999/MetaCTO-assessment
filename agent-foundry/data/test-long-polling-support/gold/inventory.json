@@ -1,0 +1,104 @@
+{
+  "channel": "inventory",
+  "poll_timeout_s": 5,
+  "expected_event_type": "inventory.updated",
+  "reference_plan": {
+    "channel": "inventory",
+    "poll_path": "/poll/inventory",
+    "trigger_path": "/publish/inventory",
+    "poll_timeout_s": 5,
+    "expected_event_type": "inventory.updated",
+    "client_max_time_s": 10,
+    "cases": [
+      {
+        "label": "no_event",
+        "kind": "no_event"
+      },
+      {
+        "label": "event",
+        "kind": "event"
+      }
+    ]
+  },
+  "observations": {
+    "no_event": {
+      "status": 200,
+      "content_length": 43,
+      "elapsed_s": 5.005585457998677
+    },
+    "event": {
+      "status": 200,
+      "body": {
+        "event_type": "message",
+        "sku": "SKU-42",
+        "channel": "inventory",
+        "id": "evt-1"
+      },
+      "elapsed_s": 4.508410833994276,
+      "response_after_event_s": 3.005,
+      "event_offset_s": 1.503
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "ne_status",
+      "ideal": "204",
+      "observed_token": "200",
+      "api_correct": false
+    },
+    {
+      "scenario": "ne_not_early",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ne_within_window",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ne_body_empty",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "ev_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_within_2s",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "ev_valid_json",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_event_type_match",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "ev_secondary_nonempty",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "client_max_time_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

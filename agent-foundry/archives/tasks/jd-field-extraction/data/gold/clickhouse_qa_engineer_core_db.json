@@ -1,0 +1,25 @@
+{
+  "title": "QA Engineer - Core Database",
+  "company": "ClickHouse",
+  "location": null,
+  "remote_or_onsite": "remote",
+  "employment_type": "full-time",
+  "seniority": "senior",
+  "salary_min": 141000,
+  "salary_max": 230000,
+  "salary_currency": "USD",
+  "years_experience_min": null,
+  "tech_stack": ["SQL", "Python", "Go", "C++", "Git", "Linux", "shell scripting", "ClickHouse"],
+  "must_haves": [
+    "Extensive knowledge of SQL",
+    "Prior SDET/Release Engineering/QA experience on a classical database or distributed system",
+    "Hands-on experience with a programming language (Python/Go/C++)",
+    "Ability to read C++ code for validation",
+    "Working knowledge of Git, Linux, and shell scripting",
+    "Experience with both manual and automation testing",
+    "Strong production debugging skills"
+  ],
+  "nice_to_haves": [],
+  "visa_sponsorship": "unspecified",
+  "apply_url": null
+}

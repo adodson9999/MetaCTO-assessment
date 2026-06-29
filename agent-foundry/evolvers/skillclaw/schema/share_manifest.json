@@ -1,0 +1,14 @@
+{
+  "task": "validate-json-schema-responses",
+  "shared_skill": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillclaw/schema/shared/SKILL.md",
+  "ts": "2026-06-25T21:06:54.861646+00:00",
+  "offered_to": [
+    "langgraph",
+    "crewai",
+    "claude_sdk",
+    "api-tester-validate-json-schema-responses"
+  ],
+  "backend": "local_filesystem",
+  "air_gapped": true,
+  "note": "Shared skill available to all schema agents; adoption is the user's call."
+}

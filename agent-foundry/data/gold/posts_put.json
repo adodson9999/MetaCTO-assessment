@@ -1,0 +1,310 @@
+{
+  "slug": "posts_put",
+  "method": "PUT",
+  "path": "/posts/{id}",
+  "schema": {
+    "fields": {
+      "title": {
+        "type": "string",
+        "maxLength": 150
+      },
+      "body": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "userId": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "title"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "body": null,
+        "userId": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "title:key_absent",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "title:key_present_null",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:INT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": 42,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:FLOAT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": 3.14,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:BOOL_TRUE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": true,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:BOOL_FALSE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": false,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:LIST_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": [
+          1,
+          "a",
+          true
+        ],
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:OBJECT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": {
+          "key": "value"
+        },
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:NULL_NONE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "edited",
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "title",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "body": "edited"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "body",
+      "field": "body",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Updated Post",
+        "body": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ]
+}

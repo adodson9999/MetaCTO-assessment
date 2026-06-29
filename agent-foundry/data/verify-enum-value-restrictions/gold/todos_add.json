@@ -1,0 +1,171 @@
+{
+  "slug": "todos_add",
+  "method": "POST",
+  "path": "/todos/add",
+  "schema": {
+    "fields": {
+      "todo": {
+        "type": "string"
+      },
+      "completed": {
+        "type": "boolean"
+      },
+      "userId": {
+        "type": "integer"
+      },
+      "priority": {
+        "type": "string",
+        "enum": [
+          "LOW",
+          "MEDIUM",
+          "HIGH"
+        ]
+      }
+    },
+    "required": [
+      "todo",
+      "priority"
+    ],
+    "enum_fields": [
+      "priority"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid_values",
+      "label": "priority:LOW",
+      "field": "priority",
+      "value_sent": "LOW",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": "LOW"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "priority:MEDIUM",
+      "field": "priority",
+      "value_sent": "MEDIUM",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": "MEDIUM"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "priority:HIGH",
+      "field": "priority",
+      "value_sent": "HIGH",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": "HIGH"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "priority",
+      "field": "priority",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "priority",
+      "field": "priority",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": ""
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "priority",
+      "field": "priority",
+      "value_sent": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": null
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "priority",
+      "field": "priority",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": 0
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "priority",
+      "field": "priority",
+      "value_sent": "low",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1,
+        "priority": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+# Forge Agents — central config. One switch drives the whole foundry.
+
+[backend]
+# provider: controls the LLM backend for every runner/judge/evolver in the foundry.
+#   "ollama"       — local / air-gapped (OpenAI-compatible at ollama_base_url)
+#   "claude-haiku" — Anthropic claude-haiku-4-5 (OpenAI path via the LiteLLM proxy)
+#   "claude-cli"   — Anthropic via the `claude -p` shim (subscription, no API credits)
+#   "auto"         — resolve at run time to the first REACHABLE backend
+#                    (scripts/backend_config.py::_auto_detect): inside a Claude Code
+#                    session it prefers claude-cli, then claude-haiku, then ollama;
+#                    otherwise ollama. Each candidate's endpoint is TCP-probed first,
+#                    so 'auto' never picks a backend whose shim/proxy isn't running —
+#                    e.g. it falls back to local Ollama when no Claude endpoint is up.
+# Override per-run without editing this file: FORGE_PROVIDER=ollama|claude-haiku|claude-cli.
+# NOTE: 'auto' does NOT start any server — bring up Ollama (`ollama serve`, model pulled)
+# or a Claude shim/proxy yourself; otherwise 'auto' resolves to ollama and a run errors
+# at connect time if ollama is also down.
+provider = "auto"
+ollama_base_url = "http://127.0.0.1:11434/v1"
+ollama_model = "qwen2.5:14b-instruct"
+claude_model = "claude-haiku-4-5"
+litellm_proxy_url = "http://127.0.0.1:4000/v1"
+
+[memory]
+# Shared EverOS pool: all agents in the folder share project_id + app_id,
+# each keeps its own agent_id so contributions stay attributable.
+project_id = "agent-foundry"
+app_id = "forge"
+everos_base_url = "http://127.0.0.1:8000"
+store_path = "memory/.everos"
+
+[search]
+# Two-way hybrid: keyword (BM25/SQLite) + meaning (EverOS embeddings/LanceDB)
+# fused by RRF, then a local reranker.
+rrf_k = 60
+reranker_model = "BAAI/bge-reranker-v2-m3"   # local cross-encoder; runs offline once cached
+
+[sandbox]
+# All agent read/write/exec confined here. Nothing escapes the workspace root.
+enforce = true
+
+[evolution]
+# Nightly sleep cycle + manual /evolve. Gate = the judge metric. Staged, never auto-adopt.
+schedule = "nightly"
+skillclaw_storage_backend = "local"     # not OSS/S3 — stays air-gapped
+
+[vendor]
+# Filled in by /scan-and-integrate with pinned commits.
+# Scanned + purpose-verified + vendored 2026-06-23 (security PASS, prompt-injection PASS, purpose MATCH for all three).
+everos_commit = "1ea44ca548d1eb4810a64f7a62a541556db400a0"
+skillopt_commit = "2d7e37a395b6ac833ee8169aa707c86d99bab211"
+skillclaw_commit = "bf4dc2ee9430ecffb60e19630d26f57dfa2bd326"
+
+[vendor.everos]
+# Shared self-evolving memory pool. All providers repointed to local Ollama (air-gapped). Binds 127.0.0.1 by default.
+repo = "EverMind-AI/EverOS"
+env_file = "vendor/EverOS/.env"
+llm_base_url = "http://127.0.0.1:11434/v1"
+embedding_base_url = "http://127.0.0.1:11434/v1"
+api_host = "127.0.0.1"
+api_port = 8000
+
+[vendor.skillopt]
+# Per-agent, validation-gated skill optimization. Sleep engine pinned to a local engine.
+repo = "microsoft/SkillOpt"
+env_file = "vendor/SkillOpt/.env.local"
+optimizer_backend = "qwen_chat"
+target_backend = "qwen_chat"
+qwen_chat_base_url = "http://127.0.0.1:11434/v1"
+sleep_backend = "mock"   # deterministic, zero-network local engine; swap to qwen_chat for live local optimization
+
+[vendor.skillclaw]
+# Collective cross-agent skill evolution. Storage = local filesystem (NOT oss/s3); proxy bound to loopback.
+repo = "AMAP-ML/SkillClaw"
+env_file = "vendor/SkillClaw/.env.local"
+storage_backend = "local"
+local_root = "memory/skillclaw-share"
+openai_base_url = "http://127.0.0.1:11434/v1"
+proxy_host = "127.0.0.1"

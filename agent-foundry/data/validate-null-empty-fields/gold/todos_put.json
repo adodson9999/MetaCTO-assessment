@@ -1,0 +1,339 @@
+{
+  "slug": "todos_put",
+  "method": "PUT",
+  "path": "/todos/{id}",
+  "schema": {
+    "fields": {
+      "todo": {
+        "type": "string",
+        "maxLength": 200
+      },
+      "completed": {
+        "type": "boolean"
+      },
+      "userId": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "todo"
+    ],
+    "optional": [
+      "completed",
+      "userId"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "todo:key_absent",
+      "field": "todo",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:json_null",
+      "field": "todo",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": null,
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:empty_string",
+      "field": "todo",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "",
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:integer_zero",
+      "field": "todo",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": 0,
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:boolean_false",
+      "field": "todo",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": false,
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:empty_array",
+      "field": "todo",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": [],
+        "completed": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "todo:empty_object",
+      "field": "todo",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": {},
+        "completed": true
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:key_absent",
+      "field": "completed",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "todo": "Updated todo"
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:json_null",
+      "field": "completed",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:empty_string",
+      "field": "completed",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:integer_zero",
+      "field": "completed",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:empty_array",
+      "field": "completed",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "completed:empty_object",
+      "field": "completed",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": {}
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:key_absent",
+      "field": "userId",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:json_null",
+      "field": "userId",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "userId": null
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:empty_string",
+      "field": "userId",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "userId": ""
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:integer_zero",
+      "field": "userId",
+      "state": "integer_zero",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "userId": 0
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:empty_array",
+      "field": "userId",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "userId": []
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "userId:empty_object",
+      "field": "userId",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": "Updated todo",
+        "completed": true,
+        "userId": {}
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": null,
+        "completed": true
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "todo",
+      "field": "todo",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "todo": null,
+        "completed": true
+      }
+    },
+    {
+      "category": "string_null",
+      "label": "todo",
+      "field": "todo",
+      "state": null,
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "todo": "null",
+        "completed": true
+      }
+    }
+  ]
+}

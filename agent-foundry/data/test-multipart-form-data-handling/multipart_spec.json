@@ -1,0 +1,47 @@
+{
+  "title": "Multipart/form-data upload endpoint catalogue (authored for the task)",
+  "description": "Agents are briefed one upload endpoint at a time. DummyJSON is never modified \u2014 the POST /add routes are non-persistent simulated writes and any parsed file is deleted by the server.",
+  "target": "http://localhost:8899",
+  "file_size_bytes": 51200,
+  "max_allowed_file_bytes": 5242880,
+  "endpoints": [
+    {
+      "slug": "products_add",
+      "endpoint": "/products/add",
+      "method": "POST",
+      "expected_create_status": 201,
+      "text_field_a": {
+        "name": "title",
+        "value": "Test Entity"
+      },
+      "text_field_b": {
+        "name": "category",
+        "value": "A"
+      },
+      "file_field": "document",
+      "file_media_type": "image/png",
+      "file_size_bytes": 51200,
+      "max_allowed_file_bytes": 5242880,
+      "readback_path": "/products/{id}"
+    },
+    {
+      "slug": "users_add",
+      "endpoint": "/users/add",
+      "method": "POST",
+      "expected_create_status": 201,
+      "text_field_a": {
+        "name": "firstName",
+        "value": "Test Entity"
+      },
+      "text_field_b": {
+        "name": "lastName",
+        "value": "A"
+      },
+      "file_field": "document",
+      "file_media_type": "image/png",
+      "file_size_bytes": 51200,
+      "max_allowed_file_bytes": 5242880,
+      "readback_path": "/users/{id}"
+    }
+  ]
+}

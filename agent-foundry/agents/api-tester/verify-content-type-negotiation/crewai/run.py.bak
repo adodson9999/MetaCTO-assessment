@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""CrewAI content-type-negotiation testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-
+endpoint Task. CrewAI routes the model through LiteLLM, so the claude backend works
+via an "anthropic/<model>" string and the local one via "ollama/<model>".
+Deterministic execution (real GET/write probes), recording, and emit are the shared
+harness's job (agents/common/cn.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import cn  # noqa: E402
+from cn_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    kind = spec["native"]["kind"]
+    if kind == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    if kind == "openai-cli":
+        # OpenAI-compatible shim over `claude -p` (subscription); litellm openai/ path.
+        os.environ.setdefault("OPENAI_API_KEY", "local-shim")
+        return LLM(model=f"openai/{spec['native']['model']}",
+                   base_url=spec["base_url"], api_key="local-shim", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API content-type-negotiation testing agent",
+        goal="Convert one endpoint's content-negotiation contract into a single JSON negotiation test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = cn.endpoint_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object: the endpoint's content-negotiation test plan.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return cn.extract_json(str(out)) or {}
+
+    summary = cn.run_cn_test(AGENT, generate)
+    print(f"[{AGENT}] negotiation_accuracy={summary['content_type_negotiation_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

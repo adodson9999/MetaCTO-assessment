@@ -1,0 +1,333 @@
+{
+  "slug": "recipes_put",
+  "method": "PUT",
+  "path": "/recipes/{id}",
+  "schema": {
+    "fields": {
+      "name": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "ingredients": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "name:key_absent",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "name:key_present_null",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:INT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": 42,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:FLOAT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": 3.14,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:BOOL_TRUE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": true,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:BOOL_FALSE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": false,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:LIST_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": [
+          1,
+          "a",
+          true
+        ],
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:OBJECT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": {
+          "key": "value"
+        },
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:NULL_NONE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ],
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "name",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ingredients": [
+          "salt"
+        ]
+      }
+    }
+  ]
+}

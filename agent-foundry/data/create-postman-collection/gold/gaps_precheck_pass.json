@@ -1,0 +1,6 @@
+{
+  "scenario": "gaps_precheck_pass",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

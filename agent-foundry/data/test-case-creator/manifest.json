@@ -1,0 +1,27 @@
+[
+  {
+    "name": "api-tester-demo-pagination",
+    "enabled": true,
+    "spec_path": "data/test-case-creator/specs/demo-pagination.md"
+  },
+  {
+    "name": "api-tester-demo-crud",
+    "enabled": true,
+    "spec_path": "data/test-case-creator/specs/demo-crud.md"
+  },
+  {
+    "name": "api-tester-demo-metrics",
+    "enabled": true,
+    "spec_path": "data/test-case-creator/specs/demo-metrics.md"
+  },
+  {
+    "name": "api-tester-demo-noop",
+    "enabled": true,
+    "spec_path": "data/test-case-creator/specs/demo-noop.md"
+  },
+  {
+    "name": "api-tester-demo-disabled",
+    "enabled": false,
+    "spec_path": "data/test-case-creator/specs/demo-disabled.md"
+  }
+]

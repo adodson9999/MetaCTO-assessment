@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""CrewAI rate-limit-testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-endpoint
+Task. CrewAI routes the model through LiteLLM, so claude-haiku works via an
+"anthropic/<model>" string and the air-gapped default works via "ollama/<model>".
+Deterministic execution (read-only GETs at real timing), recording, and emit are the
+shared harness's job (agents/common/ratelimit.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import ratelimit  # noqa: E402
+from ratelimit_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API rate-limit-testing agent",
+        goal="Convert one endpoint's rate-limit contract into a single JSON rate-limit test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = ratelimit.endpoint_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the eleven rate-limit-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return ratelimit.extract_json(str(out)) or {}
+
+    summary = ratelimit.run_ratelimit_test(AGENT, generate)
+    print(f"[{AGENT}] correctness_rate={summary['rate_limit_contract_correctness_rate_pct']}% "
+          f"enforced={summary['rate_limit_enforced']} "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

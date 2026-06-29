@@ -1,0 +1,44 @@
+{
+  "slug": "posts_add",
+  "method": "POST",
+  "path": "/posts/add",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    201,
+    400
+  ],
+  "cases": [
+    {
+      "documented_code": 201,
+      "request": {
+        "code": 201,
+        "method": "POST",
+        "path": "/posts/add",
+        "auth": "none",
+        "body": {
+          "title": "A Forge Post",
+          "userId": 1,
+          "body": "hello"
+        }
+      },
+      "actual_code": 201,
+      "passed": true
+    },
+    {
+      "documented_code": 400,
+      "request": {
+        "code": 400,
+        "method": "POST",
+        "path": "/posts/add",
+        "auth": "none",
+        "body": {
+          "userId": 1,
+          "body": "hello"
+        }
+      },
+      "actual_code": 201,
+      "passed": false
+    }
+  ]
+}

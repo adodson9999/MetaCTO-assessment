@@ -1,0 +1,26 @@
+{
+  "numTotalTestSuites": 2,
+  "numTotalTests": 5,
+  "numPassedTests": 4,
+  "numFailedTests": 1,
+  "success": false,
+  "testResults": [
+    {
+      "name": "/repo/src/cart.test.js",
+      "status": "passed",
+      "assertionResults": [
+        {"fullName": "cart total calculates correctly", "title": "calculates correctly", "status": "passed", "failureMessages": []},
+        {"fullName": "cart applies discount", "title": "applies discount", "status": "passed", "failureMessages": []}
+      ]
+    },
+    {
+      "name": "/repo/src/order.test.js",
+      "status": "failed",
+      "assertionResults": [
+        {"fullName": "order persists to db", "title": "persists to db", "status": "passed", "failureMessages": []},
+        {"fullName": "search returns matches", "title": "returns matches", "status": "passed", "failureMessages": []},
+        {"fullName": "legacy export csv", "title": "export csv", "status": "failed", "failureMessages": ["Expected header row, received empty buffer"]}
+      ]
+    }
+  ]
+}

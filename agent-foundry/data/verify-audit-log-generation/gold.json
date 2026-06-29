@@ -1,0 +1,1447 @@
+{
+  "summary": {
+    "target": "http://localhost:8904",
+    "authenticated": true,
+    "collections": 6,
+    "scenarios_per_collection": 9,
+    "total_scenarios": 54,
+    "api_correct_scenarios": 2,
+    "empirical_audit_correctness_rate_pct": 3.7,
+    "headline_audit_log_coverage_rate_pct": 0.0,
+    "coverage_covered_ops": 0,
+    "coverage_total_ops": 18,
+    "note": "Ground truth = live DummyJSON observed token per (collection, scenario). DummyJSON has NO audit-log system; the only log is request-logger.js's winston 'HTTP Request' stdout (LOG_ENABLED=true), which carries timestamp + ip but NO user_id/action_type/resource_id and is not user-scoped. So no captured line qualifies as a correctly-populated audit entry => Audit Log Coverage Rate = 0% (0/N auditable ops). CREATE returns 201 (status ok) but the returned id is a non-persistent phantom (length+1), so the literal follow-on PUT/DELETE on it return 404 (update/delete status NOT ok). The sub-100% rates are real QA findings, not agent failures."
+  },
+  "coverage_cases": [
+    {
+      "collection": "/products",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/products",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/products",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/posts",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/posts",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/posts",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/comments",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/comments",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/comments",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/todos",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/todos",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/todos",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/users",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/users",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/users",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/recipes",
+      "operation": "create",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/recipes",
+      "operation": "update",
+      "complete_token": "false",
+      "covered": false
+    },
+    {
+      "collection": "/recipes",
+      "operation": "delete",
+      "complete_token": "false",
+      "covered": false
+    }
+  ],
+  "collections": [
+    {
+      "collection": "/products",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/products",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/products/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/products/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/products/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": 195,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/products/add",
+          "status": 201,
+          "wall_ts": 1782434015.016735,
+          "resource_id": 195
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/products/195",
+          "status": 404,
+          "wall_ts": 1782434015.030324,
+          "resource_id": 195
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/products/195",
+          "status": 404,
+          "wall_ts": 1782434015.045446,
+          "resource_id": 195
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/products/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/products/195",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/products/195",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    },
+    {
+      "collection": "/posts",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/posts",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/posts/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/posts/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/posts/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": null,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/posts/add",
+          "status": 400,
+          "wall_ts": 1782434015.061295,
+          "resource_id": null
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/posts/{resource_id}",
+          "status": 400,
+          "wall_ts": 1782434015.075826,
+          "resource_id": null
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/posts/{resource_id}",
+          "status": 400,
+          "wall_ts": 1782434015.09025,
+          "resource_id": null
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/posts/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/posts/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/posts/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    },
+    {
+      "collection": "/comments",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/comments",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/comments/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/comments/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/comments/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": null,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/comments/add",
+          "status": 400,
+          "wall_ts": 1782434015.1033301,
+          "resource_id": null
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/comments/{resource_id}",
+          "status": 404,
+          "wall_ts": 1782434015.117842,
+          "resource_id": null
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/comments/{resource_id}",
+          "status": 404,
+          "wall_ts": 1782434015.1310341,
+          "resource_id": null
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/comments/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/comments/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/comments/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    },
+    {
+      "collection": "/todos",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/todos",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/todos/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/todos/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/todos/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": null,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/todos/add",
+          "status": 400,
+          "wall_ts": 1782434015.144711,
+          "resource_id": null
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/todos/{resource_id}",
+          "status": 404,
+          "wall_ts": 1782434015.1571321,
+          "resource_id": null
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/todos/{resource_id}",
+          "status": 404,
+          "wall_ts": 1782434015.170656,
+          "resource_id": null
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/todos/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/todos/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/todos/{resource_id}",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    },
+    {
+      "collection": "/users",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/users",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/users/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/users/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/users/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": 209,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/users/add",
+          "status": 201,
+          "wall_ts": 1782434015.185222,
+          "resource_id": 209
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/users/209",
+          "status": 404,
+          "wall_ts": 1782434015.198543,
+          "resource_id": 209
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/users/209",
+          "status": 404,
+          "wall_ts": 1782434015.21059,
+          "resource_id": 209
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/users/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/users/209",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/users/209",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "true",
+          "api_correct": true
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    },
+    {
+      "collection": "/recipes",
+      "test_user_id": "user-test-001",
+      "reference_plan": {
+        "collection": "/recipes",
+        "id_field": "id",
+        "test_user_id": "user-test-001",
+        "operations": [
+          {
+            "label": "create",
+            "action_type": "CREATE",
+            "method": "POST",
+            "path": "/recipes/add",
+            "body": {
+              "title": "audit-probe"
+            },
+            "expect_status": [
+              201
+            ]
+          },
+          {
+            "label": "update",
+            "action_type": "UPDATE",
+            "method": "PUT",
+            "path": "/recipes/{resource_id}",
+            "body": {
+              "title": "audit-probe-updated"
+            },
+            "expect_status": [
+              200
+            ]
+          },
+          {
+            "label": "delete",
+            "action_type": "DELETE",
+            "method": "DELETE",
+            "path": "/recipes/{resource_id}",
+            "body": null,
+            "expect_status": [
+              200,
+              204
+            ]
+          }
+        ],
+        "audit_query": {
+          "filter_user_id": "user-test-001",
+          "window_before_seconds": 5,
+          "window_after_seconds": 10,
+          "expected_entry_count": 3,
+          "required_fields": [
+            "user_id",
+            "action_type",
+            "resource_id",
+            "timestamp",
+            "ip_address"
+          ],
+          "timestamp_tolerance_seconds": 5,
+          "action_types": [
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ]
+        }
+      },
+      "resource_id": 51,
+      "op_log": [
+        {
+          "label": "create",
+          "action_type": "CREATE",
+          "method": "POST",
+          "path": "/recipes/add",
+          "status": 200,
+          "wall_ts": 1782434015.22476,
+          "resource_id": 51
+        },
+        {
+          "label": "update",
+          "action_type": "UPDATE",
+          "method": "PUT",
+          "path": "/recipes/51",
+          "status": 404,
+          "wall_ts": 1782434015.237397,
+          "resource_id": 51
+        },
+        {
+          "label": "delete",
+          "action_type": "DELETE",
+          "method": "DELETE",
+          "path": "/recipes/51",
+          "status": 404,
+          "wall_ts": 1782434015.251231,
+          "resource_id": 51
+        }
+      ],
+      "audit_query_result": {
+        "queried": true,
+        "by_op": {
+          "create": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "update": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          },
+          "delete": {
+            "present": true,
+            "fields_complete": false,
+            "ts_within": true,
+            "user_match": false,
+            "candidate_lines": 1
+          }
+        },
+        "count_valid": 0,
+        "all_fields_nonnull": false,
+        "user_scoped": false,
+        "candidate_lines": 3,
+        "detail": [
+          {
+            "op": "create",
+            "method": "POST",
+            "path": "/recipes/add",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "update",
+            "method": "PUT",
+            "path": "/recipes/51",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          },
+          {
+            "op": "delete",
+            "method": "DELETE",
+            "path": "/recipes/51",
+            "candidate_lines": 1,
+            "valid_audit_entry": false,
+            "missing_fields": [
+              "user_id",
+              "action_type",
+              "resource_id"
+            ]
+          }
+        ],
+        "expected_entry_count": 3
+      },
+      "scenarios": [
+        {
+          "scenario": "create_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_status_ok",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "create_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "update_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "delete_audit_entry_complete",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_entry_count_exactly_3",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_all_fields_nonnull",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        },
+        {
+          "scenario": "audit_user_scoped",
+          "ideal": "true",
+          "observed_token": "false",
+          "api_correct": false
+        }
+      ]
+    }
+  ]
+}

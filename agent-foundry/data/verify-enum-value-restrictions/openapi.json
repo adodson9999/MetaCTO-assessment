@@ -1,0 +1,228 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON enum-restriction surface (forge test spec)",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "paths": {
+    "/products/add": {
+      "post": {
+        "operationId": "products_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "availabilityStatus": {
+                    "type": "string",
+                    "enum": [
+                      "IN_STOCK",
+                      "LOW_STOCK",
+                      "OUT_OF_STOCK"
+                    ]
+                  }
+                },
+                "required": [
+                  "title",
+                  "availabilityStatus"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "Forge Widget",
+                "price": 9.99,
+                "availabilityStatus": "IN_STOCK"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "operationId": "users_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": [
+                      "MALE",
+                      "FEMALE",
+                      "OTHER"
+                    ]
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "ADMIN",
+                      "MODERATOR",
+                      "USER"
+                    ]
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "gender"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "firstName": "Forge",
+                "gender": "MALE",
+                "role": "USER"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/todos/add": {
+      "post": {
+        "operationId": "todos_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "todo": {
+                    "type": "string"
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH"
+                    ]
+                  }
+                },
+                "required": [
+                  "todo",
+                  "priority"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "todo": "Ship the foundry",
+                "completed": false,
+                "userId": 1,
+                "priority": "MEDIUM"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/posts/add": {
+      "post": {
+        "operationId": "posts_add",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "DRAFT",
+                      "PUBLISHED",
+                      "ARCHIVED"
+                    ]
+                  },
+                  "visibility": {
+                    "type": "string",
+                    "enum": [
+                      "PUBLIC",
+                      "PRIVATE"
+                    ],
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "title",
+                  "status"
+                ],
+                "additionalProperties": false
+              },
+              "example": {
+                "title": "A Forge Post",
+                "userId": 1,
+                "status": "PUBLISHED",
+                "visibility": "PUBLIC"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "validation error"
+          }
+        }
+      }
+    }
+  }
+}

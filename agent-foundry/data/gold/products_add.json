@@ -1,0 +1,508 @@
+{
+  "slug": "products_add",
+  "method": "POST",
+  "path": "/products/add",
+  "schema": {
+    "fields": {
+      "title": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "description": {
+        "type": "string",
+        "maxLength": 500
+      },
+      "price": {
+        "type": "number"
+      },
+      "stock": {
+        "type": "integer"
+      },
+      "category": {
+        "type": "string",
+        "maxLength": 60
+      }
+    },
+    "required": [
+      "title",
+      "price"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "description": null,
+        "price": null,
+        "stock": null,
+        "category": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "title:key_absent",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "title:key_present_null",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "price:key_absent",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "price:key_present_null",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": null,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:INT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": 42,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:FLOAT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": 3.14,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:BOOL_TRUE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": true,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:BOOL_FALSE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": false,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:LIST_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": [
+          1,
+          "a",
+          true
+        ],
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:OBJECT_VAL",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": {
+          "key": "value"
+        },
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "title:NULL_NONE",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": null,
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:BOOL_TRUE",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": true,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:BOOL_FALSE",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": false,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:STRING_VAL",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": "wrong_type_string",
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:CHAR_VAL",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": "x",
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:LIST_VAL",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": [
+          1,
+          "a",
+          true
+        ],
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:OBJECT_VAL",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": {
+          "key": "value"
+        },
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "price:NULL_NONE",
+      "field": "price",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": null,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "title",
+      "field": "title",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "description",
+      "field": "description",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools",
+        "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "category",
+      "field": "category",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ]
+}

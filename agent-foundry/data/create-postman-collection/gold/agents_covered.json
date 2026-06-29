@@ -1,0 +1,6 @@
+{
+  "scenario": "agents_covered",
+  "ideal": "5",
+  "observed_token": "5",
+  "api_correct": true
+}

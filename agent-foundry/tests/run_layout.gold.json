@@ -1,0 +1,10 @@
+{
+  "policy": "results/ contains ONLY per-run trees: <YYYY-MM-DD>/<HH-MM-SS>/{TestCases,BugReport}/<agent>/{cases.json,cases.md}. No runs/, no bug-reports/, no flat agent folders, no bespoke buckets, no loose files.",
+  "results_top_level": "date directories only, matching ^\\d{4}-\\d{2}-\\d{2}$",
+  "time_dir_regex": "^\\d{2}-\\d{2}-\\d{2}$",
+  "sections": {"TestCases": "required (>=1 agent)", "BugReport": "optional (only agents with a confirmed doc-backed bug)", "Postman": "optional (collection.json + environment.json deliverable)"},
+  "agent_dir_files": ["cases.json", "cases.md"],
+  "postman_files": ["collection.json", "environment.json"],
+  "forbidden_top_level": ["runs", "bug-reports", "authz", "clarity", "crud", "schema", "status"],
+  "ignored": [".DS_Store"]
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "posts_add",
+  "method": "POST",
+  "path": "/posts/add",
+  "request_body": {
+    "title": "A Forge Post",
+    "body": "hello world",
+    "userId": 1,
+    "tags": [
+      "a"
+    ]
+  },
+  "actual_code": 201,
+  "actual_class": "2xx",
+  "matched_response_key": "2xx",
+  "documented_schema": false,
+  "fields_validated": 0,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "conformance": "n/a",
+  "response_body": {
+    "id": 252,
+    "title": "A Forge Post",
+    "body": "hello world",
+    "userId": 1,
+    "tags": [
+      "a"
+    ]
+  },
+  "note": "response status documented as description-only; no JSON Schema present -> nothing to validate (spec TODO)."
+}

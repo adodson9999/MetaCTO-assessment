@@ -1,0 +1,6 @@
+{
+  "scenario": "headers_correct",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

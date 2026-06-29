@@ -1,0 +1,28 @@
+{
+  "description": "Coverage floor for the four assessment Core Requirements. The deterministic core_requirements contract MUST cover every scenario_id below every run; the builders MUST emit the 8-field test cases + a 4-folder Postman collection. Guarded by G14–G17 and test_core_requirements.py / test_core_gates.py.",
+  "agent_of_area": {
+    "Authentication": "test-authentication-flows",
+    "CRUD": "verify-crud-operation-integrity",
+    "Search & Filtering": "validate-search-and-filter-queries"
+  },
+  "required_scenarios": {
+    "test-authentication-flows": [
+      "AUTH-LOGIN-VALID", "AUTH-LOGIN-WRONGPASS", "AUTH-LOGIN-UNKNOWN",
+      "AUTH-ME-VALID", "AUTH-ME-MISSING", "AUTH-ME-MALFORMED", "AUTH-ME-EXPIRED",
+      "AUTH-REFRESH-VALID", "AUTH-REFRESH-MISSING"
+    ],
+    "verify-crud-operation-integrity": [
+      "CRUD-READ-ONE", "CRUD-CREATE", "CRUD-CREATE-NONPERSIST", "CRUD-UPDATE",
+      "CRUD-DELETE", "CRUD-READ-MISSING"
+    ],
+    "validate-search-and-filter-queries": [
+      "SEARCH-KEYWORD", "FILTER-CATEGORY", "PAGE-LIMIT-SKIP", "SELECT-FIELDS", "SORT-ASC"
+    ]
+  },
+  "testcase_fields": ["test_case_id", "title_summary", "preconditions", "test_steps",
+                      "test_data", "expected_result", "actual_result", "status"],
+  "statuses": ["Pass", "Fail", "Blocked"],
+  "postman_folders": ["Authentication", "CRUD — Products", "Search & Filtering", "Error Handling"],
+  "postman_variables": ["base_url", "token", "refreshToken", "newProductId"],
+  "login_captures": ["token", "refreshToken"]
+}

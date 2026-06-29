@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / verify-sorting-behavior",
+  "metric_name": "sort_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted, or seed not emitted -> observed 'missing'/'false') counts as a mismatch. Denominator = all 12 gold scenarios.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-sorting-behavior/gold.json",
+  "headline_metric": "sorting_accuracy_rate_pct",
+  "scenarios_total": 12,
+  "rationale": "All four agents seed the SAME isolated reference resource and issue the same read-only sort GETs, so the headline Sorting Accuracy Rate (the four ordering cases where every adjacent record pair is correctly ordered) is a property of the reference resource, not the agent — a correctly-constructed plan scores 100%. Fidelity-to-gold instead measures each framework's test quality: did it emit exactly 20 distinct seed records with the right non-sequential names and two-second-apart created_at timestamps (seed_count), construct the four ascending/descending ordering cases with the correct field+direction+params (the four *_status 200 and *_ordering true scenarios), and construct the two negative probes so the invalid sort field returns 400 with a message naming the field (invalid_sort_field_status 400 + invalid_sort_field_message true) and the invalid order direction returns 400 (invalid_order_direction_status 400). The headline sorting_accuracy_rate_pct is still emitted by every agent as the task's QA finding.",
+  "metric_definition_for_task": "Sorting Accuracy Rate = (sort requests where all N-1 adjacent pairs are in correct order / total sort test cases) x 100. Pass: 100%. Fail: any adjacent pair where record[i] > record[i+1] in ascending sort or record[i] < record[i+1] in descending sort.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (seed wrong or incomplete, any sort case uncovered or mis-constructed, any ordering not realized, or any negative-probe status/message divergent from gold)"
+}

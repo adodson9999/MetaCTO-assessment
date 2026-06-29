@@ -1,0 +1,78 @@
+{
+  "bug_index": 8,
+  "agent_name": "webhook-delivery-tester",
+  "status": "TIMED_OUT",
+  "severity": "MEDIUM",
+  "priority": "P3",
+  "title": "[webhook-delivery-tester] Agent timed out after 300 seconds \u2014 no output produced",
+  "decision": {
+    "title": "[webhook-delivery-tester] Agent timed out after 300 seconds \u2014 no output produced",
+    "severity": "MEDIUM",
+    "priority": "P3",
+    "testing_steps": [
+      {
+        "tc_id": "tc-webhook-001",
+        "step_id": "tc-webhook-001-s1",
+        "step_text": "POST /webhooks/register with body = a callback URL and Asserts exactly 201.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": false,
+        "folder": "webhook-delivery-tester",
+        "item_name": "tc-webhook-001",
+        "new_item": {
+          "name": "tc-webhook-001",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/webhooks/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "webhooks",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                  "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

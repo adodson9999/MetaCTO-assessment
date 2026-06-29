@@ -1,0 +1,336 @@
+{
+  "title": "Content-type-negotiation endpoint catalogue (authored for the task)",
+  "description": "Agents are briefed one endpoint at a time. 'accept' endpoints get Accept-header response-negotiation probes; 'consumes' endpoints get request Content-Type probes. DummyJSON is never modified \u2014 read-only GETs for accept, non-persistent simulated writes for consumes.",
+  "target": "http://localhost:8899",
+  "supported_formats": [
+    "application/json",
+    "application/xml",
+    "text/csv"
+  ],
+  "default_format": "application/json",
+  "unsupported_accept_probe": "text/html",
+  "wildcard_probe": "*/*",
+  "supported_content_type": "application/json",
+  "unsupported_content_type_probes": [
+    "application/xml",
+    "text/plain"
+  ],
+  "endpoints": [
+    {
+      "slug": "get_products",
+      "kind": "accept",
+      "endpoint": "/products"
+    },
+    {
+      "slug": "get_products_1",
+      "kind": "accept",
+      "endpoint": "/products/1"
+    },
+    {
+      "slug": "get_posts",
+      "kind": "accept",
+      "endpoint": "/posts"
+    },
+    {
+      "slug": "get_posts_1",
+      "kind": "accept",
+      "endpoint": "/posts/1"
+    },
+    {
+      "slug": "get_todos",
+      "kind": "accept",
+      "endpoint": "/todos"
+    },
+    {
+      "slug": "get_todos_1",
+      "kind": "accept",
+      "endpoint": "/todos/1"
+    },
+    {
+      "slug": "get_users",
+      "kind": "accept",
+      "endpoint": "/users"
+    },
+    {
+      "slug": "get_users_1",
+      "kind": "accept",
+      "endpoint": "/users/1"
+    },
+    {
+      "slug": "get_recipes",
+      "kind": "accept",
+      "endpoint": "/recipes"
+    },
+    {
+      "slug": "get_recipes_1",
+      "kind": "accept",
+      "endpoint": "/recipes/1"
+    },
+    {
+      "slug": "get_carts",
+      "kind": "accept",
+      "endpoint": "/carts"
+    },
+    {
+      "slug": "get_carts_1",
+      "kind": "accept",
+      "endpoint": "/carts/1"
+    },
+    {
+      "slug": "get_comments",
+      "kind": "accept",
+      "endpoint": "/comments"
+    },
+    {
+      "slug": "get_comments_1",
+      "kind": "accept",
+      "endpoint": "/comments/1"
+    },
+    {
+      "slug": "auth_login",
+      "kind": "consumes",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "valid": {
+        "username": "emilys",
+        "password": "emilyspass"
+      }
+    },
+    {
+      "slug": "products_add",
+      "kind": "consumes",
+      "endpoint": "/products/add",
+      "method": "POST",
+      "valid": {
+        "title": "Forge Test Widget",
+        "price": 9.99,
+        "stock": 5,
+        "category": "tools"
+      }
+    },
+    {
+      "slug": "products_put",
+      "kind": "consumes",
+      "endpoint": "/products/{id}",
+      "method": "PUT",
+      "valid": {
+        "title": "Updated Widget",
+        "price": 12.5
+      }
+    },
+    {
+      "slug": "products_patch",
+      "kind": "consumes",
+      "endpoint": "/products/{id}",
+      "method": "PATCH",
+      "valid": {
+        "title": "Patched Widget"
+      }
+    },
+    {
+      "slug": "posts_add",
+      "kind": "consumes",
+      "endpoint": "/posts/add",
+      "method": "POST",
+      "valid": {
+        "title": "A Forge Post",
+        "body": "hello world",
+        "userId": 1,
+        "tags": [
+          "a"
+        ]
+      }
+    },
+    {
+      "slug": "posts_put",
+      "kind": "consumes",
+      "endpoint": "/posts/{id}",
+      "method": "PUT",
+      "valid": {
+        "title": "Updated Post",
+        "body": "edited"
+      }
+    },
+    {
+      "slug": "posts_patch",
+      "kind": "consumes",
+      "endpoint": "/posts/{id}",
+      "method": "PATCH",
+      "valid": {
+        "title": "Patched Post"
+      }
+    },
+    {
+      "slug": "todos_add",
+      "kind": "consumes",
+      "endpoint": "/todos/add",
+      "method": "POST",
+      "valid": {
+        "todo": "Ship the foundry",
+        "completed": false,
+        "userId": 1
+      }
+    },
+    {
+      "slug": "todos_put",
+      "kind": "consumes",
+      "endpoint": "/todos/{id}",
+      "method": "PUT",
+      "valid": {
+        "todo": "Updated todo",
+        "completed": true
+      }
+    },
+    {
+      "slug": "todos_patch",
+      "kind": "consumes",
+      "endpoint": "/todos/{id}",
+      "method": "PATCH",
+      "valid": {
+        "completed": true
+      }
+    },
+    {
+      "slug": "users_add",
+      "kind": "consumes",
+      "endpoint": "/users/add",
+      "method": "POST",
+      "valid": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "slug": "users_put",
+      "kind": "consumes",
+      "endpoint": "/users/{id}",
+      "method": "PUT",
+      "valid": {
+        "firstName": "Updated",
+        "lastName": "Name"
+      }
+    },
+    {
+      "slug": "users_patch",
+      "kind": "consumes",
+      "endpoint": "/users/{id}",
+      "method": "PATCH",
+      "valid": {
+        "firstName": "Patched"
+      }
+    },
+    {
+      "slug": "recipes_add",
+      "kind": "consumes",
+      "endpoint": "/recipes/add",
+      "method": "POST",
+      "valid": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "slug": "recipes_put",
+      "kind": "consumes",
+      "endpoint": "/recipes/{id}",
+      "method": "PUT",
+      "valid": {
+        "name": "Updated Stew",
+        "ingredients": [
+          "salt"
+        ]
+      }
+    },
+    {
+      "slug": "recipes_patch",
+      "kind": "consumes",
+      "endpoint": "/recipes/{id}",
+      "method": "PATCH",
+      "valid": {
+        "name": "Patched Stew"
+      }
+    },
+    {
+      "slug": "carts_add",
+      "kind": "consumes",
+      "endpoint": "/carts/add",
+      "method": "POST",
+      "valid": {
+        "userId": 1,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "slug": "carts_put",
+      "kind": "consumes",
+      "endpoint": "/carts/{id}",
+      "method": "PUT",
+      "valid": {
+        "merge": true,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "slug": "carts_patch",
+      "kind": "consumes",
+      "endpoint": "/carts/{id}",
+      "method": "PATCH",
+      "valid": {
+        "merge": false,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "slug": "comments_add",
+      "kind": "consumes",
+      "endpoint": "/comments/add",
+      "method": "POST",
+      "valid": {
+        "body": "Nice post",
+        "postId": 1,
+        "userId": 1
+      }
+    },
+    {
+      "slug": "comments_put",
+      "kind": "consumes",
+      "endpoint": "/comments/{id}",
+      "method": "PUT",
+      "valid": {
+        "body": "Updated comment"
+      }
+    },
+    {
+      "slug": "comments_patch",
+      "kind": "consumes",
+      "endpoint": "/comments/{id}",
+      "method": "PATCH",
+      "valid": {
+        "body": "Patched comment"
+      }
+    }
+  ]
+}

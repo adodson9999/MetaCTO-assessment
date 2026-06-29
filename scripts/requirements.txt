@@ -1,0 +1,5 @@
+# Contextual-retrieval backend dependencies (scripts/contextual_retrieval.py)
+# Local, offline-capable: LanceDB store + BGE-M3 embeddings + BM25 full-text.
+lancedb>=0.13
+sentence-transformers>=3.0
+transformers>=4.40

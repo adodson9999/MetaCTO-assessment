@@ -1,0 +1,33 @@
+{
+  "slug": "http_500",
+  "method": "GET",
+  "path": "/http/500",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    500
+  ],
+  "cases": [
+    {
+      "documented_code": 500,
+      "trigger": "passthrough",
+      "request": {
+        "code": 500,
+        "method": "GET",
+        "path": "/http/500",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 500,
+      "body": "{\"status\":500,\"title\":\"Internal Server Error\",\"type\":\"about:blank\",\"detail\":\"Internal Server Error\",\"message\":\"Internal Server Error\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

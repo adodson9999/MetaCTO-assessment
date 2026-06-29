@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review_output.schema.json",
+  "title": "review_output",
+  "description": "The one and only output shape every code-review-perspective agent must emit: a rating out of 100 and the notes explaining why it is not 100 and how to reach 100.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rating", "notes"],
+  "properties": {
+    "rating": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Integer score from 0 (worst through this lens) to 100 (nothing to improve through this lens)."
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "When rating < 100: the reason the line/function/script is not 100 AND what would make it 100. When rating == 100: a statement that no change is needed."
+    }
+  }
+}

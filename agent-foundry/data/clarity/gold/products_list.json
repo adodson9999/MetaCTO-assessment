@@ -1,0 +1,33 @@
+{
+  "slug": "products_list",
+  "method": "GET",
+  "path": "/products",
+  "auth_required": false,
+  "is_hook": false,
+  "documented_codes": [
+    400
+  ],
+  "cases": [
+    {
+      "documented_code": 400,
+      "trigger": "bad_query",
+      "request": {
+        "code": 400,
+        "method": "GET",
+        "path": "/products?skip=abc",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 400,
+      "body": "{\"message\":\"Invalid 'skip' - must be a number\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

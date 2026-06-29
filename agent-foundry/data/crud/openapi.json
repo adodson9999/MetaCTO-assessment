@@ -1,0 +1,635 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DummyJSON (authored for the CRUD-integrity task)",
+    "version": "1.0.0",
+    "description": "Per-resource CRUD contract authored from DummyJSON routes/controllers. Agents parse THIS spec; ground truth is the live API's observed HTTP code + the read-only DB state per (resource, step)."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8899"
+    }
+  ],
+  "x-crud-resources": [
+    "products",
+    "posts",
+    "comments",
+    "todos",
+    "carts",
+    "users",
+    "recipes"
+  ],
+  "paths": {
+    "/products/add": {
+      "post": {
+        "operationId": "products_create",
+        "x-crud-resource": "products",
+        "x-crud-table": "products",
+        "x-crud-create-body": {
+          "title": "Test-001",
+          "price": 42,
+          "stock": 7,
+          "brand": "Test-Brand",
+          "category": "smartphones"
+        },
+        "x-crud-update-body": {
+          "title": "Test-001-updated",
+          "price": 99,
+          "stock": 13
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "title": "Test-001",
+                "price": 42,
+                "stock": 7,
+                "brand": "Test-Brand",
+                "category": "smartphones"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "products_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "products_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "Test-001-updated",
+                "price": 99,
+                "stock": 13
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "products_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/posts/add": {
+      "post": {
+        "operationId": "posts_create",
+        "x-crud-resource": "posts",
+        "x-crud-table": "posts",
+        "x-crud-create-body": {
+          "title": "Test-001",
+          "body": "original body",
+          "userId": 1,
+          "tags": [
+            "x"
+          ],
+          "reactions": 5
+        },
+        "x-crud-update-body": {
+          "title": "Test-001-updated",
+          "body": "updated body",
+          "reactions": 9
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "title": "Test-001",
+                "body": "original body",
+                "userId": 1,
+                "tags": [
+                  "x"
+                ],
+                "reactions": 5
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "operationId": "posts_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "posts_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "Test-001-updated",
+                "body": "updated body",
+                "reactions": 9
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "posts_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/comments/add": {
+      "post": {
+        "operationId": "comments_create",
+        "x-crud-resource": "comments",
+        "x-crud-table": "comments",
+        "x-crud-create-body": {
+          "body": "Test comment 001",
+          "postId": 1,
+          "userId": 1
+        },
+        "x-crud-update-body": {
+          "body": "Test comment 001 - updated"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "body": "Test comment 001",
+                "postId": 1,
+                "userId": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "operationId": "comments_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "comments_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "body": "Test comment 001 - updated"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "comments_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/todos/add": {
+      "post": {
+        "operationId": "todos_create",
+        "x-crud-resource": "todos",
+        "x-crud-table": "todos",
+        "x-crud-create-body": {
+          "todo": "Test todo 001",
+          "completed": false,
+          "userId": 1
+        },
+        "x-crud-update-body": {
+          "todo": "Test todo 001 - updated",
+          "completed": true
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "todo": "Test todo 001",
+                "completed": false,
+                "userId": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "operationId": "todos_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "todos_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "todo": "Test todo 001 - updated",
+                "completed": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "todos_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/carts/add": {
+      "post": {
+        "operationId": "carts_create",
+        "x-crud-resource": "carts",
+        "x-crud-table": "carts",
+        "x-crud-create-body": {
+          "userId": 1,
+          "products": [
+            {
+              "id": 1,
+              "quantity": 2
+            }
+          ]
+        },
+        "x-crud-update-body": {
+          "merge": false,
+          "products": [
+            {
+              "id": 1,
+              "quantity": 5
+            }
+          ]
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "userId": 1,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 2
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/carts/{id}": {
+      "get": {
+        "operationId": "carts_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "carts_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "merge": false,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 5
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "carts_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "operationId": "users_create",
+        "x-crud-resource": "users",
+        "x-crud-table": "users",
+        "x-crud-create-body": {
+          "firstName": "Test",
+          "lastName": "User",
+          "age": 30,
+          "email": "test001@example.com",
+          "phone": "+10000000001"
+        },
+        "x-crud-update-body": {
+          "firstName": "Test-upd",
+          "lastName": "User-upd",
+          "age": 31
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "firstName": "Test",
+                "lastName": "User",
+                "age": 30,
+                "email": "test001@example.com",
+                "phone": "+10000000001"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "users_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "users_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "firstName": "Test-upd",
+                "lastName": "User-upd",
+                "age": 31
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "users_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/recipes/add": {
+      "post": {
+        "operationId": "recipes_create",
+        "x-crud-resource": "recipes",
+        "x-crud-table": "recipes",
+        "x-crud-create-body": {
+          "name": "Test Recipe 001",
+          "cuisine": "Italian",
+          "difficulty": "Easy",
+          "servings": 4,
+          "caloriesPerServing": 200
+        },
+        "x-crud-update-body": {
+          "name": "Test Recipe 001 - updated",
+          "cuisine": "Mexican",
+          "difficulty": "Hard"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": {
+                "name": "Test Recipe 001",
+                "cuisine": "Italian",
+                "difficulty": "Easy",
+                "servings": 4,
+                "caloriesPerServing": 200
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created"
+          }
+        }
+      }
+    },
+    "/recipes/{id}": {
+      "get": {
+        "operationId": "recipes_read",
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "operationId": "recipes_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Test Recipe 001 - updated",
+                "cuisine": "Mexican",
+                "difficulty": "Hard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "recipes_delete",
+        "responses": {
+          "200": {
+            "description": "deleted"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    }
+  }
+}

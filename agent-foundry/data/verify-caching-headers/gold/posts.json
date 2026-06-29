@@ -1,0 +1,190 @@
+{
+  "collection": "/posts",
+  "target_id": 1,
+  "reference_plan": {
+    "collection": "/posts",
+    "id_field": "id",
+    "target_id": 1,
+    "cacheable_get": {
+      "label": "get",
+      "method": "GET",
+      "path": "/posts/1"
+    },
+    "update_request": {
+      "label": "update",
+      "method": "PUT",
+      "path": "/posts/1",
+      "body": {
+        "title": "caching-probe-changed"
+      }
+    },
+    "mutation_requests": [
+      {
+        "label": "post",
+        "method": "POST",
+        "path": "/posts/add",
+        "body": {
+          "title": "caching-probe"
+        }
+      },
+      {
+        "label": "put",
+        "method": "PUT",
+        "path": "/posts/1",
+        "body": {
+          "title": "caching-probe"
+        }
+      },
+      {
+        "label": "patch",
+        "method": "PATCH",
+        "path": "/posts/1",
+        "body": {
+          "title": "caching-probe"
+        }
+      },
+      {
+        "label": "delete",
+        "method": "DELETE",
+        "path": "/posts/1",
+        "body": null
+      }
+    ]
+  },
+  "request_log": [
+    {
+      "label": "get",
+      "method": "GET",
+      "path": "/posts/1",
+      "status": 200,
+      "cache_control": null,
+      "etag": "W/\"1c5-HOjJyPXFuJStMSX7RB8h5QIDDRY\"",
+      "body_len": 453
+    },
+    {
+      "label": "conditional_get",
+      "method": "GET",
+      "path": "/posts/1",
+      "if_none_match": "W/\"1c5-HOjJyPXFuJStMSX7RB8h5QIDDRY\"",
+      "status": 304,
+      "body_len": 0
+    },
+    {
+      "label": "update",
+      "method": "PUT",
+      "path": "/posts/1",
+      "status": 200
+    },
+    {
+      "label": "reget",
+      "method": "GET",
+      "path": "/posts/1",
+      "status": 200,
+      "etag": "W/\"1c5-HOjJyPXFuJStMSX7RB8h5QIDDRY\"",
+      "etag_changed": false
+    },
+    {
+      "label": "stale_conditional_get",
+      "method": "GET",
+      "path": "/posts/1",
+      "if_none_match": "W/\"1c5-HOjJyPXFuJStMSX7RB8h5QIDDRY\"",
+      "status": 304
+    },
+    {
+      "label": "mutation_post",
+      "method": "POST",
+      "path": "/posts/add",
+      "status": 400,
+      "cache_control": null
+    },
+    {
+      "label": "mutation_put",
+      "method": "PUT",
+      "path": "/posts/1",
+      "status": 200,
+      "cache_control": null
+    },
+    {
+      "label": "mutation_patch",
+      "method": "PATCH",
+      "path": "/posts/1",
+      "status": 200,
+      "cache_control": null
+    },
+    {
+      "label": "mutation_delete",
+      "method": "DELETE",
+      "path": "/posts/1",
+      "status": 200,
+      "cache_control": null
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "cache_control_positive_maxage",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "etag_present_nonempty",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "conditional_get_returns_304",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "conditional_get_body_empty",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "update_returns_200",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "etag_changes_after_update",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "stale_etag_returns_200",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "post_no_store",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "put_no_store",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "patch_no_store",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    },
+    {
+      "scenario": "delete_no_store",
+      "ideal": "true",
+      "observed_token": "false",
+      "api_correct": false
+    }
+  ]
+}

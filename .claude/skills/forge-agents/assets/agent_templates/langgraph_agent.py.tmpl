@@ -1,0 +1,73 @@
+# LangGraph agent — template. The gated prompt from agent_built_prompts/langgraph.prompt.md
+# fills SYSTEM_PROMPT. Built to be measured: emits results/runs/<run-id>/langgraph.json.
+import json, os, sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+sys.path.insert(0, str(Path(os.environ.get("FORGE_WORKSPACE", ".")) / ".." / "scripts"))
+import backend_config  # noqa: E402
+
+WORKSPACE = Path(os.environ.get("FORGE_WORKSPACE", "."))
+RUN_ID = os.environ.get("FORGE_RUN_ID", "manual")
+AGENT = "langgraph"
+SANDBOX_ROOT = Path(os.environ.get("FORGE_SANDBOX_ROOT", WORKSPACE)).resolve()
+
+SYSTEM_PROMPT = """<<< paste langgraph.prompt.md (debate-gated, approved lines only) >>>"""
+
+
+def _model():
+    spec = backend_config.resolve(WORKSPACE)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"])
+    from langchain_community.chat_models import ChatOllama
+    return ChatOllama(model=spec["native"]["model"], base_url=spec["base_url"].replace("/v1", ""))
+
+
+def _assert_sandbox(path: Path):
+    if SANDBOX_ROOT not in path.resolve().parents and path.resolve() != SANDBOX_ROOT:
+        raise PermissionError(f"sandbox violation: {path}")
+
+
+def build_graph():
+    from langgraph.graph import StateGraph, END
+    from typing import TypedDict
+
+    class S(TypedDict):
+        task: str
+        output: str
+
+    def do_task(state: S) -> S:
+        llm = _model()
+        msg = llm.invoke(f"{SYSTEM_PROMPT}\n\nTASK:\n{state['task']}")
+        return {"task": state["task"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("do_task", do_task)
+    g.set_entry_point("do_task")
+    g.add_edge("do_task", END)
+    return g.compile()
+
+
+def emit(metric_value: float, raw_output_path: str):
+    metric = json.loads((WORKSPACE / "judge" / "metric.json").read_text())
+    out = WORKSPACE / "results" / "runs" / RUN_ID / f"{AGENT}.json"
+    _assert_sandbox(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps({
+        "agent": AGENT, "run_id": RUN_ID,
+        "metric_name": metric["metric_name"], "metric_value": metric_value,
+        "raw_output_path": raw_output_path,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }, indent=2))
+
+
+if __name__ == "__main__":
+    task = (WORKSPACE / "task_spec.md").read_text()
+    result = build_graph().invoke({"task": task, "output": ""})
+    raw = WORKSPACE / "results" / "runs" / RUN_ID / f"{AGENT}.out.txt"
+    raw.parent.mkdir(parents=True, exist_ok=True)
+    raw.write_text(result["output"])
+    # The judge computes the actual metric from raw output via judge/metric.json's
+    # "how_computed". Emit a placeholder 0.0 here only if scoring is deferred.
+    emit(0.0, str(raw))

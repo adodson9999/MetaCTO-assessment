@@ -1,0 +1,27 @@
+[
+  {
+    "name": "auth-flow-checker",
+    "spec_path": "agents/auth-flow-checker.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "deprecated-v1-tester",
+    "spec_path": "agents/deprecated-v1-tester.prompt.md",
+    "enabled": false
+  },
+  {
+    "name": "schema-validator",
+    "spec_path": "agents/schema-validator.prompt.md",
+    "enabled": true
+  },
+  {
+    "name": "experimental-grpc-prober",
+    "spec_path": "agents/experimental-grpc-prober.prompt.md",
+    "enabled": false
+  },
+  {
+    "name": "cors-header-checker",
+    "spec_path": "agents/cors-header-checker.prompt.md",
+    "enabled": true
+  }
+]

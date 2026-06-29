@@ -1,0 +1,24 @@
+{
+  "slug": "http_403",
+  "method": "GET",
+  "path": "/http/403",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    403
+  ],
+  "cases": [
+    {
+      "documented_code": 403,
+      "request": {
+        "code": 403,
+        "method": "GET",
+        "path": "/http/403",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 403,
+      "passed": true
+    }
+  ]
+}

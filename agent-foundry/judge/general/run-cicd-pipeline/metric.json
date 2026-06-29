@@ -1,0 +1,20 @@
+{
+  "task": "general / run-cicd-pipeline",
+  "metric_name": "pipeline_summary_fidelity_pct",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (scenario x summary_field) cells where the agent's emitted ten-field pipeline-summary matches the deterministic gold summary. Denominator = scenarios x 10 fields (here 4 x 10 = 40). A field the agent omitted or got wrong counts as a mismatch. The three *_agents cells are scored on the NAME SET (the load-bearing classification result); list ordering and bucket-partition exactness are scored separately by report_conformance.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/run-cicd-pipeline/gold.json",
+  "headline_metric": "pass_rate_pct",
+  "fields_per_scenario": 10,
+  "discriminators": {
+    "rank_key": "fidelity desc, report_conformance desc, tokens asc, elapsed asc",
+    "report_conformance_pct": "DETERMINISTIC structural exactness of the RAW emitted summary vs gold (exactly the ten keys, native-int counts, the three *_agents as ordered plain-string lists matching gold, and the three failure buckets partitioning agents_failed with no name in two buckets) scored BEFORE the tolerant fidelity normalisation — separates frameworks when fidelity ties at 100%.",
+    "efficiency": "total LLM tokens (lower better) then wall-clock elapsed (lower better); tokens=0 (framework didn't expose usage) sorts last among ties."
+  },
+  "rationale": "All four agents classify the SAME local scenario fixtures, so the headline Pipeline Agent Pass Rate (agents_passed / agents_total, per run) is a property of the fixtures, not the agent — it is the same for every agent that classifies correctly (100%, 33.33%, 66.67%, 50% for clean_all_pass, mixed_batch, disabled_and_empty_stdout, timeout_precedence). Pipeline-Summary Fidelity instead measures each framework's classification quality: did it apply the enabled-filter, parse stdout to detect MALFORMED (empty counts), honour the TIMED_OUT > MALFORMED > FAILED > PASSED precedence so the three failure buckets stay mutually exclusive, count agents_total/passed/failed, and copy run_id/model/model_digest/timestamp through unchanged. Because a deterministic, tightly debate-gated task saturates correctness, report_conformance + efficiency break ties so the leaderboard stays strictly ranked.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold field)",
+  "fail_condition": "fidelity < 100% (any field of any scenario diverges from gold)",
+  "task_metric_note": "The TASK's own gate metric is Pipeline Agent Pass Rate = (enabled agents that exit 0 AND whose stdout parses as valid JSON / total enabled agents) x 100; pass = exactly 100 (zero failures), fail = any value < 100 (a single failed, malformed, or timed-out agent sets FAIL_COUNT > 0, exits the pipeline with code 1, and blocks all downstream deployment, no tolerance). TIMED_OUT agents count as failures. The honest finding from the fixtures: runs mixed_batch, disabled_and_empty_stdout, and timeout_precedence MUST be blocked; clean_all_pass may deploy."
+}

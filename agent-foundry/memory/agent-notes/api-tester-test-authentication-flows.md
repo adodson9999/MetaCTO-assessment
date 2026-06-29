@@ -1,0 +1,10 @@
+- [2026-06-25T20:05:34.137640+00:00] run=auth-run-1 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-25T20:27:17.933934+00:00] run=evolve-auth-api-tester-test-authentication-flows-base auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-25T20:28:56.572492+00:00] run=evolve-auth-api-tester-test-authentication-flows-cand auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-26T20:33:37.673908+00:00] run=RUN-20260626-200550 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-28T03:21:15.556689+00:00] run=RUN-20260628-025411 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-28T17:43:11.002776+00:00] run=RUN-20260628-171526 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-29T01:03:31.955047+00:00] run=RUN-20260629-003439 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-29T12:46:49.242373+00:00] run=RUN-20260629-121847 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-29T17:25:59.971320+00:00] run=2026-06-29_17-10-02 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-06-29T19:44:03.293380+00:00] run=2026-06-29_19-27-43 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance

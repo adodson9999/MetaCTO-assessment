@@ -1,0 +1,26 @@
+{
+  "task": "general / test-case-creator (n600)",
+  "metric_name": "test_case_coverage_rate",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Authoritative re-scoring (judge/general/test-case-creator/score.py): the judge loads each agent's EMITTED registry (results/runs/<run>/<agent>.emitted-registry.json) and recomputes coverage against the deterministic gold itself — it never trusts the number the harness self-reported. Coverage = percentage of gold test cases (one per numbered step across every enabled agent spec in the build manifest) reproduced under a matching tc_id of the form [agent]-step-[step_id], counting ONLY schema-valid cases (G5). Denominator = total steps extracted from all enabled agent specs by the deterministic reference (agents/common/testcase_spec.py).",
+  "headline_metric": "quality_score",
+  "headline_how_computed": "quality_score = coverage x field-accuracy x set-equality, in percent. It is 100 ONLY for a perfect reproduction and strictly drops for any single-knob defect: dropping a step (coverage), flipping one involves_* or blanking an Assert clause (field-accuracy), or inventing an extra case (set-equality). This is the rank key; coverage remains the contract metric written back as metric_value.",
+  "tiebreaker_metric": "test_case_field_accuracy_pct",
+  "tiebreaker_how_computed": "Over the gold cases the agent reproduced, the percentage of the eleven registry fields that exactly equal the deterministic gold field (booleans exact, strings verbatim; an omitted field is a mismatch).",
+  "emit_fields": ["metric_name", "metric_value", "quality_score", "raw_output_path"],
+  "gold_path": "data/test-case-creator/gold.json",
+  "deliverable_path": "results/test-case-registry.json",
+  "gates": {
+    "_note": "Anti-saturation metric gates added 2026-06-28 (update-agent). Authorized move: the prior reported 100% was saturation (empty/benign-wrong output was credited), not correctness. Proven by `score.py --oracle`, which exits non-zero if the metric stops discriminating.",
+    "G4_anti_saturation_oracle": "Reference input -> 100. Empty {}/[] -> 0 (never 100). Single-knob mutations (drop a step, flip one involves_*, blank an Assert clause, invent an extra case) each strictly lower quality_score. Enforced by score.py --oracle.",
+    "G5_schema_validity": "A case counts toward coverage only if it has EXACTLY the eleven keys, correct types (five involves_* booleans, the rest strings), and a unique tc_id. Malformed cases — including TC-ERR-<agent> failure sentinels — are dropped from the scored set and never credited as covered.",
+    "G6_tc_id_set_equality": "Per enabled agent, the emitted valid tc_ids must equal the gold tc_ids: no invented extras, no omissions. Invented extras penalize quality_score via the set-equality factor.",
+    "G8_gold_determinism": "Rebuilding the reference registry twice from the manifest is byte-identical (testcase_spec.build_reference_registry).",
+    "G9_denominator_intact": "gold_tc == sum of numbered steps over all enabled agent specs, and every gold tc_id is reproduced or explained by a logged failure sentinel for that agent.",
+    "G10_regression_floor": "Coverage and field-accuracy may not drop below the last accepted golden baseline (tests/golden/general/test-case-creator/golden.json). Tradeoff-authorized drops are recorded via score.py --check-regression, never silently swallowed."
+  },
+  "rationale": "Every framework receives the same build manifest and the same agent-node spec cards and must reproduce the exact per-step test-case registry: extracting every numbered step (including sub-lettered steps like 3b), forming the [agent]-step-[step_id] tc_id, copying step_ext verbatim, and computing the five case-sensitive involves_* substring flags, the capital-'Assert ' expected_outcome clauses, and the 'Fail:' fail_condition off the Metric line. The fixtures deliberately span HTTP/DB/file-write/assert/metric flag triggers, sub-lettered steps, an Assert-clause step, a '÷'/'rate' metric step, a PARSE_ERROR node with no How section (whose correct output is an empty array — a zero-step spec is success, NOT a failure), and a disabled node that must be excluded, so a framework that fumbles any rule loses cases or cells. The deterministic n600 deliverable (results/test-case-registry.json) is gap-free by construction and is what n601 (Postman Collection Creator) consumes; this metric ranks which framework most reliably reproduces it — and the anti-saturation gates ensure empty or degenerate output can never be mistaken for a perfect score.",
+  "pass_threshold": "quality_score = 100 (coverage 100%, field-accuracy 100%, zero invented extras, gaps_found = false). The oracle suite (G4) must pass before any leaderboard is trusted.",
+  "fail_condition": "Fail: any step from any enabled agent spec that is absent from the registry without a logged failure sentinel (G9 gap), any malformed case credited as covered (G5), any invented tc_id absent from gold (G6), or an empty/degenerate emission scoring above the floor (G4). A registry with gaps must not be consumed by n601 until n600 is re-run clean."
+}

@@ -1,0 +1,261 @@
+{
+  "slug": "carts_put",
+  "method": "PUT",
+  "path": "/carts/{id}",
+  "schema": {
+    "fields": {
+      "merge": {
+        "type": "boolean"
+      },
+      "products": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "products"
+    ],
+    "optional": [
+      "merge"
+    ]
+  },
+  "cases": [
+    {
+      "category": "required_state",
+      "label": "products:key_absent",
+      "field": "products",
+      "state": "key_absent",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": true
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:json_null",
+      "field": "products",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": null
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_string",
+      "field": "products",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": ""
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:integer_zero",
+      "field": "products",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": 0
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:boolean_false",
+      "field": "products",
+      "state": "boolean_false",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": false
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_array",
+      "field": "products",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": true,
+        "products": []
+      }
+    },
+    {
+      "category": "required_state",
+      "label": "products:empty_object",
+      "field": "products",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": {}
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:key_absent",
+      "field": "merge",
+      "state": "key_absent",
+      "ideal_token": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": true,
+      "payload": {
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:json_null",
+      "field": "merge",
+      "state": "json_null",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": null,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:empty_string",
+      "field": "merge",
+      "state": "empty_string",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": "",
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:integer_zero",
+      "field": "merge",
+      "state": "integer_zero",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": 0,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:empty_array",
+      "field": "merge",
+      "state": "empty_array",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": [],
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "optional_state",
+      "label": "merge:empty_object",
+      "field": "merge",
+      "state": "empty_object",
+      "ideal_token": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "api_correct": false,
+      "payload": {
+        "merge": {},
+        "products": [
+          {
+            "id": 1,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "category": "all_required_null",
+      "label": "",
+      "field": null,
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": null
+      }
+    },
+    {
+      "category": "each_required_null",
+      "label": "products",
+      "field": "products",
+      "state": null,
+      "ideal_token": "400",
+      "actual_code": 400,
+      "actual_class": "400",
+      "api_correct": true,
+      "payload": {
+        "merge": true,
+        "products": null
+      }
+    }
+  ]
+}

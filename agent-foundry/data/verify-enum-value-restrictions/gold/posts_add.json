@@ -1,0 +1,296 @@
+{
+  "slug": "posts_add",
+  "method": "POST",
+  "path": "/posts/add",
+  "schema": {
+    "fields": {
+      "title": {
+        "type": "string"
+      },
+      "userId": {
+        "type": "integer"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "DRAFT",
+          "PUBLISHED",
+          "ARCHIVED"
+        ]
+      },
+      "visibility": {
+        "type": "string",
+        "enum": [
+          "PUBLIC",
+          "PRIVATE"
+        ],
+        "nullable": true
+      }
+    },
+    "required": [
+      "title",
+      "status"
+    ],
+    "enum_fields": [
+      "status",
+      "visibility"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid_values",
+      "label": "status:DRAFT",
+      "field": "status",
+      "value_sent": "DRAFT",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "DRAFT",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "status:PUBLISHED",
+      "field": "status",
+      "value_sent": "PUBLISHED",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "status:ARCHIVED",
+      "field": "status",
+      "value_sent": "ARCHIVED",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "ARCHIVED",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "visibility:PUBLIC",
+      "field": "visibility",
+      "value_sent": "PUBLIC",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "valid_values",
+      "label": "visibility:PRIVATE",
+      "field": "visibility",
+      "value_sent": "PRIVATE",
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": "PRIVATE"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "status",
+      "field": "status",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "unknown_string",
+      "label": "visibility",
+      "field": "visibility",
+      "value_sent": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": "INVALID_ENUM_THAT_DOES_NOT_EXIST"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "status",
+      "field": "status",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "empty_string",
+      "label": "visibility",
+      "field": "visibility",
+      "value_sent": "",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": ""
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "status",
+      "field": "status",
+      "value_sent": null,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": null,
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "null_value",
+      "label": "visibility",
+      "field": "visibility",
+      "value_sent": null,
+      "ideal_token": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": true,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": null
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "status",
+      "field": "status",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": 0,
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "wrong_type",
+      "label": "visibility",
+      "field": "visibility",
+      "value_sent": 0,
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": 0
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "status",
+      "field": "status",
+      "value_sent": "draft",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "draft",
+        "visibility": "PUBLIC"
+      }
+    },
+    {
+      "category": "case_variant",
+      "label": "visibility",
+      "field": "visibility",
+      "value_sent": "public",
+      "ideal_token": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "message_has_field": null,
+      "api_correct": false,
+      "payload": {
+        "title": "A Forge Post",
+        "userId": 1,
+        "status": "PUBLISHED",
+        "visibility": "public"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1454 @@
+# https://dummyjson.com/carts
+
+Captured API response for `https://dummyjson.com/carts`.
+Registered by reference-link-factory because docling cannot parse a live JSON endpoint directly.
+
+```json
+{
+  "carts": [
+    {
+      "id": 1,
+      "products": [
+        {
+          "id": 162,
+          "title": "Blue Frock",
+          "price": 29.99,
+          "quantity": 4,
+          "total": 119.96,
+          "discountPercentage": 12.13,
+          "discountedTotal": 105.41,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tops/blue-frock/thumbnail.webp"
+        },
+        {
+          "id": 113,
+          "title": "Generic Motorcycle",
+          "price": 3999.99,
+          "quantity": 3,
+          "total": 11999.97,
+          "discountPercentage": 12.1,
+          "discountedTotal": 10547.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/generic-motorcycle/thumbnail.webp"
+        },
+        {
+          "id": 122,
+          "title": "iPhone 6",
+          "price": 299.99,
+          "quantity": 3,
+          "total": 899.97,
+          "discountPercentage": 6.69,
+          "discountedTotal": 839.76,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/thumbnail.webp"
+        },
+        {
+          "id": 138,
+          "title": "Baseball Ball",
+          "price": 8.99,
+          "quantity": 2,
+          "total": 17.98,
+          "discountPercentage": 1.71,
+          "discountedTotal": 17.67,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/baseball-ball/thumbnail.webp"
+        }
+      ],
+      "total": 13037.88,
+      "discountedTotal": 11510.81,
+      "userId": 1,
+      "totalProducts": 4,
+      "totalQuantity": 12
+    },
+    {
+      "id": 2,
+      "products": [
+        {
+          "id": 86,
+          "title": "Man Short Sleeve Shirt",
+          "price": 19.99,
+          "quantity": 5,
+          "total": 99.94999999999999,
+          "discountPercentage": 6.83,
+          "discountedTotal": 93.12,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/thumbnail.webp"
+        },
+        {
+          "id": 104,
+          "title": "Apple iPhone Charger",
+          "price": 19.99,
+          "quantity": 2,
+          "total": 39.98,
+          "discountPercentage": 18.52,
+          "discountedTotal": 32.58,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-iphone-charger/thumbnail.webp"
+        }
+      ],
+      "total": 139.93,
+      "discountedTotal": 125.7,
+      "userId": 2,
+      "totalProducts": 2,
+      "totalQuantity": 7
+    },
+    {
+      "id": 3,
+      "products": [
+        {
+          "id": 24,
+          "title": "Fish Steak",
+          "price": 14.99,
+          "quantity": 1,
+          "total": 14.99,
+          "discountPercentage": 4.23,
+          "discountedTotal": 14.36,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/fish-steak/thumbnail.webp"
+        },
+        {
+          "id": 123,
+          "title": "iPhone 13 Pro",
+          "price": 1099.99,
+          "quantity": 1,
+          "total": 1099.99,
+          "discountPercentage": 9.37,
+          "discountedTotal": 996.92,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-13-pro/thumbnail.webp"
+        },
+        {
+          "id": 129,
+          "title": "Realme X",
+          "price": 299.99,
+          "quantity": 1,
+          "total": 299.99,
+          "discountPercentage": 6.95,
+          "discountedTotal": 279.14,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/realme-x/thumbnail.webp"
+        },
+        {
+          "id": 86,
+          "title": "Man Short Sleeve Shirt",
+          "price": 19.99,
+          "quantity": 5,
+          "total": 99.94999999999999,
+          "discountPercentage": 6.83,
+          "discountedTotal": 93.12,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shirts/man-short-sleeve-shirt/thumbnail.webp"
+        },
+        {
+          "id": 8,
+          "title": "Dior J'adore",
+          "price": 89.99,
+          "quantity": 2,
+          "total": 179.98,
+          "discountPercentage": 14.72,
+          "discountedTotal": 153.49,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp"
+        },
+        {
+          "id": 157,
+          "title": "Party Glasses",
+          "price": 19.99,
+          "quantity": 5,
+          "total": 99.94999999999999,
+          "discountPercentage": 11.22,
+          "discountedTotal": 88.74,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sunglasses/party-glasses/thumbnail.webp"
+        }
+      ],
+      "total": 1794.85,
+      "discountedTotal": 1625.77,
+      "userId": 3,
+      "totalProducts": 6,
+      "totalQuantity": 15
+    },
+    {
+      "id": 4,
+      "products": [
+        {
+          "id": 92,
+          "title": "Sports Sneakers Off White Red",
+          "price": 109.99,
+          "quantity": 3,
+          "total": 329.96999999999997,
+          "discountPercentage": 0.04,
+          "discountedTotal": 329.84,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/thumbnail.webp"
+        },
+        {
+          "id": 8,
+          "title": "Dior J'adore",
+          "price": 89.99,
+          "quantity": 4,
+          "total": 359.96,
+          "discountPercentage": 14.72,
+          "discountedTotal": 306.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp"
+        }
+      ],
+      "total": 689.93,
+      "discountedTotal": 636.81,
+      "userId": 4,
+      "totalProducts": 2,
+      "totalQuantity": 7
+    },
+    {
+      "id": 5,
+      "products": [
+        {
+          "id": 161,
+          "title": "Samsung Galaxy Tab White",
+          "price": 349.99,
+          "quantity": 4,
+          "total": 1399.96,
+          "discountPercentage": 18.2,
+          "discountedTotal": 1145.17,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-white/thumbnail.webp"
+        },
+        {
+          "id": 39,
+          "title": "Soft Drinks",
+          "price": 1.99,
+          "quantity": 4,
+          "total": 7.96,
+          "discountPercentage": 17.48,
+          "discountedTotal": 6.57,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/thumbnail.webp"
+        },
+        {
+          "id": 3,
+          "title": "Powder Canister",
+          "price": 14.99,
+          "quantity": 4,
+          "total": 59.96,
+          "discountPercentage": 9.84,
+          "discountedTotal": 54.06,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp"
+        }
+      ],
+      "total": 1467.88,
+      "discountedTotal": 1205.8,
+      "userId": 5,
+      "totalProducts": 3,
+      "totalQuantity": 12
+    },
+    {
+      "id": 6,
+      "products": [
+        {
+          "id": 192,
+          "title": "Rolex Datejust Women",
+          "price": 10999.99,
+          "quantity": 5,
+          "total": 54999.95,
+          "discountPercentage": 15.94,
+          "discountedTotal": 46232.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-datejust-women/thumbnail.webp"
+        },
+        {
+          "id": 130,
+          "title": "Realme XT",
+          "price": 349.99,
+          "quantity": 1,
+          "total": 349.99,
+          "discountPercentage": 11.51,
+          "discountedTotal": 309.71,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/realme-xt/thumbnail.webp"
+        },
+        {
+          "id": 155,
+          "title": "Classic Sun Glasses",
+          "price": 24.99,
+          "quantity": 4,
+          "total": 99.96,
+          "discountPercentage": 4.94,
+          "discountedTotal": 95.02,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sunglasses/classic-sun-glasses/thumbnail.webp"
+        },
+        {
+          "id": 42,
+          "title": "Water",
+          "price": 0.99,
+          "quantity": 4,
+          "total": 3.96,
+          "discountPercentage": 14.92,
+          "discountedTotal": 3.37,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/water/thumbnail.webp"
+        }
+      ],
+      "total": 55453.86,
+      "discountedTotal": 46641.06,
+      "userId": 6,
+      "totalProducts": 4,
+      "totalQuantity": 14
+    },
+    {
+      "id": 7,
+      "products": [
+        {
+          "id": 56,
+          "title": "Electric Stove",
+          "price": 49.99,
+          "quantity": 1,
+          "total": 49.99,
+          "discountPercentage": 14.04,
+          "discountedTotal": 42.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/thumbnail.webp"
+        },
+        {
+          "id": 136,
+          "title": "Vivo X21",
+          "price": 499.99,
+          "quantity": 1,
+          "total": 499.99,
+          "discountPercentage": 17.41,
+          "discountedTotal": 412.94,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/vivo-x21/thumbnail.webp"
+        },
+        {
+          "id": 9,
+          "title": "Dolce Shine Eau de",
+          "price": 69.99,
+          "quantity": 2,
+          "total": 139.98,
+          "discountPercentage": 0.62,
+          "discountedTotal": 139.11,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp"
+        },
+        {
+          "id": 120,
+          "title": "Vaseline Men Body and Face Lotion",
+          "price": 9.99,
+          "quantity": 4,
+          "total": 39.96,
+          "discountPercentage": 13.39,
+          "discountedTotal": 34.61,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/skin-care/vaseline-men-body-and-face-lotion/thumbnail.webp"
+        },
+        {
+          "id": 56,
+          "title": "Electric Stove",
+          "price": 49.99,
+          "quantity": 1,
+          "total": 49.99,
+          "discountPercentage": 14.04,
+          "discountedTotal": 42.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/thumbnail.webp"
+        },
+        {
+          "id": 90,
+          "title": "Puma Future Rider Trainers",
+          "price": 89.99,
+          "quantity": 5,
+          "total": 449.95,
+          "discountPercentage": 4.2,
+          "discountedTotal": 431.05,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/thumbnail.webp"
+        }
+      ],
+      "total": 1229.86,
+      "discountedTotal": 1103.65,
+      "userId": 7,
+      "totalProducts": 6,
+      "totalQuantity": 14
+    },
+    {
+      "id": 8,
+      "products": [
+        {
+          "id": 18,
+          "title": "Cat Food",
+          "price": 8.99,
+          "quantity": 2,
+          "total": 17.98,
+          "discountPercentage": 9.58,
+          "discountedTotal": 16.26,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cat-food/thumbnail.webp"
+        },
+        {
+          "id": 50,
+          "title": "Black Whisk",
+          "price": 9.99,
+          "quantity": 3,
+          "total": 29.97,
+          "discountPercentage": 10.24,
+          "discountedTotal": 26.9,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/black-whisk/thumbnail.webp"
+        },
+        {
+          "id": 162,
+          "title": "Blue Frock",
+          "price": 29.99,
+          "quantity": 4,
+          "total": 119.96,
+          "discountPercentage": 12.13,
+          "discountedTotal": 105.41,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tops/blue-frock/thumbnail.webp"
+        },
+        {
+          "id": 11,
+          "title": "Annibale Colombo Bed",
+          "price": 1899.99,
+          "quantity": 3,
+          "total": 5699.97,
+          "discountPercentage": 8.57,
+          "discountedTotal": 5211.48,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp"
+        },
+        {
+          "id": 108,
+          "title": "iPhone 12 Silicone Case with MagSafe Plum",
+          "price": 29.99,
+          "quantity": 4,
+          "total": 119.96,
+          "discountPercentage": 13.85,
+          "discountedTotal": 103.35,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/iphone-12-silicone-case-with-magsafe-plum/thumbnail.webp"
+        },
+        {
+          "id": 106,
+          "title": "Apple Watch Series 4 Gold",
+          "price": 349.99,
+          "quantity": 1,
+          "total": 349.99,
+          "discountPercentage": 12.02,
+          "discountedTotal": 307.92,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-watch-series-4-gold/thumbnail.webp"
+        }
+      ],
+      "total": 6337.83,
+      "discountedTotal": 5771.32,
+      "userId": 8,
+      "totalProducts": 6,
+      "totalQuantity": 17
+    },
+    {
+      "id": 9,
+      "products": [
+        {
+          "id": 1,
+          "title": "Essence Mascara Lash Princess",
+          "price": 9.99,
+          "quantity": 3,
+          "total": 29.97,
+          "discountPercentage": 10.48,
+          "discountedTotal": 26.83,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+        },
+        {
+          "id": 98,
+          "title": "Rolex Submariner Watch",
+          "price": 13999.99,
+          "quantity": 2,
+          "total": 27999.98,
+          "discountPercentage": 5.05,
+          "discountedTotal": 26585.98,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/thumbnail.webp"
+        },
+        {
+          "id": 132,
+          "title": "Samsung Galaxy S8",
+          "price": 499.99,
+          "quantity": 3,
+          "total": 1499.97,
+          "discountPercentage": 19.45,
+          "discountedTotal": 1208.23,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/samsung-galaxy-s8/thumbnail.webp"
+        },
+        {
+          "id": 90,
+          "title": "Puma Future Rider Trainers",
+          "price": 89.99,
+          "quantity": 2,
+          "total": 179.98,
+          "discountPercentage": 4.2,
+          "discountedTotal": 172.42,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/puma-future-rider-trainers/thumbnail.webp"
+        }
+      ],
+      "total": 29709.9,
+      "discountedTotal": 27993.46,
+      "userId": 9,
+      "totalProducts": 4,
+      "totalQuantity": 10
+    },
+    {
+      "id": 10,
+      "products": [
+        {
+          "id": 41,
+          "title": "Tissue Paper Box",
+          "price": 2.49,
+          "quantity": 1,
+          "total": 2.49,
+          "discountPercentage": 13.28,
+          "discountedTotal": 2.16,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/thumbnail.webp"
+        },
+        {
+          "id": 108,
+          "title": "iPhone 12 Silicone Case with MagSafe Plum",
+          "price": 29.99,
+          "quantity": 5,
+          "total": 149.95,
+          "discountPercentage": 13.85,
+          "discountedTotal": 129.18,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/iphone-12-silicone-case-with-magsafe-plum/thumbnail.webp"
+        }
+      ],
+      "total": 152.44,
+      "discountedTotal": 131.34,
+      "userId": 10,
+      "totalProducts": 2,
+      "totalQuantity": 6
+    },
+    {
+      "id": 11,
+      "products": [
+        {
+          "id": 115,
+          "title": "MotoGP CI.H1",
+          "price": 14999.99,
+          "quantity": 4,
+          "total": 59999.96,
+          "discountPercentage": 6.92,
+          "discountedTotal": 55847.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/motogp-ci.h1/thumbnail.webp"
+        },
+        {
+          "id": 101,
+          "title": "Apple AirPods Max Silver",
+          "price": 549.99,
+          "quantity": 2,
+          "total": 1099.98,
+          "discountPercentage": 13.67,
+          "discountedTotal": 949.61,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods-max-silver/thumbnail.webp"
+        },
+        {
+          "id": 55,
+          "title": "Egg Slicer",
+          "price": 6.99,
+          "quantity": 4,
+          "total": 27.96,
+          "discountPercentage": 14.76,
+          "discountedTotal": 23.83,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/egg-slicer/thumbnail.webp"
+        },
+        {
+          "id": 25,
+          "title": "Green Bell Pepper",
+          "price": 1.29,
+          "quantity": 3,
+          "total": 3.87,
+          "discountPercentage": 0.16,
+          "discountedTotal": 3.86,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp"
+        },
+        {
+          "id": 161,
+          "title": "Samsung Galaxy Tab White",
+          "price": 349.99,
+          "quantity": 2,
+          "total": 699.98,
+          "discountPercentage": 18.2,
+          "discountedTotal": 572.58,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-white/thumbnail.webp"
+        }
+      ],
+      "total": 61831.75,
+      "discountedTotal": 57397.84,
+      "userId": 11,
+      "totalProducts": 5,
+      "totalQuantity": 15
+    },
+    {
+      "id": 12,
+      "products": [
+        {
+          "id": 117,
+          "title": "Sportbike Motorcycle",
+          "price": 7499.99,
+          "quantity": 1,
+          "total": 7499.99,
+          "discountPercentage": 11.58,
+          "discountedTotal": 6631.49,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/sportbike-motorcycle/thumbnail.webp"
+        },
+        {
+          "id": 28,
+          "title": "Ice Cream",
+          "price": 5.49,
+          "quantity": 5,
+          "total": 27.450000000000003,
+          "discountPercentage": 8.69,
+          "discountedTotal": 25.06,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/ice-cream/thumbnail.webp"
+        },
+        {
+          "id": 98,
+          "title": "Rolex Submariner Watch",
+          "price": 13999.99,
+          "quantity": 2,
+          "total": 27999.98,
+          "discountPercentage": 5.05,
+          "discountedTotal": 26585.98,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-submariner-watch/thumbnail.webp"
+        },
+        {
+          "id": 8,
+          "title": "Dior J'adore",
+          "price": 89.99,
+          "quantity": 1,
+          "total": 89.99,
+          "discountPercentage": 14.72,
+          "discountedTotal": 76.74,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp"
+        },
+        {
+          "id": 162,
+          "title": "Blue Frock",
+          "price": 29.99,
+          "quantity": 5,
+          "total": 149.95,
+          "discountPercentage": 12.13,
+          "discountedTotal": 131.76,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tops/blue-frock/thumbnail.webp"
+        },
+        {
+          "id": 14,
+          "title": "Knoll Saarinen Executive Conference Chair",
+          "price": 499.99,
+          "quantity": 4,
+          "total": 1999.96,
+          "discountPercentage": 2.01,
+          "discountedTotal": 1959.76,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp"
+        }
+      ],
+      "total": 37767.32,
+      "discountedTotal": 35410.79,
+      "userId": 12,
+      "totalProducts": 6,
+      "totalQuantity": 18
+    },
+    {
+      "id": 13,
+      "products": [
+        {
+          "id": 35,
+          "title": "Potatoes",
+          "price": 2.29,
+          "quantity": 2,
+          "total": 4.58,
+          "discountPercentage": 5.38,
+          "discountedTotal": 4.33,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/potatoes/thumbnail.webp"
+        },
+        {
+          "id": 23,
+          "title": "Eggs",
+          "price": 2.99,
+          "quantity": 4,
+          "total": 11.96,
+          "discountPercentage": 11.05,
+          "discountedTotal": 10.64,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/eggs/thumbnail.webp"
+        }
+      ],
+      "total": 16.54,
+      "discountedTotal": 14.97,
+      "userId": 13,
+      "totalProducts": 2,
+      "totalQuantity": 6
+    },
+    {
+      "id": 14,
+      "products": [
+        {
+          "id": 44,
+          "title": "Family Tree Photo Frame",
+          "price": 29.99,
+          "quantity": 4,
+          "total": 119.96,
+          "discountPercentage": 14.87,
+          "discountedTotal": 102.12,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/family-tree-photo-frame/thumbnail.webp"
+        },
+        {
+          "id": 68,
+          "title": "Pan",
+          "price": 24.99,
+          "quantity": 1,
+          "total": 24.99,
+          "discountPercentage": 3,
+          "discountedTotal": 24.24,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/pan/thumbnail.webp"
+        },
+        {
+          "id": 65,
+          "title": "Lunch Box",
+          "price": 12.99,
+          "quantity": 5,
+          "total": 64.95,
+          "discountPercentage": 10.34,
+          "discountedTotal": 58.23,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/lunch-box/thumbnail.webp"
+        }
+      ],
+      "total": 209.9,
+      "discountedTotal": 184.59,
+      "userId": 14,
+      "totalProducts": 3,
+      "totalQuantity": 10
+    },
+    {
+      "id": 15,
+      "products": [
+        {
+          "id": 61,
+          "title": "Hand Blender",
+          "price": 34.99,
+          "quantity": 2,
+          "total": 69.98,
+          "discountPercentage": 17.02,
+          "discountedTotal": 58.07,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/hand-blender/thumbnail.webp"
+        },
+        {
+          "id": 105,
+          "title": "Apple MagSafe Battery Pack",
+          "price": 99.99,
+          "quantity": 1,
+          "total": 99.99,
+          "discountPercentage": 17.17,
+          "discountedTotal": 82.82,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-magsafe-battery-pack/thumbnail.webp"
+        },
+        {
+          "id": 141,
+          "title": "Basketball Rim",
+          "price": 39.99,
+          "quantity": 2,
+          "total": 79.98,
+          "discountPercentage": 7.74,
+          "discountedTotal": 73.79,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/basketball-rim/thumbnail.webp"
+        }
+      ],
+      "total": 249.95,
+      "discountedTotal": 214.68,
+      "userId": 15,
+      "totalProducts": 3,
+      "totalQuantity": 5
+    },
+    {
+      "id": 16,
+      "products": [
+        {
+          "id": 20,
+          "title": "Cooking Oil",
+          "price": 4.99,
+          "quantity": 5,
+          "total": 24.950000000000003,
+          "discountPercentage": 9.33,
+          "discountedTotal": 22.62,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp"
+        },
+        {
+          "id": 91,
+          "title": "Sports Sneakers Off White & Red",
+          "price": 119.99,
+          "quantity": 3,
+          "total": 359.96999999999997,
+          "discountPercentage": 4.97,
+          "discountedTotal": 342.08,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-&-red/thumbnail.webp"
+        }
+      ],
+      "total": 384.92,
+      "discountedTotal": 364.7,
+      "userId": 16,
+      "totalProducts": 2,
+      "totalQuantity": 8
+    },
+    {
+      "id": 17,
+      "products": [
+        {
+          "id": 123,
+          "title": "iPhone 13 Pro",
+          "price": 1099.99,
+          "quantity": 5,
+          "total": 5499.95,
+          "discountPercentage": 9.37,
+          "discountedTotal": 4984.6,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-13-pro/thumbnail.webp"
+        },
+        {
+          "id": 137,
+          "title": "American Football",
+          "price": 19.99,
+          "quantity": 1,
+          "total": 19.99,
+          "discountPercentage": 4.93,
+          "discountedTotal": 19,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/american-football/thumbnail.webp"
+        },
+        {
+          "id": 25,
+          "title": "Green Bell Pepper",
+          "price": 1.29,
+          "quantity": 5,
+          "total": 6.45,
+          "discountPercentage": 0.16,
+          "discountedTotal": 6.44,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp"
+        },
+        {
+          "id": 26,
+          "title": "Green Chili Pepper",
+          "price": 0.99,
+          "quantity": 5,
+          "total": 4.95,
+          "discountPercentage": 1,
+          "discountedTotal": 4.9,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/thumbnail.webp"
+        }
+      ],
+      "total": 5531.34,
+      "discountedTotal": 5014.94,
+      "userId": 17,
+      "totalProducts": 4,
+      "totalQuantity": 16
+    },
+    {
+      "id": 18,
+      "products": [
+        {
+          "id": 169,
+          "title": "Dodge Hornet GT Plus",
+          "price": 24999.99,
+          "quantity": 5,
+          "total": 124999.95000000001,
+          "discountPercentage": 2.63,
+          "discountedTotal": 121712.45,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/vehicle/dodge-hornet-gt-plus/thumbnail.webp"
+        },
+        {
+          "id": 193,
+          "title": "Watch Gold for Women",
+          "price": 799.99,
+          "quantity": 5,
+          "total": 3999.95,
+          "discountPercentage": 18.34,
+          "discountedTotal": 3266.36,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/watch-gold-for-women/thumbnail.webp"
+        }
+      ],
+      "total": 128999.9,
+      "discountedTotal": 124978.81,
+      "userId": 18,
+      "totalProducts": 2,
+      "totalQuantity": 10
+    },
+    {
+      "id": 19,
+      "products": [
+        {
+          "id": 22,
+          "title": "Dog Food",
+          "price": 10.99,
+          "quantity": 3,
+          "total": 32.97,
+          "discountPercentage": 10.27,
+          "discountedTotal": 29.58,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/dog-food/thumbnail.webp"
+        },
+        {
+          "id": 56,
+          "title": "Electric Stove",
+          "price": 49.99,
+          "quantity": 1,
+          "total": 49.99,
+          "discountPercentage": 14.04,
+          "discountedTotal": 42.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/electric-stove/thumbnail.webp"
+        },
+        {
+          "id": 97,
+          "title": "Rolex Datejust",
+          "price": 10999.99,
+          "quantity": 2,
+          "total": 21999.98,
+          "discountPercentage": 3.73,
+          "discountedTotal": 21179.38,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/thumbnail.webp"
+        },
+        {
+          "id": 71,
+          "title": "Silver Pot With Glass Cap",
+          "price": 39.99,
+          "quantity": 1,
+          "total": 39.99,
+          "discountPercentage": 5.7,
+          "discountedTotal": 37.71,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/silver-pot-with-glass-cap/thumbnail.webp"
+        },
+        {
+          "id": 69,
+          "title": "Plate",
+          "price": 3.99,
+          "quantity": 5,
+          "total": 19.950000000000003,
+          "discountPercentage": 7.31,
+          "discountedTotal": 18.49,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/plate/thumbnail.webp"
+        }
+      ],
+      "total": 22142.88,
+      "discountedTotal": 21308.13,
+      "userId": 19,
+      "totalProducts": 5,
+      "totalQuantity": 12
+    },
+    {
+      "id": 20,
+      "products": [
+        {
+          "id": 123,
+          "title": "iPhone 13 Pro",
+          "price": 1099.99,
+          "quantity": 4,
+          "total": 4399.96,
+          "discountPercentage": 9.37,
+          "discountedTotal": 3987.68,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-13-pro/thumbnail.webp"
+        },
+        {
+          "id": 36,
+          "title": "Protein Powder",
+          "price": 19.99,
+          "quantity": 3,
+          "total": 59.97,
+          "discountPercentage": 7.59,
+          "discountedTotal": 55.42,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/protein-powder/thumbnail.webp"
+        },
+        {
+          "id": 146,
+          "title": "Feather Shuttlecock",
+          "price": 5.99,
+          "quantity": 2,
+          "total": 11.98,
+          "discountPercentage": 2.95,
+          "discountedTotal": 11.63,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/feather-shuttlecock/thumbnail.webp"
+        },
+        {
+          "id": 89,
+          "title": "Nike Baseball Cleats",
+          "price": 79.99,
+          "quantity": 3,
+          "total": 239.96999999999997,
+          "discountPercentage": 18.04,
+          "discountedTotal": 196.68,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/nike-baseball-cleats/thumbnail.webp"
+        }
+      ],
+      "total": 4711.88,
+      "discountedTotal": 4251.41,
+      "userId": 20,
+      "totalProducts": 4,
+      "totalQuantity": 12
+    },
+    {
+      "id": 21,
+      "products": [
+        {
+          "id": 79,
+          "title": "Asus Zenbook Pro Dual Screen Laptop",
+          "price": 1799.99,
+          "quantity": 1,
+          "total": 1799.99,
+          "discountPercentage": 11.14,
+          "discountedTotal": 1599.47,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/thumbnail.webp"
+        },
+        {
+          "id": 164,
+          "title": "Gray Dress",
+          "price": 34.99,
+          "quantity": 4,
+          "total": 139.96,
+          "discountPercentage": 14.28,
+          "discountedTotal": 119.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tops/gray-dress/thumbnail.webp"
+        },
+        {
+          "id": 192,
+          "title": "Rolex Datejust Women",
+          "price": 10999.99,
+          "quantity": 1,
+          "total": 10999.99,
+          "discountPercentage": 15.94,
+          "discountedTotal": 9246.59,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-datejust-women/thumbnail.webp"
+        }
+      ],
+      "total": 12939.94,
+      "discountedTotal": 10966.03,
+      "userId": 21,
+      "totalProducts": 3,
+      "totalQuantity": 6
+    },
+    {
+      "id": 22,
+      "products": [
+        {
+          "id": 16,
+          "title": "Apple",
+          "price": 1.99,
+          "quantity": 4,
+          "total": 7.96,
+          "discountPercentage": 12.62,
+          "discountedTotal": 6.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp"
+        },
+        {
+          "id": 92,
+          "title": "Sports Sneakers Off White Red",
+          "price": 109.99,
+          "quantity": 2,
+          "total": 219.98,
+          "discountPercentage": 0.04,
+          "discountedTotal": 219.89,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-shoes/sports-sneakers-off-white-red/thumbnail.webp"
+        },
+        {
+          "id": 166,
+          "title": "Tartan Dress",
+          "price": 39.99,
+          "quantity": 2,
+          "total": 79.98,
+          "discountPercentage": 12.95,
+          "discountedTotal": 69.62,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/tops/tartan-dress/thumbnail.webp"
+        }
+      ],
+      "total": 307.92,
+      "discountedTotal": 296.47,
+      "userId": 22,
+      "totalProducts": 3,
+      "totalQuantity": 8
+    },
+    {
+      "id": 23,
+      "products": [
+        {
+          "id": 127,
+          "title": "Oppo K1",
+          "price": 299.99,
+          "quantity": 5,
+          "total": 1499.95,
+          "discountPercentage": 18.29,
+          "discountedTotal": 1225.61,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/oppo-k1/thumbnail.webp"
+        },
+        {
+          "id": 134,
+          "title": "Vivo S1",
+          "price": 249.99,
+          "quantity": 4,
+          "total": 999.96,
+          "discountPercentage": 10.17,
+          "discountedTotal": 898.26,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/vivo-s1/thumbnail.webp"
+        }
+      ],
+      "total": 2499.91,
+      "discountedTotal": 2123.87,
+      "userId": 23,
+      "totalProducts": 2,
+      "totalQuantity": 9
+    },
+    {
+      "id": 24,
+      "products": [
+        {
+          "id": 117,
+          "title": "Sportbike Motorcycle",
+          "price": 7499.99,
+          "quantity": 4,
+          "total": 29999.96,
+          "discountPercentage": 11.58,
+          "discountedTotal": 26525.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/sportbike-motorcycle/thumbnail.webp"
+        },
+        {
+          "id": 128,
+          "title": "Realme C35",
+          "price": 149.99,
+          "quantity": 2,
+          "total": 299.98,
+          "discountPercentage": 15.3,
+          "discountedTotal": 254.08,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/realme-c35/thumbnail.webp"
+        }
+      ],
+      "total": 30299.94,
+      "discountedTotal": 26780.04,
+      "userId": 24,
+      "totalProducts": 2,
+      "totalQuantity": 6
+    },
+    {
+      "id": 25,
+      "products": [
+        {
+          "id": 32,
+          "title": "Milk",
+          "price": 3.49,
+          "quantity": 2,
+          "total": 6.98,
+          "discountPercentage": 13.74,
+          "discountedTotal": 6.02,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/milk/thumbnail.webp"
+        },
+        {
+          "id": 106,
+          "title": "Apple Watch Series 4 Gold",
+          "price": 349.99,
+          "quantity": 3,
+          "total": 1049.97,
+          "discountPercentage": 12.02,
+          "discountedTotal": 923.76,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-watch-series-4-gold/thumbnail.webp"
+        },
+        {
+          "id": 35,
+          "title": "Potatoes",
+          "price": 2.29,
+          "quantity": 5,
+          "total": 11.45,
+          "discountPercentage": 5.38,
+          "discountedTotal": 10.83,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/potatoes/thumbnail.webp"
+        },
+        {
+          "id": 110,
+          "title": "Selfie Lamp with iPhone",
+          "price": 14.99,
+          "quantity": 4,
+          "total": 59.96,
+          "discountPercentage": 19.4,
+          "discountedTotal": 48.33,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/selfie-lamp-with-iphone/thumbnail.webp"
+        },
+        {
+          "id": 103,
+          "title": "Apple HomePod Mini Cosmic Grey",
+          "price": 99.99,
+          "quantity": 1,
+          "total": 99.99,
+          "discountPercentage": 18.1,
+          "discountedTotal": 81.89,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-homepod-mini-cosmic-grey/thumbnail.webp"
+        }
+      ],
+      "total": 1228.35,
+      "discountedTotal": 1070.83,
+      "userId": 25,
+      "totalProducts": 5,
+      "totalQuantity": 15
+    },
+    {
+      "id": 26,
+      "products": [
+        {
+          "id": 122,
+          "title": "iPhone 6",
+          "price": 299.99,
+          "quantity": 3,
+          "total": 899.97,
+          "discountPercentage": 6.69,
+          "discountedTotal": 839.76,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/thumbnail.webp"
+        },
+        {
+          "id": 63,
+          "title": "Kitchen Sieve",
+          "price": 7.99,
+          "quantity": 4,
+          "total": 31.96,
+          "discountPercentage": 18.91,
+          "discountedTotal": 25.92,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/kitchen-sieve/thumbnail.webp"
+        },
+        {
+          "id": 108,
+          "title": "iPhone 12 Silicone Case with MagSafe Plum",
+          "price": 29.99,
+          "quantity": 4,
+          "total": 119.96,
+          "discountPercentage": 13.85,
+          "discountedTotal": 103.35,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/iphone-12-silicone-case-with-magsafe-plum/thumbnail.webp"
+        },
+        {
+          "id": 153,
+          "title": "Volleyball",
+          "price": 11.99,
+          "quantity": 5,
+          "total": 59.95,
+          "discountPercentage": 12.25,
+          "discountedTotal": 52.61,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/volleyball/thumbnail.webp"
+        }
+      ],
+      "total": 1111.84,
+      "discountedTotal": 1021.64,
+      "userId": 26,
+      "totalProducts": 4,
+      "totalQuantity": 16
+    },
+    {
+      "id": 27,
+      "products": [
+        {
+          "id": 192,
+          "title": "Rolex Datejust Women",
+          "price": 10999.99,
+          "quantity": 4,
+          "total": 43999.96,
+          "discountPercentage": 15.94,
+          "discountedTotal": 36986.37,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-datejust-women/thumbnail.webp"
+        },
+        {
+          "id": 97,
+          "title": "Rolex Datejust",
+          "price": 10999.99,
+          "quantity": 5,
+          "total": 54999.95,
+          "discountPercentage": 3.73,
+          "discountedTotal": 52948.45,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mens-watches/rolex-datejust/thumbnail.webp"
+        },
+        {
+          "id": 20,
+          "title": "Cooking Oil",
+          "price": 4.99,
+          "quantity": 3,
+          "total": 14.97,
+          "discountPercentage": 9.33,
+          "discountedTotal": 13.57,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp"
+        },
+        {
+          "id": 113,
+          "title": "Generic Motorcycle",
+          "price": 3999.99,
+          "quantity": 3,
+          "total": 11999.97,
+          "discountPercentage": 12.1,
+          "discountedTotal": 10547.97,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/motorcycle/generic-motorcycle/thumbnail.webp"
+        }
+      ],
+      "total": 111014.85,
+      "discountedTotal": 100496.36,
+      "userId": 27,
+      "totalProducts": 4,
+      "totalQuantity": 15
+    },
+    {
+      "id": 28,
+      "products": [
+        {
+          "id": 182,
+          "title": "Green Crystal Earring",
+          "price": 29.99,
+          "quantity": 5,
+          "total": 149.95,
+          "discountPercentage": 15.24,
+          "discountedTotal": 127.1,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-jewellery/green-crystal-earring/thumbnail.webp"
+        },
+        {
+          "id": 64,
+          "title": "Knife",
+          "price": 14.99,
+          "quantity": 2,
+          "total": 29.98,
+          "discountPercentage": 18.86,
+          "discountedTotal": 24.33,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/knife/thumbnail.webp"
+        },
+        {
+          "id": 46,
+          "title": "Plant Pot",
+          "price": 14.99,
+          "quantity": 3,
+          "total": 44.97,
+          "discountPercentage": 6.84,
+          "discountedTotal": 41.89,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/thumbnail.webp"
+        },
+        {
+          "id": 185,
+          "title": "Black & Brown Slipper",
+          "price": 19.99,
+          "quantity": 5,
+          "total": 99.94999999999999,
+          "discountPercentage": 3.33,
+          "discountedTotal": 96.62,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-shoes/black-&-brown-slipper/thumbnail.webp"
+        },
+        {
+          "id": 175,
+          "title": "White Faux Leather Backpack",
+          "price": 39.99,
+          "quantity": 3,
+          "total": 119.97,
+          "discountPercentage": 15.2,
+          "discountedTotal": 101.73,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-bags/white-faux-leather-backpack/thumbnail.webp"
+        },
+        {
+          "id": 81,
+          "title": "Lenovo Yoga 920",
+          "price": 1099.99,
+          "quantity": 5,
+          "total": 5499.95,
+          "discountPercentage": 6.55,
+          "discountedTotal": 5139.7,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/lenovo-yoga-920/thumbnail.webp"
+        }
+      ],
+      "total": 5944.77,
+      "discountedTotal": 5531.37,
+      "userId": 28,
+      "totalProducts": 6,
+      "totalQuantity": 23
+    },
+    {
+      "id": 29,
+      "products": [
+        {
+          "id": 174,
+          "title": "Prada Women Bag",
+          "price": 599.99,
+          "quantity": 3,
+          "total": 1799.97,
+          "discountPercentage": 14.09,
+          "discountedTotal": 1546.35,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/womens-bags/prada-women-bag/thumbnail.webp"
+        },
+        {
+          "id": 102,
+          "title": "Apple Airpower Wireless Charger",
+          "price": 79.99,
+          "quantity": 5,
+          "total": 399.95,
+          "discountPercentage": 4.48,
+          "discountedTotal": 382.03,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpower-wireless-charger/thumbnail.webp"
+        },
+        {
+          "id": 48,
+          "title": "Bamboo Spatula",
+          "price": 7.99,
+          "quantity": 5,
+          "total": 39.95,
+          "discountPercentage": 2.84,
+          "discountedTotal": 38.82,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/bamboo-spatula/thumbnail.webp"
+        },
+        {
+          "id": 141,
+          "title": "Basketball Rim",
+          "price": 39.99,
+          "quantity": 3,
+          "total": 119.97,
+          "discountPercentage": 7.74,
+          "discountedTotal": 110.68,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/basketball-rim/thumbnail.webp"
+        }
+      ],
+      "total": 2359.84,
+      "discountedTotal": 2077.88,
+      "userId": 29,
+      "totalProducts": 4,
+      "totalQuantity": 16
+    },
+    {
+      "id": 30,
+      "products": [
+        {
+          "id": 143,
+          "title": "Cricket Bat",
+          "price": 29.99,
+          "quantity": 1,
+          "total": 29.99,
+          "discountPercentage": 3.29,
+          "discountedTotal": 29,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/sports-accessories/cricket-bat/thumbnail.webp"
+        },
+        {
+          "id": 135,
+          "title": "Vivo V9",
+          "price": 299.99,
+          "quantity": 2,
+          "total": 599.98,
+          "discountPercentage": 17.67,
+          "discountedTotal": 493.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/vivo-v9/thumbnail.webp"
+        },
+        {
+          "id": 126,
+          "title": "Oppo F19 Pro Plus",
+          "price": 399.99,
+          "quantity": 1,
+          "total": 399.99,
+          "discountPercentage": 18.64,
+          "discountedTotal": 325.43,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/smartphones/oppo-f19-pro-plus/thumbnail.webp"
+        },
+        {
+          "id": 77,
+          "title": "Yellow Peeler",
+          "price": 5.99,
+          "quantity": 1,
+          "total": 5.99,
+          "discountPercentage": 12.48,
+          "discountedTotal": 5.24,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/kitchen-accessories/yellow-peeler/thumbnail.webp"
+        },
+        {
+          "id": 3,
+          "title": "Powder Canister",
+          "price": 14.99,
+          "quantity": 5,
+          "total": 74.95,
+          "discountPercentage": 9.84,
+          "discountedTotal": 67.57,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp"
+        },
+        {
+          "id": 170,
+          "title": "Durango SXT RWD",
+          "price": 36999.99,
+          "quantity": 5,
+          "total": 184999.94999999998,
+          "discountPercentage": 16.44,
+          "discountedTotal": 154585.96,
+          "thumbnail": "https://cdn.dummyjson.com/product-images/vehicle/durango-sxt-rwd/thumbnail.webp"
+        }
+      ],
+      "total": 186110.85,
+      "discountedTotal": 155507.16,
+      "userId": 30,
+      "totalProducts": 6,
+      "totalQuantity": 15
+    }
+  ],
+  "total": 208,
+  "skip": 0,
+  "limit": 30
+}
+```

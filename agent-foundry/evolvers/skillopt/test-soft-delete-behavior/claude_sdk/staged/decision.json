@@ -1,0 +1,15 @@
+{
+  "agent": "claude_sdk",
+  "ts": "2026-06-26T03:17:54.931358+00:00",
+  "metric": "soft_delete_test_fidelity_heldout",
+  "held_out_variant": {
+    "case_count": 3,
+    "deleted_at_tolerance_s": 5,
+    "resource_endpoint": "/resources"
+  },
+  "baseline_fidelity": 100.0,
+  "candidate_fidelity": 100.0,
+  "accepted": false,
+  "candidate_skill_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillopt/test-soft-delete-behavior/claude_sdk/staged/candidate_skill.md",
+  "note": "STRICT-improvement gate. ACCEPTED candidate is STAGED only \u2014 best_skill.md is NOT overwritten. Adopt manually after review."
+}

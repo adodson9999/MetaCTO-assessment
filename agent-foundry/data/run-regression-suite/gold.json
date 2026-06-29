@@ -1,0 +1,140 @@
+{
+  "summary": {
+    "target": "http://localhost:8899",
+    "deployment_health": {
+      "endpoint": "/health",
+      "status": 200,
+      "deployment_confirmed": true
+    },
+    "build_pairs": 4,
+    "fields_per_pair": 7,
+    "total_gold_fields": 28,
+    "regression_rates": [
+      {
+        "pair": "newman_junit",
+        "build_n": "ci-1043",
+        "regression_rate_pct": 40.0,
+        "overall_status": "fail"
+      },
+      {
+        "pair": "pytest_junit",
+        "build_n": "build-78",
+        "regression_rate_pct": 0.0,
+        "overall_status": "pass"
+      },
+      {
+        "pair": "jest_json",
+        "build_n": "gh-2002",
+        "regression_rate_pct": 50.0,
+        "overall_status": "fail"
+      },
+      {
+        "pair": "pytest_json",
+        "build_n": "rel-10",
+        "regression_rate_pct": 33.33,
+        "overall_status": "fail"
+      }
+    ],
+    "builds_that_must_block_deployment": [
+      "ci-1043",
+      "gh-2002",
+      "rel-10"
+    ],
+    "note": "Ground truth = the deterministic seven-field regression report per build pair (passed-in-N-1-then-failed-in-N detection). Regression Rate is fixture-determined; the genuine finding is which build-N deployments must be BLOCKED for having any regression (pass = exactly 0%, no tolerance). Framework ranking is Regression-Report Fidelity (agent report vs gold), which is API-independent."
+  },
+  "pairs": [
+    {
+      "pair": "newman_junit",
+      "format": "junit_xml",
+      "note": "Postman/Newman JUnit reporter output.",
+      "gold_report": {
+        "build_n_nus_1": "ci-1042",
+        "build_n": "ci-1043",
+        "total_tests_in_suite": 6,
+        "prev_passed_count": 5,
+        "regressions": [
+          {
+            "id": "auth.login.invalid",
+            "failure_message": "Expected 401 but got 500"
+          },
+          {
+            "id": "products.get.byId",
+            "failure_message": "Expected 200 but got 404"
+          }
+        ],
+        "newly_passing": [
+          "users.search.q"
+        ],
+        "overall_status": "fail"
+      },
+      "regression_rate_pct": 40.0,
+      "would_block_deployment": true
+    },
+    {
+      "pair": "pytest_junit",
+      "format": "junit_xml",
+      "note": "pytest --junitxml output (clean build: zero regressions).",
+      "gold_report": {
+        "build_n_nus_1": "build-77",
+        "build_n": "build-78",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [],
+        "newly_passing": [
+          "test_known_flaky"
+        ],
+        "overall_status": "pass"
+      },
+      "regression_rate_pct": 0.0,
+      "would_block_deployment": false
+    },
+    {
+      "pair": "jest_json",
+      "format": "jest_json",
+      "note": "Jest --json reporter output.",
+      "gold_report": {
+        "build_n_nus_1": "gh-2001",
+        "build_n": "gh-2002",
+        "total_tests_in_suite": 5,
+        "prev_passed_count": 4,
+        "regressions": [
+          {
+            "id": "cart applies discount",
+            "failure_message": "discount computed as NaN"
+          },
+          {
+            "id": "cart total calculates correctly",
+            "failure_message": "expected 150 received 0"
+          }
+        ],
+        "newly_passing": [],
+        "overall_status": "fail"
+      },
+      "regression_rate_pct": 50.0,
+      "would_block_deployment": true
+    },
+    {
+      "pair": "pytest_json",
+      "format": "pytest_json",
+      "note": "pytest-json-report output (a prev-passed test is removed in build N).",
+      "gold_report": {
+        "build_n_nus_1": "rel-9",
+        "build_n": "rel-10",
+        "total_tests_in_suite": 4,
+        "prev_passed_count": 3,
+        "regressions": [
+          {
+            "id": "tests/contract_test.py::test_api_contract_v2",
+            "failure_message": "schema drift: missing field 'sku'"
+          }
+        ],
+        "newly_passing": [
+          "tests/perf_test.py::test_perf_smoke"
+        ],
+        "overall_status": "fail"
+      },
+      "regression_rate_pct": 33.33,
+      "would_block_deployment": true
+    }
+  ]
+}

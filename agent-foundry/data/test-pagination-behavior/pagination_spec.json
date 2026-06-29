@@ -1,0 +1,36 @@
+{
+  "title": "DummyJSON pagination contract (authored for the pagination-testing task)",
+  "description": "Each collection paginates via query params `limit` (page size) and `skip` (offset) and wraps items under <list_field> alongside a `total`. Agents construct the pagination test plan from this; ground truth is the live API's observed behavior. DummyJSON is read-only and never modified.",
+  "target": "http://localhost:8899",
+  "page_size": 10,
+  "window_size": 25,
+  "limit_param": "limit",
+  "offset_param": "skip",
+  "id_field": "id",
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products"
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts"
+    },
+    {
+      "collection": "/comments",
+      "list_field": "comments"
+    },
+    {
+      "collection": "/todos",
+      "list_field": "todos"
+    },
+    {
+      "collection": "/users",
+      "list_field": "users"
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes"
+    }
+  ]
+}

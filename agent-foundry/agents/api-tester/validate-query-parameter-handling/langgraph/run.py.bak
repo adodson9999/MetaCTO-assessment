@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""LangGraph query-parameter-handling agent.
+
+A StateGraph whose single node turns one collection's documented query-parameter
+contract into the query-parameter test plan via the central backend (ChatAnthropic
+when the backend is claude-haiku, ChatOllama when air-gapped). Deterministic
+execution (read-only GETs), recording, and emit are handled by the shared harness
+(agents/common/queryparam.py) so this file's only framework-specific job is LLM
+elicitation through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import queryparam  # noqa: E402
+from queryparam_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+TOTALS = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+
+
+def _add_usage(meta) -> None:
+    """Accumulate token usage from a LangChain AIMessage.usage_metadata (best-effort)."""
+    if not meta:
+        return
+    TOTALS["prompt_tokens"] += int(meta.get("input_tokens", 0) or 0)
+    TOTALS["completion_tokens"] += int(meta.get("output_tokens", 0) or 0)
+    TOTALS["total_tokens"] += int(meta.get("total_tokens", 0) or 0)
+
+
+def _model():
+    spec = backend_config.resolve(WS)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"], temperature=0)
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=spec["native"]["model"],
+                      base_url=spec["base_url"].replace("/v1", ""),
+                      temperature=0, format="json")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    llm = _model()
+
+    def generate_node(state: S) -> S:
+        msg = llm.invoke(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        _add_usage(getattr(msg, "usage_metadata", None))
+        return {"brief": state["brief"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(cfg: dict) -> dict:
+        brief = queryparam.collection_brief(cfg)
+        result = graph.invoke({"brief": brief, "output": ""})
+        return queryparam.extract_json(result["output"]) or {}
+
+    summary = queryparam.run_queryparam_test(AGENT, generate, usage=lambda: TOTALS)
+    print(f"[{AGENT}] accuracy={summary['query_param_handling_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']} "
+          f"tokens={summary['tokens']['total_tokens']}")
+
+
+if __name__ == "__main__":
+    main()

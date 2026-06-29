@@ -1,0 +1,44 @@
+{
+  "sub_test": "VIEWER_LIST",
+  "requesting_role": "viewer",
+  "method": "GET",
+  "endpoint": "/auth/posts",
+  "resource_owner": "none",
+  "expected_code": 200,
+  "leakage": {
+    "forbidden_fields": [
+      "id",
+      "title",
+      "body",
+      "tags",
+      "reactions",
+      "views",
+      "userId"
+    ],
+    "forbidden_substrings": [
+      "stack",
+      "Error:",
+      ".js:",
+      ".ts:",
+      "/src/",
+      "/Users/",
+      "node_modules",
+      "SELECT ",
+      "INSERT ",
+      "UPDATE ",
+      "WHERE ",
+      "Traceback",
+      "at Object.",
+      "at async"
+    ]
+  },
+  "expect_resource_data": false,
+  "list_must_exclude": "3",
+  "body_snippet": "{\"posts\":[{\"id\":1,\"title\":\"His mother had always taught him\",\"body\":\"His mother had always taught him not to ever think of himself as better than others. He'd tried to live by this motto. He never loo",
+  "actual_code": 200,
+  "actual_class": "2xx",
+  "data_exposed": true,
+  "data_present": null,
+  "leak_safe": true,
+  "pass": false
+}

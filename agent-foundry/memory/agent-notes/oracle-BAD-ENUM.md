@@ -1,0 +1,1 @@
+- [2026-06-28T00:38:00.937372+00:00] run=selftest-BAD-ENUM documentation-reviewer run: verdict_accuracy=0.0% over 4 reports; source-of-truth match=0.0%

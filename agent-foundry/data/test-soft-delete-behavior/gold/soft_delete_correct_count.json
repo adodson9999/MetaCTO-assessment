@@ -1,0 +1,6 @@
+{
+  "scenario": "soft_delete_correct_count",
+  "ideal": "5",
+  "observed_token": "5",
+  "api_correct": true
+}

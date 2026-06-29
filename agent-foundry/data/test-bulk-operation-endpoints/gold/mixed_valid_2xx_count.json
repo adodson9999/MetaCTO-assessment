@@ -1,0 +1,6 @@
+{
+  "scenario": "mixed_valid_2xx_count",
+  "ideal": "8",
+  "observed_token": "8",
+  "api_correct": true
+}

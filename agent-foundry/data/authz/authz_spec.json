@@ -1,0 +1,48 @@
+{
+  "target": "http://localhost:8899",
+  "login_path": "/auth/login",
+  "resource_path": "/auth/posts/{id}",
+  "collection_path": "/auth/posts",
+  "admin_listing_path": "/auth/users",
+  "resource_id": 3,
+  "resource_field_names": [
+    "id",
+    "title",
+    "body",
+    "tags",
+    "reactions",
+    "views",
+    "userId"
+  ],
+  "owner_resource_snapshot": {
+    "id": 3,
+    "title": "Dave watched as the forest burned up on the hill.",
+    "body": "Dave watched as the forest burned up on the hill, only a few miles from her house. The car had been hastily packed and Marta was inside trying to round up the last of the pets. Dave went through his mental list of the most important papers and documents that they couldn't leave behind. He scolded himself for not having prepared these better in advance and hoped that he had remembered everything that was needed. He continued to wait for Marta to appear with the pets, but she still was nowhere to be seen.",
+    "tags": [
+      "magical",
+      "history",
+      "french"
+    ],
+    "reactions": {
+      "likes": 1448,
+      "dislikes": 39
+    },
+    "views": 4152,
+    "userId": 16
+  },
+  "users": {
+    "viewer": {
+      "username": "evelyns",
+      "password": "evelynspass"
+    },
+    "owner": {
+      "username": "averyp",
+      "password": "averyppass"
+    },
+    "admin": {
+      "username": "emilys",
+      "password": "emilyspass"
+    }
+  },
+  "roles_note": "DummyJSON users carry a role field (admin/moderator/user) but the API enforces no role/ownership checks; the security contract here is what a correct API SHOULD return."
+}

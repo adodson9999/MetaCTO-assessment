@@ -1,0 +1,18 @@
+{
+  "title": "Idealized sort contract (authored for the sorting-behavior task)",
+  "description": "One collection exposes a sort query parameter selecting a sortable field and an order query parameter (asc|desc). The task seeds 20 records with distinct non-sequential names and created_at timestamps two seconds apart, then verifies ascending/descending ordering on name and created_at plus 400 handling for an invalid sort field and an invalid order direction. Exercised against an isolated in-process reference resource; DummyJSON is never seeded or modified.",
+  "resource_path": "/resources",
+  "list_field": "resources",
+  "name_field": "name",
+  "timestamp_field": "created_at",
+  "sortable_fields": [
+    "name",
+    "created_at"
+  ],
+  "valid_orders": [
+    "asc",
+    "desc"
+  ],
+  "seed_count": 20,
+  "seed_timestamp_step_seconds": 2
+}

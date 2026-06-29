@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK error-message-clarity testing agent.
+
+Standalone program mirroring the other three. Native Claude is used when the
+backend is claude-haiku; under an air-gapped Ollama backend the SDK's cloud path
+is unavailable, so it falls back to the OpenAI-compatible local endpoint. Either
+way it elicits the per-code request descriptors; the shared harness sends, captures
+bodies, runs the clarity assertions, records, and emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import clarity_contract  # noqa: E402
+from clarity_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+def _text_of(msg) -> str:
+    """Pull assistant text out of a claude_agent_sdk message, ignoring the
+    hook/system/result-envelope traffic. AssistantMessage.content is a list of
+    blocks; TextBlock carries .text. ResultMessage carries .result."""
+    content = getattr(msg, "content", None)
+    if isinstance(content, list):
+        parts = [getattr(b, "text", "") for b in content if getattr(b, "text", "")]
+        if parts:
+            return "".join(parts)
+    result = getattr(msg, "result", None)
+    if isinstance(result, str):
+        return result
+    return ""
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    # Single, non-agentic completion: no tools, one turn. The agent's only job is
+    # to emit the JSON descriptor object — it must not loop or call tools.
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"],
+                              max_turns=1, allowed_tools=[])
+    texts = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        t = _text_of(msg)
+        if t:
+            texts.append(t)
+    return "\n".join(texts)
+
+
+def _anthropic_direct(brief: str) -> str:
+    """Direct Anthropic SDK fallback — still Claude, no dead local proxy."""
+    import anthropic
+    client = anthropic.Anthropic()
+    resp = client.messages.create(
+        model=SPEC["native"]["model"], max_tokens=2048, temperature=0,
+        system=APPROVED_PROMPT,
+        messages=[{"role": "user", "content": user_message(brief)}])
+    return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            out = asyncio.run(_native(brief))
+            if out.strip():
+                return out
+        except Exception:  # noqa  -- SDK/CLI path hiccup; fall back to direct Claude
+            pass
+        try:
+            return _anthropic_direct(brief)
+        except Exception:  # noqa
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(op: dict) -> dict:
+        brief = clarity_contract.operation_brief(op)
+        return clarity_contract.extract_json(_elicit(brief)) or {}
+
+    summary = clarity_contract.run_clarity_test(AGENT, generate)
+    print(f"[{AGENT}] pass_rate={summary['error_clarity_pass_rate_pct']}% "
+          f"passed={summary['passed_cases']}/{summary['documented_error_cases']} "
+          f"covered={summary['covered_cases']} p1={summary['p1_security_defects']}")
+
+
+if __name__ == "__main__":
+    main()

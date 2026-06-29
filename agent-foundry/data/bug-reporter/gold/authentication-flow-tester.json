@@ -1,0 +1,92 @@
+{
+  "bug_index": 1,
+  "agent_name": "authentication-flow-tester",
+  "status": "FAILED",
+  "severity": "CRITICAL",
+  "priority": "P1",
+  "title": "[authentication-flow-tester] AssertionError: expected 200 on valid login but got 401",
+  "decision": {
+    "title": "[authentication-flow-tester] AssertionError: expected 200 on valid login but got 401",
+    "severity": "CRITICAL",
+    "priority": "P1",
+    "testing_steps": [
+      {
+        "tc_id": "tc-auth-001",
+        "step_id": "tc-auth-001-s1",
+        "step_text": "Send POST /auth/login with a valid body and Assert response code equals 200.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      },
+      {
+        "tc_id": "tc-auth-002",
+        "step_id": "tc-auth-002-s1",
+        "step_text": "GET /auth/me with Authorization header, Asserts response code is exactly 401 when the token is missing.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      },
+      {
+        "tc_id": "tc-auth-003",
+        "step_id": "tc-auth-003-s1",
+        "step_text": "Inspect the in-memory session table for a stale entry.",
+        "involves_http_call": false,
+        "involves_assertion": false,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": true,
+        "folder": "authentication-flow-tester",
+        "item_name": "tc-auth-001",
+        "new_item": null
+      },
+      {
+        "exists_in_collection": false,
+        "folder": "authentication-flow-tester",
+        "item_name": "tc-auth-002",
+        "new_item": {
+          "name": "tc-auth-002",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "body": {
+              "mode": "none"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                  "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

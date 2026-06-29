@@ -1,0 +1,6 @@
+{
+  "scenario": "all_get_by_id_no_field_leak",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

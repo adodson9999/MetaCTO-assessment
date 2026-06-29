@@ -1,0 +1,34 @@
+Job Description, 10a Labs AI Red Teamer, Cyber
+AI Red Teamer, Cyber
+About 10a Labs: 10a Labs is the safety and threat-intelligence layer trusted by frontier AI labs, AI unicorns,
+Fortune 10 companies, and leading global technology platforms. Our adversarial red teaming, model evaluations,
+and intelligence collection enable engineering, safety, and security teams to stay ahead of evolving threats and
+deploy AI systems safely.
+About the role: We are seeking an AI Red Teamer with deep cybersecurity expertise to help evaluate the security
+and resilience of advanced AI systems and applications. This role is ideal for someone who enjoys offensive
+security, creative problem-solving, and thinking like an adversary.
+In this role, you will: Design and execute red team assessments against AI systems, applications, and supporting
+infrastructure. Translate ambiguous objectives into structured testing plans and attack strategies. Develop
+adversarial testing methodologies to evaluate system security, robustness, and resilience. Craft prompts, attack
+chains, and adversarial inputs to uncover unintended or unsafe system behavior. Identify vulnerabilities, security
+risks, and failure modes through testing and analysis. Analyze system outputs and behaviors to assess security
+and safety risks. Document findings, communicate risk, and provide actionable recommendations. Collaborate
+with engineers, researchers, and subject-matter experts to improve system security. Continuously refine testing
+methodologies based on emerging threats and attacker techniques.
+Required Qualifications: 2 to 5 years of relevant professional experience, with a track record of taking ownership
+of complex projects and driving them to completion. Degree in Computer Science, Engineering, Cyber Security,
+or a related field (or equivalent practical experience). Strong understanding of cybersecurity principles, attack
+methodologies, and common vulnerability classes. Experience with security tools such as Splunk, Wireshark,
+Metasploit, Burp Suite, Nmap, or similar platforms. Comfortable working in Linux and terminal-based
+environments. Experience scripting or automating workflows using Python, Bash, or similar languages.
+Familiarity with SIEM platforms and security monitoring concepts. Ability to think creatively from an adversarial
+perspective and investigate complex technical problems. Excellent analytical and problem-solving skills.
+Excellent written and verbal communication skills.
+Preferred Qualifications: CompTIA Security+ certification and/or Google Cybersecurity Certificate. Experience
+testing AI, machine learning, or large language model applications. Familiarity with prompt injection, jailbreak
+techniques, or other AI attack methodologies. Offensive security certifications such as PNPT, OSCP, CySA+,
+GCIH, or GPEN. Experience supporting government, defense, intelligence, or critical infrastructure environments.
+Compensation & Benefits: Salary Range $100K to $120K depending on experience and location.
+Performance-based annual bonus. Support for conferences, continuing education, or leadership training. Fully
+remote, U.S.-based. Comprehensive health, dental, and vision coverage. Generous PTO and paid holiday
+schedule. 401(k) plan.

@@ -1,0 +1,47 @@
+{
+  "bug_index": 5,
+  "agent_name": "crud-integrity-prober",
+  "status": "FAILED",
+  "severity": "HIGH",
+  "priority": "P2",
+  "title": "[crud-integrity-prober] psycopg2.OperationalError: database connection refused (500) during CRUD write",
+  "decision": {
+    "title": "[crud-integrity-prober] psycopg2.OperationalError: database connection refused (500) during CRUD write",
+    "severity": "HIGH",
+    "priority": "P2",
+    "testing_steps": [
+      {
+        "tc_id": "tc-crud-001",
+        "step_id": "tc-crud-001-s1",
+        "step_text": "POST /resources with body: a new resource and Asserts exactly 201.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      },
+      {
+        "tc_id": "tc-crud-002",
+        "step_id": "tc-crud-002-s1",
+        "step_text": "DELETE /resources/42 with Authorization header, Asserts response code = 204.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": true,
+        "folder": "crud-integrity-prober",
+        "item_name": "tc-crud-001",
+        "new_item": null
+      },
+      {
+        "exists_in_collection": true,
+        "folder": "crud-integrity-prober",
+        "item_name": "tc-crud-002",
+        "new_item": null
+      }
+    ]
+  }
+}

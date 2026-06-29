@@ -1,0 +1,583 @@
+{
+  "slug": "recipes_add",
+  "method": "POST",
+  "path": "/recipes/add",
+  "schema": {
+    "fields": {
+      "name": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "ingredients": {
+        "type": "array"
+      },
+      "instructions": {
+        "type": "array"
+      },
+      "prepTimeMinutes": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name",
+      "ingredients"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": null,
+        "instructions": null,
+        "prepTimeMinutes": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "name:key_absent",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "name:key_present_null",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "ingredients:key_absent",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "ingredients:key_present_null",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:INT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": 42,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:FLOAT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": 3.14,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:BOOL_TRUE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": true,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:BOOL_FALSE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": false,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:LIST_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": [
+          1,
+          "a",
+          true
+        ],
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:OBJECT_VAL",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": {
+          "key": "value"
+        },
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "name:NULL_NONE",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": null,
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:INT_VAL",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": 42,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:FLOAT_VAL",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": 3.14,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:BOOL_TRUE",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": true,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:BOOL_FALSE",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": false,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:STRING_VAL",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": "wrong_type_string",
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:CHAR_VAL",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": "x",
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:OBJECT_VAL",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": {
+          "key": "value"
+        },
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "ingredients:NULL_NONE",
+      "field": "ingredients",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": null,
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "Forge Stew",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10,
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "name",
+      "field": "name",
+      "expected_class": "400",
+      "actual_code": 200,
+      "actual_class": "2xx",
+      "payload": {
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ingredients": [
+          "water"
+        ],
+        "instructions": [
+          "boil"
+        ],
+        "prepTimeMinutes": 10
+      }
+    }
+  ]
+}

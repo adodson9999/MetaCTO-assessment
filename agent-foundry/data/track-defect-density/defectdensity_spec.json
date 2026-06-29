@@ -1,0 +1,222 @@
+{
+  "title": "Sprint defect-density fixtures (authored for the Track-Defect-Density task)",
+  "description": "Each sprint stands in for the Jira REST query result (component=API, issuetype=Bug, created in the sprint window) plus `git diff --numstat` over the API source. Agents compute the published dashboard record; ground truth is the deterministic reference in agents/common/defectdensity_spec.py. Fully air-gapped: no Jira, no Git, no network, no DummyJSON.",
+  "test_file_suffixes": [
+    "test.go",
+    "test.py",
+    ".spec.ts"
+  ],
+  "alert_deviation_threshold_pct": 20.0,
+  "fields": [
+    "sprint_name",
+    "defect_density",
+    "rolling_avg_3_sprint",
+    "deviation_pct",
+    "alert_flag",
+    "p1_count",
+    "p2_count",
+    "p3_count",
+    "p4_count",
+    "trend"
+  ],
+  "sprints": [
+    {
+      "sprint_name": "Sprint-25",
+      "sprint_start_date": "2026-04-06",
+      "sprint_end_date": "2026-04-17",
+      "jira_issues": [
+        {
+          "key": "API-201",
+          "priority": "High"
+        },
+        {
+          "key": "API-202",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-203",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "900\t300\tsrc/api/users.go\n500\t300\tsrc/api/orders.go\n400\t100\tsrc/api/users_test.go",
+      "prev_density_1": 1.4,
+      "prev_density_2": 1.6,
+      "prev_density_3": 1.5
+    },
+    {
+      "sprint_name": "Sprint-26",
+      "sprint_start_date": "2026-04-20",
+      "sprint_end_date": "2026-05-01",
+      "jira_issues": [
+        {
+          "key": "API-210",
+          "priority": "High"
+        },
+        {
+          "key": "API-211",
+          "priority": "High"
+        },
+        {
+          "key": "API-212",
+          "priority": "High"
+        },
+        {
+          "key": "API-213",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-214",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-215",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-216",
+          "priority": "Low"
+        },
+        {
+          "key": "API-217",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "1200\t500\tsrc/api/payments.go\n200\t100\tsrc/api/billing.go\n300\t50\tsrc/api/billing_test.py\n100\t20\tui/cart.spec.ts",
+      "prev_density_1": 2.0,
+      "prev_density_2": 2.4,
+      "prev_density_3": 2.2
+    },
+    {
+      "sprint_name": "Sprint-27",
+      "sprint_start_date": "2026-05-04",
+      "sprint_end_date": "2026-05-15",
+      "jira_issues": [
+        {
+          "key": "API-220",
+          "priority": "Highest"
+        },
+        {
+          "key": "API-221",
+          "priority": "High"
+        },
+        {
+          "key": "API-222",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-223",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "1500\t500\tsrc/api/auth.go\n300\t200\tsrc/api/session.go\n600\t200\tsrc/api/auth_test.go",
+      "prev_density_1": 1.5,
+      "prev_density_2": 1.7,
+      "prev_density_3": 1.6
+    },
+    {
+      "sprint_name": "Sprint-28",
+      "sprint_start_date": "2026-05-18",
+      "sprint_end_date": "2026-05-29",
+      "jira_issues": [
+        {
+          "key": "API-230",
+          "priority": "Highest"
+        },
+        {
+          "key": "API-231",
+          "priority": "Highest"
+        },
+        {
+          "key": "API-232",
+          "priority": "High"
+        },
+        {
+          "key": "API-233",
+          "priority": "High"
+        },
+        {
+          "key": "API-234",
+          "priority": "High"
+        },
+        {
+          "key": "API-235",
+          "priority": "High"
+        },
+        {
+          "key": "API-236",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-237",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-238",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-239",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "1500\t500\tsrc/api/orders.go\n300\t200\tsrc/api/inventory.go\n800\t300\tsrc/api/orders_test.go\n120\t30\tui/checkout.spec.ts",
+      "prev_density_1": 2.5,
+      "prev_density_2": 2.7,
+      "prev_density_3": 2.6
+    },
+    {
+      "sprint_name": "Sprint-29",
+      "sprint_start_date": "2026-06-01",
+      "sprint_end_date": "2026-06-12",
+      "jira_issues": [
+        {
+          "key": "API-240",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-241",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "1200\t300\tsrc/api/profile.go\n400\t100\tsrc/api/avatar.go\n200\t50\tsrc/api/profile_test.py",
+      "prev_density_1": 2.0,
+      "prev_density_2": 1.8,
+      "prev_density_3": 1.9
+    },
+    {
+      "sprint_name": "Sprint-30",
+      "sprint_start_date": "2026-06-15",
+      "sprint_end_date": "2026-06-26",
+      "jira_issues": [
+        {
+          "key": "API-250",
+          "priority": "High"
+        },
+        {
+          "key": "API-251",
+          "priority": "High"
+        },
+        {
+          "key": "API-252",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-253",
+          "priority": "Medium"
+        },
+        {
+          "key": "API-254",
+          "priority": "Low"
+        },
+        {
+          "key": "API-255",
+          "priority": "Low"
+        }
+      ],
+      "diff_numstat": "1500\t500\tsrc/api/search.go\n300\t200\tsrc/api/index.go\n900\t300\tsrc/api/search_test.go\n400\t100\tsrc/api/index_test.py\n200\t50\tui/search.spec.ts",
+      "prev_density_1": 1.9,
+      "prev_density_2": 2.1,
+      "prev_density_3": 2.0
+    }
+  ]
+}

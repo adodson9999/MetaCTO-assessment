@@ -1,0 +1,32 @@
+{
+  "bug_index": 4,
+  "agent_name": "biometric-far-checker",
+  "status": "FAILED",
+  "severity": "HIGH",
+  "priority": "P2",
+  "title": "[biometric-far-checker] biometric match exceeded tolerance",
+  "decision": {
+    "title": "[biometric-far-checker] biometric match exceeded tolerance",
+    "severity": "HIGH",
+    "priority": "P2",
+    "testing_steps": [
+      {
+        "tc_id": "tc-bio-001",
+        "step_id": "tc-bio-001-s1",
+        "step_text": "POST /biometric/verify with a valid body, Assert response code equals 200.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": true,
+        "folder": "biometric-far-checker",
+        "item_name": "tc-bio-001",
+        "new_item": null
+      }
+    ]
+  }
+}

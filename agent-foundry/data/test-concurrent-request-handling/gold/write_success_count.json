@@ -1,0 +1,6 @@
+{
+  "scenario": "write_success_count",
+  "ideal": "50",
+  "observed_token": "50",
+  "api_correct": true
+}

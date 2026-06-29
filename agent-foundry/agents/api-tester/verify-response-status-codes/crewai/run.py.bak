@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI status-code-testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-
+operation Task. CrewAI routes the model through LiteLLM, so the local Ollama
+backend works via an "ollama/<model>" string. Deterministic sending/comparison/
+recording/emit is the shared harness's job (agents/common/status_contract.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import status_contract  # noqa: E402
+from status_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API response status-code testing agent",
+        goal="Convert one operation's documented response codes into one request descriptor per code.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(op: dict) -> dict:
+        brief = status_contract.operation_brief(op)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output='A single JSON object with one key "requests": '
+                                    "an array of one request descriptor per documented code.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return status_contract.extract_json(str(out)) or {}
+
+    summary = status_contract.run_status_test(AGENT, generate)
+    print(f"[{AGENT}] accuracy={summary['status_code_accuracy_rate_pct']}% "
+          f"correct={summary['correct']}/{summary['testable']} covered={summary['covered_cases']}")
+
+
+if __name__ == "__main__":
+    main()

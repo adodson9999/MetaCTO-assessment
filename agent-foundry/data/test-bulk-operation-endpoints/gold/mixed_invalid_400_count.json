@@ -1,0 +1,6 @@
+{
+  "scenario": "mixed_invalid_400_count",
+  "ideal": "2",
+  "observed_token": "2",
+  "api_correct": true
+}

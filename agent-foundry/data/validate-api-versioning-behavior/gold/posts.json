@@ -1,0 +1,164 @@
+{
+  "endpoint": "/posts",
+  "list_field": "posts",
+  "schema_diff_field": "apiVersion",
+  "reference_plan": {
+    "endpoint": "/posts",
+    "list_field": "posts",
+    "schema_diff_field": "apiVersion",
+    "cases": [
+      {
+        "label": "current_v2",
+        "path": "/v2/posts",
+        "version": "v2",
+        "version_status": "current"
+      },
+      {
+        "label": "deprecated_v1",
+        "path": "/v1/posts",
+        "version": "v1",
+        "version_status": "deprecated"
+      },
+      {
+        "label": "unsupported_v0",
+        "path": "/v0/posts",
+        "version": "v0",
+        "version_status": "unsupported"
+      },
+      {
+        "label": "unsupported_v99",
+        "path": "/v99/posts",
+        "version": "v99",
+        "version_status": "unsupported"
+      },
+      {
+        "label": "unsupported_vbeta",
+        "path": "/vbeta/posts",
+        "version": "vbeta",
+        "version_status": "unsupported"
+      }
+    ]
+  },
+  "request_log": {
+    "current_v2": {
+      "path": "/v2/posts",
+      "version": "v2",
+      "version_status": "current",
+      "status": 404,
+      "deprecation": null,
+      "ajv_error_count": null
+    },
+    "deprecated_v1": {
+      "path": "/v1/posts",
+      "version": "v1",
+      "version_status": "deprecated",
+      "status": 404,
+      "deprecation": null,
+      "ajv_error_count": null
+    },
+    "unsupported_v0": {
+      "path": "/v0/posts",
+      "version": "v0",
+      "version_status": "unsupported",
+      "status": 404,
+      "deprecation": null,
+      "ajv_error_count": null
+    },
+    "unsupported_v99": {
+      "path": "/v99/posts",
+      "version": "v99",
+      "version_status": "unsupported",
+      "status": 404,
+      "deprecation": null,
+      "ajv_error_count": null
+    },
+    "unsupported_vbeta": {
+      "path": "/vbeta/posts",
+      "version": "vbeta",
+      "version_status": "unsupported",
+      "status": 404,
+      "deprecation": null,
+      "ajv_error_count": null
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "current_v2_status",
+      "ideal": "200",
+      "observed_token": "404",
+      "api_correct": false
+    },
+    {
+      "scenario": "current_v2_schema_valid",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "current_v2_no_deprecation",
+      "ideal": "absent",
+      "observed_token": "absent",
+      "api_correct": true
+    },
+    {
+      "scenario": "deprecated_v1_status",
+      "ideal": "200",
+      "observed_token": "404",
+      "api_correct": false
+    },
+    {
+      "scenario": "deprecated_v1_schema_valid",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "deprecated_v1_deprecation_present",
+      "ideal": "present",
+      "observed_token": "absent",
+      "api_correct": false
+    },
+    {
+      "scenario": "deprecated_v1_deprecation_iso",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "deprecated_v1_deprecation_future",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "schema_diff_field_present_in_v2",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "schema_diff_field_absent_in_v1",
+      "ideal": "true",
+      "observed_token": "missing",
+      "api_correct": false
+    },
+    {
+      "scenario": "unsupported_v0_404",
+      "ideal": "404",
+      "observed_token": "404",
+      "api_correct": true
+    },
+    {
+      "scenario": "unsupported_v99_404",
+      "ideal": "404",
+      "observed_token": "404",
+      "api_correct": true
+    },
+    {
+      "scenario": "unsupported_vbeta_4xx",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

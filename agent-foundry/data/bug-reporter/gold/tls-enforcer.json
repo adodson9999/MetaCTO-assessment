@@ -1,0 +1,32 @@
+{
+  "bug_index": 2,
+  "agent_name": "tls-enforcer",
+  "status": "FAILED",
+  "severity": "CRITICAL",
+  "priority": "P1",
+  "title": "[tls-enforcer] TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+  "decision": {
+    "title": "[tls-enforcer] TLS handshake failed: server negotiated a weak cipher (TLS_RSA_WITH_RC4)",
+    "severity": "CRITICAL",
+    "priority": "P1",
+    "testing_steps": [
+      {
+        "tc_id": "tc-tls-001",
+        "step_id": "tc-tls-001-s1",
+        "step_text": "GET /secure/ping over TLS 1.2 and Assert response code = 200.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": true,
+        "folder": "tls-enforcer",
+        "item_name": "tc-tls-001",
+        "new_item": null
+      }
+    ]
+  }
+}

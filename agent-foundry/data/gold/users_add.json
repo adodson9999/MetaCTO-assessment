@@ -1,0 +1,371 @@
+{
+  "slug": "users_add",
+  "method": "POST",
+  "path": "/users/add",
+  "schema": {
+    "fields": {
+      "firstName": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "lastName": {
+        "type": "string",
+        "maxLength": 50
+      },
+      "age": {
+        "type": "integer"
+      },
+      "email": {
+        "type": "string",
+        "maxLength": 120
+      }
+    },
+    "required": [
+      "firstName"
+    ]
+  },
+  "cases": [
+    {
+      "category": "valid",
+      "label": "",
+      "field": null,
+      "expected_class": "2xx",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_all_null",
+      "label": "",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": null,
+        "age": null,
+        "email": null
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "firstName:key_absent",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_missing_required",
+      "label": "firstName:key_present_null",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:INT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": 42,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:FLOAT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": 3.14,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:BOOL_TRUE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": true,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:BOOL_FALSE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": false,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:LIST_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": [
+          1,
+          "a",
+          true
+        ],
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:OBJECT_VAL",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": {
+          "key": "value"
+        },
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_wrong_type",
+      "label": "firstName:NULL_NONE",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": null,
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "INT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": 42
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "FLOAT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": 3.14
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_TRUE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": true
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "BOOL_FALSE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": false
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "STRING_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": "wrong_type_string"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "CHAR_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": "x"
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "LIST_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": [
+          1,
+          "a",
+          true
+        ]
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "OBJECT_VAL",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": {
+          "key": "value"
+        }
+      }
+    },
+    {
+      "category": "inv_extra_field",
+      "label": "NULL_NONE",
+      "field": null,
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com",
+        "extra_field": null
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "firstName",
+      "field": "firstName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "lastName",
+      "field": "lastName",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "age": 30,
+        "email": "f@example.com"
+      }
+    },
+    {
+      "category": "inv_maxlength",
+      "label": "email",
+      "field": "email",
+      "expected_class": "400",
+      "actual_code": 201,
+      "actual_class": "2xx",
+      "payload": {
+        "firstName": "Forge",
+        "lastName": "Tester",
+        "age": 30,
+        "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "agent": "api-tester-test-api-gateway-routing",
+  "ts": "2026-06-26T01:08:38.161916+00:00",
+  "metric": "routing_test_fidelity_heldout",
+  "held_out_routes": [
+    "/api/users",
+    "/api/orders"
+  ],
+  "baseline_fidelity": 100.0,
+  "candidate_fidelity": 100.0,
+  "accepted": false,
+  "candidate_skill_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillopt/test-api-gateway-routing/api-tester-test-api-gateway-routing/staged/candidate_skill.md",
+  "note": "STRICT-improvement gate. ACCEPTED candidate is STAGED only \u2014 best_skill.md is NOT overwritten. Adopt manually after review."
+}

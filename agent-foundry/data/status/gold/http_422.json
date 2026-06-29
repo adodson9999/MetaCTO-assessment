@@ -1,0 +1,24 @@
+{
+  "slug": "http_422",
+  "method": "GET",
+  "path": "/http/422",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    422
+  ],
+  "cases": [
+    {
+      "documented_code": 422,
+      "request": {
+        "code": 422,
+        "method": "GET",
+        "path": "/http/422",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 422,
+      "passed": true
+    }
+  ]
+}

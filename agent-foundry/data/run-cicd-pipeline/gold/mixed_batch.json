@@ -1,0 +1,25 @@
+{
+  "scenario": "mixed_batch",
+  "note": "Six enabled agents across two batches of four: one non-zero exit (FAILED), one zero-exit-but-non-JSON stdout (MALFORMED), one timed out (TIMED_OUT, exit 124), three pass. Pipeline FAILS (33.33%).",
+  "gold_summary": {
+    "run_id": "2026-06-26T15-02-44",
+    "model": "llama3.1:8b",
+    "model_digest": "42182419e950",
+    "agents_total": 6,
+    "agents_passed": 2,
+    "agents_failed": 4,
+    "failed_agents": [
+      "schema-validator",
+      "idempotency-prober"
+    ],
+    "malformed_agents": [
+      "rate-limit-prober"
+    ],
+    "timed_out_agents": [
+      "webhook-delivery-tester"
+    ],
+    "timestamp": "2026-06-26T15:09:31+00:00"
+  },
+  "pass_rate_pct": 33.33,
+  "would_block_deployment": true
+}

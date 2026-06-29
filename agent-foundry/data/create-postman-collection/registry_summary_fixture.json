@@ -1,0 +1,11 @@
+{
+  "registry_file": "results/test-case-registry.json",
+  "total_test_cases": 16,
+  "http_test_cases": 14,
+  "agents_scanned": 6,
+  "coverage_rate": 100.0,
+  "gaps_found": false,
+  "gap_count": 0,
+  "note": "FIXTURE standing in for the n600 test-case-registry-summary.json. gaps_found=false so n601 may proceed. n600 (the test-case-registry builder) is a sibling agent that is not part of this build; this fixture lets n601's deterministic core be verified end-to-end without it. Re-run n600 to regenerate the real registry + summary before a production n601 run.",
+  "timestamp": "2026-06-26T00:00:00Z"
+}

@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""LangGraph create-postman-collection agent ("n601").
+
+A StateGraph whose single node turns one n601 brief into the Postman Generation Contract
+via the central backend (ChatAnthropic when provider=claude-haiku, else ChatOllama).
+Deterministic execution (apply the contract to the registry, build + read back +
+recursively count the collection, run Newman, score) is handled by the shared harness
+(agents/common/postman.py) so this file's only framework-specific job is LLM elicitation
+through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import postman  # noqa: E402
+from postman_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+
+
+def _caller():
+    """Return call(prompt)->str for the central backend (anthropic / openai-cli / ollama)."""
+    spec = backend_config.resolve(WS)
+    kind = spec["native"]["kind"]
+    if kind == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        llm = ChatAnthropic(model=spec["native"]["model"], temperature=0, max_tokens=1500)
+        return lambda p: getattr(llm.invoke(p), "content", "")
+    if kind == "openai-cli":
+        from openai import OpenAI
+        client = OpenAI(base_url=spec["base_url"], api_key="local-shim")
+
+        def call(p):
+            r = client.chat.completions.create(
+                model=spec["native"]["model"], temperature=0,
+                messages=[{"role": "user", "content": p}])
+            return r.choices[0].message.content or ""
+        return call
+    from langchain_ollama import ChatOllama
+    llm = ChatOllama(model=spec["native"]["model"],
+                     base_url=spec["base_url"].replace("/v1", ""),
+                     temperature=0, format="json")
+    return lambda p: getattr(llm.invoke(p), "content", "")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    call = _caller()
+
+    def generate_node(state: S) -> S:
+        out = call(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": out if isinstance(out, str) else str(out)}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(cfg: dict) -> dict:
+        b = postman.brief(cfg)
+        result = graph.invoke({"brief": b, "output": ""})
+        return postman.extract_json(result["output"]) or {}
+
+    s = postman.run_postman_test(AGENT, generate)
+    print(f"[{AGENT}] coverage_rate={s['postman_coverage_rate_pct']}% "
+          f"items={s['postman_item_count']}/{s['http_tc_count']} "
+          f"scenarios={s['scenarios_api_correct']}/{s['scenarios_total']} "
+          f"newman={s['newman_valid']}")
+
+
+if __name__ == "__main__":
+    main()

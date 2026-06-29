@@ -1,0 +1,20 @@
+{
+  "task": "api-tester / test-soft-delete-behavior",
+  "base_url": "http://127.0.0.1:8950",
+  "resource_endpoint": "/resources",
+  "create_fields": {"name": "widget", "sku": "SKU", "color": "octopus-teal"},
+  "id_field": "id",
+  "delete_expected_status": [200, 204],
+  "get_deleted_expected_status": 404,
+  "collection_expected_status": 200,
+  "include_deleted_param": "include_deleted=true",
+  "include_deleted_expected_status": 200,
+  "db_path": "data/test-soft-delete-behavior/resources.db",
+  "db_table": "resources",
+  "db_id_column": "id",
+  "db_deleted_at_column": "deleted_at",
+  "db_is_deleted_column": "is_deleted",
+  "deleted_at_tolerance_s": 10,
+  "case_count": 5,
+  "notes": "TARGET = a local, air-gapped, SQLite-backed soft-delete endpoint (tools/softdelete_target/app.py). DummyJSON is NOT used and NOT modified: it never persists and exposes no queryable DB, so the deleted_at / DB-row / collection-exclusion assertions are unverifiable against it. The harness namespaces each created resource's field values with run_id + agent + case index so the four agents can run against one DB without their resources being confused; ids are server-generated UUID-hex strings so there are never collisions. Each run exercises case_count independent create->delete->verify lifecycles; the Soft Delete Correctness Rate is the fraction passing the full combined condition."
+}

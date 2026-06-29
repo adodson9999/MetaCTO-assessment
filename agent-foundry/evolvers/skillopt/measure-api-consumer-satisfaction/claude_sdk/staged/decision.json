@@ -1,0 +1,11 @@
+{
+  "agent": "claude_sdk",
+  "ts": "2026-06-26T02:55:06.327110+00:00",
+  "metric": "nps_measurement_plan_fidelity_heldout",
+  "held_out_dataset": "q_prev",
+  "baseline_fidelity": 0.0,
+  "candidate_fidelity": 0.0,
+  "accepted": false,
+  "candidate_skill_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillopt/measure-api-consumer-satisfaction/claude_sdk/staged/candidate_skill.md",
+  "note": "STRICT-improvement gate. ACCEPTED candidate is STAGED only \u2014 best_skill.md is NOT overwritten. Adopt manually after review."
+}

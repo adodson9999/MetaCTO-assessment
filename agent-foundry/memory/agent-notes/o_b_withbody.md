@@ -1,0 +1,1 @@
+- [2026-06-26T15:50:00.421496+00:00] run=oracle2 create-postman-collection run: coverage_rate=100.0% (items=14/14, scenarios_ok=14/14, newman=True)

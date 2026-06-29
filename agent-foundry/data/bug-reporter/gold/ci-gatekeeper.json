@@ -1,0 +1,78 @@
+{
+  "bug_index": 3,
+  "agent_name": "ci-gatekeeper",
+  "status": "TIMED_OUT",
+  "severity": "CRITICAL",
+  "priority": "P1",
+  "title": "[ci-gatekeeper] Agent timed out after 300 seconds \u2014 no output produced",
+  "decision": {
+    "title": "[ci-gatekeeper] Agent timed out after 300 seconds \u2014 no output produced",
+    "severity": "CRITICAL",
+    "priority": "P1",
+    "testing_steps": [
+      {
+        "tc_id": "tc-pipe-001",
+        "step_id": "tc-pipe-001-s1",
+        "step_text": "POST /pipeline/run with body = a manifest and Asserts exactly 202.",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "The asserted response is returned.",
+        "fail_condition": "The assertion does not hold."
+      }
+    ],
+    "postman_references": [
+      {
+        "exists_in_collection": false,
+        "folder": "ci-gatekeeper",
+        "item_name": "tc-pipe-001",
+        "new_item": {
+          "name": "tc-pipe-001",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pipeline/run",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pipeline",
+                "run"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 0\", function() { pm.response.to.have.status(0); });",
+                  "pm.test(\"Response time < 5000ms\", function() { pm.expect(pm.response.responseTime).to.be.below(5000); });"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "metric_name": "crud_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (resource x cell) cells where the agent's executed observation equals the gold observation. Cells per resource = 6 HTTP steps (CREATE, READ, UPDATE, READ_AFTER_UPDATE, DELETE, READ_AFTER_DELETE -> observed actual_code) + 4 DB checkpoints (DB_AFTER_CREATE, DB_AFTER_READ, DB_AFTER_UPDATE, DB_FINAL -> observed db_state) = 10. A cell the agent did not cover (step omitted / not sent) counts as a mismatch. Denominator = all gold cells across all resources.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/crud/gold.json",
+  "headline_metric": "crud_integrity_rate_pct",
+  "tie_breakers": ["coverage_cells", "create_success", "wall_clock_seconds"],
+  "rationale": "All four agents drive the same local DummyJSON, whose CRUD behavior (simulated, non-persisting) is a property of the API, not the agent -> the headline CRUD Integrity Rate is identical (0%) for every agent and cannot separate frameworks. Fidelity-to-gold instead measures each framework's TEST quality: did it construct and execute the correct 8-step plan (right verbs, paths, {RESOURCE_ID} chaining, bodies, declared table) and faithfully record the real per-step HTTP code + read-only DB state. The headline crud_integrity_rate_pct is still emitted by every agent as the task's QA finding: DummyJSON CREATE returns a synthetic id (recipes returns 200 not 201) but never persists, so every READ/UPDATE/DELETE on the created id 404s and the DB never reflects the write -> CRUD Integrity Rate = 0%."
+}

@@ -1,0 +1,32 @@
+{
+  "title": "AI Red Teamer, Cyber",
+  "company": "10a Labs",
+  "location": "United States",
+  "remote_or_onsite": "remote",
+  "employment_type": "full-time",
+  "seniority": "mid",
+  "salary_min": 100000,
+  "salary_max": 120000,
+  "salary_currency": "USD",
+  "years_experience_min": 2,
+  "tech_stack": ["Splunk", "Wireshark", "Metasploit", "Burp Suite", "Nmap", "Linux", "Python", "Bash", "SIEM"],
+  "must_haves": [
+    "2-5 years relevant professional experience",
+    "Degree in CS/Engineering/Cyber Security or equivalent practical experience",
+    "Strong understanding of cybersecurity principles and attack methodologies",
+    "Experience with security tools (Splunk/Wireshark/Metasploit/Burp Suite/Nmap)",
+    "Comfortable in Linux and terminal-based environments",
+    "Scripting/automation with Python or Bash",
+    "Familiarity with SIEM platforms and security monitoring",
+    "Excellent analytical and communication skills"
+  ],
+  "nice_to_haves": [
+    "CompTIA Security+ or Google Cybersecurity Certificate",
+    "Experience testing AI/ML/LLM applications",
+    "Familiarity with prompt injection/jailbreak techniques",
+    "Offensive security certifications (PNPT/OSCP/CySA+/GCIH/GPEN)",
+    "Government/defense/intelligence/critical-infrastructure experience"
+  ],
+  "visa_sponsorship": "unspecified",
+  "apply_url": null
+}

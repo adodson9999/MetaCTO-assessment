@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK status-code-testing agent.
+
+Standalone program mirroring the other three. Native Claude is used when the
+backend is claude-haiku; under the default air-gapped Ollama backend the SDK's
+cloud path is unavailable, so it falls back to the OpenAI-compatible local
+endpoint (Ollama /v1). Either way it elicits the per-code request descriptors;
+the shared harness sends/compares/records/emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import status_contract  # noqa: E402
+from status_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa  -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(op: dict) -> dict:
+        brief = status_contract.operation_brief(op)
+        return status_contract.extract_json(_elicit(brief)) or {}
+
+    summary = status_contract.run_status_test(AGENT, generate)
+    print(f"[{AGENT}] accuracy={summary['status_code_accuracy_rate_pct']}% "
+          f"correct={summary['correct']}/{summary['testable']} covered={summary['covered_cases']}")
+
+
+if __name__ == "__main__":
+    main()

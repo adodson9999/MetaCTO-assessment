@@ -1,0 +1,6 @@
+- [2026-06-25T22:58:10.985065+00:00] run=verify-fidelity versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:03:33.967449+00:00] run=verify2 versioning-behavior run: accuracy=21.15% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:07:01.312736+00:00] run=det1 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:07:06.953327+00:00] run=det2 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:07:12.024043+00:00] run=det3 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-06-25T23:14:07.088269+00:00] run=upg versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)

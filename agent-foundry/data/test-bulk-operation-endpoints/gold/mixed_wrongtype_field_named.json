@@ -1,0 +1,6 @@
+{
+  "scenario": "mixed_wrongtype_field_named",
+  "ideal": "true",
+  "observed_token": "true",
+  "api_correct": true
+}

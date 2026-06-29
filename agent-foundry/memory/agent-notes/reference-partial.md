@@ -1,0 +1,1 @@
+- [2026-06-26T02:55:40.832702+00:00] run=ref-validate-partial enum-value-restriction test run: rate=51.43% over 4 endpoints (35 cases); invalid-rejection=0.0%

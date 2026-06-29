@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""LangGraph header-propagation-testing agent.
+
+A StateGraph whose single node turns one endpoint's correlation-header contract into
+the propagation test plan via the backend LLM (native Claude when the backend is
+claude-haiku). Deterministic execution (the harness sends the requests, greps the
+captured API server log, evaluates), recording, and emit are handled by the shared
+harness (agents/common/header.py) so this file's only framework-specific job is LLM
+elicitation through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import header  # noqa: E402
+from header_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+
+
+def _model():
+    spec = backend_config.resolve(WS)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"], temperature=0)
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=spec["native"]["model"],
+                      base_url=spec["base_url"].replace("/v1", ""),
+                      temperature=0, format="json")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    llm = _model()
+
+    def generate_node(state: S) -> S:
+        msg = llm.invoke(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(endpoint: dict) -> dict:
+        brief = header.endpoint_brief(endpoint)
+        result = graph.invoke({"brief": brief, "output": ""})
+        return header.extract_json(result["output"]) or {}
+
+    summary = header.run_header_test(AGENT, generate)
+    print(f"[{AGENT}] header_propagation_rate={summary['header_propagation_rate_pct']}% "
+          f"endpoints={len(summary['endpoints'])} scenarios={summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

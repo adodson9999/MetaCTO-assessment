@@ -1,0 +1,33 @@
+{
+  "slug": "http_422",
+  "method": "GET",
+  "path": "/http/422",
+  "auth_required": false,
+  "is_hook": true,
+  "documented_codes": [
+    422
+  ],
+  "cases": [
+    {
+      "documented_code": 422,
+      "trigger": "passthrough",
+      "request": {
+        "code": 422,
+        "method": "GET",
+        "path": "/http/422",
+        "auth": "none",
+        "body": null
+      },
+      "actual_code": 422,
+      "body": "{\"status\":422,\"title\":\"Unprocessable Entity\",\"type\":\"about:blank\",\"detail\":\"Unprocessable Entity\",\"message\":\"Unprocessable Entity\"}",
+      "verdict": {
+        "valid_json": true,
+        "message_present": true,
+        "code_present": false,
+        "sensitive_found": false,
+        "sensitive_matches": [],
+        "passed": false
+      }
+    }
+  ]
+}

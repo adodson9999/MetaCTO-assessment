@@ -1,0 +1,25 @@
+{
+  "task": "api-tester / test-bulk-operation-endpoints",
+  "endpoint": "/bulk/products",
+  "base_url": "http://127.0.0.1:8924",
+  "max_batch_size": 100,
+  "required_fields": [
+    {"name": "title", "type": "string"},
+    {"name": "price", "type": "number"},
+    {"name": "category", "type": "string"}
+  ],
+  "valid_item_template": {"title": "Bulk Item [N]", "price": 9.99, "category": "test"},
+  "valid_count": 8,
+  "missing_field": "category",
+  "wrongtype_field": "title",
+  "wrongtype_value": 12345,
+  "oversize_count": 101,
+  "expected_batch_status": 207,
+  "expected_valid_item_status": 201,
+  "expected_invalid_item_status": 400,
+  "expected_oversize_status": 413,
+  "expected_db_delta": 8,
+  "db_path": "data/test-bulk-operation-endpoints/records.db",
+  "db_table": "records",
+  "notes": "DummyJSON exposes NO bulk endpoints (no 207, no per-item array, no persistence), so the 207 / per-item-status / DB-count-delta assertions cannot run against it. DummyJSON is left 100% untouched. The bulk test targets a separate, purpose-built, local, air-gapped, spec-conformant bulk endpoint (tools/bulk_target/app.py). The harness namespaces each agent's rows with an X-Bulk-Scope header (run_id:agent:batch) so the four agents run in parallel against one DB without colliding."
+}

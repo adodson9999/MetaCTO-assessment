@@ -1,0 +1,72 @@
+{
+  "title": "DummyJSON query-parameter contract (authored for the query-parameter-handling task)",
+  "description": "Each list collection exposes the documented query parameters under 'documented_params' and a sibling /search route whose required parameter is `q`. Agents construct the query-parameter test plan from this; ground truth is the live API's observed behavior. DummyJSON is read-only and never modified.",
+  "target": "http://localhost:8899",
+  "id_field": "id",
+  "documented_params": [
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "enum": null
+    },
+    {
+      "name": "skip",
+      "type": "integer",
+      "required": false,
+      "enum": null
+    },
+    {
+      "name": "select",
+      "type": "string",
+      "required": false,
+      "enum": null
+    },
+    {
+      "name": "sortBy",
+      "type": "string",
+      "required": false,
+      "enum": null
+    },
+    {
+      "name": "order",
+      "type": "string",
+      "required": false,
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    },
+    {
+      "name": "q",
+      "type": "string",
+      "required": true,
+      "enum": null,
+      "route": "search",
+      "note": "search query on <collection>/search; idealized contract requires it"
+    }
+  ],
+  "undocumented_param_policy": "ignore",
+  "collections": [
+    {
+      "collection": "/products",
+      "list_field": "products",
+      "search_path": "/products/search"
+    },
+    {
+      "collection": "/posts",
+      "list_field": "posts",
+      "search_path": "/posts/search"
+    },
+    {
+      "collection": "/users",
+      "list_field": "users",
+      "search_path": "/users/search"
+    },
+    {
+      "collection": "/recipes",
+      "list_field": "recipes",
+      "search_path": "/recipes/search"
+    }
+  ]
+}

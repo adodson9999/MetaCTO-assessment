@@ -1,0 +1,11 @@
+- [2026-06-25T22:38:13.604207+00:00] run=smoke-subagent null-empty test run: accuracy=11.11% over 1 endpoints (9 cases); required-rejection=0.0%
+- [2026-06-25T22:50:52.933272+00:00] run=null-run-1-ae1077 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
+- [2026-06-25T23:15:54.915137+00:00] run=evolve-null-api-tester-validate-null-empty-fields-base null-empty test run: accuracy=11.86% over 2 endpoints (59 cases); required-rejection=0.0%
+- [2026-06-25T23:18:22.771674+00:00] run=evolve-null-api-tester-validate-null-empty-fields-cand null-empty test run: accuracy=0.0% over 2 endpoints (59 cases); required-rejection=0.0%
+- [2026-06-26T21:08:44.386301+00:00] run=RUN-20260626-200550 null-empty test run: accuracy=34.32% over 22 endpoints (437 cases); required-rejection=33.21%
+- [2026-06-28T03:57:43.403549+00:00] run=RUN-20260628-025411 null-empty test run: accuracy=34.32% over 22 endpoints (437 cases); required-rejection=33.21%
+- [2026-06-28T18:19:39.313480+00:00] run=RUN-20260628-171526 null-empty test run: accuracy=34.32% over 22 endpoints (437 cases); required-rejection=33.21%
+- [2026-06-29T01:39:56.621557+00:00] run=RUN-20260629-003439 null-empty test run: accuracy=34.32% over 22 endpoints (437 cases); required-rejection=33.21%
+- [2026-06-29T13:24:30.433901+00:00] run=RUN-20260629-121847 null-empty test run: accuracy=34.32% over 22 endpoints (437 cases); required-rejection=33.21%
+- [2026-06-29T17:51:37.422977+00:00] run=2026-06-29_17-10-02 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
+- [2026-06-29T20:08:59.473194+00:00] run=2026-06-29_19-27-43 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%

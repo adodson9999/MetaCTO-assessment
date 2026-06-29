@@ -1,0 +1,1 @@
+- [2026-06-25T23:03:39.392344+00:00] run=verify2 versioning-behavior run: accuracy=23.08% over 4 endpoints (52 scenarios)

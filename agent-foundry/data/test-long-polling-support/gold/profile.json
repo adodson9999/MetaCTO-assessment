@@ -1,0 +1,104 @@
+{
+  "channel": "profile",
+  "poll_timeout_s": 5,
+  "expected_event_type": "profile.updated",
+  "reference_plan": {
+    "channel": "profile",
+    "poll_path": "/poll/profile",
+    "trigger_path": "/publish/profile",
+    "poll_timeout_s": 5,
+    "expected_event_type": "profile.updated",
+    "client_max_time_s": 10,
+    "cases": [
+      {
+        "label": "no_event",
+        "kind": "no_event"
+      },
+      {
+        "label": "event",
+        "kind": "event"
+      }
+    ]
+  },
+  "observations": {
+    "no_event": {
+      "status": 204,
+      "content_length": 0,
+      "elapsed_s": 5.006065624998882
+    },
+    "event": {
+      "status": 200,
+      "body": {
+        "event_type": "profile.updated",
+        "user_id": "USR-7",
+        "channel": "profile",
+        "id": "evt-1"
+      },
+      "elapsed_s": 1.5017941670084838,
+      "response_after_event_s": 0.0,
+      "event_offset_s": 1.502
+    }
+  },
+  "scenarios": [
+    {
+      "scenario": "ne_status",
+      "ideal": "204",
+      "observed_token": "204",
+      "api_correct": true
+    },
+    {
+      "scenario": "ne_not_early",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ne_within_window",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ne_body_empty",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_status",
+      "ideal": "200",
+      "observed_token": "200",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_within_2s",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_valid_json",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_event_type_match",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "ev_secondary_nonempty",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    },
+    {
+      "scenario": "client_max_time_correct",
+      "ideal": "true",
+      "observed_token": "true",
+      "api_correct": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "title": "Run Regression Suite \u2014 build-pair catalogue (api-tester)",
+  "description": "Each entry is one (build N-1, build N) test-result-artifact pair in a named reporter format. Agents parse both artifacts and emit the seven-field regression report; ground truth is the deterministic comparison in regression_spec. DummyJSON is read-only and never modified; the deployment health check is a read-only GET /health against the local target.",
+  "target": "http://localhost:8899",
+  "builds_subdir": "builds",
+  "build_pairs": [
+    {
+      "pair": "newman_junit",
+      "format": "junit_xml",
+      "prev_build_id": "ci-1042",
+      "build_id": "ci-1043",
+      "prev_file": "build_prev.xml",
+      "curr_file": "build_curr.xml",
+      "note": "Postman/Newman JUnit reporter output."
+    },
+    {
+      "pair": "pytest_junit",
+      "format": "junit_xml",
+      "prev_build_id": "build-77",
+      "build_id": "build-78",
+      "prev_file": "build_prev.xml",
+      "curr_file": "build_curr.xml",
+      "note": "pytest --junitxml output (clean build: zero regressions)."
+    },
+    {
+      "pair": "jest_json",
+      "format": "jest_json",
+      "prev_build_id": "gh-2001",
+      "build_id": "gh-2002",
+      "prev_file": "build_prev.json",
+      "curr_file": "build_curr.json",
+      "note": "Jest --json reporter output."
+    },
+    {
+      "pair": "pytest_json",
+      "format": "pytest_json",
+      "prev_build_id": "rel-9",
+      "build_id": "rel-10",
+      "prev_file": "build_prev.json",
+      "curr_file": "build_curr.json",
+      "note": "pytest-json-report output (a prev-passed test is removed in build N)."
+    }
+  ]
+}
