@@ -1,0 +1,19 @@
+{
+  "task": "general / documentation-reviewer",
+  "alias": "n603",
+  "metric_name": "verdict_accuracy_pct",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of labeled bug reports whose emitted verdict (one of yes | no | missing-docs) matches the gold verdict in data/documentation-reviewer/gold.json. Denominator = number of labeled reports. A verdict the agent omitted, mis-cased, or set to a value outside the three allowed strings counts as a mismatch (an empty or malformed emission scores 0, never 100). This is the task's own judge metric: verdict correctness against the labeled examples.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/documentation-reviewer/gold.json",
+  "headline_metric": "verdict_accuracy_pct",
+  "discriminators": {
+    "rank_key": "verdict_accuracy desc, source_of_truth_match desc, tokens asc, elapsed asc",
+    "source_of_truth_match_pct": "Percentage of reports where, having returned the correct verdict, the agent also named the correct source-of-truth FILE (the most-recently-modified matching file on a conflict, or no file when missing-docs). Breaks verdict-accuracy ties — it measures whether the agent applied the newest-file source-of-truth rule, not just guessed the verdict.",
+    "efficiency": "total LLM tokens (lower better) then wall-clock elapsed (lower better); tokens=0 (framework didn't expose usage) sorts last among ties."
+  },
+  "rationale": "The four agents review the SAME labeled bug reports against the SAME local cli/ + reference/ corpus, so verdict correctness is a property of the framework + its gated prompt + its evolved skill, not of the task. Verdict accuracy is the headline because it is exactly what the task asks (is the bug valid: yes / no / missing-docs). Source-of-truth-file match is the natural discriminator: two agents can both return 'no' on the limit=0 conflict, but only the one that honoured the most-recently-modified-file rule names cli/products.md (not the older reference/products.md) as the source of truth. Efficiency breaks any remaining tie so the leaderboard stays strictly ranked.",
+  "pass_threshold": "verdict_accuracy = 100% (agent reproduces every gold verdict)",
+  "fail_condition": "verdict_accuracy < 100% (any verdict diverges from gold)"
+}

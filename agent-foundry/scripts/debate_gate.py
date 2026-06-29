@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — debate gate used by EVERY agent's _*_gate_authoring.py.
 """
 Debate-gate bookkeeping scaffold.
 

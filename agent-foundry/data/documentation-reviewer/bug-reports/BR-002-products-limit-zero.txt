@@ -1,0 +1,27 @@
+Title: [Products] GET /products?limit=0 returns all products instead of an empty page
+
+Environment:
+  OS: Ubuntu 22.04
+  Browser/App Version: dummyjson-pp-cli 4.24.0
+  Device: CI runner
+  Build/Version: dummyjson@1.0.0
+  Environment: staging
+
+Steps to Reproduce:
+  1. Send GET /products?limit=0
+  2. Count the items in the returned products array
+
+Expected Result:
+  An empty list (0 products), because limit=0 should page nothing
+
+Actual Result:
+  All 194 products are returned in a single response
+
+Severity: Medium
+Priority: P3
+
+Evidence:
+  - Screenshot:
+  - Logs: products.length == 194, total == 194
+
+Notes / Workaround: agent=general-documentation-reviewer; reproduced with the crewai framework only

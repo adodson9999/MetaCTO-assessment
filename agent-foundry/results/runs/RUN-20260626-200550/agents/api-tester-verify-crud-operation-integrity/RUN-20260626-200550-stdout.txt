@@ -1,1 +1,0 @@
-[api-tester-verify-crud-operation-integrity] crud_integrity_rate_pct=0.0%

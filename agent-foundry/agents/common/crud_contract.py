@@ -378,7 +378,7 @@ def run_crud_test(agent: str, generate) -> dict:
            "crud_integrity_rate_pct": rate,
            "resource_types": total, "resource_types_passing": passed,
            "covered_step_cells": covered_cells, "resources": results}
-    run_dir = WORKSPACE / "results" / "crud" / "runs" / RUN_ID
+    run_dir = WORKSPACE / "results" / "runs" / RUN_ID
     run_dir.mkdir(parents=True, exist_ok=True)
     cases_path = run_dir / f"{agent}.cases.json"
     _assert_sandbox(cases_path)
@@ -394,14 +394,14 @@ def run_crud_test(agent: str, generate) -> dict:
 
 def emit(agent: str, metric_value: float, raw_output_path: str,
          extra: dict | None = None) -> None:
-    """Write results/crud/runs/<run>/<agent>.json. metric_value here is the headline
+    """Write results/runs/<run>/<agent>.json. metric_value here is the headline
     CRUD Integrity Rate; the judge later overwrites metric_value with CRUD-Test
     Fidelity."""
     metric = {}
     mp = WORKSPACE / "judge" / "crud" / "metric.json"
     if mp.exists():
         metric = json.loads(mp.read_text())
-    out = WORKSPACE / "results" / "crud" / "runs" / RUN_ID / f"{agent}.json"
+    out = WORKSPACE / "results" / "runs" / RUN_ID / f"{agent}.json"
     _assert_sandbox(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {"agent": agent, "run_id": RUN_ID,

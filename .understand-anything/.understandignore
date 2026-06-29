@@ -82,3 +82,13 @@ public/css/prism.scss
 
 # Exclude our own analysis output.
 .understand-anything/
+agent-foundry/agents/
+agent-foundry/results/
+agent-foundry/memory/
+agent-foundry/tools/
+agent-foundry/evolvers/
+agent-foundry/.venv/
+.understand-anything/intermediate/
+.understand-anything/knowledge-graph.*.json
+CLI/
+node_modules/

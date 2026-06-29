@@ -215,6 +215,125 @@ def write_deliverable(cfgs: list[dict]) -> dict:
 
 
 # --------------------------------------------------------------------------- #
+# Empty-output hardening (CHANGE 1): escalating format enforcement + a loud,
+# auditable failure sentinel. The retry prefixes escalate each attempt so a model
+# that fumbled the JSON format on attempt 1 is shown progressively stronger guidance.
+# An empty array is only ever a FAILURE when the deterministic extractor proves the
+# How section has numbered steps; when it has zero steps, [] is the CORRECT answer
+# and is accepted without retry or sentinel.
+# --------------------------------------------------------------------------- #
+MAX_ATTEMPTS = 3
+
+# attempt 1: plain brief (no prefix).
+# attempt 2: a one-shot worked example — a sample How section mapped to the exact
+#            11-key array, so the model can pattern-match the transformation.
+# attempt 3: the exact 11-key JSON skeleton to fill in, one object per step.
+_RETRY_PREFIXES = [
+    "",
+    (
+        "FORMAT CORRECTION — your previous response was not a valid JSON array of "
+        "11-key step objects. Study this worked example, then do the SAME for the real "
+        "input below.\n\n"
+        "EXAMPLE how_text:\n"
+        "  1. Send GET /products?limit=10 and assert exactly 200.\n"
+        "  2. Write the page plan to results/plan.json.\n"
+        "EXAMPLE metric_line: - **Metric:** Pass: 100%. Fail: any wrong page.\n\n"
+        "EXAMPLE correct output (one object per numbered step, exactly 11 keys each):\n"
+        '[{"tc_id":"demo-step-1","agent":"demo","step_id":"1",'
+        '"step_ext":"Send GET /products?limit=10 and assert exactly 200.",'
+        '"involves_http_call":true,"involves_db_query":false,"involves_file_write":false,'
+        '"involves_assertion":true,"involves_metric_check":false,'
+        '"expected_outcome":"see step_text","fail_condition":"Fail: any wrong page."},'
+        '{"tc_id":"demo-step-2","agent":"demo","step_id":"2",'
+        '"step_ext":"Write the page plan to results/plan.json.",'
+        '"involves_http_call":false,"involves_db_query":false,"involves_file_write":true,'
+        '"involves_assertion":false,"involves_metric_check":false,'
+        '"expected_outcome":"see step_text","fail_condition":"Fail: any wrong page."}]\n\n'
+        "Now output ONLY the JSON array for the real input. Start with [ and end with ]."
+    ),
+    (
+        "MANDATORY FORMAT — output ONLY a JSON array, one object per numbered step in "
+        "the How section. Each object must have EXACTLY these eleven keys, no more and "
+        "no fewer. Fill in every <...> placeholder; do not add a 'description' or "
+        "'steps' key:\n"
+        "[\n"
+        '  {\n'
+        '    "tc_id": "<agent_name>-step-<step_id>",\n'
+        '    "agent": "<agent_name>",\n'
+        '    "step_id": "<step_id>",\n'
+        '    "step_ext": "<verbatim step text>",\n'
+        '    "involves_http_call": <true|false>,\n'
+        '    "involves_db_query": <true|false>,\n'
+        '    "involves_file_write": <true|false>,\n'
+        '    "involves_assertion": <true|false>,\n'
+        '    "involves_metric_check": <true|false>,\n'
+        '    "expected_outcome": "<Assert clauses joined with \' AND \', else see step_text>",\n'
+        '    "fail_condition": "<Fail: ... from metric_line, else none_stated>"\n'
+        '  }\n'
+        "]\n"
+        "Output ONLY the array — start with [ and end with ]."
+    ),
+]
+
+
+def _expected_step_count(cfg: dict) -> int:
+    """How many numbered steps the deterministic extractor finds in this agent's How
+    section. This is the ground truth for whether an empty emission is correct ([] when
+    zero) or an extraction failure (empty when one or more steps exist)."""
+    return len(tcspec.extract_steps(cfg.get("how_text", "") or ""))
+
+
+def _generate_with_retry(generate, cfg: dict, expected_steps: int) -> tuple[list, str | None, int]:
+    """Drive one agent's generation with escalating format enforcement.
+
+    Returns (cases, error, attempts). Retries an empty result ONLY when steps are
+    expected; an exception is unrecoverable for this cfg and is not retried. When zero
+    steps are expected, a single attempt runs and an empty [] is success (error=None).
+    """
+    max_attempts = 1 if expected_steps == 0 else MAX_ATTEMPTS
+    gen_error: str | None = None
+    for attempt in range(max_attempts):
+        attempt_cfg = dict(cfg)
+        if attempt > 0:
+            attempt_cfg["retry_prefix"] = _RETRY_PREFIXES[attempt]
+        try:
+            result = generate(attempt_cfg) or []
+        except Exception as e:  # noqa: BLE001 — recorded per agent, never crashes the run
+            return [], f"{type(e).__name__}: {e}", attempt + 1
+        if not isinstance(result, list):
+            result = []
+        if result:
+            return result, None, attempt + 1
+        if expected_steps == 0:
+            return [], None, attempt + 1  # [] is the correct answer for a no-step spec
+        gen_error = f"empty output on attempt {attempt + 1} of {max_attempts}"
+    return [], gen_error, max_attempts
+
+
+def _failure_sentinel(cfg: dict, expected_steps: int, gen_error: str | None) -> dict:
+    """An auditable, loud failure record for a steps-present agent that returned nothing.
+
+    tc_id never collides with a gold tc_id, so it can never be credited as coverage; the
+    schema-validity gate (G5) drops it from the scored set and the denominator gate (G9)
+    treats it as the logged explanation for that agent's missing steps. fail=True so the
+    failure surfaces rather than passing silently."""
+    return {
+        "tc_id": f"TC-ERR-{cfg['name']}",
+        "agent": cfg["name"],
+        "run_id": RUN_ID,
+        "outcome": "ERROR",
+        "reason": "extraction_failure",
+        "error": gen_error or (
+            f"empty/unparseable output after {MAX_ATTEMPTS} attempts for an agent with "
+            f"{expected_steps} expected step(s)"
+        ),
+        "expected_steps": expected_steps,
+        "pass": False,
+        "fail": True,
+    }
+
+
+# --------------------------------------------------------------------------- #
 # The shared driver
 # --------------------------------------------------------------------------- #
 def run_testcase_test(agent: str, generate) -> dict:
@@ -242,25 +361,8 @@ def run_testcase_test(agent: str, generate) -> dict:
 
     emitted_registry: list[dict] = []
     per_agent = []
-    _RETRY_PREFIXES = [
-        "",   # attempt 1: no prefix
-        (
-            "CRITICAL: Your previous response was not a valid JSON array. "
-            "Output ONLY a JSON array. Start with [ and end with ]. "
-            "No other text, no markdown fences, no explanation."
-        ),
-        (
-            "MANDATORY FORMAT — your response must be exactly this structure:\n"
-            '[{"tc_id":"TC-1","agent":"<agent_name>","description":"...","steps":[...]}]\n'
-            "Output ONLY the JSON array. Nothing else."
-        ),
-    ]
-    MAX_ATTEMPTS = 3
 
     for cfg in cfgs:
-        cases: list = []
-        gen_error: str | None = None
-
         # D3b: Load staged findings for this agent and inject as staging_prefix.
         # staging_brief() returns "" if no staging files exist for this agent.
         if _staging_mod is not None:
@@ -271,48 +373,23 @@ def run_testcase_test(agent: str, generate) -> dict:
             except Exception:  # noqa: BLE001
                 pass
 
-        for attempt in range(MAX_ATTEMPTS):
-            attempt_cfg = dict(cfg)
-            if attempt > 0:
-                attempt_cfg["retry_prefix"] = _RETRY_PREFIXES[attempt]
+        # Ground truth for whether [] is correct (zero steps) or a failure (steps exist).
+        expected_steps = _expected_step_count(cfg)
+        cases, gen_error, attempts = _generate_with_retry(generate, cfg, expected_steps)
 
-            try:
-                result = generate(attempt_cfg) or []
-                if not isinstance(result, list):
-                    result = []
-            except Exception as e:  # noqa
-                gen_error = f"{type(e).__name__}: {e}"
-                break  # exception is unrecoverable for this cfg; do not retry
-
-            if result:
-                cases = result
-                gen_error = None
-                break
-
-            gen_error = f"empty output on attempt {attempt + 1} of {MAX_ATTEMPTS}"
-
-        if not cases:
-            sentinel = {
-                "tc_id": f"TC-ERR-{cfg['name']}",
-                "agent": cfg["name"],
-                "run_id": RUN_ID,
-                "outcome": "ERROR",
-                "error": (
-                    gen_error or
-                    f"test-case-creator returned empty/unparseable output "
-                    f"after {MAX_ATTEMPTS} attempts"
-                ),
-                "pass": False,
-                "fail": False,
-            }
-            emitted_registry.append(sentinel)
+        # Empty + steps were expected -> auditable, loud failure sentinel.
+        # Empty + zero steps expected -> [] is correct, nothing recorded.
+        if not cases and expected_steps > 0:
+            emitted_registry.append(_failure_sentinel(cfg, expected_steps, gen_error))
 
         emitted_registry.extend([c for c in cases if isinstance(c, dict)])
         per_agent.append({
             "agent_spec": cfg["name"],
+            "expected_steps": expected_steps,
             "emitted_count": len(cases),
-            "attempts": attempt + 1,
-            "error": gen_error,
+            "attempts": attempts,
+            # An empty result for a zero-step spec is success, not an error.
+            "error": gen_error if expected_steps > 0 else None,
         })
 
     scored = tcspec.score_registry(emitted_registry, gold["registry"])
@@ -352,7 +429,7 @@ def emit(agent: str, metric_value: float, raw_output_path: str, extra: dict | No
     """Write results/runs/<run>/test-case-creator/<agent>.json. metric_value is the
     framework's coverage of the gold registry; the judge later confirms it."""
     metric = {}
-    mp = WORKSPACE / "judge" / "test-case-creator" / "metric.json"
+    mp = WORKSPACE / "judge" / "general" / "test-case-creator" / "metric.json"
     if mp.exists():
         metric = json.loads(mp.read_text())
     out = RESULTS / "runs" / RUN_ID / f"{agent}.json"

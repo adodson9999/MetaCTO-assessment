@@ -1,1 +1,0 @@
-[api-tester-test-long-polling-support] longpoll_response_accuracy_pct=0.0%

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — BM25+vector retrieval helper used across agents.
 """
 Two-way hybrid folder search: keyword leg + meaning leg, fused with RRF,
 then a local reranker. Never a single-mode lookup.

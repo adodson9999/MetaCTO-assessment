@@ -1,1 +1,13 @@
 - [2026-06-26T21:30:37.093198+00:00] run=RUN-20260626-200550 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-28T04:20:25.030637+00:00] run=RUN-20260628-025411 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-28T18:42:20.023667+00:00] run=RUN-20260628-171526 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-28T23:05:30.493339+00:00] run=SMOKE4 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T00:09:56.629446+00:00] run=HANDOFF-test sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T00:24:51.597158+00:00] run=FMT-probe sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T00:26:39.287656+00:00] run=FMT-probe2 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T00:33:33.879473+00:00] run=FMT-validate sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T02:02:28.332561+00:00] run=RUN-20260629-003439 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T12:17:42.941672+00:00] run=SMOKE-fresh sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T13:47:29.064798+00:00] run=RUN-20260629-121847 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T18:06:39.431538+00:00] run=2026-06-29_17-10-02 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-29T20:24:09.535372+00:00] run=2026-06-29_19-27-43 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%

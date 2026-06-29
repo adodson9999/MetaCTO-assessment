@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared infra — claude-cli OpenAI shim used across phase4_* agent workflows + backend_config.
 """Minimal OpenAI-compatible shim over the `claude` CLI (claude.ai subscription).
 
 Why this exists: for the content-type-negotiation build the user asked for the
@@ -38,9 +39,11 @@ def _claude(prompt: str, model: str) -> str:
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # force the claude.ai subscription path
     try:
+        # Pass the prompt via STDIN, not as an argv — large briefs (the full doc corpus) exceed
+        # the OS arg-length limit (Errno 7: Argument list too long).
         proc = subprocess.run(
-            ["claude", "-p", prompt, "--output-format", "text", "--model", model],
-            stdin=subprocess.DEVNULL, capture_output=True, text=True,
+            ["claude", "-p", "--output-format", "text", "--model", model],
+            input=prompt, capture_output=True, text=True,
             env=env, timeout=CLAUDE_TIMEOUT)
         if proc.returncode == 0:
             return proc.stdout.strip()

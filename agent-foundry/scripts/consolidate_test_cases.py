@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — consolidates test cases across all agents.
 """Consolidate every agent's executed test cases for a run into one registry.
 
 Each api-tester/general agent writes results/runs/<RUN_ID>/<agent>.cases.json with

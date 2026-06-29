@@ -24,6 +24,7 @@ def build_invoker(
     ws: Path,
     system: str,
     user_message_fn: Callable[[str], str],
+    response_format: dict | None = {"type": "json_object"},
 ) -> Callable[[str], str]:
     """Return ``invoke(brief: str) -> str`` backed by the Claude Code subagent.
 
@@ -31,6 +32,11 @@ def build_invoker(
         ws: FORGE_WORKSPACE root path.
         system: Fully-loaded system-prompt string.
         user_message_fn: The ``user_message`` callable from ``*_prompt`` module.
+        response_format: OpenAI-compatible ``response_format`` sent on the local
+            (Ollama) path. Defaults to ``{"type": "json_object"}`` for agents that emit
+            a single JSON object. Pass ``None`` for agents that emit a JSON *array* — the
+            ``json_object`` constraint forces a single object and silently drops the
+            other array elements, which empties multi-item extractors (see n600).
     """
     sys.path.insert(0, str(ws / "scripts"))
     import backend_config  # noqa: PLC0415
@@ -59,18 +65,18 @@ def build_invoker(
             return None
 
     def _via_local(brief: str) -> str:
-        body = json.dumps(
-            {
-                "model": spec["model"],
-                "temperature": 0,
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user_message_fn(brief)},
-                ],
-                "stream": False,
-                "response_format": {"type": "json_object"},
-            }
-        ).encode()
+        payload = {
+            "model": spec["model"],
+            "temperature": 0,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user_message_fn(brief)},
+            ],
+            "stream": False,
+        }
+        if response_format is not None:
+            payload["response_format"] = response_format
+        body = json.dumps(payload).encode()
         req = urllib.request.Request(
             spec["base_url"] + "/chat/completions",
             data=body,

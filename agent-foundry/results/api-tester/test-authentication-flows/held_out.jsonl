@@ -1,1 +1,0 @@
-{"protected_path": "/user/me", "note": "Disjoint held-out endpoint, same authUser middleware as /auth/me. Used only by the SkillOpt validation gate, never by the ranking run."}

@@ -1,0 +1,63 @@
+{
+  "note": "Labeled verdict set for the documentation-reviewer judge metric. SWAP THIS FILE to plug in the interview's real labeled examples; the harness, scorer, and golden suite read it verbatim. verdict is the scored field; source_of_truth.file is the discriminator.",
+  "gold_decisions": [
+    {
+      "id": "BR-001",
+      "decision": {
+        "verdict": "yes",
+        "source_of_truth": {
+          "file": "data/documentation-reviewer/reference/auth.md",
+          "line": 9,
+          "text": "When the Authorization header is missing or the token is invalid, the API returns 401 Unauthorized."
+        },
+        "other_matches": [],
+        "documented_expected": "401 Unauthorized when the Authorization header is missing or invalid",
+        "observed": "200 OK with the full user object returned"
+      }
+    },
+    {
+      "id": "BR-002",
+      "decision": {
+        "verdict": "no",
+        "source_of_truth": {
+          "file": "data/documentation-reviewer/cli/products.md",
+          "line": 4,
+          "text": "Default limit is 30. Passing --limit 0 returns all products with no cap."
+        },
+        "other_matches": [
+          {
+            "file": "data/documentation-reviewer/reference/products.md",
+            "line": 5,
+            "text": "A limit of 0 returns up to a maximum of 100 products."
+          }
+        ],
+        "documented_expected": "limit=0 returns all products with no cap",
+        "observed": "All 194 products are returned in a single response"
+      }
+    },
+    {
+      "id": "BR-003",
+      "decision": {
+        "verdict": "missing-docs",
+        "source_of_truth": null,
+        "other_matches": [],
+        "documented_expected": null,
+        "observed": "Tags returned in insertion order, not alphabetical"
+      }
+    },
+    {
+      "id": "BR-004",
+      "decision": {
+        "verdict": "no",
+        "source_of_truth": {
+          "file": "data/documentation-reviewer/reference/auth.md",
+          "line": 5,
+          "text": "The accessToken expires after expiresInMins minutes (default 60)."
+        },
+        "other_matches": [],
+        "documented_expected": "accessToken expires after expiresInMins minutes, default 60",
+        "observed": "Token remained valid past 31 minutes and only expired at 60 minutes"
+      }
+    }
+  ]
+}

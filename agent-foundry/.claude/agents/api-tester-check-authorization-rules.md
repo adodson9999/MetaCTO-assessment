@@ -1,1 +1,0 @@
-../../agents/api-tester-check-authorization-rules/api-tester-check-authorization-rules.md

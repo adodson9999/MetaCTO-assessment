@@ -1,1 +1,0 @@
-[api-tester-verify-response-status-codes] status_code_accuracy_rate_pct=84.62%

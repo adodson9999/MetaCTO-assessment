@@ -1,1 +1,0 @@
-../../agents/status/api-tester-verify-response-status-codes/api-tester-verify-response-status-codes.md

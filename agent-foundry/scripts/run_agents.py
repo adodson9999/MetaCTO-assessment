@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — generic multi-agent runner; used by phase4_run.sh.
 """
 Run all four agents in parallel on the current task and collect their emitted
 metric JSONs.
@@ -25,11 +26,18 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
+def _pyexe() -> str:
+    # Prefer the foundry .venv (has langgraph/crewai/...); fall back to the launching interpreter.
+    _venv = Path(__file__).resolve().parents[1] / ".venv" / "bin" / "python"
+    return str(_venv) if _venv.exists() else (sys.executable or "python3")
+
+
+PYEXE = _pyexe()
 AGENTS = {
-    "langgraph": ["python", "agents/langgraph/run.py"],
-    "crewai": ["python", "agents/crewai/run.py"],
-    "api-tester-validate-request-payloads": ["python", "agents/api-tester/validate-request-payloads/run.py"],
-    "claude_sdk": ["python", "agents/claude_sdk/run.py"],
+    "langgraph": [PYEXE, "agents/langgraph/run.py"],
+    "crewai": [PYEXE, "agents/crewai/run.py"],
+    "api-tester-validate-request-payloads": [PYEXE, "agents/api-tester/validate-request-payloads/run.py"],
+    "claude_sdk": [PYEXE, "agents/claude_sdk/run.py"],
 }
 
 

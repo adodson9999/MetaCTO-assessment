@@ -91,3 +91,9 @@
 - [2026-06-26T03:17:54.923350+00:00] run=evolve-sd-claude_sdk-cand soft-delete-behavior run: correctness_rate=100.0% (correct_cases=3/3, scenarios_ok=13/13)
 - [2026-06-26T16:23:51.437495+00:00] run=blocked-35be6b create-postman-collection run: coverage_rate=0.0% (items=0/14, scenarios_ok=2/14, newman=True)
 - [2026-06-26T16:31:08.799997+00:00] run=verify-bug-5b784e bug-reporter run: fidelity=100.0% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)
+- [2026-06-28T00:49:54.102658+00:00] run=20260628-session-004954 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T14:42:33.223437+00:00] run=RUN-20260628T144021-upd documentation-reviewer run: verdict_accuracy=75.0% over 4 reports; source-of-truth match=75.0%
+- [2026-06-28T14:52:59.624825+00:00] run=RUN-20260628T145108-clicli documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T15:26:32.244125+00:00] run=RUN-20260628T152143-all4 documentation-reviewer run: verdict_accuracy=75.0% over 4 reports; source-of-truth match=75.0%
+- [2026-06-28T15:47:35.882106+00:00] run=RUN-20260628T154246-h2 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T23:09:41.842647+00:00] run=SMOKE4 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%

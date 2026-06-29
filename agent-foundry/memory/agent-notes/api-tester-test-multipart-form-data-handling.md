@@ -1,2 +1,8 @@
 - [2026-06-26T00:27:40.039425+00:00] run=20260626T002728-34f4f6 multipart-form-data run: accuracy=0.0% over 2 endpoints (18 scenarios)
 - [2026-06-26T21:40:51.059217+00:00] run=RUN-20260626-200550 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-28T04:30:58.990241+00:00] run=RUN-20260628-025411 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-28T18:52:54.036962+00:00] run=RUN-20260628-171526 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-29T02:12:57.701513+00:00] run=RUN-20260629-003439 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-29T13:58:05.617774+00:00] run=RUN-20260629-121847 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-29T18:14:05.098927+00:00] run=2026-06-29_17-10-02 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-06-29T20:30:52.617171+00:00] run=2026-06-29_19-27-43 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)

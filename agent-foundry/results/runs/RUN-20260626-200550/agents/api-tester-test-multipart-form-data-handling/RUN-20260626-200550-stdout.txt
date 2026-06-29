@@ -1,1 +1,0 @@
-[api-tester-test-multipart-form-data-handling] multipart_handling_accuracy_pct=33.33%

@@ -1,1 +1,0 @@
-[api-tester-validate-json-schema-responses] responses_validated=0 endpoints_covered=22

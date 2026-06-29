@@ -1,1 +1,0 @@
-[api-tester-test-rate-limit-enforcement] rate_limit_contract_correctness_rate_pct=25.0%

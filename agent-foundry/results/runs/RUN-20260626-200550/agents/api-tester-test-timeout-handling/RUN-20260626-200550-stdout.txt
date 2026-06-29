@@ -1,1 +1,0 @@
-[api-tester-test-timeout-handling] timeout_enforcement_rate_pct=0.0%

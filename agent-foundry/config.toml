@@ -1,16 +1,20 @@
 # Forge Agents — central config. One switch drives the whole foundry.
 
 [backend]
-# provider: "ollama" (local/air-gapped) or "claude-haiku" (cloud, opt-in)
-# Set to ollama (local/air-gapped) per the user's request — applies to every build in the
-# foundry, including api-tester/test-ip-allowlist-enforcement,
-# api-tester/test-event-driven-api-triggers, and api-tester/verify-third-party-oauth-integration.
-# The four agents elicit plans from the local Ollama endpoint (ollama_model below) instead of
-# claude-haiku.
-# NOTE: the Ollama server is NOT started by this config — start it separately (`ollama serve`,
-# with ollama_model pulled) before running any scripts/phase4_*_run.sh
-# (e.g. scripts/phase4_ip_allowlist_run.sh). Flip to claude-haiku, or FORGE_PROVIDER=claude-haiku
-# per-run, to use the cloud backend instead.
+# provider: controls the LLM backend for every runner/judge/evolver in the foundry.
+#   "ollama"       — local / air-gapped (OpenAI-compatible at ollama_base_url)
+#   "claude-haiku" — Anthropic claude-haiku-4-5 (OpenAI path via the LiteLLM proxy)
+#   "claude-cli"   — Anthropic via the `claude -p` shim (subscription, no API credits)
+#   "auto"         — resolve at run time to the first REACHABLE backend
+#                    (scripts/backend_config.py::_auto_detect): inside a Claude Code
+#                    session it prefers claude-cli, then claude-haiku, then ollama;
+#                    otherwise ollama. Each candidate's endpoint is TCP-probed first,
+#                    so 'auto' never picks a backend whose shim/proxy isn't running —
+#                    e.g. it falls back to local Ollama when no Claude endpoint is up.
+# Override per-run without editing this file: FORGE_PROVIDER=ollama|claude-haiku|claude-cli.
+# NOTE: 'auto' does NOT start any server — bring up Ollama (`ollama serve`, model pulled)
+# or a Claude shim/proxy yourself; otherwise 'auto' resolves to ollama and a run errors
+# at connect time if ollama is also down.
 provider = "auto"
 ollama_base_url = "http://127.0.0.1:11434/v1"
 ollama_model = "qwen2.5:14b-instruct"

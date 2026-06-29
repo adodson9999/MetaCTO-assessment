@@ -288,7 +288,7 @@ def run_status_test(agent: str, generate) -> dict:
            "status_code_accuracy_rate_pct": accuracy,
            "testable": testable, "correct": correct, "covered_cases": covered,
            "cases": cases}
-    run_dir = WORKSPACE / "results" / "status" / "runs" / RUN_ID
+    run_dir = WORKSPACE / "results" / "runs" / RUN_ID
     run_dir.mkdir(parents=True, exist_ok=True)
     cases_path = run_dir / f"{agent}.cases.json"
     _assert_sandbox(cases_path)
@@ -303,14 +303,14 @@ def run_status_test(agent: str, generate) -> dict:
 
 
 def emit(agent: str, metric_value: float, raw_output_path: str, extra: dict | None = None) -> None:
-    """Write results/status/runs/<run>/<agent>.json. metric_value here is the
+    """Write results/runs/<run>/<agent>.json. metric_value here is the
     headline accuracy rate; the judge later overwrites metric_value with
     Status-Code Test Fidelity."""
     metric = {}
     mp = WORKSPACE / "judge" / "status" / "metric.json"
     if mp.exists():
         metric = json.loads(mp.read_text())
-    out = WORKSPACE / "results" / "status" / "runs" / RUN_ID / f"{agent}.json"
+    out = WORKSPACE / "results" / "runs" / RUN_ID / f"{agent}.json"
     _assert_sandbox(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {"agent": agent, "run_id": RUN_ID,

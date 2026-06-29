@@ -1,0 +1,54 @@
+{
+  "agent": "general/documentation-reviewer",
+  "alias": "n603",
+  "metric_name": "verdict_accuracy_pct",
+  "baseline": {
+    "value": 100.0,
+    "tolerance": 0.0,
+    "direction": "higher_is_better",
+    "note": "Oracle-achievable ceiling: a perfect reviewer reproduces every gold verdict. Re-baseline after Phase 4.5 if a live framework's best stabilises below 100 on the swapped-in interview labels."
+  },
+  "cases": [
+    {
+      "id": "metric-verdict-accuracy",
+      "kind": "metric",
+      "desc": "The agent's latest judged verdict_accuracy must be >= baseline (minus tolerance)."
+    },
+    {
+      "id": "structure-oracle-saturates",
+      "kind": "structure",
+      "assert": "A perfect-oracle generate scores verdict_accuracy=100% AND source_of_truth_match=100% over all gold cases.",
+      "passed": true
+    },
+    {
+      "id": "structure-empty-scores-zero",
+      "kind": "structure",
+      "assert": "An empty/blank emission scores verdict_accuracy=0% (no saturation trap — empty output is never credited).",
+      "passed": true
+    },
+    {
+      "id": "structure-bad-enum-scores-zero",
+      "kind": "structure",
+      "assert": "A verdict string outside {yes, no, missing-docs} scores 0% (enum-constrained).",
+      "passed": true
+    },
+    {
+      "id": "structure-newest-file-wins",
+      "kind": "structure",
+      "assert": "On the limit=0 conflict, the corpus ranks cli/products.md (2026-06-25) above reference/products.md (2026-06-10), so source_of_truth=cli/products.md and reference/products.md is listed in other_matches.",
+      "passed": true
+    },
+    {
+      "id": "structure-three-verdict-classes-covered",
+      "kind": "structure",
+      "assert": "The labeled set exercises all three verdict classes: yes (BR-001), no (BR-002 conflict + BR-004 single-match), missing-docs (BR-003).",
+      "passed": true
+    },
+    {
+      "id": "structure-ignores-claimed-expected",
+      "kind": "structure",
+      "assert": "BR-004 returns 'no' from the documented default (60 min) even though the report's claimed Expected Result (30 min) differs — the agent compares observed to the DOCS, not to the reporter's claim.",
+      "passed": true
+    }
+  ]
+}

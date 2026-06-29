@@ -1,1 +1,0 @@
-[api-tester-test-idempotency-of-endpoints] idempotency_compliance_rate_pct=50.0% idempotency_correctness_rate_pct=77.78%

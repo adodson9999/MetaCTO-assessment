@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — judge scorer invoked by EVERY phase4_* agent workflow.
 """
 Judge scorer. Reads the four agents' emitted metric JSONs for a run, applies the
 metric contract (judge/metric.json), and updates the leaderboard — tracking

@@ -1,4 +1,0 @@
-{"slug": "get_users", "kind": "accept", "endpoint": "/users"}
-{"slug": "get_recipes_1", "kind": "accept", "endpoint": "/recipes/1"}
-{"slug": "recipes_add", "kind": "consumes", "endpoint": "/recipes/add"}
-{"slug": "comments_put", "kind": "consumes", "endpoint": "/comments/{id}"}

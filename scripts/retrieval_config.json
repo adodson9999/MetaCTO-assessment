@@ -1,0 +1,12 @@
+{
+  "root": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment",
+  "embedding_model": "BAAI/bge-m3",
+  "embedding_dim": 1024,
+  "model_cache_path": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/.models",
+  "table_dir": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/references",
+  "chunking": {
+    "max_tokens_per_chunk": 500,
+    "overlap_tokens": 100,
+    "split_by": "heading_or_section"
+  }
+}

@@ -1,1 +1,0 @@
-../../agents/api-tester-test-api-gateway-routing/subagent/api-tester-test-api-gateway-routing.md

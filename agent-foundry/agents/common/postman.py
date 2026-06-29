@@ -117,7 +117,7 @@ def load_registry(cfg: dict) -> tuple[list, dict]:
     (data/create-postman-collection/), NOT from the shared results/test-case-registry.json.
     This keeps the four-agent measurement deterministic and isolated from the sibling n600
     build, which writes the real results/test-case-registry.json concurrently. The
-    production CLI (scripts/postman_collection_cli.py) is the path that consumes the real
+    production CLI (scripts/postman_collection_cli__create-postman-collection.py) is the path that consumes the real
     results/ registry. FORGE_HELDOUT_REGISTRY/SUMMARY swap in a held-out fixture for the
     evolution gate."""
     registry = json.loads((WORKSPACE / cfg["registry_fixture"]).read_text())

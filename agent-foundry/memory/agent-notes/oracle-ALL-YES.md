@@ -1,0 +1,1 @@
+- [2026-06-28T00:38:00.934934+00:00] run=selftest-ALL-YES documentation-reviewer run: verdict_accuracy=25.0% over 4 reports; source-of-truth match=0.0%

@@ -1,0 +1,37 @@
+{
+  "title": "Retry-After compliance contract (authored for the Retry-After-header-compliance testing task)",
+  "description": "Each endpoint is documented to allow at most limit_n requests per window_seconds window per client key (carried in the api_key_header, X-Forwarded-For); request number limit_n+1 should return 429 carrying a positive Retry-After header that advertises the wait before retrying. A request before that advertised wait elapses should still be 429, and a request after it should succeed. Agents construct the Retry-After test plan from this; ground truth is the live API's observed behavior. DummyJSON is read-only and never modified; it runs a real express-rate-limit limiter (100/10s per client key, Retry-After = windowMs/1000) when booted NODE_ENV=production, which the harness exercises.",
+  "target": "http://localhost:8899",
+  "method": "GET",
+  "success_code": 200,
+  "limit_n": 100,
+  "window_seconds": 10,
+  "api_key_header": "X-Forwarded-For",
+  "retry_after_header": "Retry-After",
+  "endpoints": [
+    {
+      "endpoint": "/products",
+      "api_key_value": "10.60.1.0"
+    },
+    {
+      "endpoint": "/posts",
+      "api_key_value": "10.60.2.0"
+    },
+    {
+      "endpoint": "/comments",
+      "api_key_value": "10.60.3.0"
+    },
+    {
+      "endpoint": "/todos",
+      "api_key_value": "10.60.4.0"
+    },
+    {
+      "endpoint": "/users",
+      "api_key_value": "10.60.5.0"
+    },
+    {
+      "endpoint": "/recipes",
+      "api_key_value": "10.60.6.0"
+    }
+  ]
+}

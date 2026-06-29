@@ -1,1 +1,0 @@
-[api-tester-verify-error-message-clarity] error_clarity_pass_rate_pct=0.0% p1_security_defects=0

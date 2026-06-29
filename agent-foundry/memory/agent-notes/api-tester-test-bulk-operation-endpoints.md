@@ -1,2 +1,8 @@
 - [2026-06-26T00:12:50.346021+00:00] run=20260626T001226-c33a23 bulk-operation-endpoints run: accuracy=100.0% (cases_passed=3/3, mixed_db_delta=8)
 - [2026-06-26T21:25:07.476813+00:00] run=RUN-20260626-200550 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-28T04:14:43.250695+00:00] run=RUN-20260628-025411 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-28T18:36:38.013271+00:00] run=RUN-20260628-171526 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-29T01:56:46.906307+00:00] run=RUN-20260629-003439 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-29T13:41:43.542193+00:00] run=RUN-20260629-121847 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-29T18:04:09.844207+00:00] run=2026-06-29_17-10-02 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-06-29T20:21:24.530743+00:00] run=2026-06-29_19-27-43 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)

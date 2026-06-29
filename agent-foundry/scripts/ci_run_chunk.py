@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — CI chunk runner across agents (invokes ci_gen_chunks + ci_report_cases).
 """Run one chunk of agents sequentially: G1 (harness) → G1b (test-case-creator) → gate.
 
 Each agent in the chunk runs to completion before the next starts.

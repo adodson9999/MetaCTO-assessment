@@ -1,1 +1,0 @@
-[api-tester-test-event-driven-api-triggers] event_processing_success_rate_pct=0.0% dead_letter_queue_delivery_rate_pct=0.0%

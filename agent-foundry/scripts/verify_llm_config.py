@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared infra — verifies llm_config resolution for all workflows.
 """
 Guardrail verifier — LLM config format invariants for agent-foundry.
 

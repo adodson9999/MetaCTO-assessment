@@ -1,0 +1,11 @@
+- [2026-06-28T00:46:25.923287+00:00] run=smoke-subagent documentation-reviewer run: verdict_accuracy=0.0% over 4 reports; source-of-truth match=0.0%
+- [2026-06-28T00:49:54.105269+00:00] run=20260628-session-004954 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T04:39:28.824842+00:00] run=RUN-20260628-025411 documentation-reviewer run: verdict_accuracy=50.0% over 4 reports; source-of-truth match=50.0%
+- [2026-06-28T14:42:23.985940+00:00] run=RUN-20260628T144021-upd documentation-reviewer run: verdict_accuracy=75.0% over 4 reports; source-of-truth match=75.0%
+- [2026-06-28T14:48:18.547497+00:00] run=RUN-20260628T144812-haiku documentation-reviewer run: verdict_accuracy=0.0% over 4 reports; source-of-truth match=0.0%
+- [2026-06-28T14:52:51.227387+00:00] run=RUN-20260628T145108-clicli documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T15:26:22.849149+00:00] run=RUN-20260628T152143-all4 documentation-reviewer run: verdict_accuracy=75.0% over 4 reports; source-of-truth match=75.0%
+- [2026-06-28T15:47:06.634244+00:00] run=RUN-20260628T154246-h2 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T16:24:14.663372+00:00] run=VERIFY-docrev documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T19:32:03.459912+00:00] run=RUN-20260628-171526 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-29T14:58:37.665388+00:00] run=VERIFY-docrev-cli documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%

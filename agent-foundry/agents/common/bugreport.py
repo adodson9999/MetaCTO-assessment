@@ -40,7 +40,11 @@ from pathlib import Path
 WORKSPACE = Path(os.environ.get("FORGE_WORKSPACE", ".")).resolve()
 SANDBOX_ROOT = Path(os.environ.get("FORGE_SANDBOX_ROOT", WORKSPACE)).resolve()
 RUN_ID = os.environ.get("FORGE_RUN_ID", "manual")
-SPEC_PATH = WORKSPACE / "data" / "bug-reporter" / "bugreport_spec.json"
+# FORGE_BUGREPORT_SPEC lets the bug-reporter report on a LIVE run's failures (a generated
+# spec+fixture) instead of the gold fixture, without editing the scored gold spec.
+SPEC_PATH = Path(os.environ.get(
+    "FORGE_BUGREPORT_SPEC",
+    str(WORKSPACE / "data" / "bug-reporter" / "bugreport_spec.json"))).resolve()
 
 sys.path.insert(0, str(WORKSPACE / "scripts"))
 sys.path.insert(0, str(WORKSPACE / "agents" / "common"))

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Used by: shared — generic all-agents phase4 runner (invokes run_agents.py).
 # Phase 4 — run the four agents against the local target, score, leaderboard.
 # Self-contained + air-gapped. Re-runnable; each run appends to the leaderboard.
 set -uo pipefail

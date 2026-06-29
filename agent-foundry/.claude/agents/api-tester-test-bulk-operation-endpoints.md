@@ -1,1 +1,0 @@
-../../agents/api-tester-test-bulk-operation-endpoints/subagent/api-tester-test-bulk-operation-endpoints.md

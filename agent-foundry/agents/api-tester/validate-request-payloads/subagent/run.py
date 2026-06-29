@@ -31,7 +31,12 @@ def main() -> None:
         return contract.extract_json(invoke(brief)) or {}
 
     summary = contract.run_contract_test(AGENT, generate)
-    print(f"[{AGENT}] payload_rejection_rate_pct={summary['payload_rejection_rate_pct']}% covered={summary['coverage']['covered']}/{summary['coverage']['applicable']}")
+    # contract.run_contract_test returns coverage={"produced_cases": N} (no "covered"/"applicable").
+    # Read defensively so a summary-shape change never crashes AFTER artifacts are written.
+    coverage = summary.get("coverage", {})
+    produced = coverage.get("produced_cases", summary.get("produced_cases", "?"))
+    rejection = summary.get("payload_rejection_rate_pct", "?")
+    print(f"[{AGENT}] payload_rejection_rate_pct={rejection}% produced_cases={produced}")
 
 
 if __name__ == "__main__":

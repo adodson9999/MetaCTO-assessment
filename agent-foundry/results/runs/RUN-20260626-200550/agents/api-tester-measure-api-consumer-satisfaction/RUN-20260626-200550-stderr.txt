@@ -1,2 +1,0 @@
-/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/.venv/lib/python3.11/site-packages/sklearn/base.py:1403: ConvergenceWarning: Number of distinct clusters (6) found smaller than n_clusters (10). Possibly due to duplicate points in X.
-  return fit_method(estimator, *args, **kwargs)

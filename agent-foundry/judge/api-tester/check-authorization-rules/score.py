@@ -5,7 +5,7 @@ The agents emit blind test results (they never see the gold). This step reads
 each agent's recorded cases for a run, compares them to data/authz/gold.json under
 the contract in judge/metric_authz.json, computes Authorization-Test Fidelity, and
 writes that number back as each agent's metric_value. Then
-scripts/judge_leaderboard_authz.py ranks and updates the leaderboard.
+scripts/judge_leaderboard_authz__check-authorization-rules.py ranks and updates the leaderboard.
 
 Fidelity per agent = fraction of gold sub_tests where the agent's recorded tuple
     (assigned expected_code, observed actual_class, data_exposed, leak_safe)

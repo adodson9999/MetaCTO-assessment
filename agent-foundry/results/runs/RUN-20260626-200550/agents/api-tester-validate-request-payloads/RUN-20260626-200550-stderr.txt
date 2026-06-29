@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/api-tester/validate-request-payloads/subagent/run.py", line 38, in <module>
-    main()
-  File "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/agents/api-tester/validate-request-payloads/subagent/run.py", line 34, in main
-    print(f"[{AGENT}] payload_rejection_rate_pct={summary['payload_rejection_rate_pct']}% covered={summary['coverage']['covered']}/{summary['coverage']['applicable']}")
-                                                                                                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
-KeyError: 'covered'

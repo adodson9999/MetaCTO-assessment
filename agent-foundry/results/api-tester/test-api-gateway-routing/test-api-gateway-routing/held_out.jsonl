@@ -1,2 +1,0 @@
-{"route_path": "/api/users", "method": "POST", "note": "held-out compliant route (SkillOpt validation split)"}
-{"route_path": "/api/orders", "method": "POST", "note": "held-out compliant route (SkillOpt validation split)"}

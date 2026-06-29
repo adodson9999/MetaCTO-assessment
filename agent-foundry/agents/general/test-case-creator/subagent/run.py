@@ -24,7 +24,10 @@ SUBAGENT_MD = Path(__file__).resolve().parents[1] / "subagent" / "general-test-c
 
 def main() -> None:
     system = load_system_prompt(SUBAGENT_MD)
-    invoke = build_invoker(WS, system, user_message)
+    # This agent emits a JSON ARRAY, so it must NOT request response_format=json_object:
+    # that constraint forces a single object and silently drops the other steps, which is
+    # the root cause of the empty-output 0/13 collapse. Pass None for free-form output.
+    invoke = build_invoker(WS, system, user_message, response_format=None)
 
     def generate(cfg: dict) -> list:
         brief = testcase.agent_brief(cfg)

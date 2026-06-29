@@ -1,1 +1,0 @@
-[general-bug-reporter] fidelity=82.22% bugs=9 completeness=90.0% exit1=True

@@ -1,0 +1,36 @@
+{
+  "alias": "n603",
+  "task": "general / documentation-reviewer",
+  "cli_dir": "data/documentation-reviewer/cli",
+  "reference_dir": "data/documentation-reviewer/reference",
+  "max_search_passes": 3,
+  "doc_manifest": {
+    "data/documentation-reviewer/reference/auth.md": "2026-06-12T09:00:00Z",
+    "data/documentation-reviewer/reference/products.md": "2026-06-10T09:00:00Z",
+    "data/documentation-reviewer/reference/recipes.md": "2026-06-15T09:00:00Z",
+    "data/documentation-reviewer/cli/auth.md": "2026-06-20T09:00:00Z",
+    "data/documentation-reviewer/cli/products.md": "2026-06-25T09:00:00Z"
+  },
+  "cases": [
+    {
+      "id": "BR-001",
+      "report": "data/documentation-reviewer/bug-reports/BR-001-authme-missing-header.txt",
+      "disputed_keywords": ["/auth/me", "Authorization header", "Authorization", "401", "missing"]
+    },
+    {
+      "id": "BR-002",
+      "report": "data/documentation-reviewer/bug-reports/BR-002-products-limit-zero.txt",
+      "disputed_keywords": ["limit of 0", "limit 0", "--limit 0", "limit=0", "products"]
+    },
+    {
+      "id": "BR-003",
+      "report": "data/documentation-reviewer/bug-reports/BR-003-recipes-tags-order.txt",
+      "disputed_keywords": ["/recipes/tags", "tags", "sorted", "alphabetical", "order"]
+    },
+    {
+      "id": "BR-004",
+      "report": "data/documentation-reviewer/bug-reports/BR-004-token-expiry-default.txt",
+      "disputed_keywords": ["expiresInMins", "expires", "accessToken", "default", "minutes"]
+    }
+  ]
+}

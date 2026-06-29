@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — CI chunk planner across all agents.
 """Generate the chunk-index JSON array for a GitHub Actions dynamic matrix.
 
 Usage:

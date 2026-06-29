@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared infra — LLM provider export sourced by EVERY phase4_* agent workflow.
 """
 Forge LLM Config — single source of truth for provider resolution.
 

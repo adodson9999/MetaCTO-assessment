@@ -1,11 +1,14 @@
 ---
 name: add-reference
 description: >
-  Add a file to the Jarvis references folder and register it in CLAUDE.md.
-  Use when the user provides a PDF, guide, doc, or any file they want
-  remembered for future sessions. Trigger with "add this to references",
-  "save this as a reference", "add to my reference library", or any time
-  a file is shared and the user wants it permanently available to the AIOS.
+  Add a file to the MetaCTO-Assessment project's references folder and register
+  it in this project's CLAUDE.md. Use when the user provides a PDF, guide, doc,
+  or any file they want remembered for future sessions in this project. Trigger
+  with "add this to references", "save this as a reference", "add to my reference
+  library", or any time a file is shared and the user wants it permanently
+  available within the MetaCTO-Assessment project. Also accepts an http(s) URL
+  as the source, and an optional collection subfolder so callers (such as the
+  cli-factory skill) can file many links under `references/<collection>/`.
 ---
 
 # Skill: Add Reference to Library
@@ -23,15 +26,18 @@ If the intent is close but not certain, ask before starting. Do not assume.
 
 ## Definitions used below
 
-- ROOT: the directory that contains CLAUDE.md. All `references/` paths and the retrieval backend are relative to ROOT.
-- STEM: the original filename without its extension.
-- EXT: the original file extension.
-- ORIGINAL: the exact original filename, including case and all characters.
-- BACKEND: the local contextual-retrieval backend at `ROOT/scripts/contextual_retrieval.py`, configured by `ROOT/scripts/retrieval_config.json` (LanceDB store, BGE-M3 embeddings, LanceDB full-text BM25 index).
-- The three artifacts this skill writes:
-  1. `references/[STEM].md` (the docling output, this is the registered reference)
-  2. `references/original_copy_[ORIGINAL]` (the renamed copy of the source file)
-  3. `references/[STEM].lance` (the LanceDB table of contextualized, embedded, BM25-indexed chunks)
+- ROOT: the MetaCTO-Assessment project root at `/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment` (the directory that contains this project's CLAUDE.md). All `references/` paths and the retrieval backend are relative to ROOT — never the parent Jarvis vault.
+- STEM: the original filename without its extension. For a URL source, a filesystem-safe slug derived from the URL (see Step 0).
+- EXT: the original file extension. For a URL source, the fetched content type's extension (`html` for a web page, `pdf` for a PDF, etc.).
+- ORIGINAL: the exact original filename, including case and all characters. For a URL source, `[STEM].[EXT]`.
+- SOURCE: the thing being registered — a local file path, an uploaded file, or an http(s) URL.
+- COLLECTION: an optional named subfolder under `references/`, supplied by the caller (the user, or another skill such as cli-factory). Absent for a plain single-file add.
+- DESTDIR: the destination directory for all three artifacts. `references/` when no COLLECTION is given, or `references/[COLLECTION]/` when one is. **Everywhere a step below names the `references/` directory, read it as DESTDIR.**
+- BACKEND: the local contextual-retrieval backend at `ROOT/scripts/contextual_retrieval.py`, configured by `ROOT/scripts/retrieval_config.json` (LanceDB store, BGE-M3 embeddings, LanceDB full-text BM25 index). It runs in this project's own virtualenv at `ROOT/.venv` against the project-local model cache at `ROOT/.models` — no dependency on the parent Jarvis vault. Always invoke it as `ROOT/.venv/bin/python ROOT/scripts/contextual_retrieval.py ...`. If `ROOT/.venv` is missing, recreate it with `python3 -m venv ROOT/.venv && ROOT/.venv/bin/pip install -r ROOT/scripts/requirements.txt`.
+- The three artifacts this skill writes (all inside DESTDIR):
+  1. `DESTDIR/[STEM].md` (the docling output, this is the registered reference)
+  2. `DESTDIR/original_copy_[ORIGINAL]` (the renamed or saved copy of the source)
+  3. `DESTDIR/[STEM].lance` (the LanceDB table of contextualized, embedded, BM25-indexed chunks)
 
 ## Hard rules (apply at every step)
 
@@ -42,16 +48,22 @@ If the intent is close but not certain, ask before starting. Do not assume.
 
 ---
 
-## Step 1: Identify the file
+## Step 0: Resolve collection and destination (run first)
 
-Input is either a path the user provides or a file the user uploaded.
+1. COLLECTION: if the caller named a collection/subfolder (a user, or the cli-factory skill passing one per discovered link), set COLLECTION to it and DESTDIR = `references/[COLLECTION]/`. Otherwise leave COLLECTION unset and DESTDIR = `references/`. Sanitize COLLECTION to a filesystem-safe folder name; never let it contain `..` or an absolute path, so DESTDIR can never escape `references/`.
+2. Create DESTDIR if it does not exist (`mkdir -p DESTDIR`). Write nothing outside DESTDIR.
+3. From here on, every reference to the `references/` directory means DESTDIR.
 
-- If neither a path nor an upload is provided: stop. Ask which file to register. Do not pick one.
-- If both a path and an upload are provided: stop. Ask which of the two to use. Do not pick one.
-- Confirm the file exists at its stated location (the given path, or the upload location for an uploaded file).
-- If the file does not exist: stop. State it plainly, for example: "The file [name] does not exist at [location]." Do not guess an alternative, do not search for similar names, do not proceed. Ask the user for a correct path or a new upload, then re-check existence.
+## Step 1: Identify the source
 
-Only continue once exactly one file is identified and confirmed to exist.
+SOURCE is a local path the user provides, a file the user uploaded, or an http(s) URL.
+
+- If no path, upload, or URL is provided: stop. Ask what to register. Do not pick one.
+- If more than one of {path, upload, URL} is provided: stop. Ask which to use. Do not pick one.
+- **Local file or upload:** confirm the file exists at its stated location. If it does not: stop. State it plainly, for example: "The file [name] does not exist at [location]." Do not guess an alternative, do not search for similar names, do not proceed. Ask for a correct path or a new upload, then re-check existence.
+- **URL:** confirm it is a single, well-formed http(s) URL. Do not invent or "correct" URLs — register only the exact URL given (or, in a cli-factory run, the exact URL discovered). Derive STEM as a filesystem-safe slug from the URL: lowercase the host plus path, drop the scheme and query string, replace non-alphanumeric runs with `-`, and use `index` if the path is empty (e.g. `https://api.example.com/docs/auth?v=2` → `api-example-com-docs-auth`). The actual fetch happens in Step 5; reachability is verified there.
+
+Only continue once exactly one source is identified (a file confirmed to exist, or a well-formed URL).
 
 ## Step 2: Determine the destination name
 
@@ -91,9 +103,13 @@ If the file type is not on this list (for example: ZIP, MP4, MOV, EXE, or any ot
 
 In this order:
 
-1. Run the source file through docling to produce `references/[STEM].md`. This is the reference.
-  - If bash is unavailable, hand the user the exact command (for example: `docling [source] --to md --output references/`), then continue once they confirm.
-2. Rename the source copy to `references/original_copy_[ORIGINAL]`.
+1. Produce `DESTDIR/[STEM].md` (the reference) with docling:
+  - **Local file or upload:** run docling on the source file: `docling [source] --to md --output DESTDIR/`.
+  - **URL:** docling fetches and converts the page directly — `docling [URL] --to md --output DESTDIR/`. If the page is auth-walled, pass `--headers` per docling's docs; never put a secret value in any artifact (see the secret rule). If docling cannot fetch or parse the URL, fall back to the `defuddle` skill to produce clean markdown for the public URL, writing the same `DESTDIR/[STEM].md`. If both fail, apply Hard Rule 3.
+  - If bash is unavailable, hand the user the exact command, then continue once they confirm.
+2. Save the source copy as `DESTDIR/original_copy_[ORIGINAL]`:
+  - **Local file or upload:** rename/copy the source to that path.
+  - **URL:** save the fetched raw page (the bytes docling downloaded, or a one-time fetch of the URL) as `DESTDIR/original_copy_[STEM].[EXT]`.
 3. If either action fails, apply Hard Rule 3: notify, explain why, give fix steps, continue from the failed action until it succeeds.
 
 ## Step 6: Get the one-line description
@@ -101,6 +117,7 @@ In this order:
 The user provides this. Required format: what it is plus when to use it. Example: "Q3 vendor contract, use when checking renewal terms or payment schedules."
 
 - If the description is missing, vague, or only covers one half (says what it is but not when to use it, or the reverse): notify the user that it is unclear and re-ask. Repeat until the description clearly states both what it is and when to use it.
+- **Bulk / collection mode (e.g. a cli-factory run over many URLs):** do not stop to ask per link. Auto-derive the description from the page's title/`<h1>` plus the collection's purpose, keeping both halves — for example: "[Page title] — documentation page for the [COLLECTION] CLI; use when looking up [the page's topic]." If a title cannot be determined, fall back to the slug. Both halves (what it is + when to use it) must still be present.
 
 ## Step 7: Contextual retrieval preprocessing
 
@@ -109,18 +126,19 @@ This step runs after the description is set and before CLAUDE.md is updated. Its
 1. Chunk `references/[STEM].md` using BACKEND's `chunk()`, which splits by document heading or section, caps each chunk at the configured token limit, and carries the configured overlap on any split section.
 2. For each chunk, generate a 1 to 2 sentence context using BACKEND's `make_context()`, passing the chunk text, the full reference document, and the Step 6 description as document-level context. The model that writes this context is set in the backend config, not in this skill.
 3. Embed and store using BACKEND's `embed_and_store()`: embed each chunk's contextualized text with BGE-M3, write the rows into `references/[STEM].lance`, and build the full-text (BM25) index so hybrid search works. Each row includes at least: chunk_id, section, context, text, contextualized_text, and the dense vector.
-  - If bash is unavailable, hand the user the exact command to run the backend module on `references/[STEM].md` writing to `references/[STEM].lance`, then continue once they confirm.
+  - Build the table by running BACKEND's `build` command from ROOT: `.venv/bin/python scripts/contextual_retrieval.py build DESTDIR/[STEM].md DESTDIR/[STEM].lance`. If bash is unavailable, hand the user that exact command, then continue once they confirm.
 4. If chunking, context generation, embedding, or the table write fails, apply Hard Rule 3: notify, explain why, give fix steps, continue from the failed action until it succeeds. Never leave a partial table. If a partial `.lance` table was written before failure, state that it is incomplete and must not be used until the step completes, and finish building it before moving on.
 
 ## Step 8: Update CLAUDE.md
 
-- If CLAUDE.md does not exist (unlikely): the skill is permitted to create it. Ask the user where ROOT is before creating it. Do not guess the location.
-- Add a single bullet under the "Reference Library" section that covers the reference and names its retrieval index:
-  - `references/[STEM].md`: [description] (retrieval index: `references/[STEM].lance`)
-- If the "Reference Library" section does not exist, create it immediately before the "## How you work with me" heading.
-- If the "## How you work with me" heading is also missing: stop and ask the user where the "Reference Library" section should be placed. Do not guess placement.
+- The target is this project's CLAUDE.md at `ROOT/CLAUDE.md` (the MetaCTO-Assessment project root), never the parent Jarvis vault's CLAUDE.md.
+- If `ROOT/CLAUDE.md` does not exist (unlikely): the skill is permitted to create it at ROOT. Do not create it anywhere else and do not guess an alternate location.
+- Add a single bullet that covers the reference and names its retrieval index (one bullet per reference — in a collection run, one per link):
+  - `DESTDIR/[STEM].md`: [description] (retrieval index: `DESTDIR/[STEM].lance`)
+- If a "## Reference Library" section does not exist in `ROOT/CLAUDE.md`, create it by appending the `## Reference Library` heading at the end of the file, then add the bullet under it.
+- **Collection mode:** group the bullet under a `### [COLLECTION]` subheading inside the Reference Library (create the subheading once, then add each link's bullet beneath it) so all references for one CLI/collection stay together and mirror the `references/[COLLECTION]/` folder.
 - If the edit fails after the files were already written: apply Hard Rule 3. The files stay in place, the user is told the registration failed and why, given fix steps, and the edit is retried until it succeeds. Never leave the files on disk unregistered.
 
 ## Step 9: Confirm
 
-One line, reflecting the three actual stored artifacts: "Added `references/[STEM].md` (reference), `references/original_copy_[ORIGINAL]` (source copy), and `references/[STEM].lance` (retrieval index), and registered the reference in CLAUDE.md."
+One line, reflecting the three actual stored artifacts: "Added `DESTDIR/[STEM].md` (reference), `DESTDIR/original_copy_[ORIGINAL]` (source copy), and `DESTDIR/[STEM].lance` (retrieval index), and registered the reference in CLAUDE.md." In a collection run, confirm once at the end with a count: "Added N references under `references/[COLLECTION]/` and registered each in CLAUDE.md."

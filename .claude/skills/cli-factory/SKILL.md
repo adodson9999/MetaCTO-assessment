@@ -8,7 +8,9 @@ description: >
   a CLI for <API>", "make an agent CLI for <API or URL>", "wrap <API> as a CLI", or
   "make an MCP server for <API>". Accepts an API name, an OpenAPI/HAR spec
   (--spec / --har), or a website URL to sniff. Use when you want a reusable,
-  agent-native CLI/MCP for a service (client work or Jarvis tooling).
+  agent-native CLI/MCP for a service (client work or Jarvis tooling). Every link the
+  run discovers is also archived via the add-reference skill into a per-CLI collection
+  folder (`references/<name>/`) that mirrors the printed `CLI/<name>/`.
 allowed-tools:
   - Bash
   - Read
@@ -70,6 +72,12 @@ Determine the input mode from the invocation:
 Default agent target is Claude Code. Check the built-in catalog first
 (`"$PP" catalog list`) — many popular APIs are pre-built and print in seconds.
 
+**Also ask the user to name this run's reference collection** — the subfolder under
+`references/` that will hold every link the run discovers (see Step 5). Default to the
+generated CLI slug if they don't give one. Call this value **COLLECTION**; it should match
+how the printed CLI is indexed under `CLI/` so `references/<COLLECTION>/` mirrors
+`CLI/<COLLECTION>/`.
+
 ## Step 3 — Run the lean loop
 
 Follow the vendored upstream playbook — **read `references/printing-press/SKILL.md`** for the
@@ -80,6 +88,11 @@ authoritative phase structure, modes (default / codex / polish), and rules. The 
 3. Build the highest-value gaps (compound commands, local SQLite mirror, agent-native flags).
 4. Run one **shipcheck** block (dogfood + dead-code + runtime verify + scorecard).
 5. Optionally run live API smoke tests.
+
+As you run the loop, **keep a deduplicated list of every URL you encounter** — the resolved
+spec/doc URL, each page fetched via `fetch-docs`, links cited in the research brief, doc
+links for sniffed endpoints, and the catalog source URL. This is the **link set** consumed by
+Step 5.
 
 The **binary is authoritative** for subcommands — consult `"$PP" --help` and the relevant
 reference file rather than reimplementing logic. Load these on-demand from
@@ -113,7 +126,29 @@ before publishing or archiving.
   Jarvis `CLI/` folder — the tidy aggregation point for every printed CLI. Idempotent; prunes
   dead links. `CLI/` is excluded from Obsidian indexing so the Go trees don't bloat the vault.
 
-## Step 5 — Jarvis wire-up (offer after a successful print)
+## Step 5 — Archive every discovered link as references (always run)
+
+Mirror the printed CLI with its source docs: for every URL in the Step 3 **link set**, file a
+reference under `references/[COLLECTION]/` so `references/[COLLECTION]/` parallels the printed
+`CLI/[COLLECTION]/`.
+
+1. **Dedupe** the link set; register each unique URL once.
+2. **Filter:** drop links `add-reference` cannot parse (pure asset/binary endpoints, `mailto:`,
+   `javascript:`, anchors) and anything reachable only with a secret/cookie value.
+3. For each remaining URL, **invoke the `add-reference` skill in collection mode**:
+   - COLLECTION = the name chosen in Step 2 (default: the CLI slug).
+   - SOURCE = the URL. `add-reference` fetches it (docling, with a `defuddle` fallback) →
+     `references/[COLLECTION]/[STEM].md` + `original_copy_…` + a LanceDB retrieval index, and
+     adds one CLAUDE.md bullet per link under a `### [COLLECTION]` subheading.
+   - Use its **bulk/collection mode**: descriptions are auto-derived (no per-link prompts);
+     its collision handling (rename, never overwrite) and Hard Rule 3 (no half-done state)
+     apply per link.
+4. **Cardinal secret rule still applies** — never save a page (or a request header) that
+   contains an API key, token, password, or session cookie value. Env-var names/placeholders
+   are fine.
+5. Report a count: "Filed N references under `references/[COLLECTION]/`."
+
+## Step 6 — Jarvis wire-up (offer after a successful print)
 
 A printed CLI/MCP is a candidate Jarvis connection. Offer to:
 

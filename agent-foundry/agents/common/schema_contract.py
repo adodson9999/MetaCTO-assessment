@@ -374,7 +374,7 @@ def run_schema_test(agent: str, generate) -> dict:
            "endpoints_without_documented_response_schema":
                sum(1 for c in cases if c["covered"] and not c["documented_schema"]),
            "cases": cases}
-    run_dir = WORKSPACE / "results" / "schema" / "runs" / RUN_ID
+    run_dir = WORKSPACE / "results" / "runs" / RUN_ID
     run_dir.mkdir(parents=True, exist_ok=True)
     cases_path = run_dir / f"{agent}.cases.json"
     _assert_sandbox(cases_path)
@@ -391,14 +391,14 @@ def run_schema_test(agent: str, generate) -> dict:
 
 
 def emit(agent: str, metric_value, raw_output_path: str, extra: dict | None = None) -> None:
-    """Write results/schema/runs/<run>/<agent>.json. metric_value here is the
+    """Write results/runs/<run>/<agent>.json. metric_value here is the
     headline conformance rate (None/N/A under the current spec); the judge later
     overwrites metric_value with Response-Validation Fidelity."""
     metric = {}
     mp = WORKSPACE / "judge" / "schema" / "metric.json"
     if mp.exists():
         metric = json.loads(mp.read_text())
-    out = WORKSPACE / "results" / "schema" / "runs" / RUN_ID / f"{agent}.json"
+    out = WORKSPACE / "results" / "runs" / RUN_ID / f"{agent}.json"
     _assert_sandbox(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {"agent": agent, "run_id": RUN_ID,

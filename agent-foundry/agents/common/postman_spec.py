@@ -3,7 +3,7 @@
 ONE definition of the Postman-generation contract + the per-scenario evaluation, shared
 by:
   - the deterministic gold reference (data/create-postman-collection/build_gold.py),
-  - the production CLI (scripts/postman_collection_cli.py), and
+  - the production CLI (scripts/postman_collection_cli__create-postman-collection.py), and
   - the harness (agents/common/postman.py) — which applies whatever CONTRACT an agent
     emitted to the registry and scores the resulting collection on the same scenario-key
     scheme.

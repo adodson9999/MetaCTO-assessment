@@ -1,1 +1,0 @@
-[api-tester-test-ip-allowlist-enforcement] ip_allowlist_enforcement_rate_pct=0.0% any_nonallowlisted_200_bypass=False

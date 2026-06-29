@@ -1,1 +1,0 @@
-[api-tester-verify-sorting-behavior] sorting_accuracy_rate_pct=100.0%

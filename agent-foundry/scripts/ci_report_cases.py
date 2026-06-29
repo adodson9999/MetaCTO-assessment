@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Used by: shared — CI case reporter across agents.
 """CI gate: report test-case-creator output for one agent and fail on ERROR sentinel.
 
 Exit code 0: at least one valid test case was generated for the target agent.

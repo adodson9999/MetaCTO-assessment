@@ -18,3 +18,7 @@
 - [2026-06-26T16:22:28.460878+00:00] run=smoke create-postman-collection run: coverage_rate=0.0% (items=0/14, scenarios_ok=2/14, newman=True)
 - [2026-06-26T16:23:53.771561+00:00] run=blocked-35be6b create-postman-collection run: coverage_rate=0.0% (items=0/14, scenarios_ok=2/14, newman=True)
 - [2026-06-26T16:31:08.790853+00:00] run=verify-bug-5b784e bug-reporter run: fidelity=100.0% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)
+- [2026-06-28T00:49:54.097910+00:00] run=20260628-session-004954 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T15:27:15.304953+00:00] run=RUN-20260628T152143-all4 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T15:47:58.126376+00:00] run=RUN-20260628T154246-h2 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-06-28T23:08:26.783752+00:00] run=SMOKE4 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%

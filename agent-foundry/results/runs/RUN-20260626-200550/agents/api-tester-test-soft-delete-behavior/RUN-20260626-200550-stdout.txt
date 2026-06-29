@@ -1,1 +1,0 @@
-[api-tester-test-soft-delete-behavior] soft_delete_correctness_rate_pct=0.0%

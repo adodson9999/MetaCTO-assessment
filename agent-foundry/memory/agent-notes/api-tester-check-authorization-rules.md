@@ -1,2 +1,17 @@
 - [2026-06-25T20:13:00.344500+00:00] run=20260625T200441-f38507 authz run: access_control_accuracy=16.67% core 1/6
 - [2026-06-26T20:35:10.571920+00:00] run=RUN-20260626-200550 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-28T03:22:49.675746+00:00] run=RUN-20260628-025411 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-28T17:44:48.129014+00:00] run=RUN-20260628-171526 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T01:05:09.498570+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T02:24:10.579272+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T02:34:33.487674+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T02:44:38.543031+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T02:57:05.845974+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T03:07:21.426969+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T03:17:27.044735+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T03:31:02.749978+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T03:41:21.725388+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T03:51:22.948695+00:00] run=RUN-20260629-003439 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T12:48:27.304390+00:00] run=RUN-20260629-121847 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T17:26:41.085122+00:00] run=2026-06-29_17-10-02 authz run: access_control_accuracy=16.67% core 1/6
+- [2026-06-29T19:44:37.084388+00:00] run=2026-06-29_19-27-43 authz run: access_control_accuracy=16.67% core 1/6

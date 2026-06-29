@@ -1,0 +1,86 @@
+{
+  "suite": "code-review-perspectives",
+  "contract": "review_output.schema.json",
+  "baseline": {"metric_name": "schema_conformance_rate", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 10,
+  "structure": {
+    "required_keys": ["rating", "notes"],
+    "rating_type": "integer",
+    "rating_min": 0,
+    "rating_max": 100,
+    "notes_min_length": 1,
+    "exactly_one_json_object": true,
+    "no_extra_keys": true
+  },
+  "comment": "schema_cases run with NO model (pure Python via the validator) and MUST always pass exactly as marked - they are the deterministic forcing function for output shape. band_cases need a model: feed input_code to the named agent, then check the emitted output validates AND its rating falls within expect_band widened by band_tolerance. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal", "kind": "schema", "expect": "pass", "output": "{\"rating\": 100, \"notes\": \"No problems found through the lens; no change needed.\"}"},
+    {"id": "ok-low-with-fix", "kind": "schema", "expect": "pass", "output": "{\"rating\": 40, \"notes\": \"Untrusted input is concatenated into the SQL string; use a parameterized query to reach 100.\"}"},
+    {"id": "ok-key-order", "kind": "schema", "expect": "pass", "output": "{\"notes\": \"x\", \"rating\": 0}"},
+    {"id": "ok-boundary-0", "kind": "schema", "expect": "pass", "output": "{\"rating\": 0, \"notes\": \"worst case; fix described\"}"},
+    {"id": "ok-boundary-100", "kind": "schema", "expect": "pass", "output": "{\"rating\": 100, \"notes\": \"no change needed\"}"},
+    {"id": "bad-rating-101", "kind": "schema", "expect": "fail", "output": "{\"rating\": 101, \"notes\": \"x\"}"},
+    {"id": "bad-rating-negative", "kind": "schema", "expect": "fail", "output": "{\"rating\": -1, \"notes\": \"x\"}"},
+    {"id": "bad-rating-float", "kind": "schema", "expect": "fail", "output": "{\"rating\": 90.5, \"notes\": \"x\"}"},
+    {"id": "bad-rating-string", "kind": "schema", "expect": "fail", "output": "{\"rating\": \"90\", \"notes\": \"x\"}"},
+    {"id": "bad-rating-range", "kind": "schema", "expect": "fail", "output": "{\"rating\": \"90-100\", \"notes\": \"x\"}"},
+    {"id": "bad-notes-empty", "kind": "schema", "expect": "fail", "output": "{\"rating\": 80, \"notes\": \"\"}"},
+    {"id": "bad-extra-key", "kind": "schema", "expect": "fail", "output": "{\"rating\": 80, \"notes\": \"x\", \"severity\": \"high\"}"},
+    {"id": "bad-missing-notes", "kind": "schema", "expect": "fail", "output": "{\"rating\": 80}"},
+    {"id": "bad-code-fence", "kind": "schema", "expect": "fail", "output": "```json\n{\"rating\": 80, \"notes\": \"x\"}\n```"},
+    {"id": "bad-prose-prefix", "kind": "schema", "expect": "fail", "output": "Here is my review: {\"rating\": 80, \"notes\": \"x\"}"},
+    {"id": "bad-two-objects", "kind": "schema", "expect": "fail", "output": "{\"rating\": 80, \"notes\": \"x\"}\n{\"rating\": 90, \"notes\": \"y\"}"},
+    {"id": "bad-not-json", "kind": "schema", "expect": "fail", "output": "the rating is 80 because the function is fine"}
+  ],
+  "band_cases": [
+    {
+      "id": "minimalist-clean-oneliner",
+      "agent": "minimalist-reviewer",
+      "expect_band": [90, 100],
+      "input_code": "def is_even(n):\n    return n % 2 == 0"
+    },
+    {
+      "id": "minimalist-bloated",
+      "agent": "minimalist-reviewer",
+      "expect_band": [0, 55],
+      "input_code": "def is_even(n):\n    result = None\n    temp = n\n    if temp % 2 == 0:\n        result = True\n    else:\n        result = False\n    flag = result\n    return flag  # TODO: remove old impl below\n    # x = temp / 2"
+    },
+    {
+      "id": "security-parameterized-clean",
+      "agent": "security-reviewer",
+      "expect_band": [85, 100],
+      "input_code": "def get_user(db, user_id):\n    return db.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))"
+    },
+    {
+      "id": "security-sql-injection",
+      "agent": "security-reviewer",
+      "expect_band": [0, 35],
+      "input_code": "def get_user(db, user_id):\n    return db.execute(\"SELECT * FROM users WHERE id = \" + user_id)"
+    },
+    {
+      "id": "logic-error-correct",
+      "agent": "logic-error-reviewer",
+      "expect_band": [85, 100],
+      "input_code": "def last(items):\n    if not items:\n        return None\n    return items[len(items) - 1]"
+    },
+    {
+      "id": "logic-error-off-by-one",
+      "agent": "logic-error-reviewer",
+      "expect_band": [0, 45],
+      "input_code": "def last(items):\n    return items[len(items)]"
+    },
+    {
+      "id": "performance-hash-lookup",
+      "agent": "performance-reviewer",
+      "expect_band": [85, 100],
+      "input_code": "def shared(a, b):\n    bs = set(b)\n    return [x for x in a if x in bs]"
+    },
+    {
+      "id": "performance-quadratic",
+      "agent": "performance-reviewer",
+      "expect_band": [0, 50],
+      "input_code": "def shared(a, b):\n    out = []\n    for x in a:\n        for y in b:\n            if x == y:\n                out.append(x)\n    return out"
+    }
+  ]
+}

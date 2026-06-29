@@ -1,1 +1,0 @@
-[api-tester-validate-graphql-depth-limits] depth_enforcement_pct=23.08%

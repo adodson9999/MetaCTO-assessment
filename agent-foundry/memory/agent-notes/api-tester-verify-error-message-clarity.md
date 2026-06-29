@@ -1,3 +1,17 @@
 - [2026-06-25T22:41:03.954046+00:00] run=20260625T223813-4b8a83 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
 - [2026-06-25T23:00:26.244577+00:00] run=20260625T225832-c586d6 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
 - [2026-06-26T20:40:53.869570+00:00] run=RUN-20260626-200550 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-28T03:28:44.375839+00:00] run=RUN-20260628-025411 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-28T17:50:44.857226+00:00] run=RUN-20260628-171526 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T01:11:10.735027+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T02:28:11.783555+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T02:38:23.463195+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T02:48:27.096158+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T03:01:06.557336+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T03:11:11.055315+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T03:21:16.063894+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T03:35:02.547532+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T03:45:09.593916+00:00] run=RUN-20260629-003439 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T12:54:27.533996+00:00] run=RUN-20260629-121847 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T17:32:35.561678+00:00] run=2026-06-29_17-10-02 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-06-29T19:50:43.550855+00:00] run=2026-06-29_19-27-43 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations

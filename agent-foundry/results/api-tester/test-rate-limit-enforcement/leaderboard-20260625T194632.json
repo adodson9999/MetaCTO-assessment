@@ -1,8 +1,0 @@
-{
-  "metric_name": "rate_limit_test_fidelity",
-  "direction": "higher_is_better",
-  "status": "awaiting_valid_agent_run",
-  "note": "Prior leaderboard entries were produced against the pre-correction target config (rate limiter assumed absent / disabled in development mode) and are NOT comparable to the corrected build (real limiter active, NODE_ENV=production, N=100/W=10s). They have been cleared. The deterministic gold reference + harness are validated to 100% against the real limiter (every endpoint trips at request 101). A valid four-agent run is blocked only on Anthropic API credits (backend=claude-haiku per user instruction; balance exhausted 2026-06-25). Add credits, then run scripts/phase4_ratelimit_run.sh to populate this leaderboard.",
-  "agents": {},
-  "runs": []
-}

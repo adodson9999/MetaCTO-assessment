@@ -1,2 +1,8 @@
 - [2026-06-25T23:57:31.179070+00:00] run=hp-run-2 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
 - [2026-06-26T21:15:14.320313+00:00] run=RUN-20260626-200550 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-28T04:04:28.238012+00:00] run=RUN-20260628-025411 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-28T18:26:23.127262+00:00] run=RUN-20260628-171526 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-29T01:46:37.157088+00:00] run=RUN-20260629-003439 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-29T13:31:23.641781+00:00] run=RUN-20260629-121847 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-29T17:55:45.810475+00:00] run=2026-06-29_17-10-02 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-06-29T20:13:37.264153+00:00] run=2026-06-29_19-27-43 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
