@@ -7,3 +7,4 @@
 - [2026-06-29T13:41:25.710071+00:00] run=RUN-20260629-121847 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
 - [2026-06-29T18:03:57.793969+00:00] run=2026-06-29_17-10-02 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
 - [2026-06-29T20:20:57.377025+00:00] run=2026-06-29_19-27-43 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-06-29T22:52:10.668929+00:00] run=2026-06-29_22-00-33 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)

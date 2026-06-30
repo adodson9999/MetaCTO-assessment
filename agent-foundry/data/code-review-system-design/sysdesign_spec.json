@@ -1,0 +1,8 @@
+{
+  "task": "code-review / system-design",
+  "group": "code-review",
+  "short_name": "system-design",
+  "lens": "system design — judge whether the structure is sound and will hold up as load grows (coupling, cohesion, boundaries, state ownership, behaviour under scale)",
+  "held_out_path": "results/code-review/system-design/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness (sysdesign.py), the spec scorer (sysdesign_spec.py), the judge scorer (judge/code-review/system-design/score.py), and the golden suite all read it verbatim. held_out_path matches judge/code-review/system-design/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (sd-001, sd-002, ...)."
+}

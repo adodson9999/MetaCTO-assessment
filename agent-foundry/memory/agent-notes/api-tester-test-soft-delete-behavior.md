@@ -11,3 +11,4 @@
 - [2026-06-29T14:01:21.148014+00:00] run=RUN-20260629-121847 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
 - [2026-06-29T18:16:33.003985+00:00] run=2026-06-29_17-10-02 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
 - [2026-06-29T20:33:30.044228+00:00] run=2026-06-29_19-27-43 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-06-29T23:19:54.033735+00:00] run=2026-06-29_22-00-33 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)

@@ -1,0 +1,8 @@
+{
+  "task": "code-review / network",
+  "group": "code-review",
+  "short_name": "network",
+  "lens": "network resilience — judge whether the code stays correct when the network is slow, flaky, or down (timeouts, retry/backoff/jitter, retry-on-non-idempotent-write, write-may-have-succeeded after a timeout, chatty/N+1 round-trips, missing fallback when a dependency is down)",
+  "held_out_path": "results/code-review/network/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness (network.py), the spec scorer (network_spec.py), the judge scorer (judge/code-review/network/score.py), and the golden suite all read it verbatim. held_out_path matches judge/code-review/network/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (nw-001, nw-002, ...) when a line omits an explicit id."
+}

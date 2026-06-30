@@ -1,0 +1,8 @@
+{"id": "mc-001", "input_code": "def mean(xs):\n    if not xs:\n        return 0.0\n    return sum(xs) / len(xs)", "gold_band": [90, 100]}
+{"id": "mc-002", "input_code": "def mean(xs):\n    return sum(xs) / len(xs)", "gold_band": [0, 45]}
+{"id": "mc-003", "input_code": "def add(a, b):\n    return a + b", "gold_band": [90, 100]}
+{"id": "mc-004", "input_code": "def collatz_steps(n):\n    steps = 0\n    while n != 1:\n        n = n - 2\n        steps += 1\n    return steps", "gold_band": [0, 40]}
+{"id": "mc-005", "input_code": "def last(xs):\n    return xs[len(xs)]", "gold_band": [0, 40]}
+{"id": "mc-006", "input_code": "def is_one_third(x):\n    return x == 1.0 / 3.0", "gold_band": [40, 75]}
+{"id": "mc-007", "input_code": "def has_duplicate(xs):\n    for i in range(len(xs)):\n        for j in range(len(xs)):\n            if i != j and xs[i] == xs[j]:\n                return True\n    return False", "gold_band": [55, 89]}
+{"id": "mc-008", "input_code": "def factorial(n):\n    result = 1\n    for k in range(2, n + 1):\n        result *= k\n    return result", "gold_band": [90, 100]}

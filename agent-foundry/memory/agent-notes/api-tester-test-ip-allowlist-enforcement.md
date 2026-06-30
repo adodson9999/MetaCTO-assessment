@@ -8,3 +8,4 @@
 - [2026-06-29T13:54:58.877978+00:00] run=RUN-20260629-121847 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
 - [2026-06-29T18:11:51.830199+00:00] run=2026-06-29_17-10-02 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
 - [2026-06-29T20:29:07.278347+00:00] run=2026-06-29_19-27-43 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-06-29T22:59:28.438012+00:00] run=2026-06-29_22-00-33 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)

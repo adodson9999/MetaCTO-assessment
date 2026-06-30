@@ -1,0 +1,1 @@
+- [2026-06-30T00:44:20.361687+00:00] run=codereview-min-53842e1b code-review-minimalist run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%

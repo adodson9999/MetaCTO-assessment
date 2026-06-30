@@ -17,3 +17,4 @@
 - [2026-06-29T13:28:36.396659+00:00] run=RUN-20260629-121847 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
 - [2026-06-29T17:53:52.142639+00:00] run=2026-06-29_17-10-02 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
 - [2026-06-29T20:11:38.311057+00:00] run=2026-06-29_19-27-43 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-06-29T22:42:37.949350+00:00] run=2026-06-29_22-00-33 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources

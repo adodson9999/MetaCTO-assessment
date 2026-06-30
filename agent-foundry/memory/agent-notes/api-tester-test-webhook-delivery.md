@@ -5,3 +5,5 @@
 - [2026-06-29T13:35:18.609025+00:00] run=RUN-20260629-121847 webhook-delivery run: contract_correctness=75.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
 - [2026-06-29T17:58:36.664156+00:00] run=2026-06-29_17-10-02 webhook-delivery run: contract_correctness=75.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
 - [2026-06-29T20:16:01.791946+00:00] run=2026-06-29_19-27-43 webhook-delivery run: contract_correctness=50.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
+- [2026-06-29T21:41:07.134377+00:00] run=inspect2-1782769012 webhook-delivery run: contract_correctness=50.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
+- [2026-06-29T22:47:31.286047+00:00] run=2026-06-29_22-00-33 webhook-delivery run: contract_correctness=50.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0

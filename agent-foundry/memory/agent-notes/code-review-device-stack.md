@@ -1,0 +1,1 @@
+- [2026-06-30T00:55:10.267049+00:00] run=devstack-ollama-20260630T005223 device-stack run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%
