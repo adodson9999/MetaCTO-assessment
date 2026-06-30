@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[1]
@@ -109,26 +110,100 @@ def test_postman_collection_structure():
         assert want in folders, f"Postman missing folder {want}"
     assert {v["key"] for v in col["variable"]} == set(GOLD["postman_variables"])
     assert {v["key"] for v in env["values"]} == set(GOLD["postman_variables"])
+    # folders are agent names; every request is named by a test_case_id (TC-...)
+    auth_folder = next(f for f in col["item"] if f["name"] == "test-authentication-flows")
+    assert all(it["name"].startswith("TC-AUTH-") for it in auth_folder["item"]), \
+        "requests in the auth folder must be named by test_case_id"
     reqs = [it for f in col["item"] for it in f["item"]]
     for it in reqs:
         exec_lines = "\n".join(it["event"][0]["script"]["exec"])
         assert "pm.test" in exec_lines, f"request {it['name']} has no pm.test"
-    # login captures token + refreshToken
-    login = next(it for it in reqs if it["name"].startswith("AUTH-LOGIN-VALID"))
+    # login (TC-AUTH-001) captures token + refreshToken
+    login = next(it for it in reqs if "Login with valid credentials" in it["name"])
     login_js = "\n".join(login["event"][0]["script"]["exec"])
     for var in GOLD["login_captures"]:
         assert f'pm.collectionVariables.set("{var}"' in login_js, f"login does not capture {var}"
     # protected /auth/me valid uses Bearer {{token}}
-    me = next(it for it in reqs if it["name"].startswith("AUTH-ME-VALID"))
+    me = next(it for it in reqs if "valid Bearer token" in it["name"])
     assert any(h.get("value") == "Bearer {{token}}" for h in me["request"]["header"])
     # refresh body uses {{refreshToken}}
-    refresh = next(it for it in reqs if it["name"].startswith("AUTH-REFRESH-VALID"))
+    refresh = next(it for it in reqs if "valid refreshToken" in it["name"])
     assert "{{refreshToken}}" in refresh["request"]["body"]["raw"]
+
+
+def test_postman_request_naming_and_alignment():
+    """Every Postman request is named '<test_case_id> — <title>' and maps 1:1 (id AND title) to a
+    row in the same agent's test cases."""
+    import re
+    res = _fake_results(all_pass=True)
+    by_agent = CT.to_testcases(res)
+    col, _ = CP.build(res)
+    pat = re.compile(GOLD["postman_request_name_regex"])
+    case_titles = {agent: {c["test_case_id"]: c["title_summary"] for c in cases}
+                   for agent, cases in by_agent.items()}
+    for folder in col["item"]:
+        agent = folder["name"]
+        assert agent in case_titles, f"Postman folder {agent} is not a test agent"
+        for it in folder["item"]:
+            name = it["name"]
+            assert pat.match(name), f"request name not '<TC-id> — <title>': {name!r}"
+            tc_id, title = name.split(" — ", 1)
+            assert tc_id in case_titles[agent], f"{agent}: {tc_id} not in cases"
+            assert case_titles[agent][tc_id] == title, f"{agent}: {tc_id} title mismatch"
+
+
+def test_parse_request_filters():
+    """The step parser accepts real API calls and rejects generic/no-path rows."""
+    ok = CP._parse_request({"test_steps": ["1. Send GET /products to http://localhost:8899."]})
+    assert ok == ("GET", "/products", {}, None)
+    q = CP._parse_request({"test_steps": ["1. Send GET /products/search?q=phone."]})
+    assert q == ("GET", "/products/search", {"q": "phone"}, None)
+    b = CP._parse_request({"test_steps": ['1. Send POST /auth/login with body "{\\"username\\": \\"x\\"}"']})
+    assert b and b[0] == "POST" and b[1] == "/auth/login"
+    assert CP._parse_request({"test_steps": ["1. Send GET  to http://localhost:8899."]}) is None
+    assert CP._parse_request({"test_steps": ["1. Seed /resources with 20 records."]}) is None
+
+
+def test_build_full_adds_api_agent_folders():
+    """build_full keeps the rich core folders and adds a folder per OTHER agent that has real
+    API-call test cases — named by test_case_id — and skips agents whose cases aren't API calls."""
+    res = _fake_results(all_pass=True)
+    with tempfile.TemporaryDirectory() as td:
+        out = Path(td)
+        # write core TestCases (so build_full's core folders have alignment) + two non-core agents
+        for agent, cases in CT.to_testcases(res).items():
+            d = out / "TestCases" / agent
+            d.mkdir(parents=True)
+            (d / "cases.json").write_text(json.dumps(cases))
+        api_agent = out / "TestCases" / "test-pagination-behavior"
+        api_agent.mkdir(parents=True)
+        (api_agent / "cases.json").write_text(json.dumps([
+            {"test_case_id": "TC-PAGE-001", "title_summary": "Page1 returns 200",
+             "preconditions": "x", "test_steps": ["1. Send GET /products to http://localhost:8899."],
+             "test_data": {}, "expected_result": "The API returns 200.", "actual_result": "x", "status": "Pass"}]))
+        noapi_agent = out / "TestCases" / "run-regression-suite"
+        noapi_agent.mkdir(parents=True)
+        (noapi_agent / "cases.json").write_text(json.dumps([
+            {"test_case_id": "TC-REG-001", "title_summary": "generic", "preconditions": "x",
+             "test_steps": ["1. Send GET  to http://localhost:8899."], "test_data": {},
+             "expected_result": "The API returns 200.", "actual_result": "x", "status": "Pass"}]))
+        col, _ = CP.build_full(out, res)
+        names = {f["name"] for f in col["item"]}
+        assert "test-authentication-flows" in names, "core folders must remain"
+        assert "test-pagination-behavior" in names, "API-call agent must be added"
+        assert "run-regression-suite" not in names, "no-path agent must be skipped"
+        page = next(f for f in col["item"] if f["name"] == "test-pagination-behavior")
+        it = page["item"][0]
+        assert it["name"] == "TC-PAGE-001 — Page1 returns 200"
+        assert it["request"]["url"]["raw"] == "{{base_url}}/products"
+        assert "pm.test" in "\n".join(it["event"][0]["script"]["exec"])
 
 
 def main() -> int:
     tests = [test_contract_covers_gold_floor, test_assertion_evaluator,
-             test_testcases_schema_and_coverage, test_postman_collection_structure]
+             test_testcases_schema_and_coverage, test_postman_collection_structure,
+             test_postman_request_naming_and_alignment, test_parse_request_filters,
+             test_build_full_adds_api_agent_folders]
     failed = 0
     for t in tests:
         try:

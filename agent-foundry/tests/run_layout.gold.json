@@ -6,5 +6,5 @@
   "agent_dir_files": ["cases.json", "cases.md"],
   "postman_files": ["collection.json", "environment.json"],
   "forbidden_top_level": ["runs", "bug-reports", "authz", "clarity", "crud", "schema", "status"],
-  "ignored": [".DS_Store"]
+  "ignored": [".DS_Store", "code-review"]
 }

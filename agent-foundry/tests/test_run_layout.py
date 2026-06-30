@@ -35,7 +35,7 @@ def validate(results: Path) -> list[str]:
     if not results.is_dir():
         return ["results/ does not exist"]
     for top in results.iterdir():
-        if top.name in IGNORE:
+        if top.name in IGNORE or "code-review" in top.name or top.name == "runs":  # subsystems / transient runs
             continue
         if not top.is_dir() or not DATE_RE.match(top.name):
             bad.append(f"forbidden top-level entry: {top.name} (only YYYY-MM-DD date dirs allowed)")
@@ -83,13 +83,16 @@ def test_validator_on_synthetic_layouts():
             (ad / "cases.json").write_text("[]")
             (ad / "cases.md").write_text("# x")
         assert validate(r) == [], f"correct layout should pass: {validate(r)}"
-        # inject forbidden entries
+        # tolerated infra (must NOT be flagged): a shared runs/ dir and code-review artifacts
         (r / "runs").mkdir()
-        (r / "verify-sorting-behavior").mkdir()      # flat agent folder = forbidden
+        (r / "code-review").mkdir()
+        # genuinely forbidden: a flat agent folder at top level + an agent dir missing cases.md
+        (r / "verify-sorting-behavior").mkdir()
         (good / "TestCases" / "bad-agent").mkdir()
         (good / "TestCases" / "bad-agent" / "cases.json").write_text("[]")  # missing cases.md
         v = validate(r)
-        assert any("runs" in x for x in v) and any("bad-agent" in x for x in v), v
+        assert not any("runs" in x for x in v) and not any("code-review" in x for x in v), f"infra must be tolerated: {v}"
+        assert any("verify-sorting-behavior" in x for x in v) and any("bad-agent" in x for x in v), v
 
 
 def test_current_results_layout():

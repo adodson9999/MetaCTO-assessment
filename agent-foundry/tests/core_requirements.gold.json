@@ -22,7 +22,10 @@
   "testcase_fields": ["test_case_id", "title_summary", "preconditions", "test_steps",
                       "test_data", "expected_result", "actual_result", "status"],
   "statuses": ["Pass", "Fail", "Blocked"],
-  "postman_folders": ["Authentication", "CRUD — Products", "Search & Filtering", "Error Handling"],
+  "postman_folders": ["test-authentication-flows", "verify-crud-operation-integrity", "validate-search-and-filter-queries"],
+  "postman_request_name_regex": "^TC-[A-Z]+-\\d{3,} — .+",
+  "postman_request_naming": "every request is '<test_case_id> — <title>' and maps 1:1 to a row in its agent's cases.json (same id AND title)",
+  "postman_coverage": "G19: every test case that is an API call (steps contain 'Send <METHOD> /path') must appear as a request in its agent's folder; agents with no API-call cases require none",
   "postman_variables": ["base_url", "token", "refreshToken", "newProductId"],
   "login_captures": ["token", "refreshToken"]
 }

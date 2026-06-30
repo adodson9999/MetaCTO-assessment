@@ -361,6 +361,7 @@ _AGENT_SECTIONS = ("TestCases", "BugReport")
 _POSTMAN_FILES = {"collection.json", "environment.json"}
 _LAYOUT_FILES = {"cases.json", "cases.md"}
 _LAYOUT_IGNORE = {".DS_Store"}
+_PRESERVE_MARKER = "code-review"   # code-review judge fixtures/leaderboards: a separate subsystem, not run output
 
 # Core-Requirements coverage floors (scenario_ids that MUST appear in each core agent's cases)
 _AUTH_REQUIRED = {"AUTH-LOGIN-VALID", "AUTH-LOGIN-WRONGPASS", "AUTH-LOGIN-UNKNOWN",
@@ -381,8 +382,8 @@ def g13_results_layout() -> dict:
         return {"id": "G13", "name": "results-layout", "hard": True, "status": "PASS",
                 "detail": "results/ absent (nothing to validate)."}
     for top in sorted(results.iterdir()):
-        if top.name in _LAYOUT_IGNORE:
-            continue
+        if top.name in _LAYOUT_IGNORE or _PRESERVE_MARKER in top.name or top.name == "runs":
+            continue   # transient shared executor dir (runs/) + code-review subsystem are tolerated
         if not top.is_dir() or not _DATE_RE.match(top.name):
             bad.append(f"forbidden top-level entry: {top.name} (only YYYY-MM-DD dirs allowed)")
             continue
@@ -482,9 +483,10 @@ def g17_postman(out_root: Path = None) -> dict:
                 "detail": f"collection.json not valid JSON: {e}"}
     problems = []
     folders = {f.get("name") for f in c.get("item", [])}
-    want = {"Authentication", "CRUD — Products", "Search & Filtering", "Error Handling"}
+    want = {"test-authentication-flows", "verify-crud-operation-integrity",
+            "validate-search-and-filter-queries"}
     if not want.issubset(folders):
-        problems.append(f"missing folders {sorted(want - folders)}")
+        problems.append(f"missing agent folders {sorted(want - folders)}")
     if "base_url" not in {v.get("key") for v in c.get("variable", [])}:
         problems.append("missing {{base_url}} variable")
     reqs = [it for f in c.get("item", []) for it in f.get("item", [])]
@@ -500,10 +502,101 @@ def g17_postman(out_root: Path = None) -> dict:
             "detail": "; ".join(problems) or f"valid v2.1 collection: {len(folders)} folders, {len(reqs)} requests, all asserted."}
 
 
+_POSTMAN_NAME_RE = re.compile(r"^TC-[A-Z]+-\d{3,} — .+")
+
+
+def g18_postman_testcase_alignment(out_root: Path = None) -> dict:
+    """HARD: every Postman request is named '<test_case_id> — <title>', sits in its agent's folder,
+    and maps 1:1 to a row in that agent's TestCases cases.json (same id AND same title). This is what
+    makes a request traceable to its test case; it must hold whenever the collection is created."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    col_path = (out_root / "Postman" / "collection.json") if out_root else None
+    if not col_path or not col_path.exists():
+        return {"id": "G18", "name": "postman-testcase-alignment", "hard": True, "status": "FAIL",
+                "detail": "Postman/collection.json missing."}
+    try:
+        c = json.loads(col_path.read_text())
+    except (OSError, json.JSONDecodeError) as e:
+        return {"id": "G18", "name": "postman-testcase-alignment", "hard": True, "status": "FAIL",
+                "detail": f"collection.json not valid JSON: {e}"}
+    problems: list[str] = []
+    checked = 0
+    for folder in c.get("item", []):
+        agent = folder.get("name", "")
+        try:
+            cases = {cc["test_case_id"]: cc["title_summary"]
+                     for cc in json.loads((out_root / "TestCases" / agent / "cases.json").read_text())}
+        except (OSError, json.JSONDecodeError):
+            problems.append(f"{agent}: folder has no matching TestCases/{agent}/cases.json")
+            cases = {}
+        for it in folder.get("item", []):
+            name = it.get("name", "")
+            checked += 1
+            if not _POSTMAN_NAME_RE.match(name):
+                problems.append(f"{agent}: request not named '<TC-id> — <title>': {name!r}")
+                continue
+            tc_id, title = name.split(" — ", 1)
+            if tc_id not in cases:
+                problems.append(f"{agent}: {tc_id} has no matching test case in cases.json")
+            elif cases[tc_id] != title:
+                problems.append(f"{agent}: {tc_id} title differs between Postman and cases.json")
+    return {"id": "G18", "name": "postman-testcase-alignment", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": "; ".join(problems[:6]) or f"all {checked} requests named '<TC-id> — <title>' and aligned 1:1 with TestCases."}
+
+
+def _request_parser():
+    """The single source of truth for 'is this test case an API call?' — core_postman._parse_request."""
+    sys.path.insert(0, str(WS / "agents" / "common"))
+    import core_postman as CP
+    return CP._parse_request
+
+
+def g19_postman_coverage(out_root: Path = None) -> dict:
+    """HARD: every test case that is an API call (its steps contain 'Send <METHOD> /path') MUST
+    appear as a request in its agent's folder in the collection. This makes ALL recorded API calls
+    follow the agent-folder → test_case_id flow; an agent whose cases aren't API calls requires none."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    col_path = (out_root / "Postman" / "collection.json") if out_root else None
+    tc_root = (out_root / "TestCases") if out_root else None
+    if not col_path or not col_path.exists():
+        return {"id": "G19", "name": "postman-coverage", "hard": True, "status": "FAIL",
+                "detail": "Postman/collection.json missing."}
+    try:
+        c = json.loads(col_path.read_text())
+    except (OSError, json.JSONDecodeError) as e:
+        return {"id": "G19", "name": "postman-coverage", "hard": True, "status": "FAIL",
+                "detail": f"collection.json not valid JSON: {e}"}
+    parse = _request_parser()
+    in_col: dict[str, set] = {}
+    for f in c.get("item", []):
+        in_col[f.get("name", "")] = {it["name"].split(" — ", 1)[0]
+                                     for it in f.get("item", []) if " — " in it.get("name", "")}
+    problems, required_total = [], 0
+    for agent_dir in sorted(p for p in (tc_root.iterdir() if tc_root and tc_root.is_dir() else []) if p.is_dir()):
+        agent = agent_dir.name
+        try:
+            cases = json.loads((agent_dir / "cases.json").read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        required = {cc["test_case_id"] for cc in cases if parse(cc) is not None}
+        required_total += len(required)
+        missing = required - in_col.get(agent, set())
+        if missing:
+            problems.append(f"{agent}: {len(missing)} API-call test case(s) absent from collection "
+                            f"e.g. {sorted(missing)[:3]}")
+    return {"id": "G19", "name": "postman-coverage", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": "; ".join(problems[:6]) or f"all {required_total} API-call test cases present in the collection."}
+
+
 def core_gate(out_root: Path = None) -> list:
-    """The deliverable gate set: layout (G13) + the four Core-Requirements coverage gates."""
+    """The deliverable gate set: layout (G13) + the Core-Requirements coverage/Postman gates."""
     return [g13_results_layout(), g14_auth_lifecycle(out_root), g15_crud_products(out_root),
-            g16_search_coverage(out_root), g17_postman(out_root)]
+            g16_search_coverage(out_root), g17_postman(out_root),
+            g18_postman_testcase_alignment(out_root), g19_postman_coverage(out_root)]
 
 
 def run(run_id: str) -> dict:

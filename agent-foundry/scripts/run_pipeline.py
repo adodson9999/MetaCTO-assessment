@@ -68,8 +68,13 @@ def run_executor(run_dir: Path, run_id: str, agent: str) -> bool:
     rp = WS / "agents" / "api-tester" / agent / "subagent" / "run.py"
     if not rp.exists():
         return False
+    # PYTHONPATH includes scripts/_record so sitecustomize installs the request recorder at startup,
+    # capturing every API call this agent makes (per-agent, deduped) under results/runs/<RID>/requests/.
+    rec_dir = str(WS / "scripts" / "_record")
+    pp = rec_dir + (os.pathsep + os.environ["PYTHONPATH"] if os.environ.get("PYTHONPATH") else "")
     env = dict(os.environ, FORGE_WORKSPACE=str(WS), FORGE_RUN_ID=run_id,
-               FORGE_TARGET_BASE_URL=TARGET, FORGE_MAX_ENDPOINTS="0")
+               FORGE_TARGET_BASE_URL=TARGET, FORGE_MAX_ENDPOINTS="0",
+               PYTHONPATH=pp, FORGE_RECORD_REQUESTS="1", FORGE_AGENT=agent)
     try:
         subprocess.run([PY, str(rp)], cwd=str(WS), env=env, capture_output=True, text=True, timeout=2400)
     except subprocess.TimeoutExpired:
@@ -123,14 +128,18 @@ def build_core_requirements(out_root: Path, target: str) -> dict:
         if tc:
             per_agent[agent]["fails"].append({"tc": tc, "expected": str(sc["expected_status"]),
                                               "observed": str(sc["actual_status"]), "scenario": sc["title"]})
-    collection, environment = CP.build(results)
+    # build_full adds a folder for every OTHER agent with real API-call test cases (already on
+    # disk from build_test_cases), on top of the rich core-agent folders.
+    collection, environment = CP.build_full(out_root, results)
     pm = out_root / "Postman"
     pm.mkdir(parents=True, exist_ok=True)
     (pm / "collection.json").write_text(json.dumps(collection, indent=2))
     (pm / "environment.json").write_text(json.dumps(environment, indent=2))
     blocked = sum(1 for r in results if r["blocked"])
-    print(f"Core requirements: {len(results)} scenarios across {len(by_agent)} agents "
-          f"({blocked} blocked); Postman collection written.", flush=True)
+    folders = len(collection["item"])
+    reqs = sum(len(f["item"]) for f in collection["item"])
+    print(f"Core requirements: {len(results)} scenarios across {len(by_agent)} core agents "
+          f"({blocked} blocked); Postman collection: {folders} agent folders / {reqs} requests.", flush=True)
     return per_agent
 
 
@@ -215,22 +224,28 @@ def _bug_md(agent: str, bugs: list) -> str:
     return "\n".join(out)
 
 
-def cleanup(keep: Path) -> list[str]:
-    """results/ must contain ONLY date-dir trees. Remove the transient run dir, old flat agent
-    folders, bug-reports/, and any loose file/folder."""
+def cleanup(run_id: str) -> list[str]:
+    """Remove ONLY this api-tester run's transient output, leaving date-dir deliverables and any
+    OTHER subsystem's artifacts untouched: delete results/runs/<run_id> (our executor data) — and
+    runs/ only if it becomes empty — plus clearly-legacy api-tester strays (bug-reports/ or a
+    top-level dir holding *.cases.json). Never touch code-review/*, another subsystem's runs/<id>,
+    date dirs, or unknown files."""
     removed = []
     date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    runs = RESULTS / "runs"
+    mine = runs / run_id
+    if mine.exists():
+        shutil.rmtree(mine, ignore_errors=True); removed.append(f"runs/{run_id}")
+    if runs.is_dir() and not any(runs.iterdir()):
+        runs.rmdir(); removed.append("runs(empty)")
     for child in RESULTS.iterdir():
-        if child.name == ".DS_Store":
-            child.unlink(missing_ok=True); removed.append(child.name); continue
-        if child.is_dir() and date_re.match(child.name):
-            continue   # a date dir — allowed
-        # everything else (runs/, bug-reports/, flat <agent>/, loose json) is removed
-        if child.is_dir():
-            shutil.rmtree(child, ignore_errors=True)
-        else:
-            child.unlink(missing_ok=True)
-        removed.append(child.name)
+        name = child.name
+        if name == ".DS_Store":
+            child.unlink(missing_ok=True); removed.append(name); continue
+        if name == "runs" or "code-review" in name or (child.is_dir() and date_re.match(name)):
+            continue
+        if name == "bug-reports" or (child.is_dir() and any(child.glob("*.cases.json"))):
+            shutil.rmtree(child, ignore_errors=True); removed.append(name)   # legacy api-tester stray
     return removed
 
 
@@ -257,13 +272,19 @@ def main() -> None:
     print(f"building layout -> results/{date}/{tm}/", flush=True)
     per_agent = build_test_cases(out_root, run_id)
     print(f"TestCases: {len(per_agent)} agents", flush=True)
+    import request_cases
+    req_dir = RESULTS / "runs" / run_id / "requests"
+    appended = request_cases.augment(out_root, req_dir, CORE_AGENTS)
+    if appended:
+        print(f"Recorded requests folded in: {sum(appended.values())} request-derived cases "
+              f"across {len(appended)} agents.", flush=True)
     if "--no-core" not in args:
         core = build_core_requirements(out_root, TARGET)
         per_agent.update(core)   # deep core-requirement cases override the shallow harness output
     bug = build_bug_reports(out_root, per_agent, bug_limit, do_bugs)
     print(f"BugReport: {bug['agents_with_bugs']} agents / {bug['bugs']} bugs "
           f"(reviewed {bug['reviewed']} of {bug['considered']} unique mismatches)", flush=True)
-    removed = cleanup(out_root)
+    removed = cleanup(run_id)
     print(f"cleanup removed from results/: {removed}", flush=True)
     import guardrails
     gates = guardrails.core_gate(out_root)
