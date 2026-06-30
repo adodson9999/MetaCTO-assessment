@@ -1,0 +1,2 @@
+{"input_code": "def is_even(n):\n    return n % 2 == 0", "gold_band": [90, 100]}
+{"input_code": "def is_even(n):\n    r = None\n    if n % 2 == 0:\n        r = True\n    else:\n        r = False\n    return r  # TODO drop old impl", "gold_band": [0, 55]}

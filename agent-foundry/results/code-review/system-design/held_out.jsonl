@@ -1,0 +1,2 @@
+{"input_code": "class OrderService:\n    def __init__(self, repo):\n        self.repo = repo\n    def total(self, order_id):\n        return self.repo.total(order_id)", "gold_band": [85, 100]}
+{"input_code": "def total(order_id):\n    for o in load_all_orders():\n        if o.id == order_id:\n            return sum(load_item(i) for i in o.item_ids)", "gold_band": [0, 50]}

@@ -1,0 +1,8 @@
+{
+  "task": "code-review / minimalist",
+  "group": "code-review",
+  "short_name": "minimalist",
+  "lens": "minimalism (less is more) — judge whether the code does its job with as little code, indirection, and cleverness as possible",
+  "held_out_path": "results/code-review/minimalist/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/minimalist/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (CR-001, CR-002, ...)."
+}

@@ -7,3 +7,4 @@
 - [2026-06-29T13:57:22.972932+00:00] run=RUN-20260629-121847 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
 - [2026-06-29T18:13:18.195840+00:00] run=2026-06-29_17-10-02 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
 - [2026-06-29T20:30:31.636952+00:00] run=2026-06-29_19-27-43 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-06-29T23:17:01.723944+00:00] run=2026-06-29_22-00-33 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions

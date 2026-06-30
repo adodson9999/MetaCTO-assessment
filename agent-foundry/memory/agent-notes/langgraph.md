@@ -22,3 +22,6 @@
 - [2026-06-28T15:27:15.304953+00:00] run=RUN-20260628T152143-all4 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
 - [2026-06-28T15:47:58.126376+00:00] run=RUN-20260628T154246-h2 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
 - [2026-06-28T23:08:26.783752+00:00] run=SMOKE4 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-30T00:44:28.250966+00:00] run=codereview-min-53842e1b code-review-minimalist run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T00:46:44.886682+00:00] run=devstack-20260630T004641 device-stack run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T00:55:22.644889+00:00] run=devstack-ollama-20260630T005223 device-stack run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%

@@ -1,0 +1,47 @@
+{
+  "agent": "code-review/minimalist",
+  "metric_name": "rating_band_accuracy",
+  "baseline": {
+    "value": 1.0,
+    "tolerance": 0.0,
+    "direction": "higher_is_better",
+    "note": "Oracle-achievable ceiling: a perfect reviewer lands every held-out case inside its gold band with a valid {rating, notes} object. Re-baseline after Phase 4.5 if a live framework's best stabilises below 1.0 on the swapped-in interview labels."
+  },
+  "cases": [
+    {
+      "id": "metric-rating-band-accuracy",
+      "kind": "metric",
+      "desc": "The agent's latest judged rating_band_accuracy must be >= baseline (minus tolerance)."
+    },
+    {
+      "id": "structure-oracle-saturates",
+      "kind": "structure",
+      "assert": "A perfect-oracle generate (gold-band midpoint + non-empty note) scores rating_band_accuracy=1.0 over all held-out cases.",
+      "passed": true
+    },
+    {
+      "id": "structure-empty-scores-zero",
+      "kind": "structure",
+      "assert": "An empty/blank emission ({}) scores rating_band_accuracy=0.0 (no saturation trap — empty output is never credited).",
+      "passed": true
+    },
+    {
+      "id": "structure-strict-schema",
+      "kind": "structure",
+      "assert": "A non-{rating, notes} object scores 0.0: an extra key, a non-integer/bool/float rating, an out-of-range rating, or empty notes all fail the strict schema.",
+      "passed": true
+    },
+    {
+      "id": "structure-nonoverlapping-bands",
+      "kind": "structure",
+      "assert": "The two seed bands are disjoint ([90,100] and [0,55]), so a constant-rating agent scores at most 0.5 — the metric cannot be faked by emitting one fixed number.",
+      "passed": true
+    },
+    {
+      "id": "structure-band-classes-covered",
+      "kind": "structure",
+      "assert": "The labeled set exercises both ends of the lens: a top-band minimal one-liner (CR-001, [90,100]) and a low-band over-engineered rewrite with a removable temp, a removable branch, and a dead TODO comment (CR-002, [0,55]).",
+      "passed": true
+    }
+  ]
+}

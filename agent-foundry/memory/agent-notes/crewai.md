@@ -88,3 +88,6 @@
 - [2026-06-28T15:26:53.785463+00:00] run=RUN-20260628T152143-all4 documentation-reviewer run: verdict_accuracy=75.0% over 4 reports; source-of-truth match=75.0%
 - [2026-06-28T15:47:27.298308+00:00] run=RUN-20260628T154246-h2 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
 - [2026-06-28T23:06:58.317890+00:00] run=SMOKE4 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-06-30T00:44:33.553011+00:00] run=codereview-min-53842e1b code-review-minimalist run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T00:49:25.149306+00:00] run=devstack-20260630T004641 device-stack run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T00:55:18.671840+00:00] run=devstack-ollama-20260630T005223 device-stack run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=100.0% band_pass=50.0%

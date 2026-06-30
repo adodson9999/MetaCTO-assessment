@@ -1,0 +1,37 @@
+{
+  "suite": "code-review-network",
+  "group": "code-review",
+  "short_name": "network",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via network_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "No problems found through the network lens; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 17, "notes": "while True retries a non-idempotent POST on every exception with no backoff, no attempt cap, and no idempotency key, so a flaky network duplicates the write; cap attempts with exponential backoff and jitter and add an idempotency key to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "hangs forever; bounded-timeout fix described"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "nw-001",
+      "expect_band": [80, 100],
+      "input_code": "r = http.get(url, timeout=2.0)\nr.raise_for_status()"
+    },
+    {
+      "id": "nw-002",
+      "expect_band": [0, 35],
+      "input_code": "while True:\n    try:\n        return http.post(url, body)\n    except Exception:\n        continue"
+    }
+  ]
+}

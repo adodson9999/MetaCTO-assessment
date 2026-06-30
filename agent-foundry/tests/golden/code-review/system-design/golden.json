@@ -1,0 +1,37 @@
+{
+  "suite": "code-review-system-design",
+  "group": "code-review",
+  "short_name": "system-design",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via sysdesign_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "No problems found through the system-design lens; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 30, "notes": "total() loads every order then scans for one id, a full-collection fetch that bottlenecks at 100x data; replace with an indexed repo.get(order_id) to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "worst case; structural fix described"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "sd-001",
+      "expect_band": [85, 100],
+      "input_code": "class OrderService:\n    def __init__(self, repo):\n        self.repo = repo\n    def total(self, order_id):\n        return self.repo.total(order_id)"
+    },
+    {
+      "id": "sd-002",
+      "expect_band": [0, 50],
+      "input_code": "def total(order_id):\n    for o in load_all_orders():\n        if o.id == order_id:\n            return sum(load_item(i) for i in o.item_ids)"
+    }
+  ]
+}

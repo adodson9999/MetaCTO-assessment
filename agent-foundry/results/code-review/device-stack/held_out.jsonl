@@ -1,0 +1,8 @@
+{"id": "ds-001", "input_code": "start = time.monotonic()\ndo_work()\nelapsed = time.monotonic() - start", "gold_band": [85, 100]}
+{"id": "ds-002", "input_code": "start = time.time()\ndo_work()\nelapsed = time.time() - start  # used for a timeout", "gold_band": [0, 55]}
+{"id": "ds-003", "input_code": "def add(a, b):\n    return a + b", "gold_band": [85, 100]}
+{"id": "ds-004", "input_code": "def store(data):\n    buf = bytearray(1024)\n    buf[:len(data)] = data  # data arrives from the network, length unbounded\n    return buf", "gold_band": [0, 39]}
+{"id": "ds-005", "input_code": "def frame_len(header):\n    return struct.unpack('<H', header[:2])[0]  # length field arrives in network (big-endian) byte order", "gold_band": [0, 45]}
+{"id": "ds-006", "input_code": "def read_configs(paths):\n    out = {}\n    for p in paths:\n        out[p] = open(p).read()\n    return out", "gold_band": [55, 80]}
+{"id": "ds-007", "input_code": "def save(path, data):\n    with open(path, 'w') as f:\n        f.write(data)", "gold_band": [10, 55]}
+{"id": "ds-008", "input_code": "granted = check_camera_permission()\nif granted:\n    while True:\n        frame = capture_frame()", "gold_band": [42, 70]}
