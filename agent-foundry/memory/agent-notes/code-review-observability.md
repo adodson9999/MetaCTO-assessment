@@ -1,0 +1,3 @@
+- [2026-06-30T02:57:10.973602+00:00] run=ob-claude-1782788116 code-review-observability run: rating_band_accuracy=0.6667 over 6 cases; schema_valid=100.0%
+- [2026-06-30T03:01:22.944070+00:00] run=ob-claude2-1782788374 code-review-observability run: rating_band_accuracy=0.8333 over 6 cases; schema_valid=100.0%
+- [2026-06-30T03:06:07.194909+00:00] run=ob-claude3-1782788639 code-review-observability run: rating_band_accuracy=1.0 over 6 cases; schema_valid=100.0%

@@ -61,6 +61,11 @@ enforce = true
 schedule = "nightly"
 skillclaw_storage_backend = "local"     # not OSS/S3 — stays air-gapped
 
+[code_review_gate]
+# Article I.10 LLM-graded gate over every reviewer in agents/code-review/.
+applies = false   # auto-detect from task_spec; true forces the gate
+threshold = 85    # floor; may be raised, never lowered
+
 [vendor]
 # Filled in by /scan-and-integrate with pinned commits.
 everos_commit = ""

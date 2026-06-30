@@ -1,0 +1,220 @@
+{
+  "task": "code-review / security",
+  "rounds": 10,
+  "baseline_mean": 0.9375,
+  "best_label": "round-03",
+  "best_mean": 1.0,
+  "best_per_framework": {
+    "langgraph": 1.0,
+    "crewai": 1.0,
+    "claude_sdk": 1.0,
+    "code-review-security": 1.0
+  },
+  "improvement": 0.0625,
+  "determinism_recheck": true,
+  "trajectory": [
+    {
+      "round": 0,
+      "edit": "baseline (debate-gated APPROVED_PROMPT)",
+      "per_framework": {
+        "langgraph": 0.75,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 0.9375,
+      "kept": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r00-b9b23d"
+    },
+    {
+      "round": 1,
+      "edit": "round-01.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.875,
+        "claude_sdk": 0.875,
+        "code-review-security": 0.875
+      },
+      "mean": 0.875,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r01-af3b42"
+    },
+    {
+      "round": 2,
+      "edit": "round-02.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 0.9688,
+      "kept": true,
+      "improves": true,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r02-4f66b3"
+    },
+    {
+      "round": 3,
+      "edit": "round-03.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 1.0,
+      "kept": true,
+      "improves": true,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r03-b36e91"
+    },
+    {
+      "round": 4,
+      "edit": "round-04.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 1.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r04-76949c"
+    },
+    {
+      "round": 5,
+      "edit": "round-05.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 1.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r05-aeb24e"
+    },
+    {
+      "round": 6,
+      "edit": "round-06.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 1.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r06-21eef9"
+    },
+    {
+      "round": 7,
+      "edit": "round-07.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-security": 1.0
+      },
+      "mean": 1.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r07-eec5b4"
+    },
+    {
+      "round": 8,
+      "edit": "round-08.md",
+      "per_framework": {
+        "langgraph": 0.5,
+        "crewai": 0.5,
+        "claude_sdk": 0.5,
+        "code-review-security": 0.5
+      },
+      "mean": 0.5,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r08-3568a1",
+      "invalid_backend_outage": true,
+      "note": "scored during the ollama outage (ConnectError); not a valid prompt evaluation"
+    },
+    {
+      "round": 9,
+      "edit": "round-09.md",
+      "per_framework": {
+        "langgraph": 0.0,
+        "crewai": 0.0,
+        "claude_sdk": 0.0,
+        "code-review-security": 0.0
+      },
+      "mean": 0.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r09-ecb9b6",
+      "invalid_backend_outage": true,
+      "note": "scored during the ollama outage (ConnectError); not a valid prompt evaluation"
+    },
+    {
+      "round": 10,
+      "edit": "round-10.md",
+      "per_framework": {
+        "langgraph": 0.0,
+        "crewai": 0.0,
+        "claude_sdk": 0.0,
+        "code-review-security": 0.0
+      },
+      "mean": 0.0,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "sec-tourney-r10-b37ed8",
+      "invalid_backend_outage": true,
+      "note": "scored during the ollama outage (ConnectError); not a valid prompt evaluation"
+    }
+  ],
+  "determinism_recheck_method": "two independent temp-0 passes of the winning doc (round-03); meanA=meanB=1.0, per-framework identical",
+  "backend_outage": {
+    "rounds_invalidated": [
+      8,
+      9,
+      10,
+      "original --recheck"
+    ],
+    "cause": "ollama crashed under ~35min sustained load; ConnectError [Errno 61] Connection refused -> empty emissions scored 0.0",
+    "evidence": "round-10 is byte-identical to round-03 (winner) yet scored 0.0; collapse was uniform across all four independent frameworks (0.5 then 0.0), which prompt content cannot cause at temperature=0",
+    "resolution": "restarted ollama; re-ran the winner twice -> deterministic mean 1.0 (see determinism_recheck)"
+  }
+}

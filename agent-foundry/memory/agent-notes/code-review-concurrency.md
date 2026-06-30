@@ -1,0 +1,14 @@
+- [2026-06-30T01:45:25.538612+00:00] run=concurrency-live-001 code-review-concurrency run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T02:16:34.733149+00:00] run=conc-claude-smoke code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:35:29.384152+00:00] run=conc-tourney-r00-6b366c code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:41:39.570152+00:00] run=conc-tourney-r01-f4e109 code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:49:11.720617+00:00] run=conc-tourney-r02-bc3821 code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:54:09.249658+00:00] run=conc-tourney-r03-33786b code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:57:48.602868+00:00] run=conc-tourney-r04-38b38e code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:01:41.615195+00:00] run=conc-tourney-r05-1b1534 code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:04:07.584848+00:00] run=conc-tourney-r06-6188d6 code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:08:11.418361+00:00] run=conc-tourney-r07-74de33 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:11:16.926827+00:00] run=conc-tourney-r08-42f3cd code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:22:17.472746+00:00] run=conc-tourney-r09-3f0b80 code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=87.5%
+- [2026-06-30T03:26:01.055385+00:00] run=conc-tourney-r10-151966 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:29:45.283372+00:00] run=conc-tourney-recheck-0ecb9e code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%

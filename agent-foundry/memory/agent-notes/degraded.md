@@ -1,1 +1,0 @@
-- [2026-06-26T16:20:00.397706+00:00] run=degraded-bug bug-reporter run: fidelity=4.44% over 9 bug reports (45 fields); completeness=80.0%; crit/high=False (exit1=False)

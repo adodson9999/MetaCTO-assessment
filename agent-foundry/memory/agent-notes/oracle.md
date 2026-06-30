@@ -1,2 +1,0 @@
-- [2026-06-26T03:01:41.740082+00:00] run=oracle-verify graphql-depth run: enforcement=100.0% over 2 endpoints (26 scenarios)
-- [2026-06-26T16:20:00.387044+00:00] run=oracle-bug bug-reporter run: fidelity=100.0% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)

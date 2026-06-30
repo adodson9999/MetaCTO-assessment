@@ -1,0 +1,65 @@
+{
+  "agent": "code-review/concurrency",
+  "metric_name": "rating_band_accuracy",
+  "baseline": {
+    "value": 0.75,
+    "tolerance": 0.125,
+    "direction": "higher_is_better",
+    "note": "Re-baselined after Phase 4.5 on the expanded 8-case held-out set, run on the claude-cli backend (sonnet via the `claude -p` shim). 0.75 is the live debate-gated (un-promoted) agent's baseline MEAN over the four frameworks; tolerance 0.125 absorbs one case of `claude -p` sampling variance (claude -p is not strictly temp-0, confirmed by the tournament determinism recheck). The deterministic oracle ceiling is still 1.0 (see structure-oracle-saturates). The SkillOpt tournament lifted the mean to 0.9688 (best skill staged at evolvers/skillopt/code-review/concurrency/best_skill.md), but that skill is NOT auto-adopted, so this golden gates the live agent."
+  },
+  "live": {
+    "backend": "claude-cli (sonnet via claude -p shim on :8787)",
+    "held_out_cases": 8,
+    "oracle_ceiling": 1.0,
+    "baseline_run_mean": 0.75,
+    "baseline_per_framework": {"langgraph": 0.75, "crewai": 0.875, "claude_sdk": 0.625, "code-review-concurrency": 0.75},
+    "staged_best_mean": 0.9688,
+    "staged_best_per_framework": {"langgraph": 1.0, "crewai": 1.0, "claude_sdk": 1.0, "code-review-concurrency": 0.875},
+    "staged_best_skill": "evolvers/skillopt/code-review/concurrency/best_skill.md",
+    "determinism_recheck": false,
+    "determinism_note": "Prompt and scoring are deterministic; the LLM sampling (claude -p subscription) is not strictly temp-0, so per-run rating_band_accuracy varies by ~1 case."
+  },
+  "cases": [
+    {
+      "id": "metric-rating-band-accuracy",
+      "kind": "metric",
+      "desc": "The agent's latest judged rating_band_accuracy (mean over the four frameworks) must be >= baseline (0.75) minus tolerance (0.125) = 0.625."
+    },
+    {
+      "id": "structure-oracle-saturates",
+      "kind": "structure",
+      "assert": "A perfect-oracle generate (gold-band midpoint + non-empty note) scores rating_band_accuracy=1.0 over all 8 held-out cases.",
+      "passed": true
+    },
+    {
+      "id": "structure-empty-scores-zero",
+      "kind": "structure",
+      "assert": "An empty/blank emission ({}) scores rating_band_accuracy=0.0 (no saturation trap — empty output is never credited).",
+      "passed": true
+    },
+    {
+      "id": "structure-strict-schema",
+      "kind": "structure",
+      "assert": "A non-{rating, notes} object scores 0.0: an extra key, a non-integer/bool/float rating, an out-of-range rating, or empty notes all fail the strict schema.",
+      "passed": true
+    },
+    {
+      "id": "structure-nonoverlapping-bands",
+      "kind": "structure",
+      "assert": "Across the 8 graded cases the best score any single constant rating can reach is 0.5 (verified by sweeping rating 0..100) — the metric cannot be faked by emitting one fixed number.",
+      "passed": true
+    },
+    {
+      "id": "structure-band-classes-covered",
+      "kind": "structure",
+      "assert": "The labeled set spans the lens: SAFE (CC-001 guarded RMW, CC-007 pure local fn, CC-008 check-then-act under lock; [85,100]); UNSAFE lost-update (CC-002 lock-free increment, CC-006 RMW across await; [0,45]); SERIOUS (CC-003 AB-BA deadlock; [0,30]); and middle-band problems (CC-004 check-then-act no lock [25,55], CC-005 lock held across blocking call [45,70]).",
+      "passed": true
+    },
+    {
+      "id": "structure-prompt-body-parity",
+      "kind": "structure",
+      "assert": "The subagent .md body (front-matter stripped) is byte-identical to concurrencylens_prompt.APPROVED_PROMPT, so all four frameworks run the same debate-gated lines.",
+      "passed": true
+    }
+  ]
+}

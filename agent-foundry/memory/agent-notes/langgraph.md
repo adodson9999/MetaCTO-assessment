@@ -25,3 +25,86 @@
 - [2026-06-30T00:44:28.250966+00:00] run=codereview-min-53842e1b code-review-minimalist run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
 - [2026-06-30T00:46:44.886682+00:00] run=devstack-20260630T004641 device-stack run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
 - [2026-06-30T00:55:22.644889+00:00] run=devstack-ollama-20260630T005223 device-stack run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%
+- [2026-06-30T01:18:43.638350+00:00] run=net-20260629T201839 network run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T01:27:29.443137+00:00] run=codereview-ut-a7fc3c0b code-review-unit-test run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T01:28:16.067799+00:00] run=vuln-build-20260629 vulnerability run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T01:31:56.159402+00:00] run=vuln-build-ollama-20260629 vulnerability run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T01:40:04.113066+00:00] run=security-live-20260629T203606 security run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T01:41:28.970978+00:00] run=le-20260630T014030 code-review-logic-error run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T01:43:01.820212+00:00] run=le-det-20260630T014219 code-review-logic-error run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T01:45:39.931047+00:00] run=concurrency-live-001 code-review-concurrency run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T01:54:34.978065+00:00] run=sec-tourney-r00-b9b23d security run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T01:57:57.452773+00:00] run=sec-tourney-r01-af3b42 security run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T02:03:34.831810+00:00] run=sec-tourney-r02-4f66b3 security run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T02:03:40.036234+00:00] run=di-baseline-1782784747 code-review-data-integrity run: rating_band_accuracy=0.5 over 6 cases; schema_valid=100.0%
+- [2026-06-30T02:09:55.178869+00:00] run=sec-tourney-r03-b36e91 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:12:44.198436+00:00] run=conc-claude-smoke code-review-concurrency run: rating_band_accuracy=0.0 over 8 cases; schema_valid=0.0%
+- [2026-06-30T02:13:58.018411+00:00] run=sec-tourney-r04-76949c security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:18:13.342099+00:00] run=sec-tourney-r05-aeb24e security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:20:40.799988+00:00] run=sec-tourney-r06-21eef9 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:22:55.615074+00:00] run=sec-tourney-r07-eec5b4 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:24:07.348583+00:00] run=sec-tourney-r08-3568a1 security run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=50.0% band_pass=50.0%
+- [2026-06-30T02:24:18.676224+00:00] run=sec-tourney-r09-ecb9b6 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:24:34.663948+00:00] run=sec-tourney-r10-b37ed8 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:24:50.670900+00:00] run=sec-tourney-recheck-2bc028 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:29:15.799795+00:00] run=manual code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:34:59.066858+00:00] run=conc-tourney-r00-6b366c code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:38:53.813632+00:00] run=sec-tourney-recheckA-40c5a0 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:42:44.195172+00:00] run=conc-tourney-r01-f4e109 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:49:53.608824+00:00] run=sec-tourney-recheckB-86495f security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:50:38.194147+00:00] run=conc-tourney-r02-bc3821 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:51:13.009014+00:00] run=maintainability-live-20260630T024209 maintainability run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%
+- [2026-06-30T02:54:06.348194+00:00] run=maintainability-claude-20260630T025402 maintainability run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:54:22.890066+00:00] run=conc-tourney-r03-33786b code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T02:58:07.994796+00:00] run=conc-tourney-r04-38b38e code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:01:18.302020+00:00] run=conc-tourney-r05-1b1534 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:04:21.722710+00:00] run=conc-tourney-r06-6188d6 code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:05:39.817399+00:00] run=maintainability-claude2-20260630T030330 maintainability run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T03:07:48.656559+00:00] run=conc-tourney-r07-74de33 code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:11:53.542296+00:00] run=conc-tourney-r08-42f3cd code-review-concurrency run: rating_band_accuracy=0.875 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:22:15.009233+00:00] run=advinput-live-20260629T221227 adversarial-input run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=100.0% band_pass=50.0%
+- [2026-06-30T03:22:45.014532+00:00] run=net-20260629T221146 network run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=75.0% band_pass=50.0%
+- [2026-06-30T03:22:52.379400+00:00] run=conc-tourney-r09-3f0b80 code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:26:30.061689+00:00] run=conc-tourney-r10-151966 code-review-concurrency run: rating_band_accuracy=0.75 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:28:00.672125+00:00] run=maint-r0-032446 maintainability run: rating_band_accuracy=0.8182 over 11 held-out cases; schema_pass=100.0% band_pass=81.82%
+- [2026-06-30T03:29:39.827385+00:00] run=conc-tourney-recheck-0ecb9e code-review-concurrency run: rating_band_accuracy=1.0 over 8 cases; schema_valid=100.0%
+- [2026-06-30T03:39:42.507658+00:00] run=adv-tourney-r00-cb1a4f adversarial-input run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=100.0% band_pass=50.0%
+- [2026-06-30T03:42:42.279431+00:00] run=maint-r1-032954 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=90.91% band_pass=90.91%
+- [2026-06-30T03:46:52.673803+00:00] run=chaos-claude-20260630T033510 chaos-engineering run: rating_band_accuracy=0.25 over 8 held-out cases; schema_pass=75.0% band_pass=25.0%
+- [2026-06-30T03:48:17.456382+00:00] run=adv-tourney-r01-f2bf83 adversarial-input run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=100.0% band_pass=62.5%
+- [2026-06-30T03:58:25.162287+00:00] run=adv-tourney-r02-dde83a adversarial-input run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T04:02:31.557105+00:00] run=maint-r3-034643 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=90.91% band_pass=90.91%
+- [2026-06-30T04:02:49.899495+00:00] run=maint-r2-034643 maintainability run: rating_band_accuracy=0.8182 over 11 held-out cases; schema_pass=90.91% band_pass=81.82%
+- [2026-06-30T04:04:21.236241+00:00] run=adv-tourney-r03-a64cd6 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:07:21.763111+00:00] run=adv-tourney-r04-f03685 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:10:04.677963+00:00] run=adv-tourney-r05-35ec34 adversarial-input run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T04:12:54.802627+00:00] run=adv-tourney-r06-a2da6a adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:15:48.208671+00:00] run=adv-tourney-r07-de1a89 adversarial-input run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T04:18:33.002918+00:00] run=adv-tourney-r08-bb10a2 adversarial-input run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T04:21:18.990414+00:00] run=adv-tourney-r09-991909 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:24:03.498502+00:00] run=adv-tourney-r10-4c3b13 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:26:31.677833+00:00] run=adv-tourney-recheckA-6b762b adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:29:00.077432+00:00] run=adv-tourney-recheckB-e956a7 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T13:26:21.239236+00:00] run=maint-r4-132317 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:26:40.216434+00:00] run=maint-bchk-132317 maintainability run: rating_band_accuracy=0.8182 over 11 held-out cases; schema_pass=100.0% band_pass=81.82%
+- [2026-06-30T13:30:11.733003+00:00] run=chaos-claude-clean-132549 chaos-engineering run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%
+- [2026-06-30T13:40:13.123843+00:00] run=maint-r5-133657 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:43:47.641695+00:00] run=maint-r7-134103 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:44:01.230037+00:00] run=maint-r6-134103 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:44:08.417973+00:00] run=chaos-final-133921 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T13:48:51.949349+00:00] run=maint-r8-134514 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T14:30:10.627924+00:00] run=maint-r10-142709 maintainability run: rating_band_accuracy=1.0 over 11 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T14:30:22.344211+00:00] run=maint-r9-142709 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T14:48:15.294974+00:00] run=maint-final-144440 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T14:55:12.592150+00:00] run=chaos-tourney-r00-424ad1 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T15:07:54.166834+00:00] run=chaos-tourney-r01-d1555a chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T15:17:49.368223+00:00] run=chaos-tourney-r02-64c74c chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T15:28:45.213923+00:00] run=chaos-tourney-r03-125dda chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=87.5% band_pass=75.0%
+- [2026-06-30T15:38:48.216549+00:00] run=chaos-tourney-r04-abf2c7 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T15:53:13.174367+00:00] run=chaos-tourney-r05-b4885d chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T16:05:29.431077+00:00] run=chaos-tourney-r06-fa6182 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T16:17:22.982703+00:00] run=chaos-tourney-r07-787bb2 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=87.5% band_pass=87.5%
+- [2026-06-30T16:29:43.856274+00:00] run=chaos-tourney-r08-3f80cd chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T16:41:53.909170+00:00] run=chaos-tourney-r09-972d84 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T16:53:47.174183+00:00] run=chaos-tourney-r10-422ae9 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T17:05:03.732845+00:00] run=chaos-tourney-recheck-a88512 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%

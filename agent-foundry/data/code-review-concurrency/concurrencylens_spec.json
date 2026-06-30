@@ -1,0 +1,8 @@
+{
+  "task": "code-review / concurrency",
+  "group": "code-review",
+  "short_name": "concurrency",
+  "lens": "is the code safe when two or more things run at the same time — judge only thread/task safety under simultaneous execution",
+  "held_out_path": "results/code-review/concurrency/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/concurrency/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (CC-001, CC-002, ...)."
+}

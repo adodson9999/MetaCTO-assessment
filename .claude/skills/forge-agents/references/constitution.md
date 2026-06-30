@@ -57,6 +57,15 @@ the model enforces the rest. A violation hard-halts the build.
    **file completeness** (`references/file-verification.md`): every file the build
    creates must exist with correct content, and the `.claude/agents/<name>.md`
    subagent registration is verified explicitly — never assumed.
+10. **Code-producing builds pass the code-review gate at ≥85, no exception.** Any
+    code an agent produces — and, when the built agent is code-producing, the code
+    it generates — must score **≥85 on every code-review agent present in
+    `agents/code-review/`** (the set discovered at run time, however many — no
+    fixed count) before the build reports "done". On a failure the flow hard-halts
+    and loops until every reviewer is ≥85. The threshold is a floor (may be raised,
+    never lowered); the gate is never waived. Enforced by
+    `scripts/code_review_gate.py`; verified by `verify_build.py`. See
+    `references/code-review-gate.md`.
 
 ---
 

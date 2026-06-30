@@ -1,0 +1,51 @@
+{
+  "suite": "code-review-maintainability",
+  "group": "code-review",
+  "short_name": "maintainability",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "live_tournament_baseline": {
+    "comment": "Post-10-round keep-if-improved tournament on the 11-case hardened held-out, Claude-session backend (mean band-accuracy over the 4 frameworks). Baseline-before-loop measured twice at 0.8864; post-loop best 0.9773 / confirm 0.9545. The shared claude-cli shim (contended by a concurrent forge race) wobbles band-edge cases +/-0.045 run-to-run, so a SkillOpt regression check should use the lower bound minus tolerance, not an exact match.",
+    "mean_band_acc_best": 0.9773,
+    "mean_band_acc_confirm": 0.9545,
+    "regression_floor": 0.90,
+    "live_tolerance": 0.05,
+    "adopted_rounds": [4, 6, 9]
+  },
+  "comment": "schema_cases run with NO model (pure Python via maintainability_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "Clear, well-named, and easy to change safely; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 20, "notes": "Misleading name: get_count() mutates self.count, so the next reader will treat a read as side-effect-free and call it in a hot path or assertion, corrupting state; rename it to increment_and_get() (or split the mutation out) so the name matches the behaviour to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "Comment contradicts the code: it says retry 3 times but the loop runs 5, so the next editor will tune the wrong number and ship a behaviour change; make the loop bound a named constant MAX_RETRIES = 3 and loop over it so the stated and actual counts cannot diverge"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "ok-duplicated", "expect": "pass", "output": {"rating": 50, "notes": "Duplicated logic that will drift: the 1.08 tax rate is copy-pasted on two lines, so a future rate change updates one and silently leaves the other wrong; extract TAX_RATE = 1.08 and reference it in both places to reach 100"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "mt-001",
+      "expect_band": [85, 100],
+      "input_code": "def days_between(start, end):\n    return (end - start).days"
+    },
+    {
+      "id": "mt-002",
+      "expect_band": [0, 50],
+      "input_code": "def f(a, b, c=0, d=0, e=0):\n    return a and (b or c) and not d or e  # ?"
+    },
+    {
+      "id": "mt-007",
+      "expect_band": [85, 100],
+      "input_code": "def is_even(n):\n    return n % 2 == 0"
+    }
+  ]
+}

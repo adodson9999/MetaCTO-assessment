@@ -1,0 +1,8 @@
+{
+  "shared_skill": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillclaw/code-review-maintainability-shared/SKILL.md",
+  "ts": "2026-06-30T14:50:22+00:00",
+  "offered_to": ["langgraph", "crewai", "claude_sdk", "code-review-maintainability"],
+  "backend": "local_filesystem",
+  "air_gapped": true,
+  "note": "Evolved maintainability lens (post-10-round tournament, +9pts mean band-acc via 3 band-resolution anchors). Shared to all agents; adoption is the user's call."
+}

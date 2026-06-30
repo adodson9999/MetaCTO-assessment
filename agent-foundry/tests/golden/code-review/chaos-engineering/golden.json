@@ -1,0 +1,47 @@
+{
+  "suite": "code-review-chaos-engineering",
+  "group": "code-review",
+  "short_name": "chaos-engineering",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via chaos_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "An injected dependency or instance failure is contained, degrades gracefully, and recovers automatically; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 18, "notes": "Inject a recommender outage: recommender.fetch has no timeout and no fallback in the request path, so the hang takes the whole home page down with no steady state held and no recovery; wrap it with a 200ms timeout and a circuit breaker whose fallback serves cached recommendations so the failure is contained and self-heals to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "Inject an upstream outage: the unbounded while-True retry with no backoff or jitter hammers the failing dependency into a retry storm and never returns, a stuck state with no cap; add a bounded retry (max attempts) with exponential backoff and jitter plus a circuit breaker and fallback to fix"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "chaos-001",
+      "expect_band": [85, 100],
+      "input_code": "@circuit_breaker(fallback=cached_quote)\ndef quote(sym):\n    return pricing.get(sym, timeout=1.0)"
+    },
+    {
+      "id": "chaos-002",
+      "expect_band": [0, 45],
+      "input_code": "def render_home(user):\n    recs = recommender.fetch(user)  # no timeout, no fallback, in request path\n    return page(recs)"
+    },
+    {
+      "id": "chaos-004",
+      "expect_band": [0, 35],
+      "input_code": "def call():\n    while True:\n        try:\n            return upstream.get()\n        except Exception:\n            continue  # no backoff, no jitter, no cap"
+    },
+    {
+      "id": "chaos-008",
+      "expect_band": [82, 100],
+      "input_code": "@circuit_breaker(failure_threshold=5, reset_timeout=30, fallback=serve_stale)\n@retry(max_attempts=3, backoff=expo_jitter)\n@timeout(1.0)\ndef feed(user):\n    return feed_service.get(user)"
+    }
+  ]
+}

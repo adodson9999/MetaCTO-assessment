@@ -1,0 +1,145 @@
+{
+  "gate": "code-review",
+  "threshold": 85,
+  "comment": "Golden cases for the gate's pure decision logic (no model). Each case supplies targets, a verdict matrix, applies, and optionally an explicit 'perspectives' set (the dynamically discovered reviewer set for that case; when omitted it defaults to the known set). A verdict is [target, perspective, rating]. Tokens: 'all'/'all21' expand to every perspective in the case's set at the given rating; 'all-but-chaos' excludes chaos-engineering. These pin the dynamic, no-bypass rule: every target x every discovered reviewer >= 85, no exception; a missing pair fails; an empty reviewer set cannot pass; adding a reviewer makes it required; applies=false never blocks.",
+  "cases": [
+    {
+      "id": "pass-all-at-85-boundary",
+      "applies": true,
+      "targets": ["a.py"],
+      "matrix": [["a.py", "all21", 85]],
+      "expect_status": "pass",
+      "expect_min": 85
+    },
+    {
+      "id": "pass-high",
+      "applies": true,
+      "targets": ["a.py", "b.py"],
+      "matrix": [["a.py", "all21", 96], ["b.py", "all21", 90]],
+      "expect_status": "pass",
+      "expect_min": 90
+    },
+    {
+      "id": "fail-one-perspective-at-84",
+      "applies": true,
+      "targets": ["a.py"],
+      "matrix": [["a.py", "all21", 90], ["a.py", "security", 84]],
+      "expect_status": "fail",
+      "expect_min": 84
+    },
+    {
+      "id": "fail-missing-perspective",
+      "applies": true,
+      "targets": ["a.py"],
+      "matrix": [["a.py", "all-but-chaos", 95]],
+      "expect_status": "fail"
+    },
+    {
+      "id": "fail-missing-target-entirely",
+      "applies": true,
+      "targets": ["a.py", "b.py"],
+      "matrix": [["a.py", "all21", 95]],
+      "expect_status": "fail"
+    },
+    {
+      "id": "applies-false-never-blocks",
+      "applies": false,
+      "targets": [],
+      "matrix": [],
+      "expect_status": "pass"
+    },
+    {
+      "id": "applies-true-but-no-targets-fails",
+      "applies": true,
+      "targets": [],
+      "matrix": [],
+      "expect_status": "fail"
+    },
+    {
+      "id": "fail-zero-from-invalid-output",
+      "applies": true,
+      "targets": ["a.py"],
+      "matrix": [["a.py", "all21", 95], ["a.py", "minimalist", 0]],
+      "expect_status": "fail",
+      "expect_min": 0
+    },
+    {
+      "id": "dynamic-arbitrary-set-passes",
+      "applies": true,
+      "perspectives": ["alpha", "beta", "gamma"],
+      "targets": ["a.py"],
+      "matrix": [["a.py", "all", 90]],
+      "expect_status": "pass",
+      "expect_min": 90
+    },
+    {
+      "id": "dynamic-missing-one-fails-no-skip",
+      "applies": true,
+      "perspectives": ["alpha", "beta", "gamma"],
+      "targets": ["a.py"],
+      "matrix": [["a.py", "alpha", 90], ["a.py", "beta", 90]],
+      "expect_status": "fail"
+    },
+    {
+      "id": "dynamic-empty-set-cannot-pass",
+      "applies": true,
+      "perspectives": [],
+      "targets": ["a.py"],
+      "matrix": [],
+      "expect_status": "fail"
+    },
+    {
+      "id": "dynamic-added-reviewer-becomes-required",
+      "applies": true,
+      "perspectives": ["alpha", "beta", "gamma", "delta"],
+      "targets": ["a.py"],
+      "matrix": [["a.py", "alpha", 95], ["a.py", "beta", 95], ["a.py", "gamma", 95]],
+      "expect_status": "fail"
+    },
+    {
+      "id": "multi-agent-all-affected-pass",
+      "comment": "Two affected agents (one target file each). Passes only when EVERY affected agent's code is >=85 on EVERY discovered reviewer.",
+      "applies": true,
+      "targets": ["agentA/langgraph/run.py", "agentB/crewai/run.py"],
+      "matrix": [["agentA/langgraph/run.py", "all21", 90], ["agentB/crewai/run.py", "all21", 90]],
+      "expect_status": "pass",
+      "expect_min": 90
+    },
+    {
+      "id": "multi-agent-one-affected-one-reviewer-below-fails",
+      "comment": "Multi-agent: a single reviewer below 85 on ONE affected agent fails the whole update (no exception).",
+      "applies": true,
+      "targets": ["agentA/langgraph/run.py", "agentB/crewai/run.py"],
+      "matrix": [["agentA/langgraph/run.py", "all21", 96], ["agentB/crewai/run.py", "all21", 90], ["agentB/crewai/run.py", "security", 80]],
+      "expect_status": "fail",
+      "expect_min": 80
+    },
+    {
+      "id": "multi-agent-missing-target-for-one-affected-fails",
+      "comment": "Multi-agent: an affected agent whose code got no verdicts is a failure, not a skip.",
+      "applies": true,
+      "targets": ["agentA/langgraph/run.py", "agentB/crewai/run.py"],
+      "matrix": [["agentA/langgraph/run.py", "all21", 95]],
+      "expect_status": "fail"
+    },
+    {
+      "id": "multi-agent-dynamic-arbitrary-count-all-pass",
+      "comment": "Per-affected-agent every-reviewer->=85 holds for ANY reviewer count (here 5, not the default set).",
+      "applies": true,
+      "perspectives": ["alpha", "beta", "gamma", "delta", "epsilon"],
+      "targets": ["agentA/run.py", "agentB/run.py"],
+      "matrix": [["agentA/run.py", "all", 88], ["agentB/run.py", "all", 88]],
+      "expect_status": "pass",
+      "expect_min": 88
+    },
+    {
+      "id": "multi-agent-dynamic-missing-one-reviewer-on-one-affected-fails",
+      "comment": "Multi-agent, arbitrary count: a discovered reviewer that did not run on ONE affected agent fails (no skip).",
+      "applies": true,
+      "perspectives": ["alpha", "beta", "gamma", "delta", "epsilon"],
+      "targets": ["agentA/run.py", "agentB/run.py"],
+      "matrix": [["agentA/run.py", "all", 90], ["agentB/run.py", "alpha", 90], ["agentB/run.py", "beta", 90], ["agentB/run.py", "gamma", 90], ["agentB/run.py", "delta", 90]],
+      "expect_status": "fail"
+    }
+  ]
+}

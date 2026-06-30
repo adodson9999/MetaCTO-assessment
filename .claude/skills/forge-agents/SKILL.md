@@ -32,6 +32,7 @@ one extra phase (**data-input**) for pattern-finding over user data:
 | tasks               | Phase 3 (per-agent line drafting)             | debate gate + determinism review per line |
 | analyze             | **Phase 3.5 — /analyze cross-artifact gate**  | constitution + spec + metric consistency |
 | checklist           | Phase 6 self-review + golden suite            | "unit tests for English" plus real regression tests |
+| checklist           | **Phase 6.5 — code-review gate**             | every reviewer in agents/code-review/ ≥85 over all created/produced code |
 | implement           | Phase 4 (judge + run) + Phase 4.5 (improve)   | hard metric, 10-round keep-if-improved loop |
 
 Customization (presets / extensions / overrides) is in `references/presets.md`.
@@ -148,8 +149,22 @@ are finalized:
   scripts), run the **code-quality gate** (`scripts/slop_scan.py`,
   `references/code-quality-gate.md`): auto-fix mechanical slop in place, hand the
   rest back, and re-scan until the file clears the baseline score.
+- **Code-review gate (Article I.10) on every code file, all four frameworks.** Each
+  `run.py` you author — LangGraph, CrewAI, Claude Code subagent, and Claude Agent SDK —
+  and any other code it produces, must pass `scripts/code_review_gate.py`: every
+  reviewer discovered in `agents/code-review/` (however many, no fixed count) scores
+  ≥85. This holds at **every point** code is created; no framework is exempt. On any
+  sub-85: hard-halt, show the reviewer notes, rewrite (never waive, never lower), and
+  re-run the full reviewer set until all four frameworks' code is ≥85 on every lens.
+  See `references/code-review-gate.md`.
 
 All four agents share the same EverOS memory pool — see `references/memory-everos.md`.
+
+Every agent's system prompt (all four frameworks) must state, in its own words, that
+**all code it creates will be reviewed by every agent in `agents/code-review/` and
+must score ≥85 on each, no exception, looping until it does** — pointing at
+`agents/code-review/` and the shared memory so the agent knows the standard before it
+writes a line. See `references/agent-frameworks.md` (self-awareness clause).
 
 ### Phase 3.5 — Analyze (cross-artifact consistency gate)
 
@@ -171,15 +186,23 @@ create the judge subfolder (`judge/<group>/<agent-short-name>/metric.json` +
 all four agents exist and each emits a machine-readable metric. No leaderboard is
 ever produced from a partial field of four.
 
+**Code-review gate on the judge.** The judge's `score.py` and any code it generates
+are code targets too: they must pass `scripts/code_review_gate.py` at ≥85 on every
+reviewer discovered in `agents/code-review/` before the judge is used. Same hard-halt
+-and-loop rule as the four frameworks — the judge is not exempt (Article I.10).
+
 ### Phase 4.5 — Improvement tournament (10 rounds)
 
 Run the keep-if-improved tournament in `references/improvement-loop.md`. For each
 agent, repeat 10 rounds: the agent runs against the judge, proposes a bounded
 self-revision, the revision passes the **same full pipeline** (debate gate +
-determinism review + 95 quality gate), and is **kept only if the judge score
+determinism review + 95 quality gate + the **code-review gate at ≥85 on every
+reviewer in `agents/code-review/`**), and is **kept only if the judge score
 improves** (else discarded and the round retried), in the style of autoresearch.
-Track the score trajectory. The post-loop best score per agent becomes the
-**golden baseline**.
+A self-revision that drops any reviewed file below 85 on any lens is rejected exactly
+like a metric regression — this holds for **every** revision, in all four frameworks
+and the judge (Article I.10). Track the score trajectory. The post-loop best score
+per agent becomes the **golden baseline**.
 
 **Per-framework mode (fight-camp).** When the user wants each framework to improve
 **independently** — evolving its own divergent prompt because a prompt that wins for
@@ -215,8 +238,13 @@ The build is not "done" until all three pass, in order:
 3. **Self-questioning pass** — read `references/self-review.md`, write
    `workspace/SELF_REVIEW.md` (gaps, residual ambiguities, fragile wiring,
    determinism findings, concrete improvements). Report; do not auto-apply.
+4. **Code-review gate (Phase 6.5).** `scripts/code_review_gate.py --agent <group>/<name>`
+   discovers and runs every reviewer in `agents/code-review/` over every code file
+   the build created (and the agent's produced code when code-producing). Pass =
+   every target ≥85 on every discovered reviewer. On any sub-85: hard-halt, show the
+   reviewer notes, rewrite, loop until all ≥85. See `references/code-review-gate.md`.
 
-Only after 1–3 pass may the build report success.
+Only after 1–4 pass may the build report success.
 
 ## Folder search
 

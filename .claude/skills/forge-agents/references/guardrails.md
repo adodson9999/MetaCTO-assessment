@@ -67,6 +67,11 @@ an agent group absent.
 - No generated script writes or execs outside `FORGE_WORKSPACE` (static check:
   no absolute paths above the workspace, no bare `export FORGE_PROVIDER`).
 
+### 9. Code-review gate (Article I.10)
+- `results/_global/code-review-<TS>.json` exists (the gate always runs, writes a receipt).
+- The receipt's reviewer set equals the current contents of `agents/code-review/` (no stale/short-receipt bypass).
+- When `applies` is true, `status` must be `pass`: every code target scored ≥85 on every reviewer discovered in `agents/code-review/`. Any rating <85, any missing reviewer/target, or an empty set hard-halts the build. Never waived or lowered.
+
 ## Schema mode (asked per build)
 
 Phase 2 records `config.toml [guardrails].schema_mode`:

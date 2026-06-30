@@ -1,0 +1,8 @@
+{
+  "metric_name": "rating_band_accuracy",
+  "direction": "higher_is_better",
+  "unit": "fraction",
+  "how_computed": "each held-out case scores 1.0 if the output passes the {rating,notes} schema (exactly those two keys, rating int 0-100, notes non-empty, one JSON object) AND rating is within the case gold_band inclusive, else 0.0; metric_value = mean over cases; pure-Python, deterministic, identical for all four agents",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "held_out_path": "results/code-review/api-contract/held_out.jsonl"
+}

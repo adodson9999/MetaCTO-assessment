@@ -1,0 +1,44 @@
+{
+  "agent": "code-review/logic-error",
+  "metric_name": "rating_band_accuracy",
+  "baseline": {
+    "value": 1.0,
+    "tolerance": 0.0,
+    "direction": "higher_is_better",
+    "note": "Oracle-achievable ceiling: a perfect reviewer lands every held-out case inside its gold band with a valid {rating, notes} object. Re-baseline after Phase 4.5 if a live framework's best stabilises below 1.0 on the swapped-in interview labels."
+  },
+  "schema_cases": [
+    {"id": "schema-valid-midband", "expect": "pass", "output": {"rating": 92, "notes": "no change needed"}},
+    {"id": "schema-valid-low", "expect": "pass", "output": {"rating": 10, "notes": "off-by-one on [1,2,3]; change items[len(items)] to items[-1]"}},
+    {"id": "schema-extra-key", "expect": "fail", "output": {"rating": 92, "notes": "ok", "confidence": 0.9}},
+    {"id": "schema-missing-notes", "expect": "fail", "output": {"rating": 92}},
+    {"id": "schema-empty-notes", "expect": "fail", "output": {"rating": 92, "notes": ""}},
+    {"id": "schema-bool-rating", "expect": "fail", "output": {"rating": true, "notes": "ok"}},
+    {"id": "schema-float-rating", "expect": "fail", "output": {"rating": 92.5, "notes": "ok"}},
+    {"id": "schema-string-rating", "expect": "fail", "output": {"rating": "92", "notes": "ok"}},
+    {"id": "schema-out-of-range", "expect": "fail", "output": {"rating": 101, "notes": "ok"}},
+    {"id": "schema-negative", "expect": "fail", "output": {"rating": -1, "notes": "ok"}},
+    {"id": "schema-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "LE-001",
+      "input_code": "def last(items):\n    if not items:\n        return None\n    return items[len(items) - 1]",
+      "expect_band": [85, 100],
+      "desc": "Correct: guards the empty list and returns the final element for every list; no logic bug."
+    },
+    {
+      "id": "LE-002",
+      "input_code": "def last(items):\n    return items[len(items)]",
+      "expect_band": [0, 45],
+      "desc": "Off-by-one: indexes one past the end and fails for every non-empty list; fix to items[len(items) - 1] or items[-1]."
+    }
+  ],
+  "structure_assertions": [
+    {"id": "structure-oracle-saturates", "assert": "A perfect-oracle generate (gold-band midpoint + non-empty note) scores 1.0 over all band cases.", "passed": true},
+    {"id": "structure-empty-scores-zero", "assert": "An empty emission ({}) scores 0.0 on every band case (no saturation trap).", "passed": true},
+    {"id": "structure-strict-schema", "assert": "A non-{rating, notes} object scores 0.0: extra key, bool/float/string rating, out-of-range rating, or empty notes all fail the strict schema.", "passed": true},
+    {"id": "structure-nonoverlapping-bands", "assert": "The two seed bands are disjoint ([85,100] and [0,45]), so a constant-rating agent scores at most 0.5 — the metric cannot be faked by emitting one fixed number.", "passed": true},
+    {"id": "structure-band-classes-covered", "assert": "The labeled set exercises both ends of the lens: a correct empty-guarded accessor (LE-001, [85,100]) and an off-by-one that is wrong for every non-empty input (LE-002, [0,45]).", "passed": true}
+  ]
+}

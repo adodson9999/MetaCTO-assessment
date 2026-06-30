@@ -1,0 +1,8 @@
+{
+  "task": "code-review / unit-test",
+  "group": "code-review",
+  "short_name": "unit-test",
+  "lens": "would the tests actually fail if the code were wrong — judge whether the tests genuinely catch a real regression",
+  "held_out_path": "results/code-review/unit-test/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/unit-test/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (UT-001, UT-002, ...)."
+}

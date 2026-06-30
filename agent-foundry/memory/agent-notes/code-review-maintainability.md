@@ -1,0 +1,16 @@
+- [2026-06-30T02:50:45.563925+00:00] run=maintainability-live-20260630T024209 maintainability run: rating_band_accuracy=0.375 over 8 held-out cases; schema_pass=100.0% band_pass=37.5%
+- [2026-06-30T02:56:36.258353+00:00] run=maintainability-claude-20260630T025402 maintainability run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T03:05:38.486852+00:00] run=maintainability-claude2-20260630T030330 maintainability run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T03:27:48.984595+00:00] run=maint-r0-032446 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T03:41:10.818737+00:00] run=maint-r1-032954 maintainability run: rating_band_accuracy=0.7273 over 11 held-out cases; schema_pass=81.82% band_pass=72.73%
+- [2026-06-30T04:01:42.427737+00:00] run=maint-r3-034643 maintainability run: rating_band_accuracy=0.7273 over 11 held-out cases; schema_pass=81.82% band_pass=72.73%
+- [2026-06-30T04:01:47.492606+00:00] run=maint-r2-034643 maintainability run: rating_band_accuracy=0.8182 over 11 held-out cases; schema_pass=90.91% band_pass=81.82%
+- [2026-06-30T13:26:38.648517+00:00] run=maint-r4-132317 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:26:40.732594+00:00] run=maint-bchk-132317 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:39:48.342899+00:00] run=maint-r5-133657 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T13:44:04.662481+00:00] run=maint-r7-134103 maintainability run: rating_band_accuracy=0.8182 over 11 held-out cases; schema_pass=100.0% band_pass=81.82%
+- [2026-06-30T13:44:10.559500+00:00] run=maint-r6-134103 maintainability run: rating_band_accuracy=1.0 over 11 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T13:48:50.779080+00:00] run=maint-r8-134514 maintainability run: rating_band_accuracy=1.0 over 11 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T14:30:05.777274+00:00] run=maint-r10-142709 maintainability run: rating_band_accuracy=0.9091 over 11 held-out cases; schema_pass=100.0% band_pass=90.91%
+- [2026-06-30T14:30:24.403758+00:00] run=maint-r9-142709 maintainability run: rating_band_accuracy=1.0 over 11 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T14:47:42.705270+00:00] run=maint-final-144440 maintainability run: rating_band_accuracy=1.0 over 11 held-out cases; schema_pass=100.0% band_pass=100.0%

@@ -1,0 +1,19 @@
+{
+  "shared_skill": "/Users/alexdodson/Downloads/Jarvis/assessment/MetaCTO-Assessment/agent-foundry/evolvers/skillclaw/code-review-concurrency-shared/SKILL.md",
+  "ts": "2026-06-30T03:35:00Z",
+  "source": "evolvers/skillopt/code-review/concurrency/best_skill.md (tournament winner round-07)",
+  "metric": "rating_band_accuracy",
+  "baseline_mean": 0.75,
+  "best_mean": 0.9688,
+  "improvement": 0.2188,
+  "offered_to": [
+    "langgraph",
+    "crewai",
+    "claude_sdk",
+    "code-review-concurrency"
+  ],
+  "backend": "local_filesystem",
+  "air_gapped": true,
+  "auto_adopt": false,
+  "note": "SkillClaw shares the SkillOpt-optimized concurrency skill (deadlock + safe-code + lock-across-blocking + check-then-act edits) across all four agents. STAGED — adoption is the user's call; the live subagent prompt remains the debate-gated APPROVED_PROMPT until explicitly promoted."
+}

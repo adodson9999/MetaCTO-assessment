@@ -1,0 +1,43 @@
+{
+  "suite": "code-review-memory-resource",
+  "group": "code-review",
+  "short_name": "memory-resource",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via memresource_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "Every resource is released on all paths and nothing grows without bound; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 20, "notes": "Unbounded growth: _cache[k] is written on every call and never evicted, so the dict grows without limit and exhausts memory over time; bound it with functools.lru_cache(maxsize=N) or an LRU/TTL eviction policy to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "use-after-close: f.read() runs after f.close(), operating on a released handle; move the read before close() or use a with-block so the file is read while open to fix"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "ok-retained-ref", "expect": "pass", "output": {"rating": 35, "notes": "Retained reference: each handler is appended to a module-level list that is never cleared, preventing collection of the closures and their captured state; drop the reference (or use a WeakSet / explicit removal) when the handler is done to reach 100"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "mr-001",
+      "expect_band": [85, 100],
+      "input_code": "with open(path) as f:\n    data = f.read()"
+    },
+    {
+      "id": "mr-002",
+      "expect_band": [0, 50],
+      "input_code": "_cache = {}\ndef get(k):\n    _cache[k] = load(k)  # never evicted\n    return _cache[k]"
+    },
+    {
+      "id": "mr-008",
+      "expect_band": [85, 100],
+      "input_code": "@lru_cache(maxsize=128)\ndef get(k):\n    return load(k)"
+    }
+  ]
+}

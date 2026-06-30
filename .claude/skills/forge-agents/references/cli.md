@@ -18,6 +18,7 @@ Article V).
 | `forge improve [--rounds 10]` | `scripts/improve_loop.py`     | 4.5 |
 | `forge evolve`                | SkillOpt/SkillClaw trigger    | 5 |
 | `forge verify [--phase N]`    | `scripts/verify_build.py`     | 4 & 6 |
+| `forge code-review-gate`      | `scripts/code_review_gate.py` | 6.5 |
 | `forge test [<group>/<name>]` | `scripts/golden_run.py`       | 6 |
 | `forge determinism <artifact>`| `scripts/determinism_check.py`| any |
 | `forge preset|extension add`  | customization layering        | any |

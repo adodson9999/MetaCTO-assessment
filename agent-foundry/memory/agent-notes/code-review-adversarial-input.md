@@ -1,0 +1,14 @@
+- [2026-06-30T03:21:40.545607+00:00] run=advinput-live-20260629T221227 adversarial-input run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=100.0% band_pass=62.5%
+- [2026-06-30T03:38:16.050048+00:00] run=adv-tourney-r00-cb1a4f adversarial-input run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=100.0% band_pass=50.0%
+- [2026-06-30T03:45:50.092641+00:00] run=adv-tourney-r01-f2bf83 adversarial-input run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=100.0% band_pass=62.5%
+- [2026-06-30T03:56:27.597210+00:00] run=adv-tourney-r02-dde83a adversarial-input run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T04:03:12.485490+00:00] run=adv-tourney-r03-a64cd6 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:07:08.196023+00:00] run=adv-tourney-r04-f03685 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:09:49.549997+00:00] run=adv-tourney-r05-35ec34 adversarial-input run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T04:12:41.024134+00:00] run=adv-tourney-r06-a2da6a adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:15:33.694217+00:00] run=adv-tourney-r07-de1a89 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:18:19.750340+00:00] run=adv-tourney-r08-bb10a2 adversarial-input run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=100.0% band_pass=62.5%
+- [2026-06-30T04:21:06.008565+00:00] run=adv-tourney-r09-991909 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:23:49.691917+00:00] run=adv-tourney-r10-4c3b13 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:26:18.272558+00:00] run=adv-tourney-recheckA-6b762b adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T04:28:49.617753+00:00] run=adv-tourney-recheckB-e956a7 adversarial-input run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%

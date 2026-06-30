@@ -1,0 +1,8 @@
+{
+  "task": "code-review / data-integrity",
+  "group": "code-review",
+  "short_name": "data-integrity",
+  "lens": "can stored data end up wrong, duplicated, orphaned, or lost — judge whether writes stay consistent under concurrent writes and retries and whether migrations are safe",
+  "held_out_path": "results/code-review/data-integrity/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/data-integrity/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (DI-001, DI-002, ...)."
+}

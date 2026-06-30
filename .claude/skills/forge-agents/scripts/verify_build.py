@@ -33,7 +33,7 @@ class Report:
 
 def agent_dirs(ws: Path) -> list[Path]:
     out = []
-    for group in ("api-tester", "general"):
+    for group in ("api-tester", "general", "code-review"):
         gdir = ws / "agents" / group
         if gdir.is_dir():
             out += [d for d in gdir.iterdir() if d.is_dir()]
@@ -121,6 +121,31 @@ def check_files(ws: Path, r: Report) -> None:
             "missing or bad-content files; see results/_global/files-*.json")
 
 
+def check_code_review_gate(ws: Path, r: Report) -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(ws / "scripts"))
+    try:
+        import code_review_gate as crg
+    except Exception:
+        crg = None
+    receipts = sorted(glob.glob(str(ws / "results" / "_global" / "code-review-*.json")))
+    r.check(bool(receipts), "code-review gate receipt", "no code-review-*.json (gate not run)")
+    if not receipts:
+        return
+    try:
+        data = json.loads(Path(receipts[-1]).read_text())
+    except Exception as e:
+        r.check(False, "code-review gate receipt parseable", str(e)); return
+    applies = bool(data.get("applies")); status = data.get("status")
+    r.check((not applies) or status == "pass",
+            "code-review gate >=85 (every reviewer in agents/code-review/, no exception)",
+            f"status={status}, min_rating={data.get('min_rating')}; rewrite code below 85")
+    if applies and crg is not None:
+        r.check(crg.receipt_matches_folder(data, ws),
+                "code-review reviewer set matches agents/code-review/",
+                "receipt set != folder (stale/short receipt) — re-run the gate")
+
+
 def check_config(ws: Path, r: Report) -> None:
     cfg = ws / "config.toml"
     r.check(cfg.is_file(), "config.toml", "missing")
@@ -150,6 +175,7 @@ def main() -> int:
         check_phase6_extras(ws, r)
         check_files(ws, r)
         check_quality(ws, r)
+        check_code_review_gate(ws, r)
 
     print(f"verify_build --phase {args.phase}  ({ws})")
     for ok in r.ok:

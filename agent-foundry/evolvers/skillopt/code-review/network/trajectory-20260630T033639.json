@@ -1,0 +1,232 @@
+[
+  {
+    "round": 0,
+    "edit": "baseline (APPROVED_PROMPT)",
+    "why": null,
+    "score": 0.5,
+    "schema_pct": 62.5,
+    "kept": true,
+    "determinism_verdict": "n/a (baseline)",
+    "per_case": {
+      "nw-001": null,
+      "nw-002": null,
+      "nw-003": null,
+      "nw-004": 25,
+      "nw-005": 18,
+      "nw-006": 50,
+      "nw-007": 48,
+      "nw-008": 45
+    },
+    "ts": "2026-06-30T03:46:23.795836+00:00"
+  },
+  {
+    "round": 1,
+    "edit": "Emit the JSON object on a single line with no leading or trailing text, no markdown, no array, and no second object; if you are ever unsure, still emit exactly one object of the form {\"rating\": <integer>, \"notes\": <string>}.",
+    "why": "schema hygiene (nw-006 emitted a malformed object)",
+    "score": 0.625,
+    "schema_pct": 75.0,
+    "confirm_score": 0.75,
+    "kept": true,
+    "determinism_verdict": "adopted (held on confirm=0.75)",
+    "per_case": {
+      "nw-001": 83,
+      "nw-002": 12,
+      "nw-003": null,
+      "nw-004": 25,
+      "nw-005": 23,
+      "nw-006": null,
+      "nw-007": 55,
+      "nw-008": 75
+    },
+    "ts": "2026-06-30T04:04:25.026690+00:00"
+  },
+  {
+    "round": 2,
+    "edit": "A bounded retry loop with a fixed small number of attempts that uses exponential backoff with jitter and runs only on an idempotent read such as a GET is safe; rate it 85 or above and do not lower the rating merely because it retries.",
+    "why": "clean bounded-retry under-rated (nw-003 scored 72, gold 85-100)",
+    "score": 0.5,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": false,
+    "determinism_verdict": "discarded (score below best)",
+    "per_case": {
+      "nw-001": 80,
+      "nw-002": 8,
+      "nw-003": 81,
+      "nw-004": 45,
+      "nw-005": 20,
+      "nw-006": 50,
+      "nw-007": 50,
+      "nw-008": 25
+    },
+    "ts": "2026-06-30T04:08:09.614063+00:00"
+  },
+  {
+    "round": 3,
+    "edit": "Missing a fallback for an optional or non-critical dependency (one whose failure should degrade gracefully rather than fail the whole request) is a moderate weakness, not a severe one; rate it in the 55 to 80 band and reserve ratings below 40 for a missing timeout, an unbounded or un-backed-off retry, or a duplicated or lost write.",
+    "why": "optional-dependency fallback over-penalised (nw-007 scored 45, gold 55-80)",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": 0.75,
+    "kept": true,
+    "determinism_verdict": "adopted (held on confirm=0.75)",
+    "per_case": {
+      "nw-001": 85,
+      "nw-002": 10,
+      "nw-003": 68,
+      "nw-004": 20,
+      "nw-005": 28,
+      "nw-006": 54,
+      "nw-007": 60,
+      "nw-008": 55
+    },
+    "ts": "2026-06-30T04:15:23.639610+00:00"
+  },
+  {
+    "round": 4,
+    "edit": "A chatty or N+1 pattern that issues one request per item in a loop is a real but recoverable problem; when each call is otherwise bounded by a timeout, rate it in the 40 to 69 band and name request batching or a bulk endpoint as the fix.",
+    "why": "N+1 band calibration",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 85,
+      "nw-002": 10,
+      "nw-003": 70,
+      "nw-004": 25,
+      "nw-005": 25,
+      "nw-006": 58,
+      "nw-007": 62,
+      "nw-008": 55
+    },
+    "ts": "2026-06-30T04:19:11.785740+00:00"
+  },
+  {
+    "round": 5,
+    "edit": "The rating must be a JSON integer such as 60, never a float, a string, a value with a percent sign, or a range.",
+    "why": "integer-only rating reinforcement",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 82,
+      "nw-002": 10,
+      "nw-003": 65,
+      "nw-004": 15,
+      "nw-005": 25,
+      "nw-006": 48,
+      "nw-007": 55,
+      "nw-008": 45
+    },
+    "ts": "2026-06-30T04:21:51.453848+00:00"
+  },
+  {
+    "round": 6,
+    "edit": "A network call with no timeout can hang forever on a slow or stalled network; when the only flaw is a missing timeout on a read, rate it in the 0 to 40 band and name adding an explicit timeout within the caller's deadline as the fix.",
+    "why": "no-timeout severity anchor",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 85,
+      "nw-002": 10,
+      "nw-003": 70,
+      "nw-004": 20,
+      "nw-005": 28,
+      "nw-006": 55,
+      "nw-007": 65,
+      "nw-008": 42
+    },
+    "ts": "2026-06-30T04:26:09.005132+00:00"
+  },
+  {
+    "round": 7,
+    "edit": "A timeout that is longer than the caller's own deadline still lets the caller stall waiting on the call; rate that in the 30 to 60 band and name shrinking the timeout below the caller's deadline as the fix.",
+    "why": "timeout-longer-than-deadline anchor",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 80,
+      "nw-002": 15,
+      "nw-003": 65,
+      "nw-004": 25,
+      "nw-005": 25,
+      "nw-006": 48,
+      "nw-007": 68,
+      "nw-008": 38
+    },
+    "ts": "2026-06-30T04:28:39.679341+00:00"
+  },
+  {
+    "round": 8,
+    "edit": "Retrying a non-idempotent write such as a POST charge without an idempotency key can duplicate the write on a flaky network; rate it 0 to 35 and name adding an idempotency key, or restricting retries to idempotent calls, as the fix.",
+    "why": "non-idempotent-write retry severity anchor",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 85,
+      "nw-002": 8,
+      "nw-003": 72,
+      "nw-004": 25,
+      "nw-005": 15,
+      "nw-006": 50,
+      "nw-007": 65,
+      "nw-008": 40
+    },
+    "ts": "2026-06-30T04:32:19.194853+00:00"
+  },
+  {
+    "round": 9,
+    "edit": "Resolve the rating from these bands mechanically so identical code always lands in the same band, and never vary the rating between identical inputs.",
+    "why": "determinism reinforcement",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 85,
+      "nw-002": 15,
+      "nw-003": 70,
+      "nw-004": 20,
+      "nw-005": 24,
+      "nw-006": 52,
+      "nw-007": 65,
+      "nw-008": 45
+    },
+    "ts": "2026-06-30T04:35:09.125109+00:00"
+  },
+  {
+    "round": 10,
+    "edit": "When the rating is below 100 the notes must name the network condition that triggers the problem (slow, flaky, or down) and the exact code change that would raise the rating to 100; when the rating is 100 the notes must state that no change is needed.",
+    "why": "notes completeness reinforcement",
+    "score": 0.875,
+    "schema_pct": 100.0,
+    "confirm_score": null,
+    "kept": true,
+    "determinism_verdict": "adopted (sideways tie)",
+    "per_case": {
+      "nw-001": 90,
+      "nw-002": 8,
+      "nw-003": 70,
+      "nw-004": 15,
+      "nw-005": 20,
+      "nw-006": 50,
+      "nw-007": 68,
+      "nw-008": 40
+    },
+    "ts": "2026-06-30T04:39:27.814259+00:00"
+  }
+]

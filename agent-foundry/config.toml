@@ -15,7 +15,13 @@
 # NOTE: 'auto' does NOT start any server — bring up Ollama (`ollama serve`, model pulled)
 # or a Claude shim/proxy yourself; otherwise 'auto' resolves to ollama and a run errors
 # at connect time if ollama is also down.
-provider = "auto"
+#
+# PINNED 2026-06-29: provider = "claude-cli". This is a Claude Code session — the foundry
+# must use the Claude `claude -p` shim and NEVER fall back to local Ollama. Pinning (rather
+# than "auto") removes Ollama from the resolution chain entirely: if the Claude shim is
+# unreachable a run ERRORS at connect time instead of silently dropping to Ollama. Do not
+# set FORGE_PROVIDER=ollama for this foundry.
+provider = "claude-cli"
 ollama_base_url = "http://127.0.0.1:11434/v1"
 ollama_model = "qwen2.5:14b-instruct"
 claude_model = "claude-haiku-4-5"
@@ -43,6 +49,11 @@ enforce = true
 # Nightly sleep cycle + manual /evolve. Gate = the judge metric. Staged, never auto-adopt.
 schedule = "nightly"
 skillclaw_storage_backend = "local"     # not OSS/S3 — stays air-gapped
+
+[code_review_gate]
+# Article I.10 LLM-graded gate over every reviewer in agents/code-review/.
+applies = false   # auto-detect from task_spec; true forces the gate
+threshold = 85    # floor; may be raised, never lowered
 
 [vendor]
 # Filled in by /scan-and-integrate with pinned commits.

@@ -1,0 +1,8 @@
+{
+  "task": "code-review / api-contract",
+  "group": "code-review",
+  "short_name": "api-contract",
+  "lens": "does this break or weaken a promise other code already depends on — judge backward compatibility of an externally-depended-on interface (signatures, fields, endpoints, types, defaults, status/error codes, semantics, versioning)",
+  "held_out_path": "results/code-review/api-contract/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/api-contract/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (AC-001, AC-002, ...)."
+}

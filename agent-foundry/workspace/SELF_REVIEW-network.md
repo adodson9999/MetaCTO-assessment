@@ -73,16 +73,71 @@ lands inside it deterministically but narrow enough to reject a wrong lens:
 | nw-007 | optional dependency with no fallback | 55–80 |
 | nw-008 | timeout (30s) longer than the caller's 3s deadline | 30–60 |
 
+## Live run + leaderboard (executed)
+
+Ran all four framework dispatchers against the live `claude-cli` shim on :8787 (resolved by
+`backend_config`), then the judge. Authoritative leaderboard at
+`results/leaderboard-network.{json,md}`, run `net-20260629T221146`:
+
+| # | agent | rating_band_accuracy | schema_pass_pct |
+|---|-------|----------------------|-----------------|
+| 1 | crewai | 0.75 | 100.0% |
+| 2 | claude_sdk | 0.75 | 87.5% |
+| 3 | code-review-network (subagent) | 0.625 | 87.5% |
+| 4 | langgraph | 0.5 | 75.0% |
+
+- **First run hit a backend race:** under concurrent load the auto-detect's 0.4s TCP probe
+  of the shim flaked, so langgraph's subprocess fell back to `ollama` (:11434, model not
+  pulled) → `ResponseError 404` → scored 0.0. Fixed by pinning `FORGE_PROVIDER=claude-cli`
+  (env override wins; no probing) and re-running. Not a defect in the agent or the shared
+  runner — a transient in `_auto_detect` under parallel launches.
+- **Scores are not bit-stable across runs:** the `claude -p` shim does not honor
+  `temperature=0`, so the LLM judgments vary run-to-run (the subagent scored 0.875 on the
+  first racey run, 0.625 here). The *metric* is deterministic; the *model* is not. The
+  pure-Python oracle self-test + golden suite remain the deterministic guarantee.
+- **Reproduce:** `FORGE_PROVIDER=claude-cli` + run the four
+  `agents/code-review/network/<fw>/run.py`, then
+  `judge/code-review/network/score.py --run-id <id>`.
+
+## 10-round improvement tournament (executed)
+
+Built `scripts/tournament_network.py` (the loop harness did not exist) and ran the
+Phase-4.5 keep-if-improved tournament on the shared prompt, per
+`references/improvement-loop.md`. Pinned `FORGE_PROVIDER=claude-cli`. Run
+`20260630T033639`, ~70 min:
+
+- **baseline 0.5 (schema 62.5%) → final best 0.875 (schema 100%); improvement +0.375.**
+- rounds kept: 1, 3, 4, 5, 6, 7, 8, 9, 10. **Round 2 was correctly DISCARDED** (candidate
+  0.5 < best 0.625) — the keep-if-improved discipline held; the loop never regressed.
+- **Determinism review made concrete:** every score-improving candidate (rounds 1, 3) got a
+  confirm re-run and was adopted only because it held above the then-best on both runs — a
+  noisy single-sample win could not be kept.
+- **Real, attributable gains:** round 1 (output-hygiene line) fixed the shim's prose-wrapping
+  that had failed 3 cases → schema 62.5%→100%; round 3 (optional-dependency calibration)
+  moved nw-007 from 48 (miss) into band at 68. Final field: 7/8 in band; the lone residual
+  miss is nw-003 (clean bounded-retry rated 70 vs gold 85-100) — round 2's targeted edit
+  happened to eval at 0.5 under shim noise that round and was discarded, so that calibration
+  did not stick.
+
+Artifacts:
+- `evolvers/skillopt/code-review/network/best_skill.md` — the surviving best prompt
+  (**STAGED, not auto-adopted** into the live `network_prompt.APPROVED_PROMPT` / subagent
+  `.md`, per constitution Article: evolution is staged for review).
+- `evolvers/skillopt/code-review/network/trajectory-20260630T033639.json` — per-round
+  {round, edit, score, confirm, kept, verdict, per_case}, checkpointed each round.
+- `results/code-review/network/leaderboard-tournament-20260630T033639.{json,md}`.
+- `tests/golden/.../golden.json` → `tournament_baseline = 0.875` (soft baseline; flagged as
+  a non-deterministic-backend value).
+
 ## Residual / not done in-session
 
-- **The live 4-framework run + 10-round improvement tournament + evolution wiring were NOT
-  executed.** They require a live backend (`config.toml` `provider = "auto"` → current
-  Claude Code session → Ollama → cloud) not brought up here, and the memory note
-  `forge-concurrent-codereview-build` warns the code-review group races across concurrent
-  forge sessions — so a live run/commit during a race is deliberately avoided. Everything
-  deterministic (substrate, judge metric, golden, registration) is built and verified; the
-  LLM-dependent leaderboard is reproducible by running `scripts/run_agents.py` once a
-  backend is up, then `judge/code-review/network/score.py --run-id <id>`.
+- **best_skill.md is staged, not promoted.** Adopting it into the live gated prompt should
+  go through the `update-agent` flow (re-run the debate gate on the new lines + golden suite)
+  rather than a raw file copy.
+- **Tournament scores ride a non-deterministic backend.** The `claude -p` shim ignores
+  `temperature=0`; the confirm-re-run guard mitigates but does not eliminate sample noise. A
+  pinned-Ollama-model or Anthropic-API backend would make the trajectory bit-reproducible.
+- **Evolution wiring (SkillOpt/SkillClaw)** staged but not exercised live.
 - **Debate gate / determinism review on the prompt lines** were applied by mirroring the
   gated sibling structure rather than re-run live; the lines are deterministic by
   construction (fixed bands, two fixed anchors, "judge the same input the same way every

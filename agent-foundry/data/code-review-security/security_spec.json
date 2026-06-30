@@ -1,0 +1,8 @@
+{
+  "task": "code-review / security",
+  "group": "code-review",
+  "short_name": "security",
+  "lens": "security — judge whether an attacker can abuse the code via an unsafe input, an exposed secret, or an insecure default (untrusted input concatenated into a query/shell/path/template/redirect, a hard-coded or logged secret, a privileged action with no server-side authorization check, an insecure default such as TLS verification off / permissive CORS / verbose error leaks / wide permissions, a new path reaching something sensitive without authentication, new attack surface such as deserialization / upload / outbound fetch)",
+  "held_out_path": "results/code-review/security/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness (security.py), the spec scorer (security_spec.py), the judge scorer (judge/code-review/security/score.py), and the golden suite all read it verbatim. held_out_path matches judge/code-review/security/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (sec-001, sec-002, ...) when a line omits an explicit id."
+}

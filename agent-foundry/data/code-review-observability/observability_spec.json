@@ -1,0 +1,8 @@
+{
+  "task": "code-review / observability",
+  "group": "code-review",
+  "short_name": "observability",
+  "lens": "if this breaks in production, can someone diagnose it from logs, metrics, and traces alone — judge telemetry sufficiency and that nothing sensitive leaks",
+  "held_out_path": "results/code-review/observability/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/observability/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (OB-001, OB-002, ...)."
+}

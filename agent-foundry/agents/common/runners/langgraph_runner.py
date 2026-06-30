@@ -28,6 +28,29 @@ def _build_standard_call(
     spec = backend_config.resolve(ws)
     kind = spec["native"]["kind"]
 
+    if kind == "openai-cli":
+        # OpenAI-compatible shim (e.g. the `claude -p` CLI shim for the current
+        # Claude Code session). The standard two-backend path predates this kind;
+        # without this branch it falls through to ChatOllama and 404s against the
+        # shim. Uses the same raw OpenAI client as _build_multicaller.
+        from openai import OpenAI
+
+        client = OpenAI(base_url=spec["base_url"], api_key="local-shim")
+        model = spec["native"]["model"]
+
+        def call(prompt: str) -> Tuple[str, Optional[dict]]:
+            kwargs: dict = {
+                "model": model,
+                "temperature": 0,
+                "messages": [{"role": "user", "content": prompt}],
+            }
+            if max_tokens is not None:
+                kwargs["max_tokens"] = max_tokens
+            r = client.chat.completions.create(**kwargs)
+            return r.choices[0].message.content or "", None
+
+        return call
+
     if kind == "anthropic":
         from langchain_anthropic import ChatAnthropic
 

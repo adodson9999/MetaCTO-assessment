@@ -1,0 +1,1 @@
+- [2026-06-30T02:07:54.578843+00:00] run=di-claude-1782785087 code-review-data-integrity run: rating_band_accuracy=1.0 over 6 cases; schema_valid=100.0%

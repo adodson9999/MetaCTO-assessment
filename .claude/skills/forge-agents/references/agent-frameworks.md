@@ -16,6 +16,27 @@ Every agent must:
    {"agent": "<name>", "run_id": "<id>", "metric_name": "<from judge>",
     "metric_value": <number>, "raw_output_path": "<path>", "ts": "<iso8601>"}
    ```
+6. Carry the **code-review self-awareness clause** in its system prompt (below).
+
+## Self-awareness clause (all four frameworks + the judge)
+
+Every agent's system prompt — LangGraph, CrewAI, Claude Code subagent, Claude Agent
+SDK, and the judge — must state, in its own words, the standard it is held to **before
+it writes any code**:
+
+> All code you create will be reviewed by **every agent in `agents/code-review/`**
+> (the set discovered at run time, however many there are) and must score **≥85 on
+> each, no exception**. A single lens below 85 fails the build; you rewrite and the
+> full reviewer set re-runs, looping until every lens is ≥85. Read the reviewers in
+> `agents/code-review/` and the shared EverOS memory (`references/memory-everos.md`)
+> so you know exactly what you will be tested against.
+
+When the agent under build is itself code-producing (Article I.10, detected from
+`task_spec.md` or `config.toml [code_review_gate].applies = true`), this same dynamic
+gate is baked into **its own** runtime flow so the code it emits is gated at ≥85 on
+every discovered reviewer every time it runs — not only the foundry's own
+`run.py`/`score.py`. The clause is added by the debate gate alongside the rest of the
+prompt and verified present in Phase 6. See `references/code-review-gate.md`.
 
 ## Centralized runner architecture
 

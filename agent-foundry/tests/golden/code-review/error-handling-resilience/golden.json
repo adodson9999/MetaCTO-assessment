@@ -1,0 +1,42 @@
+{
+  "suite": "code-review-error-handling-resilience",
+  "group": "code-review",
+  "short_name": "error-handling-resilience",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via errresilience_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "Every reachable failure leaves a safe, consistent state with resources released; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 12, "notes": "Swallowed exception across a two-step transaction: charge(card) succeeds then ship(order) raises and the bare except: pass hides it, so the customer is charged with no shipment and the failure is reported as success; wrap the steps so a ship failure refunds/voids the charge (compensating rollback) and re-raise instead of swallowing to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "On any error check_permission's exception sets allowed=True, a fail-open that grants access on failure leaving an insecure authorized state; default allowed=False and re-raise so the path fails closed to fix"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "ehr-001",
+      "expect_band": [85, 100],
+      "input_code": "with open(path) as f:\n    return parse(f.read())"
+    },
+    {
+      "id": "ehr-002",
+      "expect_band": [0, 35],
+      "input_code": "try:\n    charge(card)\n    ship(order)\nexcept Exception:\n    pass"
+    },
+    {
+      "id": "ehr-007",
+      "expect_band": [85, 100],
+      "input_code": "conn = pool.acquire()\ntry:\n    do_work(conn)\nfinally:\n    conn.release()"
+    }
+  ]
+}

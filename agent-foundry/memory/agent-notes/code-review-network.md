@@ -1,0 +1,2 @@
+- [2026-06-30T01:23:12.512888+00:00] run=net-20260629T201839 network run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T03:21:14.889959+00:00] run=net-20260629T221146 network run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=87.5% band_pass=62.5%

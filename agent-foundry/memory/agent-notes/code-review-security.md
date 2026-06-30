@@ -1,0 +1,15 @@
+- [2026-06-30T01:39:42.246640+00:00] run=security-live-20260629T203606 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T01:54:27.787262+00:00] run=sec-tourney-r00-b9b23d security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T01:57:45.337270+00:00] run=sec-tourney-r01-af3b42 security run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T02:03:12.282826+00:00] run=sec-tourney-r02-4f66b3 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:08:59.164646+00:00] run=sec-tourney-r03-b36e91 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:13:27.090137+00:00] run=sec-tourney-r04-76949c security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:17:53.210144+00:00] run=sec-tourney-r05-aeb24e security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:20:27.320068+00:00] run=sec-tourney-r06-21eef9 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:22:46.956681+00:00] run=sec-tourney-r07-eec5b4 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:24:07.314329+00:00] run=sec-tourney-r08-3568a1 security run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=50.0% band_pass=50.0%
+- [2026-06-30T02:24:15.997437+00:00] run=sec-tourney-r09-ecb9b6 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:24:33.012144+00:00] run=sec-tourney-r10-b37ed8 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:24:48.954711+00:00] run=sec-tourney-recheck-2bc028 security run: rating_band_accuracy=0.0 over 8 held-out cases; schema_pass=0.0% band_pass=0.0%
+- [2026-06-30T02:39:18.973218+00:00] run=sec-tourney-recheckA-40c5a0 security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T02:45:07.029715+00:00] run=sec-tourney-recheckB-86495f security run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%

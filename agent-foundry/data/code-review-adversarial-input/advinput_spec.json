@@ -1,0 +1,8 @@
+{
+  "task": "code-review / adversarial-input",
+  "group": "code-review",
+  "short_name": "adversarial-input",
+  "lens": "adversarial-input robustness — judge whether a hostile or malformed input can crash, hang, or exhaust the code (robustness, NOT exploitability): empty/null/missing assumed-present input; oversized/deeply-nested input or min/max numeric overflow; malformed encoding or unexpected Unicode (broken UTF-8, NUL bytes, surrogate halves); a resource bomb (catastrophic-backtracking regex, zip/recursion bomb, quadratic blow-up); silent acceptance of structurally invalid data; no length/depth/count/size limit before expensive work; a prior layer that provably sanitizes is not flagged",
+  "held_out_path": "results/code-review/adversarial-input/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness (advinput.py), the spec scorer (advinput_spec.py), the judge scorer (judge/code-review/adversarial-input/score.py), and the golden suite all read it verbatim. held_out_path matches judge/code-review/adversarial-input/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (adv-001, adv-002, ...) when a line omits an explicit id."
+}

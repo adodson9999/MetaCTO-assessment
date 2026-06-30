@@ -1,0 +1,37 @@
+{
+  "suite": "code-review-adversarial-input",
+  "group": "code-review",
+  "short_name": "adversarial-input",
+  "contract": "{rating, notes} — exactly two keys, rating int 0-100, notes non-empty, one bare JSON object",
+  "baseline": {"metric_name": "rating_band_accuracy", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "band_tolerance": 0,
+  "comment": "schema_cases run with NO model (pure Python via advinput_spec.schema_ok) and MUST pass exactly as marked — the deterministic forcing function for output shape. band_cases are the labeled held-out examples; the runner checks the reference oracle lands in band (a known-good baseline) and that an empty emission scores 0.0 (cannot saturate). A live agent's recorded outputs can be checked the same way once a run exists. Prose is never compared.",
+  "schema_cases": [
+    {"id": "ok-minimal-100", "expect": "pass", "output": {"rating": 100, "notes": "No problems found through the adversarial-input lens; no change needed."}},
+    {"id": "ok-low-with-fix", "expect": "pass", "output": {"rating": 15, "notes": "the nested-quantifier regex (a+)+$ catastrophically backtracks on a long run of 'a' followed by a non-matching character, hanging the matcher; cap the input length before matching and use a linear, non-backtracking pattern (or RE2) to reach 100."}},
+    {"id": "ok-boundary-0", "expect": "pass", "output": {"rating": 0, "notes": "a constructible input hangs the matcher; bound input length and use a linear regex"}},
+    {"id": "ok-boundary-100", "expect": "pass", "output": {"rating": 100, "notes": "no change needed"}},
+    {"id": "bad-rating-101", "expect": "fail", "output": {"rating": 101, "notes": "x"}},
+    {"id": "bad-rating-negative", "expect": "fail", "output": {"rating": -1, "notes": "x"}},
+    {"id": "bad-rating-float", "expect": "fail", "output": {"rating": 90.5, "notes": "x"}},
+    {"id": "bad-rating-string", "expect": "fail", "output": {"rating": "90", "notes": "x"}},
+    {"id": "bad-rating-bool", "expect": "fail", "output": {"rating": true, "notes": "x"}},
+    {"id": "bad-notes-empty", "expect": "fail", "output": {"rating": 80, "notes": ""}},
+    {"id": "bad-extra-key", "expect": "fail", "output": {"rating": 80, "notes": "x", "severity": "high"}},
+    {"id": "bad-missing-notes", "expect": "fail", "output": {"rating": 80}},
+    {"id": "bad-empty-object", "expect": "fail", "output": {}}
+  ],
+  "band_cases": [
+    {
+      "id": "adv-001",
+      "expect_band": [85, 100],
+      "input_code": "def first_line(s):\n    if not s:\n        return ''\n    return s.split('\\n', 1)[0][:1000]"
+    },
+    {
+      "id": "adv-002",
+      "expect_band": [0, 40],
+      "input_code": "def parse(s):\n    return re.match(r'(a+)+$', s)  # on untrusted s"
+    }
+  ]
+}

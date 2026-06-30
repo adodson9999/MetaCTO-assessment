@@ -1,0 +1,8 @@
+{
+  "task": "code-review / logic-error",
+  "group": "code-review",
+  "short_name": "logic-error",
+  "lens": "would the code do the right thing for every normal input, even though it runs without crashing — judge whether the logic produces the correct result",
+  "held_out_path": "results/code-review/logic-error/held_out.jsonl",
+  "note": "The labeled held-out set is one JSON object per line at held_out_path: {\"input_code\": <str>, \"gold_band\": [lo, hi]}. The harness, driver, scorer, and golden suite all read it verbatim. held_out_path matches judge/code-review/logic-error/metric.json exactly. SWAP held_out.jsonl to plug in more labeled examples; ids are assigned by surviving-line order (LE-001, LE-002, ...)."
+}

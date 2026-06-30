@@ -1,0 +1,202 @@
+{
+  "task": "code-review / concurrency",
+  "rounds": 10,
+  "baseline_mean": 0.75,
+  "best_label": "round-07",
+  "best_mean": 0.9688,
+  "best_per_framework": {
+    "langgraph": 1.0,
+    "crewai": 1.0,
+    "claude_sdk": 1.0,
+    "code-review-concurrency": 0.875
+  },
+  "improvement": 0.2188,
+  "determinism_recheck": false,
+  "trajectory": [
+    {
+      "round": 0,
+      "edit": "baseline (debate-gated APPROVED_PROMPT)",
+      "per_framework": {
+        "langgraph": 0.75,
+        "crewai": 0.875,
+        "claude_sdk": 0.625,
+        "code-review-concurrency": 0.75
+      },
+      "mean": 0.75,
+      "kept": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r00-6b366c"
+    },
+    {
+      "round": 1,
+      "edit": "round-01.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.75,
+        "claude_sdk": 1.0,
+        "code-review-concurrency": 1.0
+      },
+      "mean": 0.9062,
+      "kept": false,
+      "improves": true,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r01-f4e109"
+    },
+    {
+      "round": 2,
+      "edit": "round-02.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.75,
+        "claude_sdk": 1.0,
+        "code-review-concurrency": 1.0
+      },
+      "mean": 0.9062,
+      "kept": false,
+      "improves": true,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r02-bc3821"
+    },
+    {
+      "round": 3,
+      "edit": "round-03.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.875,
+        "claude_sdk": 0.875,
+        "code-review-concurrency": 0.75
+      },
+      "mean": 0.8438,
+      "kept": true,
+      "improves": true,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r03-33786b"
+    },
+    {
+      "round": 4,
+      "edit": "round-04.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 0.75,
+        "claude_sdk": 0.875,
+        "code-review-concurrency": 0.875
+      },
+      "mean": 0.875,
+      "kept": false,
+      "improves": true,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r04-38b38e"
+    },
+    {
+      "round": 5,
+      "edit": "round-05.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.75,
+        "claude_sdk": 0.75,
+        "code-review-concurrency": 0.75
+      },
+      "mean": 0.7812,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r05-1b1534"
+    },
+    {
+      "round": 6,
+      "edit": "round-06.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.875,
+        "claude_sdk": 0.875,
+        "code-review-concurrency": 1.0
+      },
+      "mean": 0.9062,
+      "kept": true,
+      "improves": true,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r06-6188d6"
+    },
+    {
+      "round": 7,
+      "edit": "round-07.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 1.0,
+        "claude_sdk": 1.0,
+        "code-review-concurrency": 0.875
+      },
+      "mean": 0.9688,
+      "kept": true,
+      "improves": true,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r07-74de33"
+    },
+    {
+      "round": 8,
+      "edit": "round-08.md",
+      "per_framework": {
+        "langgraph": 0.875,
+        "crewai": 0.875,
+        "claude_sdk": 1.0,
+        "code-review-concurrency": 1.0
+      },
+      "mean": 0.9375,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r08-42f3cd"
+    },
+    {
+      "round": 9,
+      "edit": "round-09.md",
+      "per_framework": {
+        "langgraph": 1.0,
+        "crewai": 0.75,
+        "claude_sdk": 1.0,
+        "code-review-concurrency": 0.75
+      },
+      "mean": 0.875,
+      "kept": false,
+      "improves": false,
+      "no_regression": false,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r09-3f0b80"
+    },
+    {
+      "round": 10,
+      "edit": "round-10.md",
+      "per_framework": {
+        "langgraph": 0.75,
+        "crewai": 1.0,
+        "claude_sdk": 0.875,
+        "code-review-concurrency": 0.875
+      },
+      "mean": 0.875,
+      "kept": false,
+      "improves": false,
+      "no_regression": true,
+      "gate_ok": true,
+      "determinism": "temp=0 greedy",
+      "run_id": "conc-tourney-r10-151966"
+    }
+  ]
+}

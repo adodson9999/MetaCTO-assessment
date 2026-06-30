@@ -1,0 +1,15 @@
+{
+  "agent": "code-review-maintainability",
+  "trainable_state": "evolvers/skillopt/code-review/maintainability/best_skill.md",
+  "validation_gate": {
+    "metric": "rating_band_accuracy",
+    "metric_json": "judge/code-review/maintainability/metric.json",
+    "held_out": "results/code-review/maintainability/held_out.jsonl",
+    "rule": "a bounded add/delete/replace edit is adopted only if it strictly improves the held-out mean band-accuracy; ties that add a line are discarded (KISS)"
+  },
+  "golden_protection": "tests/golden/code-review/maintainability/run_golden.py must stay green after any edit (oracle in-band + schema gate); a regression rejects the edit",
+  "cadence": "nightly SkillOpt-Sleep + manual /evolve",
+  "adoption": "staged for user review — never auto-adopted",
+  "backend": "central config.toml (resolve order: claude-cli session -> ollama)",
+  "post_loop_baseline": {"mean_band_acc_best": 0.9773, "mean_band_acc_confirm": 0.9545, "baseline_before_loop": 0.8864, "rounds": 10, "adopted": [4, 6, 9]}
+}

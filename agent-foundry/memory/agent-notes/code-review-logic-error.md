@@ -1,0 +1,2 @@
+- [2026-06-30T01:41:05.279054+00:00] run=le-20260630T014030 code-review-logic-error run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%
+- [2026-06-30T01:42:38.229959+00:00] run=le-det-20260630T014219 code-review-logic-error run: rating_band_accuracy=1.0 over 2 cases; schema_valid=100.0%

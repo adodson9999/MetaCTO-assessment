@@ -1,0 +1,14 @@
+- [2026-06-30T03:47:25.811787+00:00] run=chaos-claude-20260630T033510 chaos-engineering run: rating_band_accuracy=0.5 over 8 held-out cases; schema_pass=50.0% band_pass=50.0%
+- [2026-06-30T13:50:11.147208+00:00] run=chaos-final-133921 chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T15:01:51.728562+00:00] run=chaos-tourney-r00-424ad1 chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T15:13:34.825333+00:00] run=chaos-tourney-r01-d1555a chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T15:23:05.395526+00:00] run=chaos-tourney-r02-64c74c chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T15:33:12.788553+00:00] run=chaos-tourney-r03-125dda chaos-engineering run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T15:43:51.989709+00:00] run=chaos-tourney-r04-abf2c7 chaos-engineering run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T15:59:38.958963+00:00] run=chaos-tourney-r05-b4885d chaos-engineering run: rating_band_accuracy=1.0 over 8 held-out cases; schema_pass=100.0% band_pass=100.0%
+- [2026-06-30T16:11:51.300810+00:00] run=chaos-tourney-r06-fa6182 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T16:23:16.295801+00:00] run=chaos-tourney-r07-787bb2 chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=87.5% band_pass=75.0%
+- [2026-06-30T16:36:08.717057+00:00] run=chaos-tourney-r08-3f80cd chaos-engineering run: rating_band_accuracy=0.625 over 8 held-out cases; schema_pass=87.5% band_pass=62.5%
+- [2026-06-30T16:47:53.681932+00:00] run=chaos-tourney-r09-972d84 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-06-30T16:57:46.421875+00:00] run=chaos-tourney-r10-422ae9 chaos-engineering run: rating_band_accuracy=0.75 over 8 held-out cases; schema_pass=100.0% band_pass=75.0%
+- [2026-06-30T17:10:15.561851+00:00] run=chaos-tourney-recheck-a88512 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
