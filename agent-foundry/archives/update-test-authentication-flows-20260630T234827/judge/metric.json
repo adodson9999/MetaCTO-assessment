@@ -1,0 +1,12 @@
+{
+  "metric_name": "auth_flow_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold auth checkpoints the agent reproduces. Checkpoints = the 5 executed sub-tests (valid/missing/malformed/expired/revoked), each scored by whether executing the agent's emitted credential recipe yields the SAME actual_class the gold recorded against the live API; PLUS the 5 not_applicable items (apiKey, basic, oauth2, apikey_wrong_location, dedicated_revoke_endpoint), each scored by whether the agent enumerated it with status 'needs_to_be_built_and_tested'. A checkpoint the agent did not cover counts as a mismatch. Denominator = 10.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/auth_gold.json",
+  "headline_metric": "auth_flow_pass_rate_pct",
+  "secondary_metrics": ["false_acceptance_rate_pct", "false_rejection_rate_pct"],
+  "rationale": "All four agents hit the same local API, so the raw Auth Flow Pass Rate (60% here: a stateless-JWT revoke returns 200 and a truncated token trips an unmapped 500) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's TEST quality: did it enumerate the five sub-tests with the exact credential recipes the harness needs, construct each so the live response matches the empirical ground truth, and correctly flag the undocumented schemes as needs_to_be_built_and_tested. The headline auth_flow_pass_rate_pct and the False Acceptance Rate (any non-zero value is a critical security finding) are still emitted by every agent as the task's QA finding.",
+  "escalation": "False Acceptance Rate > 0 is a CRITICAL security failure (an invalid/expired/revoked credential was accepted with 2xx) and must be escalated immediately. On this target the revoked sub-test is a standing False Acceptance because the JWT is stateless and POST /auth/logout does not revoke it."
+}

@@ -1,0 +1,156 @@
+{
+  "suite": "unverified-bug",
+  "contract": "bugreport_spec.build_category (pure, total, deterministic; V->B->S first-match)",
+  "baseline": {"metric_name": "category_conformance_rate", "value": 1.0, "direction": "higher_is_better"},
+  "tolerance": 0.0,
+  "comment": "Every *_cases set below runs with NO model — the pure-Python deterministic forcing function that MUST always pass exactly as marked. The token <<BLOB:N>> in a signal value expands to 'x'*N at load time (keeps oversized-input cases small in the golden). date/time are derived from run_id RUN-YYYYMMDD-HHMMSS: date=YYYY-MM-DD, time=HH-MM-SS.",
+
+  "category_cases": [
+    {"id": "vuln-deny-2xx", "expect_category": "vulnerability",
+     "signals": {"expected": "401", "observed": "200"}},
+    {"id": "vuln-spec-auth", "expect_category": "vulnerability",
+     "signals": {"spec_path": "agents/api-tester/test-authentication-flows/subagent/x.md", "expected": "rejected", "observed": "accepted"}},
+    {"id": "vuln-authorization-agent", "expect_category": "vulnerability",
+     "signals": {"agent": "check-authorization-rules", "expected": "denied", "observed": "ok"}},
+    {"id": "vuln-no-password", "expect_category": "vulnerability",
+     "signals": {"scenario_text": "login without password", "expected": "login rejected", "observed": "logged in"}},
+    {"id": "vuln-precedence", "expect_category": "vulnerability",
+     "signals": {"expected": "403 forbidden", "observed": "200 returned data", "scenario_text": "user list"}},
+    {"id": "biz-wrong-data", "expect_category": "business-workflow",
+     "signals": {"expected": "sorted list", "observed": "unsorted data", "scenario_text": "product sort"}},
+    {"id": "biz-wrong-4xx", "expect_category": "business-workflow",
+     "signals": {"expected": "404", "observed": "200", "scenario_text": "missing product lookup"}},
+    {"id": "sw-500", "expect_category": "computer-software",
+     "signals": {"expected": "200", "observed": "500", "scenario_text": "create resource"}},
+    {"id": "sw-db", "expect_category": "computer-software",
+     "signals": {"expected": "row created", "observed": "error", "stderr": "database connection refused"}},
+    {"id": "sw-default", "expect_category": "computer-software",
+     "signals": {"expected": "foo", "observed": "bar"}}
+  ],
+
+  "precedence_matrix_cases": [
+    {"id": "V+B->V", "expect_category": "vulnerability",
+     "signals": {"expected": "401", "observed": "200", "scenario_text": "user list data"}},
+    {"id": "V+S->V", "expect_category": "vulnerability",
+     "signals": {"expected": "401", "observed": "200", "stderr": "500 database"}},
+    {"id": "B+S(system-present)->S", "expect_category": "computer-software",
+     "signals": {"expected": "200", "observed": "500 error", "scenario_text": "product list"}},
+    {"id": "B+S(user-visible-only)->B", "expect_category": "business-workflow",
+     "signals": {"expected": "sorted", "observed": "wrong data", "scenario_text": "product list"}},
+    {"id": "all-three->V", "expect_category": "vulnerability",
+     "signals": {"expected": "403", "observed": "200 data", "scenario_text": "user list", "stderr": "exception"}}
+  ],
+
+  "negative_signal_cases": [
+    {"id": "neg-empty", "expect_category": "computer-software", "signals": {}},
+    {"id": "neg-missing-keys", "expect_category": "computer-software", "signals": {"expected": "x"}},
+    {"id": "neg-none-values", "expect_category": "computer-software",
+     "signals": {"expected": null, "observed": null, "spec_path": null, "agent": null, "scenario_text": null, "stderr": null}},
+    {"id": "neg-unicode", "expect_category": "computer-software",
+     "signals": {"observed": "café ünïcode ☃ 你好"}},
+    {"id": "neg-large-blob", "expect_category": "computer-software",
+     "signals": {"stderr": "<<BLOB:10000>>"}},
+    {"id": "neg-mixed-case", "expect_category": "business-workflow",
+     "signals": {"observed": "DATA", "scenario_text": "USER PAGE"}},
+    {"id": "neg-numeric-only", "expect_category": "computer-software",
+     "signals": {"expected": "999", "observed": "888"}}
+  ],
+
+  "severity_retention_cases": [
+    {"id": "vuln-critical-retained", "expect_category": "vulnerability", "expect_severity": "CRITICAL",
+     "failure": {"agent_name": "test-authentication-flows", "status": "FAILED",
+                 "spec_path": "agents/api-tester/test-authentication-flows/subagent/test-authentication-flows.md",
+                 "stderr": "login without password succeeded", "stdout": "",
+                 "expected": "401", "observed": "200", "scenario": "login without credentials"}}
+  ],
+
+  "layout_cases": [
+    {"id": "layout-vuln", "run_id": "RUN-20260701-120000", "agent": "test-authentication-flows",
+     "category": "vulnerability", "seq": 1, "expect_prefix": "VULN",
+     "expect_path": "results/2026-07-01/12-00-00/BugReport/test-authentication-flows/unverified_bugs/vulnerability/VULN-RUN-20260701-120000-0001.json"},
+    {"id": "layout-biz", "run_id": "RUN-20260701-120000", "agent": "verify-sorting-behavior",
+     "category": "business-workflow", "seq": 1, "expect_prefix": "BIZ",
+     "expect_path": "results/2026-07-01/12-00-00/BugReport/verify-sorting-behavior/unverified_bugs/business-workflow/BIZ-RUN-20260701-120000-0001.json"},
+    {"id": "layout-sw", "run_id": "RUN-20260701-120000", "agent": "verify-crud-operation-integrity",
+     "category": "computer-software", "seq": 3, "expect_prefix": "SW",
+     "expect_path": "results/2026-07-01/12-00-00/BugReport/verify-crud-operation-integrity/unverified_bugs/computer-software/SW-RUN-20260701-120000-0003.json"}
+  ],
+
+  "index_cases": {
+    "run_id": "RUN-20260701-120000",
+    "reports": [
+      {"bug_id": "SW-RUN-20260701-120000-0001", "category": "computer-software", "severity": "HIGH", "finding_agent": "a"},
+      {"bug_id": "VULN-RUN-20260701-120000-0001", "category": "vulnerability", "severity": "MEDIUM", "finding_agent": "b"},
+      {"bug_id": "BIZ-RUN-20260701-120000-0001", "category": "business-workflow", "severity": "LOW", "finding_agent": "c"}
+    ],
+    "expect_order": ["VULN-RUN-20260701-120000-0001", "BIZ-RUN-20260701-120000-0001", "SW-RUN-20260701-120000-0001"],
+    "expect_by_category": {"vulnerability": 1, "business-workflow": 1, "computer-software": 1},
+    "expect_no_prefix": "BUG-"
+  },
+
+  "ordering_stress_cases": {
+    "run_id": "RUN-20260701-120000",
+    "reports": [
+      {"bug_id": "SW-RUN-20260701-120000-0002", "category": "computer-software", "severity": "CRITICAL", "finding_agent": "zeta"},
+      {"bug_id": "VULN-RUN-20260701-120000-0002", "category": "vulnerability", "severity": "LOW", "finding_agent": "beta"},
+      {"bug_id": "VULN-RUN-20260701-120000-0001", "category": "vulnerability", "severity": "LOW", "finding_agent": "alpha"},
+      {"bug_id": "BIZ-RUN-20260701-120000-0001", "category": "business-workflow", "severity": "HIGH", "finding_agent": "gamma"},
+      {"bug_id": "VULN-RUN-20260701-120000-0003", "category": "vulnerability", "severity": "CRITICAL", "finding_agent": "alpha"},
+      {"bug_id": "SW-RUN-20260701-120000-0001", "category": "computer-software", "severity": "CRITICAL", "finding_agent": "alpha"}
+    ],
+    "expect_order": [
+      "VULN-RUN-20260701-120000-0003",
+      "VULN-RUN-20260701-120000-0001",
+      "VULN-RUN-20260701-120000-0002",
+      "BIZ-RUN-20260701-120000-0001",
+      "SW-RUN-20260701-120000-0001",
+      "SW-RUN-20260701-120000-0002"
+    ]
+  },
+
+  "report_only_cases": {
+    "run_id": "RUN-20260701-120000",
+    "unverified": [
+      {"category": "vulnerability", "severity": "CRITICAL", "priority": "P1", "finding_agent": "test-authentication-flows"},
+      {"category": "business-workflow", "severity": "MEDIUM", "priority": "P3", "finding_agent": "verify-sorting-behavior"}
+    ],
+    "verified": [],
+    "expect_would_exit_code_1": false,
+    "expect_ci_add_set_empty": true
+  },
+
+  "separation_cases": {
+    "run_id": "RUN-20260701-120000",
+    "verified": [{"bug_id": "BUG-RUN-20260701-120000-0001", "severity": "HIGH", "finding_agent": "verify-crud-operation-integrity"}],
+    "unverified": [
+      {"bug_id": "VULN-RUN-20260701-120000-0001", "category": "vulnerability", "severity": "CRITICAL", "finding_agent": "test-authentication-flows"},
+      {"bug_id": "SW-RUN-20260701-120000-0001", "category": "computer-software", "severity": "MEDIUM", "finding_agent": "verify-caching-headers"}
+    ],
+    "expect_verified_prefixes": ["BUG-"],
+    "expect_unverified_prefixes": ["VULN-", "BIZ-", "SW-"],
+    "expect_zero_overlap": true
+  },
+
+  "idempotency_cases": {
+    "run_id": "RUN-20260701-120000",
+    "date": "2026-07-01",
+    "time": "12-00-00",
+    "rows": [
+      {"agent": "test-authentication-flows", "endpoint": "/auth/login", "scenario": "login without password",
+       "expected": "401", "observed": "200", "outcome": "missing-docs", "reviewer_verdict": "missing-docs"},
+      {"agent": "verify-sorting-behavior", "endpoint": "/products", "scenario": "sort by price desc",
+       "expected": "sorted list", "observed": "unsorted data", "outcome": "missing-docs", "reviewer_verdict": "missing-docs"},
+      {"agent": "verify-crud-operation-integrity", "endpoint": "/carts", "scenario": "create cart",
+       "expected": "row created", "observed": "500 error", "outcome": "missing-docs", "reviewer_verdict": "missing-docs"}
+    ]
+  },
+
+  "finding_agent_cases": [
+    {"id": "fa-vuln", "run_id": "RUN-20260701-120000",
+     "row": {"agent": "test-authentication-flows", "endpoint": "/auth/login", "scenario": "login without password",
+             "expected": "401", "observed": "200", "outcome": "missing-docs", "reviewer_verdict": "missing-docs"},
+     "expect_finding_agent": "test-authentication-flows",
+     "expect_finding_endpoint": "/auth/login",
+     "expect_path_segment": "test-authentication-flows"}
+  ]
+}

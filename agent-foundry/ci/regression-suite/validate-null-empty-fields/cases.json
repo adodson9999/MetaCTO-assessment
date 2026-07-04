@@ -1,0 +1,412 @@
+[
+  {
+    "test_case_id": "TC-NULLF-035",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-036",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-037",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-038",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-039",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-040",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/users/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-067",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-068",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-069",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-070",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-071",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-072",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "method": "POST",
+    "path": "/recipes/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-NULLF-075",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:key absent: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-076",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:json null: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-077",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:empty string: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-078",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:integer zero: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-079",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:boolean false: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-080",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:empty array: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-081",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid:empty object: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-085",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:key absent: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-086",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:json null: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-087",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:empty string: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-088",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:integer zero: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-089",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:boolean false: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-090",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:empty array: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-091",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:empty object: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-092",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products:whitespace only: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-095",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Carts add: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-096",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-097",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Products: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-NULLF-098",
+    "agent": "validate-null-empty-fields",
+    "title_summary": "Userid+products: verify validate null empty fields returns 400.",
+    "method": "POST",
+    "path": "/carts/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  }
+]

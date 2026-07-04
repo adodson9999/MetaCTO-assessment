@@ -12,3 +12,8 @@
 - [2026-06-29T18:06:39.431538+00:00] run=2026-06-29_17-10-02 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
 - [2026-06-29T20:24:09.535372+00:00] run=2026-06-29_19-27-43 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
 - [2026-06-29T22:54:53.130595+00:00] run=2026-06-29_22-00-33 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-07-02T02:29:10.065528+00:00] run=RUN-20260702-000138 sorting-behavior run: sorting_accuracy=0.0% over 4 sort cases, scenario_accuracy=0.0%
+- [2026-07-02T19:00:20.727878+00:00] run=20260702T185944-8d9597 sorting-behavior run: sorting_accuracy=0.0% over 4 sort cases, scenario_accuracy=8.33%
+- [2026-07-02T23:55:48.246183+00:00] run=20260702T235347-72afc5 sorting-behavior run: sorting_accuracy=0.0% over 4 sort cases, scenario_accuracy=0.0%
+- [2026-07-02T23:57:49.008771+00:00] run=20260702T235548-dbb233 sorting-behavior run: sorting_accuracy=0.0% over 4 sort cases, scenario_accuracy=0.0%
+- [2026-07-03T23:35:03.306325+00:00] run=RUN-20260703-181017 sorting-behavior run: sorting_accuracy=0.0% over 4 sort cases, scenario_accuracy=0.0%

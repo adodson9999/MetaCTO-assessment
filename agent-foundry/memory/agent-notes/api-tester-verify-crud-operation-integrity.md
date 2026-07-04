@@ -18,3 +18,6 @@
 - [2026-06-29T17:53:52.142639+00:00] run=2026-06-29_17-10-02 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
 - [2026-06-29T20:11:38.311057+00:00] run=2026-06-29_19-27-43 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
 - [2026-06-29T22:42:37.949350+00:00] run=2026-06-29_22-00-33 crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-07-02T01:36:35.644352+00:00] run=RUN-20260702-000138 crud-integrity run: rate=0.0% passing=0/7 covered_steps=0 over 7 resources
+- [2026-07-02T20:32:59.178418+00:00] run=20260702T202506-d6c38e crud-integrity run: rate=0.0% passing=0/7 covered_steps=0 over 7 resources
+- [2026-07-03T21:59:37.344859+00:00] run=RUN-20260703-181017 crud-integrity run: rate=0.0% passing=0/7 covered_steps=0 over 7 resources

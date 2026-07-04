@@ -14,7 +14,7 @@ sys.path.insert(0, str(WS / "agents" / "common"))
 sys.path.insert(0, str(WS / "scripts"))
 
 import postman  # noqa: E402
-from postman_prompt import active_prompt, user_message  # noqa: E402
+from postman_prompt import user_message  # noqa: E402
 from runners.utils import load_system_prompt  # noqa: E402
 from runners.subagent_runner import build_invoker  # noqa: E402
 

@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""CrewAI error-message-clarity testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-
+operation Task. CrewAI routes the model through LiteLLM, so Claude works via an
+"anthropic/<model>" string and the local Ollama backend via "ollama/<model>".
+Deterministic sending/body-capture/clarity-assertions/recording/emit is the shared
+harness's job (agents/common/clarity_contract.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import clarity_contract  # noqa: E402
+from clarity_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API error-message-clarity testing agent",
+        goal="Convert one operation's documented error codes into one error-triggering "
+             "request descriptor per code.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(op: dict) -> dict:
+        brief = clarity_contract.operation_brief(op)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output='A single JSON object with one key "requests": '
+                                    "an array of one error-triggering request descriptor "
+                                    "per documented error code.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return clarity_contract.extract_json(str(out)) or {}
+
+    summary = clarity_contract.run_clarity_test(AGENT, generate)
+    print(f"[{AGENT}] pass_rate={summary['error_clarity_pass_rate_pct']}% "
+          f"passed={summary['passed_cases']}/{summary['documented_error_cases']} "
+          f"covered={summary['covered_cases']} p1={summary['p1_security_defects']}")
+
+
+if __name__ == "__main__":
+    main()

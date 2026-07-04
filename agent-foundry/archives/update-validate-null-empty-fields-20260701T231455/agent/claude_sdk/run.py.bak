@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK null-and-empty-fields testing agent.
+
+Standalone program mirroring the other three. Under the claude-haiku backend it uses
+the native Claude Agent SDK; under the air-gapped Ollama backend (no cloud) it falls
+back to the OpenAI-compatible local endpoint. Either way it elicits the six-key
+null/empty test matrix; the shared harness sends the bodies and records/emits.
+
+The native path collects text only from assistant/result messages (ignoring the SDK's
+system/hook event messages) so JSON extraction is not confused by hook payloads.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import null_contract  # noqa: E402
+from null_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+MAX_TOKENS = int(os.environ.get("FORGE_MAX_TOKENS", "8192"))
+
+
+def _assistant_text(msg) -> str:
+    """Pull only human-readable assistant/result text from one SDK message, skipping
+    system/hook/tool event messages whose dict payloads would pollute JSON extraction."""
+    name = type(msg).__name__
+    parts = []
+    content = getattr(msg, "content", None)
+    if isinstance(content, list):
+        for b in content:
+            t = getattr(b, "text", None)
+            if isinstance(t, str):
+                parts.append(t)
+    elif isinstance(content, str) and name in ("AssistantMessage", "ResultMessage"):
+        parts.append(content)
+    result = getattr(msg, "result", None)   # ResultMessage.result holds the final text
+    if isinstance(result, str):
+        parts.append(result)
+    return "\n".join(parts)
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"],
+                              allowed_tools=[], max_turns=1)
+    parts = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        t = _assistant_text(msg)
+        if t:
+            parts.append(t)
+    return "\n".join(parts)
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0, "max_tokens": MAX_TOKENS,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa  -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(ep: dict) -> dict:
+        brief = null_contract.endpoint_brief(ep)
+        return null_contract.extract_json(_elicit(brief)) or {}
+
+    summary = null_contract.run_null_test(AGENT, generate)
+    print(f"[{AGENT}] accuracy={summary['null_empty_validation_accuracy_pct']}% "
+          f"cases={summary['total_cases']}")
+
+
+if __name__ == "__main__":
+    main()

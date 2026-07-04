@@ -7,3 +7,8 @@
 - [2026-06-29T18:16:50.111226+00:00] run=2026-06-29_17-10-02 graphql-depth run: enforcement=23.08% over 2 endpoints (26 scenarios)
 - [2026-06-29T20:33:46.551977+00:00] run=2026-06-29_19-27-43 graphql-depth run: enforcement=23.08% over 2 endpoints (26 scenarios)
 - [2026-06-29T23:20:10.672974+00:00] run=2026-06-29_22-00-33 graphql-depth run: enforcement=23.08% over 2 endpoints (26 scenarios)
+- [2026-07-02T03:05:04.581115+00:00] run=RUN-20260702-000138 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-07-02T18:29:28.875451+00:00] run=20260702T182803-ca8685 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-07-02T22:39:40.639362+00:00] run=20260702T223647-9cdec9 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-07-02T22:43:40.918755+00:00] run=20260702T223940-15ec41 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)
+- [2026-07-04T00:25:03.055428+00:00] run=RUN-20260703-181017 graphql-depth run: enforcement=0.0% over 2 endpoints (26 scenarios)

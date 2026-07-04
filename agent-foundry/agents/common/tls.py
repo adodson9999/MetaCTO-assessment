@@ -431,13 +431,18 @@ def _exec_plan(cfg: dict, plan: dict) -> tuple[dict, list]:
         raw["tls1_3_http"] = _https_get_pinned(cfg, "tls1_3")
         reqlog.append({"probe": "tls1_3_http", "status": raw["tls1_3_http"]})
 
-    wanted_cert = set(plan.get("certificate_assertions") or [])
+    # Only string assertion names are valid probe keys; a plan that emits dict-shaped
+    # or otherwise non-string entries is tolerated (skipped) rather than crashing the
+    # harness on an unhashable value (robustness / adversarial-input lens).
+    wanted_cert = {a for a in (plan.get("certificate_assertions") or []) if isinstance(a, str)}
     cert = _cert_probes(cfg, wanted_cert)
     for k in tls_spec.CERT_ASSERTIONS:
         raw[f"cert_{k}"] = cert.get(k)
     if wanted_cert:
+        # cert.get(k): a requested field the served cert does not expose degrades to
+        # None rather than raising KeyError (degrade to the observable signal).
         reqlog.append({"probe": "certificate", "assertions": sorted(wanted_cert),
-                       "result": {k: cert[k] for k in wanted_cert}})
+                       "result": {k: cert.get(k) for k in wanted_cert}})
 
     for fam in (plan.get("forbidden_weak_ciphers") or []):
         if fam in tls_spec.WEAK_CIPHER_SCENARIO:

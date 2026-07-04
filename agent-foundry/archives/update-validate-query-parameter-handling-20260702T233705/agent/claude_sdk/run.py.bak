@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK query-parameter-handling agent.
+
+Standalone program mirroring the other three. Two paths reach claude-haiku:
+
+  - native Claude Agent SDK (claude_agent_sdk.query) — spawns the local `claude`
+    CLI as a subagent. Enabled ONLY when FORGE_USE_CLAUDE_AGENT_SDK is set, so a
+    foundry run launched from inside a Claude Code session does not recursively
+    spawn `claude`.
+  - the documented OpenAI-compatible shim — LiteLLM, the universal OpenAI-compatible
+    layer backend_config names for SDK/OpenAI-only components. Used in-process
+    (litellm.completion) for claude-haiku so no separate proxy server is required;
+    falls back to POSTing the Ollama /v1 endpoint under the air-gapped backend. This
+    is the default.
+
+Either way it elicits the query-parameter test plan; the shared harness executes it
+with read-only GETs and records/emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import queryparam  # noqa: E402
+from queryparam_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+TOTALS = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+
+
+def _add_usage(usage) -> None:
+    """Accumulate token usage from a litellm/OpenAI response 'usage' (best-effort)."""
+    if usage is None:
+        return
+    g = (lambda k: usage.get(k) if isinstance(usage, dict) else getattr(usage, k, None))
+    TOTALS["prompt_tokens"] += int(g("prompt_tokens") or 0)
+    TOTALS["completion_tokens"] += int(g("completion_tokens") or 0)
+    TOTALS["total_tokens"] += int(g("total_tokens") or 0)
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _openai_compat(brief: str) -> str:
+    messages = [{"role": "system", "content": APPROVED_PROMPT},
+                {"role": "user", "content": user_message(brief)}]
+    if SPEC["native"]["kind"] == "anthropic":
+        # In-process LiteLLM shim — no proxy server needed; uses ANTHROPIC_API_KEY.
+        import litellm
+        r = litellm.completion(model=f"anthropic/{SPEC['native']['model']}",
+                               temperature=0, messages=messages)
+        _add_usage(r.get("usage") if isinstance(r, dict) else getattr(r, "usage", None))
+        return r["choices"][0]["message"]["content"]
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": messages, "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    _add_usage(data.get("usage"))
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic" and os.environ.get("FORGE_USE_CLAUDE_AGENT_SDK"):
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa  -- cloud/CLI path unavailable
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(cfg: dict) -> dict:
+        brief = queryparam.collection_brief(cfg)
+        return queryparam.extract_json(_elicit(brief)) or {}
+
+    summary = queryparam.run_queryparam_test(AGENT, generate, usage=lambda: TOTALS)
+    print(f"[{AGENT}] accuracy={summary['query_param_handling_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']} "
+          f"tokens={summary['tokens']['total_tokens']}")
+
+
+if __name__ == "__main__":
+    main()

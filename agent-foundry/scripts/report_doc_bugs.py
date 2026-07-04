@@ -25,11 +25,22 @@ from pathlib import Path
 WS = Path(os.environ.get("FORGE_WORKSPACE", str(Path(__file__).resolve().parents[1]))).resolve()
 sys.path.insert(0, str(WS / "scripts"))
 sys.path.insert(0, str(WS / "agents" / "common"))
-import adjudicate as A          # build_corpus, collect_mismatches, _reviewer_invoke, _bug_report_text, _keywords
-import docreview_spec
-import docreview
+import adjudicate as A          # noqa: E402  build_corpus/collect_mismatches/_reviewer_invoke/_keywords
+import bugreport as BR          # noqa: E402  unverified/verified materialiser (single path source)
+import docreview_spec           # noqa: E402
+import docreview                # noqa: E402
+
+BR.WORKSPACE = WS
+BR.SANDBOX_ROOT = WS
+DB_AVAILABLE = False            # DummyJSON target is air-gapped (no [database])
 
 BUG_DIR = WS / "results" / "bug-reports"
+
+
+def _ctx(m: dict) -> dict:
+    return {"agent": m.get("agent", ""), "endpoint": m.get("endpoint", ""),
+            "scenario": m.get("scenario", ""), "expected": m.get("expected", ""),
+            "observed": m.get("observed", ""), "severity": A.severity(m)}
 # map a corpus file to its published source URL (provenance from reference-link-factory)
 URL_MAP = {
     "dummyjson-com-docs.md": "https://dummyjson.com/docs",
@@ -81,6 +92,9 @@ def run(run_id: str, limit: int) -> dict:
     BUG_DIR.mkdir(parents=True, exist_ok=True)
     bugs, rows = [], []
     counts = {"yes_BUG": 0, "no": 0, "missing-docs": 0, "invalid": 0}
+    counters: dict = {}
+    uv_entries: list = []
+    v_entries: list = []
     for i, m in enumerate(considered, 1):
         v = review_one(m, corpus, invoke)
         verdict = v.get("verdict")
@@ -103,16 +117,35 @@ def run(run_id: str, limit: int) -> dict:
             bugs.append(bug_id)
             row["bug_id"] = bug_id
             counts["yes_BUG"] += 1
+            # Mirror the documented bug into the new tree (decision #10).
+            vrep = BR.write_verified_bug(run_id, dict(_ctx(m), source_of_truth=sot),
+                                         counters, DB_AVAILABLE, workspace=WS)
+            row["verified_report_path"] = vrep["_meta"]["report_path"]
+            v_entries.append(vrep["_meta"]["index_entry"])
             print(f"  [{i}/{len(considered)}] BUG {bug_id}: {m['agent']}/{m['scenario']} "
                   f"exp {m['expected']} got {m['observed']} <- {Path(sot.get('file','')).name}:{sot.get('line')}", flush=True)
+        elif verdict == "missing-docs":
+            # missing-docs is no longer dropped: file a citation-free unverified bug (HF13).
+            urep = BR.write_unverified_bug(run_id, _ctx(m), counters, DB_AVAILABLE, workspace=WS)
+            row.update({"unverified_bug_id": urep["bug_id"], "category": urep["category"],
+                        "category_reason": urep["category_reason"], "exclude_from_cicd": True})
+            uv_entries.append(urep["_meta"]["index_entry"])
+            counts["missing-docs"] += 1
+            print(f"  [{i}/{len(considered)}] missing-docs -> {urep['bug_id']} "
+                  f"({urep['category']}): {m['agent']}/{m['scenario']}", flush=True)
         else:
-            counts[verdict if verdict in ("no", "missing-docs") else "invalid"] += 1
+            counts[verdict if verdict == "no" else "invalid"] += 1
             print(f"  [{i}/{len(considered)}] {verdict}: {m['agent']}/{m['scenario']}", flush=True)
         rows.append(row)
 
+    # The two SEPARATE indexes in the new tree (HF16).
+    BR.write_unverified_index(run_id, uv_entries, workspace=WS)
+    BR.write_verified_index(run_id, v_entries, workspace=WS)
+
     ledger = {"run_id": run_id, "policy": "bug = unexpected behavior + documentation-reviewer match (LLM); no RCA; no implementation review",
               "unique_disputed_behaviors": len(uniq), "considered": len(considered),
-              "counts": counts, "bug_ids": bugs, "rows": rows}
+              "counts": counts, "bug_ids": bugs,
+              "unverified_count": len(uv_entries), "rows": rows}
     (run_dir / "doc-bug-ledger.json").write_text(json.dumps(ledger, indent=2))
     (BUG_DIR / "index.json").write_text(json.dumps({"run_id": run_id, "bug_ids": bugs, "count": len(bugs)}, indent=2))
     print(f"\n[report_doc_bugs] unique={len(uniq)} considered={len(considered)} -> {counts}", flush=True)

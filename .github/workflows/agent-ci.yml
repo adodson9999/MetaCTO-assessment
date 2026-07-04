@@ -178,3 +178,54 @@ jobs:
           name: results-general
           path: agent-foundry/results/
           retention-days: 7
+
+  # -----------------------------------------------------------------------
+  # POSITION: regression-suite
+  # Replays the committed CI regression suite (agent-foundry/ci/regression-suite/<agent>/cases.json)
+  # — the passing, executable test cases grouped by the agent that created them, refreshed by each
+  # orchestration run's finalizer. The replay is DETERMINISTIC (exact request incl. body + auth token,
+  # exact expected status set) so every test can only pass or fail — no interpretation, no guessing.
+  # Reports each test and fails the job on any regression. Backend is ollama (no paid API key needed;
+  # the replay itself calls no model).
+  # -----------------------------------------------------------------------
+  regression-suite:
+    name: "regression-suite / replay passing cases (deterministic, per agent)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install DummyJSON server dependencies
+        run: npm ci --prefix agent-foundry/dummyjson
+
+      - name: Start DummyJSON API server (port 8888)
+        run: node agent-foundry/dummyjson/server.js &
+
+      - name: Wait for the target (port 8888)
+        run: |
+          for I in $(seq 1 20); do
+            nc -z 127.0.0.1 8888 2>/dev/null && echo "port 8888 ready" && break
+            sleep 2
+          done
+
+      - name: Replay the regression suite (report every passing test case, grouped by agent)
+        env:
+          FORGE_WORKSPACE:       ${{ github.workspace }}/agent-foundry
+          FORGE_TARGET_BASE_URL: http://127.0.0.1:8888
+          FORGE_PROVIDER:        ollama
+          JWT_SECRET:            forge_test_secret
+        run: python agent-foundry/scripts/ci_regression_suite.py run
+
+      - name: Upload the per-test regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-suite-report
+          path: agent-foundry/ci/regression-suite/last-run-report.json
+          retention-days: 7

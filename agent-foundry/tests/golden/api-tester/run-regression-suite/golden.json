@@ -1,0 +1,14 @@
+{
+  "total_tests": 3,
+  "previously_passing": 3,
+  "regressions": [
+    {
+      "test": "t_b",
+      "failure_message": "AssertionError: expected 200 got 500"
+    }
+  ],
+  "newly_passing": [],
+  "flaky": [],
+  "slowed": [],
+  "overall_status": "fail"
+}

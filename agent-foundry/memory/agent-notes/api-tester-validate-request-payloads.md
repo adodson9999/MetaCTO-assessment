@@ -5,3 +5,9 @@
 - [2026-06-29T17:24:02.920884+00:00] run=2026-06-29_17-10-02 contract-test run: rejection_rate=20.34% produced 558 labeled cases over 22 endpoints
 - [2026-06-29T19:41:51.125079+00:00] run=2026-06-29_19-27-43 contract-test run: rejection_rate=20.34% produced 558 labeled cases over 22 endpoints
 - [2026-06-29T22:14:37.134152+00:00] run=2026-06-29_22-00-33 contract-test run: rejection_rate=20.34% produced 558 labeled cases over 22 endpoints
+- [2026-07-02T00:12:20.692686+00:00] run=RUN-20260702-000138 contract-test run: rejection_rate=50.0% produced 23 labeled cases over 22 endpoints
+- [2026-07-02T21:48:03.539061+00:00] run=20260702T210017-b7e726 contract-test run: rejection_rate=20.83% produced 90 labeled cases over 22 endpoints
+- [2026-07-03T17:06:21.043528+00:00] run=20260703T170020-66444e contract-test run: rejection_rate=0.0% produced 0 labeled cases over 3 endpoints
+- [2026-07-03T17:20:27.509187+00:00] run=20260703T171406-514e4e contract-test run: rejection_rate=0.0% produced 0 labeled cases over 3 endpoints
+- [2026-07-04T01:43:56.615118+00:00] run=RUN-20260703-181017 contract-test run: rejection_rate=0.0% produced 0 labeled cases over 22 endpoints
+- [2026-07-04T15:55:54.214000+00:00] run=RUN-20260703-181017 contract-test run: rejection_rate=47.06% produced 36 labeled cases over 22 endpoints

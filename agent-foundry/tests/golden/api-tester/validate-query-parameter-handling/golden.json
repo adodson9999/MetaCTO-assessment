@@ -1,0 +1,115 @@
+{
+  "agent": "api-tester-validate-query-parameter-handling",
+  "lane": "query-parameter-mechanics-contract",
+  "cases": [
+    {
+      "role": "missing-required",
+      "endpoint_role": "search_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "missing_required",
+        "input_role": "required_query_term_absent"
+      },
+      "assertion": "documented_error_or_empty_result",
+      "also_accept": [
+        "documented_error_class"
+      ]
+    },
+    {
+      "role": "wrong-type coercion",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "wrong_type_coercion",
+        "input_role": "non_numeric_page_size_and_offset"
+      },
+      "assertion": "documented_error_or_ignored_per_policy",
+      "also_accept": [
+        "documented_error_class"
+      ]
+    },
+    {
+      "role": "valid single-parameter",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "valid_single_param",
+        "input_role": "one_documented_param_at_a_time"
+      },
+      "assertion": "parameter_applied_as_documented",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    },
+    {
+      "role": "undocumented-parameter",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "undocumented_param",
+        "input_role": "parameter_outside_documented_surface"
+      },
+      "assertion": "undocumented_param_ignored_per_policy",
+      "also_accept": [
+        "documented_error_class"
+      ]
+    },
+    {
+      "role": "URL-encoding",
+      "endpoint_role": "search_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "url_encoding",
+        "input_role": "percent_encoded_query_term"
+      },
+      "assertion": "encoded_value_decoded_and_applied",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    },
+    {
+      "role": "default-application",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "default_application",
+        "input_role": "defaulted_param_omitted"
+      },
+      "assertion": "documented_default_applied",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    },
+    {
+      "role": "parameter-name-case",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "param_name_case",
+        "input_role": "documented_param_alternate_case"
+      },
+      "assertion": "documented_case_sensitivity_honored",
+      "also_accept": [
+        "documented_error_class"
+      ]
+    },
+    {
+      "role": "duplicate-key",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "duplicate_same_key",
+        "input_role": "same_param_key_twice"
+      },
+      "assertion": "first_or_last_wins_per_policy",
+      "also_accept": [
+        "documented_error_class"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "query_parameter_mechanics_fidelity",
+    "value": 1.0
+  }
+}

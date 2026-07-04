@@ -1,0 +1,11 @@
+{
+  "metric_name": "error_clarity_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (operation x documented-error-code) cases where the agent's run reproduced the gold outcome: the agent covered the case, its triggered request produced the same observed status code as gold, AND its computed clarity verdict tuple (message_present, code_present, sensitive_found) equals gold's. A case the agent did not cover counts as a mismatch. Denominator = all documented gold error cases.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/clarity/gold.json",
+  "headline_metric": "error_clarity_pass_rate_pct",
+  "tie_breakers": ["coverage_cases", "p1_security_defects_fewer", "wall_clock_seconds"],
+  "rationale": "All four agents hit the same local API, so the raw Error Clarity Pass Rate is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: full coverage of the documented error matrix, correct per-code trigger compilation (drop the first required field for missing_field, omit auth for no_auth, malformed token for malformed_auth, the literal nonexistent id for bad_path_id, the documented bad-query suffix for bad_query, the hook path verbatim for passthrough), faithfully provoking the same real error response, and recording the same deterministic clarity verdict. The headline error_clarity_pass_rate_pct is still emitted by every agent as the task's QA finding: DummyJSON error bodies carry a clear 'message' (15/15) and leak zero internal details (0 P1 defects) but expose no machine-readable 'code'/'error_code' field (0/15), so the strict pass rate is 0% by the metric's definition (message AND code AND no-leak). The fail-condition the task flags as P1 — a stack trace, file path, or exception class name in any error body — is independently tracked as p1_security_defects (0 found)."
+}

@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK Measure-API-Consumer-Satisfaction agent.
+
+Standalone program mirroring the other three. Two paths reach claude-haiku:
+
+  - native Claude Agent SDK (claude_agent_sdk.query) — spawns the local `claude` CLI as
+    a subagent. Enabled ONLY when FORGE_USE_CLAUDE_AGENT_SDK is set, so a foundry run
+    launched from inside a Claude Code session does not recursively spawn `claude`.
+  - the documented OpenAI-compatible shim — the central LiteLLM proxy
+    (config.toml [backend].litellm_proxy_url), which is how backend_config says
+    SDK/OpenAI-only components reach Claude. This is the default.
+
+Under the air-gapped Ollama backend it uses the local Ollama /v1 endpoint. Either way it
+elicits the JSON measurement plan; the shared harness executes it against the seeded
+fixture and records/emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import nps  # noqa: E402
+from nps_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic" and os.environ.get("FORGE_USE_CLAUDE_AGENT_SDK"):
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa  -- cloud/CLI path unavailable
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(brief: str) -> dict:
+        return nps.extract_json(_elicit(brief)) or {}
+
+    summary = nps.run_nps_test(AGENT, generate)
+    print(f"[{AGENT}] nps={summary['nps_score']} "
+          f"plan_accuracy={summary['plan_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

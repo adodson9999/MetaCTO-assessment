@@ -21,7 +21,8 @@
 # than "auto") removes Ollama from the resolution chain entirely: if the Claude shim is
 # unreachable a run ERRORS at connect time instead of silently dropping to Ollama. Do not
 # set FORGE_PROVIDER=ollama for this foundry.
-provider = "claude-cli"
+# auto-resolves to claude-cli in a Claude Code session (no ollama)
+provider = "auto"
 ollama_base_url = "http://127.0.0.1:11434/v1"
 ollama_model = "qwen2.5:14b-instruct"
 claude_model = "claude-haiku-4-5"

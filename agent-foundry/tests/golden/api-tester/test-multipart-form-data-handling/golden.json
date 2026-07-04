@@ -1,0 +1,125 @@
+{
+  "agent": "api-tester-test-multipart-form-data-handling",
+  "lane": "multipart-encoding-parsing-mechanics",
+  "contract": {
+    "text_fields": [
+      {
+        "name": "text_field_a_name",
+        "value": "text_field_a_value"
+      },
+      {
+        "name": "text_field_b_name",
+        "value": "text_field_b_value"
+      }
+    ],
+    "file_fields": [
+      {
+        "name": "file_field_name"
+      }
+    ],
+    "max_file_bytes": 0,
+    "readback_path": "readback_path_role",
+    "duplicate_policy": "runtime_declared_first_last_or_array"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "201",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "assemble a multipart body with the two named text parts and one named file part under a single boundary",
+        "POST the multipart body to the target upload endpoint",
+        "assert the create status class",
+        "assert each text field is stored verbatim",
+        "capture the documented returned_file_url field",
+        "compute the stored file md5 and assert it equals the source md5 round-trip",
+        "re-fetch via the readback path and assert the persisted readback matches"
+      ]
+    },
+    {
+      "name": "multi_file",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "201",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "assemble two file parts sharing the one file field name, forming an array",
+        "POST the multipart body to the target upload endpoint",
+        "assert the create status class",
+        "assert exactly two stored entries under that field forming an array",
+        "assert each stored file md5 matches its source"
+      ]
+    },
+    {
+      "name": "part_without_filename",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "201",
+      "also_accept": [
+        "200",
+        "400"
+      ],
+      "steps": [
+        "assemble a part with a Content-Disposition name but no filename",
+        "POST the multipart body to the target upload endpoint",
+        "assert it is parsed per the documented filename-absent rule",
+        "assert the resource reflects that classification"
+      ]
+    },
+    {
+      "name": "duplicate_text_field",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "201",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "assemble two text parts sharing one field name with distinct values",
+        "POST the multipart body to the target upload endpoint",
+        "assert the stored value matches the runtime-declared duplicate_policy exactly (first-wins, last-wins, or array)"
+      ]
+    },
+    {
+      "name": "field_order_independence",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "201",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "assemble the body with the file part first, then the two text parts",
+        "POST the multipart body to the target upload endpoint",
+        "assert the create status class",
+        "assert every text field stored verbatim and the file md5 matches, proving order independence"
+      ]
+    },
+    {
+      "name": "malformed_boundary",
+      "endpoint_role": "target_upload_endpoint",
+      "method": "POST",
+      "expected_class": "400",
+      "also_accept": [
+        "422"
+      ],
+      "steps": [
+        "assemble a body whose declared Content-Type boundary token disagrees with the in-body part delimiters",
+        "POST the malformed multipart body to the target upload endpoint",
+        "assert 400/422",
+        "assert no resource was created"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "multipart_encoding_fidelity",
+    "value": 1.0
+  }
+}

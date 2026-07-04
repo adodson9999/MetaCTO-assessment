@@ -1,0 +1,10 @@
+{
+  "metric_name": "contract_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x applicable variant) cases where the agent's observed actual_class equals the gold actual_class. A case the agent did not cover (no payload produced / not sent) counts as a mismatch. Denominator = applicable gold cases.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/gold.json",
+  "headline_metric": "payload_rejection_rate_pct",
+  "rationale": "All four agents hit the same local API, so the raw rejection rate is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: full matrix coverage, correct payload construction per variant, and faithful recording of the real status. The headline payload_rejection_rate_pct is still emitted by every agent as the task's QA finding."
+}

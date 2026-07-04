@@ -140,6 +140,11 @@ def classify(run_dir: Path, name: str, caps: dict) -> dict:
 
     if error:
         outcome, why = "ERROR", "traceback in stderr"
+    elif empty and unsupported:
+        # Producing no cases is EXPECTED when the probed capability is genuinely absent on the
+        # target (no RBAC, no enum enforcement, no documented response schema). That is ENV-LIMITED,
+        # not a model failure — so it never trips the G21 empty-output hard gate.
+        outcome, why = "ENV-LIMITED", f"no output; probed capability absent on target: {', '.join(unsupported)}"
     elif empty:
         outcome, why = "EMPTY", empty_reason
     elif pct is None:
@@ -206,6 +211,20 @@ def g5_empty_output(rows: list) -> dict:
     return {"id": "G5", "name": "empty-output-detection",
             "status": "WARN" if empty else "PASS",
             "detail": f"agents that produced no usable output (model failure): {empty or 'none'}"}
+
+
+def g21_no_silent_empty(rows: list) -> dict:
+    """HARD: no agent may ship EMPTY on a capability the target SUPPORTS. An EMPTY outcome here means
+    the agent ran but produced no usable output (e.g. its LLM case-gen timed out) while the probed
+    feature genuinely exists — the exact silent-miss that let the auth agent skip AUTH-ME-MALFORMED
+    and still be marked PASS. Empties whose capability is declared unsupported are already downgraded
+    to ENV-LIMITED by classify() and never reach here, so absent-feature 0%s do not trip this gate."""
+    empty = [r["agent"] for r in rows if r["outcome"] == "EMPTY"]
+    return {"id": "G21", "name": "no-silent-empty", "hard": True,
+            "status": "FAIL" if empty else "PASS",
+            "detail": (f"agent(s) EMPTY on a SUPPORTED capability (silent coverage miss — map to an "
+                       f"unsupported capability if the target truly lacks it, else fix the agent): {empty}"
+                       if empty else "no agent shipped empty output on a supported capability.")}
 
 
 def g6_metric_saturation(run_dir: Path, rows: list) -> dict:
@@ -362,6 +381,7 @@ _POSTMAN_FILES = {"collection.json", "environment.json"}
 _LAYOUT_FILES = {"cases.json", "cases.md"}
 _LAYOUT_IGNORE = {".DS_Store"}
 _PRESERVE_MARKER = "code-review"   # code-review judge fixtures/leaderboards: a separate subsystem, not run output
+_RESULTS_KEEP = {"_global"}        # code-review subsystem's shared dir — tolerated (kept by choice); see G23
 
 # Core-Requirements coverage floors (scenario_ids that MUST appear in each core agent's cases)
 _AUTH_REQUIRED = {"AUTH-LOGIN-VALID", "AUTH-LOGIN-WRONGPASS", "AUTH-LOGIN-UNKNOWN",
@@ -370,6 +390,49 @@ _AUTH_REQUIRED = {"AUTH-LOGIN-VALID", "AUTH-LOGIN-WRONGPASS", "AUTH-LOGIN-UNKNOW
 _CRUD_REQUIRED = {"CRUD-READ-ONE", "CRUD-CREATE", "CRUD-CREATE-NONPERSIST", "CRUD-UPDATE",
                   "CRUD-DELETE", "CRUD-READ-MISSING"}
 _SEARCH_REQUIRED = {"SEARCH-KEYWORD", "FILTER-CATEGORY", "PAGE-LIMIT-SKIP", "SELECT-FIELDS", "SORT-ASC"}
+
+
+_BUGREPORT_ARTIFACT_DIRS = {"screenshots", "recordings", "logs", "db"}
+# Index/manifest files are forbidden under BugReport (G22) — the per-bug JSONs are the source of truth.
+_FORBIDDEN_BUG_INDEX_RE = re.compile(r".*-index\.json$|^index\.json$")
+
+
+def _check_section(entry: Path) -> list:
+    """Validate one TestCases/ or BugReport/ section. TestCases is strict: every <agent>/ holds
+    EXACTLY {cases.json,cases.md}. BugReport is the deliverable's bug tree and may also hold
+    per-run index files (verified-/unverified-index.json), shared artifact dirs (screenshots/
+    recordings/logs/db), and per-agent bug reports in EITHER shape — System-B {cases.json,cases.md}
+    OR System-A verified_bugs/ | unverified_bugs/ (plus their own artifacts). Extras are allowed in
+    BugReport so a self-contained report (with its screenshots + screen recordings) still passes."""
+    bad: list = []
+    is_bug = entry.name == "BugReport"
+    for child in sorted(entry.iterdir()):
+        if child.name in _LAYOUT_IGNORE:
+            continue
+        if is_bug and child.is_file() and _FORBIDDEN_BUG_INDEX_RE.match(child.name):
+            bad.append(f"BugReport/{child.name}: forbidden index file (G22 — bug JSONs are the "
+                       f"source of truth)")
+            continue
+        if is_bug and child.is_dir() and child.name in _BUGREPORT_ARTIFACT_DIRS:
+            continue
+        if is_bug and child.is_dir() and child.name == "unverified":
+            continue  # the single top-level unverified/{category}/ tree (not an agent)
+        if not child.is_dir():
+            bad.append(f"{entry.name}/{child.name}: loose file (must be <agent>/ dir)")
+            continue
+        names = {f.name for f in child.iterdir() if f.name not in _LAYOUT_IGNORE}
+        if not is_bug:
+            if names != _LAYOUT_FILES:
+                bad.append(f"{entry.name}/{child.name}: files {sorted(names)} != {sorted(_LAYOUT_FILES)}")
+            continue
+        # BugReport agent dir: System-B cases pair, OR System-A verified_bugs/ (unverified bugs no
+        # longer live per-agent — they are in the top-level BugReport/unverified/ tree).
+        system_b = _LAYOUT_FILES.issubset(names)
+        system_a = "verified_bugs" in names
+        if not (system_b or system_a):
+            bad.append(f"BugReport/{child.name}: neither {sorted(_LAYOUT_FILES)} nor "
+                       f"verified_bugs/ present (got {sorted(names)})")
+    return bad
 
 
 def g13_results_layout() -> dict:
@@ -382,7 +445,8 @@ def g13_results_layout() -> dict:
         return {"id": "G13", "name": "results-layout", "hard": True, "status": "PASS",
                 "detail": "results/ absent (nothing to validate)."}
     for top in sorted(results.iterdir()):
-        if top.name in _LAYOUT_IGNORE or _PRESERVE_MARKER in top.name or top.name == "runs":
+        if (top.name in _LAYOUT_IGNORE or _PRESERVE_MARKER in top.name
+                or top.name == "runs" or top.name in _RESULTS_KEEP):
             continue   # transient shared executor dir (runs/) + code-review subsystem are tolerated
         if not top.is_dir() or not _DATE_RE.match(top.name):
             bad.append(f"forbidden top-level entry: {top.name} (only YYYY-MM-DD dirs allowed)")
@@ -406,15 +470,7 @@ def g13_results_layout() -> dict:
                 if entry.name not in _AGENT_SECTIONS:
                     bad.append(f"{top.name}/{tdir.name}/{entry.name}: not TestCases|BugReport|Postman")
                     continue
-                for agent in sorted(entry.iterdir()):
-                    if agent.name in _LAYOUT_IGNORE:
-                        continue
-                    if not agent.is_dir():
-                        bad.append(f"{entry.name}/{agent.name}: loose file (must be <agent>/ dir)")
-                        continue
-                    names = {f.name for f in agent.iterdir() if f.name not in _LAYOUT_IGNORE}
-                    if names != _LAYOUT_FILES:
-                        bad.append(f"{entry.name}/{agent.name}: files {sorted(names)} != {sorted(_LAYOUT_FILES)}")
+                bad.extend(_check_section(entry))
     return {"id": "G13", "name": "results-layout", "hard": True,
             "status": "FAIL" if bad else "PASS",
             "detail": ("; ".join(bad) if bad
@@ -592,11 +648,325 @@ def g19_postman_coverage(out_root: Path = None) -> dict:
             "detail": "; ".join(problems[:6]) or f"all {required_total} API-call test cases present in the collection."}
 
 
+def g20_deliverable_separation(out_root: Path = None) -> dict:
+    """HARD: the per-run deliverable tree keeps TEST CASES and BUG REPORTS in SEPARATE folders and
+    ships a Postman collection. Concretely, for results/<date>/<time>/:
+      - TestCases/ exists and holds >=1 <agent>/cases.json (test cases ARE a first-class deliverable,
+        not merely a by-product hidden under runs/ or mixed into the bug folder);
+      - Postman/collection.json exists;
+      - every agent that appears under BugReport/ ALSO appears under TestCases/ (a bug can never be the
+        only place an agent's cases live — the test case it came from must be in TestCases);
+      - no loose cases.json sits directly under the dated root or directly under BugReport/ (files live
+        inside <agent>/ dirs).
+    This is the gate that encodes 'test cases in their own TestCases/ folder, separate from BugReport/,
+    plus a Postman collection' — it must hold after every full-orchestration finalize."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    if out_root is None:
+        return {"id": "G20", "name": "deliverable-separation", "hard": True, "status": "FAIL",
+                "detail": "no dated run tree found under results/."}
+    tc_root, br_root, pm = out_root / "TestCases", out_root / "BugReport", out_root / "Postman"
+    problems: list[str] = []
+
+    def _agents_with_cases(root: Path) -> set:
+        if not root.is_dir():
+            return set()
+        return {p.name for p in root.iterdir()
+                if p.is_dir() and p.name not in _LAYOUT_IGNORE and (p / "cases.json").is_file()}
+
+    def _bug_agents(root: Path) -> set:
+        """Agents under BugReport/, in either shape: System-B (cases.json) or System-A
+        (verified_bugs/). The top-level unverified/ tree, index files, and artifact dirs are not
+        agents (unverified bugs are grouped by category, with finding_agent recorded per report)."""
+        if not root.is_dir():
+            return set()
+        out = set()
+        for p in root.iterdir():
+            if (not p.is_dir() or p.name in _LAYOUT_IGNORE or p.name in _BUGREPORT_ARTIFACT_DIRS
+                    or p.name == "unverified"):
+                continue
+            names = {f.name for f in p.iterdir()}
+            if (p / "cases.json").is_file() or "verified_bugs" in names:
+                out.add(p.name)
+        return out
+
+    tc_agents = _agents_with_cases(tc_root)
+    if not tc_root.is_dir():
+        problems.append("missing TestCases/ (test cases must be their own deliverable folder)")
+    elif not tc_agents:
+        problems.append("TestCases/ has no <agent>/cases.json")
+    if not (pm / "collection.json").is_file():
+        problems.append("missing Postman/collection.json")
+    if br_root.is_dir():
+        br_agents = _bug_agents(br_root)
+        orphan_bugs = sorted(br_agents - tc_agents)
+        if orphan_bugs:
+            problems.append(f"BugReport agent(s) with no TestCases entry (test cases only in the bug "
+                            f"folder): {orphan_bugs}")
+        # loose cases.json directly under BugReport/ (not inside an <agent>/ dir)
+        if (br_root / "cases.json").is_file():
+            problems.append("loose cases.json directly under BugReport/ (must be BugReport/<agent>/)")
+    if (tc_root / "cases.json").is_file():
+        problems.append("loose cases.json directly under TestCases/ (must be TestCases/<agent>/)")
+    if (out_root / "cases.json").is_file():
+        problems.append("loose cases.json directly under the dated root")
+    return {"id": "G20", "name": "deliverable-separation", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": "; ".join(problems)
+                      or (f"TestCases/ ({len(tc_agents)} agents) + Postman/collection.json present and "
+                          f"separate from BugReport/.")}
+
+
 def core_gate(out_root: Path = None) -> list:
-    """The deliverable gate set: layout (G13) + the Core-Requirements coverage/Postman gates."""
+    """The deliverable gate set: layout (G13) + the Core-Requirements coverage/Postman gates +
+    the TestCases/BugReport/Postman separation gate (G20)."""
     return [g13_results_layout(), g14_auth_lifecycle(out_root), g15_crud_products(out_root),
             g16_search_coverage(out_root), g17_postman(out_root),
-            g18_postman_testcase_alignment(out_root), g19_postman_coverage(out_root)]
+            g18_postman_testcase_alignment(out_root), g19_postman_coverage(out_root),
+            g20_deliverable_separation(out_root), g22_no_bug_index_files(out_root),
+            g24_evidence_authenticity(out_root), g25_unverified_layout(out_root)]
+
+
+def g22_no_bug_index_files(out_root: Path = None) -> dict:
+    """HARD: no index/manifest file may exist under BugReport/. The per-bug JSONs are the single
+    source of truth; verified-index.json / unverified-index.json / index.json must NOT be created.
+    Any file under BugReport whose name matches '*-index.json' or 'index.json' fails this gate."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    if out_root is None:
+        return {"id": "G22", "name": "no-bug-index-files", "hard": True, "status": "PASS",
+                "detail": "no dated run tree (nothing to validate)."}
+    br = out_root / "BugReport"
+    offenders = sorted(str(p.relative_to(out_root)) for p in br.rglob("*.json")
+                       if _FORBIDDEN_BUG_INDEX_RE.match(p.name)) if br.is_dir() else []
+    return {"id": "G22", "name": "no-bug-index-files", "hard": True,
+            "status": "FAIL" if offenders else "PASS",
+            "detail": (f"forbidden index file(s) under BugReport (delete them; the bug JSONs are the "
+                       f"source of truth): {offenders}" if offenders
+                       else "no index/manifest files under BugReport.")}
+
+
+def g23_results_clean() -> dict:
+    """HARD: after a completed run's tidy, results/ holds ONLY dated deliverable dirs (YYYY-MM-DD)
+    and the tolerated _global/ (code-review) — no runs/, no legacy bug-reports/, no loose
+    test-case-registry*.json. These are deleted as soon as the deliverable is built."""
+    results = WS / "results"
+    if not results.is_dir():
+        return {"id": "G23", "name": "results-clean", "hard": True, "status": "PASS",
+                "detail": "results/ absent (nothing to validate)."}
+    strays = sorted(e.name for e in results.iterdir()
+                    if e.name not in _RESULTS_KEEP and e.name != ".DS_Store"
+                    and "code-review" not in e.name
+                    and not (e.is_dir() and _DATE_RE.match(e.name)))
+    return {"id": "G23", "name": "results-clean", "hard": True,
+            "status": "FAIL" if strays else "PASS",
+            "detail": (f"non-deliverable entries left under results/ (should be deleted post-run): "
+                       f"{strays}" if strays else "results/ holds only <date>/ deliverables + _global.")}
+
+
+_PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
+# server-log origin markers — a captured log must contain the target's OWN request-logger output,
+# not the agent's test-runner stdout/stderr.
+_SERVER_LOG_MARKERS = ("HTTP Request", "response_time_ms", "SERVER LOG (origin:")
+
+
+def _is_real_video(path: Path) -> bool:
+    """True when the file is a real, multi-frame video (a watchable screen recording): an MP4
+    (ISO Base Media 'ftyp' box) or an animated GIF (>1 frame). Single-image files fail."""
+    try:
+        head = path.read_bytes()[:32]
+    except OSError:
+        return False
+    if head[4:8] == b"ftyp":                      # MP4/MOV
+        return path.stat().st_size > 1024
+    if head[:6] in (b"GIF87a", b"GIF89a"):        # GIF — require animation (multiple frames)
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                return getattr(im, "n_frames", 1) > 1
+        except Exception:  # noqa: BLE001
+            return False
+    return False
+
+
+def _cast_shows_steps(path: Path) -> bool:
+    """True when an asciinema .cast is a real recording of the reproduction: a v2 header plus
+    output events that include an executed command ('$ ' / 'curl') AND a response line
+    (an HTTP status or a curl error) — i.e. not a single static frame. (Text fallback used only
+    when ffmpeg is unavailable to encode an MP4.)"""
+    try:
+        lines = path.read_text().splitlines()
+        header = json.loads(lines[0])
+    except (OSError, ValueError, IndexError):
+        return False
+    if header.get("version") != 2:
+        return False
+    body = "".join(json.loads(ln)[2] for ln in lines[1:]
+                   if ln.strip().startswith("[")) if len(lines) > 1 else ""
+    has_cmd = ("curl" in body) or ("$ " in body)
+    has_resp = ("HTTP" in body) or ("curl:" in body)
+    return has_cmd and has_resp and len(lines) - 1 >= 5
+
+
+def _is_real_recording(path: Path) -> bool:
+    """A valid reproduction recording: a real watchable video (MP4/animated GIF) or, only as a
+    fallback, a stepped asciinema .cast."""
+    if path.suffix.lower() in (".mp4", ".mov", ".gif"):
+        return _is_real_video(path)
+    if path.suffix.lower() == ".cast":
+        return _cast_shows_steps(path)
+    return False
+
+
+def g24_evidence_authenticity(out_root: Path = None) -> dict:
+    """HARD: every bug's captured evidence is REAL, not a placeholder.
+      - screenshot: an actual PNG of the reproduction (PNG magic bytes) — never a '*-replay.txt'.
+      - recording: a real, watchable screen recording of the reproduction — an MP4 (or animated
+        GIF); a stepped asciinema .cast is accepted only as a fallback when ffmpeg is unavailable.
+        A single static image / non-animated file fails.
+      - log: BEST-EFFORT (like db_dump) — when a report references a log it must contain the
+        target server's OWN request-logger output, not the test runner's stdout. A report with no
+        log is allowed (the server may not have been capturable), but a referenced log that is
+        empty or non-server-origin fails.
+    A single placeholder screenshot (a .txt), a static cast, or a non-server log fails the gate."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    if out_root is None:
+        return {"id": "G24", "name": "evidence-authenticity", "hard": True, "status": "PASS",
+                "detail": "no dated run tree (nothing to validate)."}
+    tree = out_root / "BugReport"
+    if not tree.is_dir():
+        return {"id": "G24", "name": "evidence-authenticity", "hard": True, "status": "PASS",
+                "detail": "no BugReport tree (nothing to validate)."}
+    # any leftover text-replay placeholder screenshot is an immediate fail
+    replays = [str(p.relative_to(out_root)) for p in tree.rglob("*-replay.txt")]
+    bugs = [p for p in tree.rglob("*.json")
+            if ("/verified_bugs/" in str(p) or "/unverified/" in str(p))
+            and p.stem[:1] in "BVSb"]  # BUG-/VULN-/BIZ-/SW-
+    bad_shot, bad_cast, bad_log, n = [], [], [], 0
+    for bf in bugs:
+        try:
+            d = json.loads(bf.read_text())
+        except (OSError, ValueError):
+            continue
+        n += 1
+        atts = d.get("attachments") or {}
+        arts = d.get("artifacts") or {}
+        bid = d.get("id") or d.get("bug_id")
+        shot = atts.get("screenshot") or arts.get("screenshot_path")
+        cast = atts.get("recording") or arts.get("recording_path")
+        log = atts.get("log") or arts.get("log_path")
+        sp = (out_root / shot) if shot else None
+        if not sp or not sp.is_file() or sp.read_bytes()[:8] != _PNG_MAGIC:
+            bad_shot.append(bid)
+        cp = (out_root / cast) if cast else None
+        if not cp or not cp.is_file() or not _is_real_recording(cp):
+            bad_cast.append(bid)
+        if log:  # referenced => must be real server output (best-effort means it may be absent)
+            lp = out_root / log
+            txt = lp.read_text(errors="replace") if lp.is_file() else ""
+            if not any(m in txt for m in _SERVER_LOG_MARKERS):
+                bad_log.append(bid)
+    problems = []
+    if replays:
+        problems.append(f"{len(replays)} placeholder '*-replay.txt' screenshot(s) present")
+    if bad_shot:
+        problems.append(f"{len(bad_shot)} bug(s) without a real PNG screenshot: {bad_shot[:5]}")
+    if bad_cast:
+        problems.append(f"{len(bad_cast)} bug(s) without a real video recording: {bad_cast[:5]}")
+    if bad_log:
+        problems.append(f"{len(bad_log)} referenced log(s) not server-origin: {bad_log[:5]}")
+    return {"id": "G24", "name": "evidence-authenticity", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": ("; ".join(problems) if problems else
+                       f"all {n} bug(s): real PNG screenshot + watchable video recording + "
+                       f"server-origin logs where captured.")}
+
+
+# canonical id-prefix -> category folder (kept local so guardrails has no cross-package import)
+_UNVERIFIED_PREFIX_TO_CATEGORY = {"VULN": "vulnerability", "BIZ": "business-workflow",
+                                  "SW": "computer-software"}
+_UNVERIFIED_ID_RE = re.compile(r"^(VULN|BIZ|SW)-")
+
+
+def g25_unverified_layout(out_root: Path = None) -> dict:
+    """HARD: every UNVERIFIED bug lives in the single top-level tree
+    BugReport/unverified/{category}/{PREFIX}-*.json, with its screenshot/recording/logs co-located
+    under BugReport/unverified/{category}/{screenshots,recordings,logs}/. Concretely:
+      - the legacy per-agent layout BugReport/<agent>/unverified_bugs/ is FORBIDDEN (none may exist);
+      - no unverified report (id VULN-/BIZ-/SW-) may sit under a verified_bugs/ dir or any per-agent
+        dir — only under BugReport/unverified/{category}/;
+      - the {category} path segment equals the report's `category` field AND the id prefix
+        (VULN→vulnerability, BIZ→business-workflow, SW→computer-software);
+      - finding_agent is non-empty (the owning agent, since it is no longer in the path);
+      - every referenced artifact (screenshot/recording/log) is co-located under
+        BugReport/unverified/{category}/.
+    A run with no unverified bugs passes trivially."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    if out_root is None:
+        return {"id": "G25", "name": "unverified-layout", "hard": True, "status": "PASS",
+                "detail": "no dated run tree (nothing to validate)."}
+    tree = out_root / "BugReport"
+    if not tree.is_dir():
+        return {"id": "G25", "name": "unverified-layout", "hard": True, "status": "PASS",
+                "detail": "no BugReport tree (nothing to validate)."}
+    problems: list = []
+    # 1. legacy per-agent unverified layout must not exist
+    legacy = [str(p.relative_to(out_root)) for p in tree.rglob("unverified_bugs") if p.is_dir()]
+    if legacy:
+        problems.append(f"legacy per-agent unverified_bugs/ dir(s) present (move to "
+                        f"BugReport/unverified/): {legacy[:5]}")
+    # 2. no unverified-id report outside BugReport/unverified/
+    stray = [str(p.relative_to(out_root)) for p in tree.rglob("*.json")
+             if _UNVERIFIED_ID_RE.match(p.stem) and "/unverified/" not in str(p)]
+    if stray:
+        problems.append(f"unverified report(s) not under BugReport/unverified/: {stray[:5]}")
+    # 3. validate each report under unverified/{category}/
+    uv_root = tree / "unverified"
+    n = 0
+    if uv_root.is_dir():
+        for cat_dir in sorted(p for p in uv_root.iterdir() if p.is_dir()):
+            cat = cat_dir.name
+            for rp in sorted(cat_dir.glob("*.json")):
+                n += 1
+                try:
+                    d = json.loads(rp.read_text())
+                except (OSError, ValueError):
+                    problems.append(f"unreadable unverified report {rp.name}")
+                    continue
+                bid = d.get("bug_id") or ""
+                pref = bid.split("-", 1)[0]
+                want_cat = _UNVERIFIED_PREFIX_TO_CATEGORY.get(pref)
+                if want_cat != cat or d.get("category") != cat:
+                    problems.append(f"{rp.name}: category mismatch (folder={cat}, "
+                                    f"field={d.get('category')}, id-prefix→{want_cat})")
+                if not d.get("finding_agent"):
+                    problems.append(f"{rp.name}: empty finding_agent")
+                arts = d.get("artifacts") or {}
+                atts = d.get("attachments") or {}
+                for got in (arts.get("screenshot_path") or atts.get("screenshot"),
+                            arts.get("recording_path") or atts.get("recording"),
+                            arts.get("log_path") or atts.get("log")):
+                    if got and not got.startswith(f"BugReport/unverified/{cat}/"):
+                        problems.append(f"{rp.name}: artifact not co-located under "
+                                        f"unverified/{cat}/ ({got})")
+    return {"id": "G25", "name": "unverified-layout", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": ("; ".join(problems[:8]) if problems else
+                       f"all {n} unverified bug(s) under BugReport/unverified/<category>/ with "
+                       f"category-consistent ids and co-located artifacts.")}
+
+
+def deliverable_gate(out_root: Path) -> list:
+    """The per-run HARD subset used by the full-orchestration finalize to decide BROKEN. Excludes the
+    global G13 (which polices the WHOLE results/ dir for legacy strays — a separate cleanliness concern);
+    every gate here is scoped to THIS run's out_root, so a clean full run can always satisfy it."""
+    return [g14_auth_lifecycle(out_root), g15_crud_products(out_root), g16_search_coverage(out_root),
+            g17_postman(out_root), g18_postman_testcase_alignment(out_root),
+            g19_postman_coverage(out_root), g20_deliverable_separation(out_root),
+            g22_no_bug_index_files(out_root), g24_evidence_authenticity(out_root),
+            g25_unverified_layout(out_root)]
 
 
 def run(run_id: str) -> dict:
@@ -628,6 +998,7 @@ def run(run_id: str) -> dict:
         g10_coverage(rows),
         g11_per_agent_producer(run_dir),
         g12_agent_output_location(run_dir),
+        g21_no_silent_empty(rows),
     ]
     from collections import Counter
     dist = dict(Counter(r["outcome"] for r in rows))

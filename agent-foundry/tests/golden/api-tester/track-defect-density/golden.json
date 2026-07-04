@@ -1,0 +1,17 @@
+{
+  "sprint_name": "sprint_under_test",
+  "defect_density": 2.5,
+  "severity_weighted_density": 6.04,
+  "per_area_densities": {
+    "component_a": 2.67,
+    "component_b": 2.22
+  },
+  "rolling_3_sprint_average": 3.0,
+  "deviation_percent": -16.67,
+  "alert": false,
+  "p1_count": 1,
+  "p2_count": 2,
+  "p3_count": 4,
+  "p4_count": 5,
+  "trend": "down"
+}

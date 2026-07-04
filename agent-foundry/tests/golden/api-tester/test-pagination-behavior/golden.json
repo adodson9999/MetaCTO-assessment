@@ -1,0 +1,265 @@
+{
+  "agent": "api-tester-test-pagination-behavior",
+  "lane": "page-size-offset-pagination-contract",
+  "cases": [
+    {
+      "role": "page_first",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "page_window",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "limit": "page_size",
+        "skip": 0,
+        "position": "first"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "non_empty_result_array": true
+      },
+      "steps": [
+        "resolve the target collection, the documented page-size param, and the documented offset param from the runtime brief by role",
+        "set the page-size param to the documented page size and the offset param to 0",
+        "issue the read-only GET for the first page via the harness",
+        "record the returned result array and the total/offset/page-size metadata for the overlap-and-gap baseline"
+      ]
+    },
+    {
+      "role": "page_middle",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "page_window",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "limit": "page_size",
+        "skip": "page_size",
+        "position": "middle"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "non_empty_result_array": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size/offset params by role",
+        "set the page-size param to the documented page size and the offset param to one page in",
+        "issue the read-only GET for the middle page via the harness",
+        "record the returned result array for the overlap-and-gap baseline"
+      ]
+    },
+    {
+      "role": "page_last_partial",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "page_window",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "limit": "page_size",
+        "skip": "total_minus_last_page",
+        "position": "last"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "partial_result_array": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size/offset params by role",
+        "set the offset param to the last page boundary derived from the documented total",
+        "issue the read-only GET for the last partial page via the harness",
+        "record the partial result array for the overlap-and-gap baseline"
+      ]
+    },
+    {
+      "role": "page_beyond_last",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "page_window",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "limit": "page_size",
+        "skip": "beyond_total",
+        "position": "beyond"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "empty_result_array": true,
+        "is_error": false
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size/offset params by role",
+        "set the offset param past the documented total",
+        "issue the read-only GET for the beyond-last page via the harness",
+        "assert a success status with an empty result array, never an error"
+      ]
+    },
+    {
+      "role": "default_page_size",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "omit_page_size_param",
+        "page_size_param": "page_size_param"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "result_count_equals_documented_default": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size param by role",
+        "omit the page-size param entirely so the documented default applies",
+        "issue the read-only GET via the harness",
+        "assert the result count matches the documented default page size"
+      ]
+    },
+    {
+      "role": "return_all_page_size",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "return_all",
+        "page_size_param": "page_size_param",
+        "limit": 0
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "returns_all_items": true,
+        "returns_none": false
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size param by role",
+        "set the page-size param to the documented value that means return all items",
+        "issue the read-only GET via the harness",
+        "assert the documented behavior is return all items, never an empty page"
+      ]
+    },
+    {
+      "role": "oversize_page_size",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "oversize",
+        "page_size_param": "page_size_param",
+        "limit": "greater_than_total"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "result_count_capped_at_total": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size param by role",
+        "set the page-size param above the documented total",
+        "issue the read-only GET via the harness",
+        "assert the result count is capped at the documented total"
+      ]
+    },
+    {
+      "role": "pagination_metadata",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "read_metadata",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "metadata_present": [
+          "total",
+          "offset",
+          "page_size"
+        ],
+        "metadata_correct": true
+      },
+      "steps": [
+        "resolve the target collection and the documented metadata field names by role",
+        "issue the read-only GET for a bounded page via the harness",
+        "assert the documented total, offset, and page-size metadata fields are present in the body",
+        "assert each metadata field is correct for the requested window"
+      ]
+    },
+    {
+      "role": "overlap_and_gap",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "cross_page_overlap_gap",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "against": "ordered_baseline"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "asserts": {
+        "zero_overlap_across_pages": true,
+        "zero_gaps_across_pages": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size/offset params by role",
+        "walk consecutive pages of the documented page size via the harness",
+        "assert no id appears on more than one page (zero overlap) against the ordered baseline",
+        "assert every baseline id appears on exactly one page (zero gaps) against the ordered baseline"
+      ]
+    },
+    {
+      "role": "invalid_params",
+      "endpoint_role": "target_collection",
+      "method": "GET",
+      "recipe": {
+        "kind": "invalid_param_probes",
+        "page_size_param": "page_size_param",
+        "offset_param": "offset_param",
+        "probes": [
+          {
+            "label": "negative_page_size",
+            "param": "page_size_param",
+            "value": "-1"
+          },
+          {
+            "label": "negative_offset",
+            "param": "offset_param",
+            "value": "-1"
+          },
+          {
+            "label": "nonnumeric_page_size",
+            "param": "page_size_param",
+            "value": "abc"
+          },
+          {
+            "label": "nonnumeric_offset",
+            "param": "offset_param",
+            "value": "abc"
+          }
+        ]
+      },
+      "expected_class": "4xx",
+      "also_accept": [
+        "2xx"
+      ],
+      "asserts": {
+        "rejected_or_documented_fallback": true
+      },
+      "steps": [
+        "resolve the target collection and the documented page-size/offset params by role",
+        "issue each invalid-param probe (negative page size, negative offset, non-numeric page-size, non-numeric offset) as a read-only GET via the harness",
+        "assert each probe is rejected with a client-error class or handled per the documented fallback",
+        "record each probe's real response for the report"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "pagination_contract_fidelity",
+    "value": 1.0
+  }
+}

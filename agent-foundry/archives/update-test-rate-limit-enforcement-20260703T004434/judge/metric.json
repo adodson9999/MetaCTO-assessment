@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-rate-limit-enforcement",
+  "metric_name": "rate_limit_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (endpoints x 8).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-rate-limit-enforcement/gold.json",
+  "headline_metric": "rate_limit_trigger_precision",
+  "headline_definition": "Rate Limit Trigger Precision = the ordinal number of the request on which the first 429 is returned (an integer, or 'none' when no 429 occurs). Pass = the first 429 occurs on exactly request N+1 where N = limit_n (=100). Fail = a 429 before N+1 (over-blocking), no 429 at all (not enforced), Retry-After absent on the 429, or a request after the Retry-After window still returning 429. Empirically DummyJSON's real limiter PASSES: first 429 on exactly request 101 with Retry-After:10.",
+  "scenarios_per_endpoint": 8,
+  "rationale": "DummyJSON runs a real express-rate-limit limiter (max 100 requests per 10s window, keyed by X-Forwarded-For under trust-proxy), active because the target is booted NODE_ENV=production. All four agents exercise the same limiter, each under its own isolated client-key bucket, so the raw Rate Limit Trigger Precision is identical for every faithful agent (first 429 on request 101 -> PASS, the documented limit IS correctly enforced). That headline is a property of the target API, not the agent, and is emitted by every agent as the task's QA finding. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct request sequence (an at_limit burst of exactly limit_n=100 requests, the single over_limit request N+1=101, the Retry-After inspection, and the two correctly-timed window probes at -2s/+1s relative to window close) and faithfully exercise every scenario. The headline rate_limit_contract_correctness_rate_pct is also emitted (empirically ~100% against the correctly-enforcing limiter); because it is identical across faithful agents, fidelity-to-gold is what ranks the four.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)"
+}

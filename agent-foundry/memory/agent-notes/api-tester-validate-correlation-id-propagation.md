@@ -8,3 +8,8 @@
 - [2026-06-29T18:03:57.793969+00:00] run=2026-06-29_17-10-02 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
 - [2026-06-29T20:20:57.377025+00:00] run=2026-06-29_19-27-43 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
 - [2026-06-29T22:52:10.668929+00:00] run=2026-06-29_22-00-33 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T02:15:44.428131+00:00] run=RUN-20260702-000138 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T18:28:03.279889+00:00] run=20260702T182700-3eff9c correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T23:03:04.424541+00:00] run=20260702T230103-8126f0 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T23:04:23.885674+00:00] run=20260702T230304-19121c correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-03T23:06:08.067642+00:00] run=RUN-20260703-181017 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)

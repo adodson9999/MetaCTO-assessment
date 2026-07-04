@@ -7,3 +7,5 @@
 - [2026-06-29T18:18:21.886596+00:00] run=2026-06-29_17-10-02 enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
 - [2026-06-29T20:35:42.462656+00:00] run=2026-06-29_19-27-43 enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
 - [2026-06-29T23:22:03.301281+00:00] run=2026-06-29_22-00-33 enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
+- [2026-07-02T03:13:17.962691+00:00] run=RUN-20260702-000138 enum-value-restriction test run: rate=0.0% over 4 endpoints (0 cases); invalid-rejection=None%
+- [2026-07-04T00:37:31.497528+00:00] run=RUN-20260703-181017 enum-value-restriction test run: rate=0.0% over 4 endpoints (0 cases); invalid-rejection=None%

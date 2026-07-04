@@ -1,0 +1,132 @@
+{
+  "agent": "api-tester-test-file-upload-and-download",
+  "lane": "file-upload-download-size-mime-integrity-authz",
+  "cases": [
+    {
+      "role": "upload_1kb_valid",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "valid_1kb",
+        "size_bytes": 1024
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "200"
+      ]
+    },
+    {
+      "role": "upload_exactly_max_size",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "exactly_max"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "200"
+      ]
+    },
+    {
+      "role": "upload_max_plus_one_rejected",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "max_plus_one"
+      },
+      "expected_class": "413",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "upload_zero_byte",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "zero_byte",
+        "size_bytes": 0
+      },
+      "expected_class": "documented",
+      "also_accept": [
+        "2xx",
+        "400"
+      ]
+    },
+    {
+      "role": "upload_disallowed_mime",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "disallowed_mime"
+      },
+      "expected_class": "415",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "upload_magic_byte_mismatch",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "magic_byte_mismatch"
+      },
+      "expected_class": "415",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "upload_path_traversal_filename",
+      "endpoint_role": "upload_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "traversal_filename"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "download_md5_round_trip",
+      "endpoint_role": "download_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "md5_round_trip"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "download_nonexistent_or_deleted",
+      "endpoint_role": "download_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "absent_id"
+      },
+      "expected_class": "404",
+      "also_accept": [
+        "410"
+      ]
+    },
+    {
+      "role": "download_authorization_cross_user",
+      "endpoint_role": "download_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "cross_user"
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "404"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "file_upload_download_fidelity",
+    "value": 1.0
+  }
+}

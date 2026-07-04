@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / test-long-polling-support",
+  "metric_name": "longpoll_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (channel x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (case not emitted / plan field miscopied so the probe diverged -> observed 'missing' or a different token) counts as a mismatch. Denominator = all gold scenarios (3 channels x (4 no-event + 5 event + 1 arithmetic) = 30).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-long-polling-support/gold.json",
+  "headline_metric": "longpoll_response_accuracy_pct",
+  "scenarios_total": 30,
+  "rationale": "All four agents drive the same local longpoll-target with the same background-thread event trigger, so the raw Long-Poll Response Accuracy (no-event polls returning 204 within the [poll_timeout_s-2, poll_timeout_s+2] window AND event polls returning 200 within 2s of the trigger, over the 6 cases) is a property of the fixture, not the agent (empirically 66.67% = 4/6: the deliberately non-compliant `inventory` channel returns 200 + a non-empty body on a no-event poll and stalls ~3s after the event with the wrong event_type, so both its cases fail). Fidelity-to-gold instead measures each framework's test quality: did it copy the contract (channel, poll_path, trigger_path, poll_timeout_s, expected_event_type), compute client_max_time_s = poll_timeout_s + 5, and list exactly the no_event then event case so faithfully that its harness-observed tokens reproduce the gold table. The headline longpoll_response_accuracy_pct is still emitted by every agent as the task's QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any case uncovered, or any plan field miscopied / client_max_time miscomputed so the observed token diverges from gold)"
+}

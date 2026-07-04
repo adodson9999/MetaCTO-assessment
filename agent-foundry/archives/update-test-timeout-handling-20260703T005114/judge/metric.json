@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / test-timeout-handling",
+  "metric_name": "timeout_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (service x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (probe not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (3 services x 1 max_wait_correct + 6 endpoints x 6 per-endpoint scenarios = 39).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-timeout-handling/gold.json",
+  "headline_metric": "timeout_enforcement_rate_pct",
+  "scenarios_total": 39,
+  "rationale": "All four agents drive the same local timeout-gateway under the same 60s injected upstream delay, so the raw Timeout Enforcement Rate (how many endpoints return 504/408 within max_wait with the TCP connection closed) is a property of the gateway, not the agent (empirically 83.33% = 5/6: the deliberately non-compliant /inventory/low-stock returns 500, leaks the upstream URL + a stack frame, and leaves the connection open). Fidelity-to-gold instead measures each framework's test quality: did it copy the contract, compute max_wait_s = upstream_timeout_s + buffer_s, list every endpoint once in BOTH the delayed and restore phases with verbatim method/path, and so faithfully exercise every scenario that its observed tokens reproduce the gold table. The headline timeout_enforcement_rate_pct is still emitted by every agent as the task's QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered, or any probe mis-constructed / max_wait miscomputed so the observed token diverges from gold)"
+}

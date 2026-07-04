@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / test-pagination-behavior",
+  "metric_name": "pagination_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 18).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-pagination-behavior/gold.json",
+  "headline_metric": "pagination_correctness_rate_pct",
+  "scenarios_per_collection": 18,
+  "rationale": "All four agents hit the same local DummyJSON read-only, so the raw Pagination Correctness Rate (how many scenarios the API satisfies under the idealized cursor-paginated contract) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct three-page request matrix (right limit/skip per page, page3 capped to the window remainder), the four invalid-parameter probes (correct param names + literal string values), and faithfully exercise every scenario. The headline pagination_correctness_rate_pct is still emitted by every agent as the task's QA finding (empirically ~77.78%: no last-page signal at a logical window, and lenient -1/0/cursor handling).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)"
+}

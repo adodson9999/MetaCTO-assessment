@@ -1,0 +1,39 @@
+{
+  "contract_oracle": "agent-foundry/references/contract-oracle.md",
+  "soak": 3,
+  "emits_deviations": true,
+  "cases": [
+    {
+      "case": "create",
+      "operation": "create",
+      "expected_by_contract": {
+        "status": 201,
+        "invariants": [
+          "id_or_location_present",
+          "readback_reflects_create"
+        ]
+      }
+    },
+    {
+      "case": "delete",
+      "operation": "delete",
+      "expected_by_contract": {
+        "status_class": "2xx",
+        "invariants": [
+          "readback_returns_404"
+        ]
+      }
+    },
+    {
+      "case": "list_sort",
+      "operation": "list_sort",
+      "expected_by_contract": {
+        "status": 200,
+        "invariants": [
+          "output_monotonic_on_sort_key",
+          "nested_keys_included"
+        ]
+      }
+    }
+  ]
+}

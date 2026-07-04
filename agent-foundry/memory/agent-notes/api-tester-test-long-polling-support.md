@@ -7,3 +7,6 @@
 - [2026-06-29T18:17:16.792968+00:00] run=2026-06-29_17-10-02 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
 - [2026-06-29T20:34:25.403108+00:00] run=2026-06-29_19-27-43 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
 - [2026-06-29T23:20:43.131894+00:00] run=2026-06-29_22-00-33 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-02T03:08:08.154978+00:00] run=RUN-20260702-000138 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-02T17:19:29.429921+00:00] run=20260702T171739-90b4a5 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-04T00:29:38.572172+00:00] run=RUN-20260703-181017 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)

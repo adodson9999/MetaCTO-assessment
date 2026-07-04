@@ -1,0 +1,101 @@
+{
+  "agent": "api-tester-verify-crud-operation-integrity",
+  "lane": "crud-operation-integrity",
+  "steps": [
+    {
+      "role": "create",
+      "kind": "create",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "asserts": {
+        "field_echo": "created_fields_equal_submitted_create_fields",
+        "returns_new_id": true
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "read",
+      "kind": "read",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "asserts": {
+        "field_echo": "read_fields_equal_created_state"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "update",
+      "kind": "update",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "asserts": {
+        "field_echo": "updated_fields_equal_submitted_update_fields"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "delete",
+      "kind": "delete",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "asserts": {
+        "soft_delete_markers": "documented_soft_delete_markers_present"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "write_persistence",
+      "kind": "write_persistence_proof",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "asserts": {
+        "write_persistence": "documented_persistence_behaviour_persisted_or_simulated",
+        "follow_up_read_reflects_contract_state": true
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "read_not_found",
+      "kind": "read",
+      "endpoint_role": "item_endpoint_nonexistent_id",
+      "method": "GET",
+      "asserts": {
+        "not_found": "known_nonexistent_item_id"
+      },
+      "expected_class": "404",
+      "also_accept": []
+    },
+    {
+      "role": "update_not_found",
+      "kind": "update",
+      "endpoint_role": "item_endpoint_nonexistent_id",
+      "method": "PUT",
+      "asserts": {
+        "not_found": "known_nonexistent_item_id"
+      },
+      "expected_class": "404",
+      "also_accept": []
+    },
+    {
+      "role": "delete_not_found",
+      "kind": "delete",
+      "endpoint_role": "item_endpoint_nonexistent_id",
+      "method": "DELETE",
+      "asserts": {
+        "not_found": "known_nonexistent_item_id"
+      },
+      "expected_class": "404",
+      "also_accept": []
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "crud_integrity_fidelity",
+    "value": 1.0
+  }
+}

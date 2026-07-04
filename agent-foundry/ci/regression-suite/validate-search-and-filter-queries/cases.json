@@ -1,0 +1,114 @@
+[
+  {
+    "test_case_id": "TC-SEARCH-001",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products/search?q=phone returns matching products (200)",
+    "method": "GET",
+    "path": "/products/search",
+    "query": {
+      "q": "phone"
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; products is array; body has 'total'."
+  },
+  {
+    "test_case_id": "TC-SEARCH-002",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products/search?q=<nonsense> returns an empty product set (200, total 0)",
+    "method": "GET",
+    "path": "/products/search",
+    "query": {
+      "q": "zzzqx-no-match"
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; products is array; total == 0."
+  },
+  {
+    "test_case_id": "TC-SEARCH-003",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products/category/smartphones returns only that category (200)",
+    "method": "GET",
+    "path": "/products/category/smartphones",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; products is array; every products[].category == 'smartphones'."
+  },
+  {
+    "test_case_id": "TC-SEARCH-004",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products/categories returns the category list (200)",
+    "method": "GET",
+    "path": "/products/categories",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; $root is array."
+  },
+  {
+    "test_case_id": "TC-SEARCH-005",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products?limit=5&skip=10 honours pagination (200)",
+    "method": "GET",
+    "path": "/products",
+    "query": {
+      "limit": 5,
+      "skip": 10
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; len(products) <= 5; skip == 10; limit == 5."
+  },
+  {
+    "test_case_id": "TC-SEARCH-006",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products?select=title,price returns only the selected fields (+id) (200)",
+    "method": "GET",
+    "path": "/products",
+    "query": {
+      "limit": 3,
+      "select": "title,price"
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; every products[] keys \u2286 ['id', 'price', 'title']."
+  },
+  {
+    "test_case_id": "TC-SEARCH-007",
+    "agent": "validate-search-and-filter-queries",
+    "title_summary": "GET /products?sortBy=title&order=asc returns title-sorted products (200)",
+    "method": "GET",
+    "path": "/products",
+    "query": {
+      "limit": 10,
+      "sortBy": "title",
+      "order": "asc"
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; products sorted by title asc."
+  }
+]

@@ -1,0 +1,180 @@
+{
+  "agent": "api-tester-test-rate-limit-enforcement",
+  "lane": "rate-limit-enforcement-contract",
+  "cases": [
+    {
+      "role": "at_limit_burst",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "burst",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "count": "limit_n",
+        "within": "one_window"
+      },
+      "expected_class": "success_class",
+      "also_accept": [],
+      "asserts": {
+        "every_request_succeeds": true,
+        "burst_count_equals_limit_n": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint, the documented key header and key value, the documented limit N, and the documented window from the runtime brief by role",
+        "issue exactly N read-only GETs carrying the documented key inside a single window via the harness",
+        "assert every one of the N burst requests returns the documented success class",
+        "record each response and the RateLimit-* header values for the header-decrement baseline"
+      ]
+    },
+    {
+      "role": "over_limit_request",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "over_limit",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "ordinal": "limit_n_plus_one",
+        "count": 1
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "asserts": {
+        "throttled": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint and the documented key header and value by role",
+        "issue one more read-only GET (request number N+1) with the same key immediately after the burst via the harness",
+        "assert the request is throttled with the documented throttle status class",
+        "record the throttled response for the report"
+      ]
+    },
+    {
+      "role": "window_probe_before_close",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "window_probe",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "offset_seconds": -2,
+        "position": "before_close"
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "asserts": {
+        "still_limited": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint and the documented window and key by role",
+        "wait until two seconds before the window is expected to close",
+        "issue one read-only GET with the exhausted key via the harness",
+        "assert the request is still limited because the window has not yet reopened"
+      ]
+    },
+    {
+      "role": "window_probe_after_open",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "window_probe",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "offset_seconds": 1,
+        "position": "after_open"
+      },
+      "expected_class": "success_class",
+      "also_accept": [],
+      "asserts": {
+        "succeeds_after_reset": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint and the documented window and key by role",
+        "wait until one second after the window is expected to open",
+        "issue one read-only GET with the same key via the harness",
+        "assert the request succeeds because the allowance has reset for the new window"
+      ]
+    },
+    {
+      "role": "per_key_isolation",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "second_key_burst",
+        "key_header_role": "key_header",
+        "second_key_value_role": "second_key_value",
+        "count": "limit_n",
+        "against": "first_key_exhausted"
+      },
+      "expected_class": "success_class",
+      "also_accept": [],
+      "asserts": {
+        "second_key_full_allowance": true,
+        "unaffected_by_first_key": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint, the documented key header, and a second independent key value by role",
+        "with the first key already exhausted, issue N read-only GETs carrying the second key inside one window via the harness",
+        "assert every request under the second key returns the documented success class",
+        "assert the second key's allowance is unaffected by the first key's exhaustion (per-key isolation)"
+      ]
+    },
+    {
+      "role": "limit_scope",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "scope_probe",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "scope_role": "documented_limit_scope",
+        "sibling_role": "sibling_endpoint"
+      },
+      "expected_class": "success_class",
+      "also_accept": [
+        "429"
+      ],
+      "asserts": {
+        "counter_shared_iff_scope_global": true,
+        "counter_separate_iff_scope_per_endpoint": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint, a documented sibling endpoint, and the documented limit scope (per-endpoint vs global) by role",
+        "exhaust the allowance on the primary endpoint, then issue a read-only GET against the sibling endpoint with the same key via the harness",
+        "if the documented scope is global, assert the sibling request is throttled because it shares the counter",
+        "if the documented scope is per-endpoint, assert the sibling request succeeds because it keeps a separate counter"
+      ]
+    },
+    {
+      "role": "ratelimit_header_decrement",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "header_decrement_probe",
+        "key_header_role": "key_header",
+        "key_value_role": "key_value",
+        "ratelimit_headers_role": "ratelimit_headers",
+        "across": "the_burst"
+      },
+      "expected_class": "success_class",
+      "also_accept": [],
+      "asserts": {
+        "ratelimit_headers_present": true,
+        "remaining_decrements_by_one_per_request": true,
+        "limit_equals_documented_limit_n": true,
+        "reset_present": true
+      },
+      "steps": [
+        "resolve the rate-limited endpoint, the documented key, and the documented RateLimit-Limit/RateLimit-Remaining/RateLimit-Reset (or X-RateLimit-*) header names by role",
+        "walk the N burst responses recorded from the at-limit case via the harness",
+        "assert the documented RateLimit-* headers are present on every burst response",
+        "assert RateLimit-Remaining decrements by exactly one per request across the burst, RateLimit-Limit equals the documented limit N, and RateLimit-Reset is present"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "rate_limit_enforcement_fidelity",
+    "value": 1.0
+  }
+}

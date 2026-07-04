@@ -1,0 +1,3 @@
+
+# CI regression suite: keep the cases, ignore the per-run replay report
+ci/regression-suite/last-run-report.json

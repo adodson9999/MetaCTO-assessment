@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI search-and-filter-query agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-
+collection Task. CrewAI routes the model through LiteLLM, so claude-haiku works via
+an "anthropic/<model>" string and the local Ollama backend via "ollama/<model>".
+Deterministic execution (read-only GETs), recording, and emit are the shared
+harness's job (agents/common/searchfilter.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import searchfilter  # noqa: E402
+from searchfilter_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API search-and-filter-query-testing agent",
+        goal="Convert one collection's documented filter contract into a single JSON filter test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = searchfilter.collection_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the four filter-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return searchfilter.extract_json(str(out)) or {}
+
+    summary = searchfilter.run_searchfilter_test(AGENT, generate)
+    print(f"[{AGENT}] accuracy={summary['filter_accuracy_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

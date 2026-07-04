@@ -1,0 +1,13 @@
+{
+  "generated_from": "results/2026-07-03/18-10-17",
+  "policy": "refresh-each-run",
+  "agents": 5,
+  "total_cases": 74,
+  "by_agent": {
+    "test-authentication-flows": 10,
+    "validate-null-empty-fields": 31,
+    "validate-request-payloads": 18,
+    "validate-search-and-filter-queries": 7,
+    "verify-crud-operation-integrity": 8
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-ip-allowlist-enforcement",
+  "metric_name": "ip_allowlist_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (endpoints x 5).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-ip-allowlist-enforcement/gold.json",
+  "headline_metric": "ip_allowlist_enforcement_rate_pct",
+  "headline_definition": "IP Allowlist Enforcement Rate = (requests correctly allowed or blocked per the current allowlist / total IP enforcement test cases) x 100. Pass = 100% (every allowlisted source IP gets exactly 200 with data, every non-allowlisted source IP and every X-Forwarded-For spoof gets exactly 403 with no resource data, and allowlist add/remove updates take effect). Fail = ANY non-allowlisted IP receiving 200 (critical, P1) OR any X-Forwarded-For spoof producing 200 (equally critical) OR any 403 leaking resource data.",
+  "scenarios_per_endpoint": 5,
+  "rationale": "All four agents hit the same local ip-allowlist-gateway, whose four COMPLIANT endpoints enforce correctly and whose two VULNERABLE endpoints honor a spoofed X-Forwarded-For. So the raw IP Allowlist Enforcement Rate is identical for every agent (~93.33%: the two xff_spoof_rejected cases return 200 instead of 403) and is a property of the target, not the agent — it is the task's QA finding, emitted by every agent as the critical P1 bypass. Fidelity-to-gold instead measures each framework's TEST quality: did it construct the correct five-case sequence (allowlisted baseline, non-allowlisted baseline, the X-Forwarded-For spoof, the allowlist-add, and the allowlist-remove) and faithfully exercise every case so its observed token reproduces the gold token — including correctly OBSERVING the bypass on the vulnerable endpoints rather than missing or mis-constructing it.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token, including the seeded bypass observations)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request/management action mis-constructed so the observed token diverges from gold)"
+}

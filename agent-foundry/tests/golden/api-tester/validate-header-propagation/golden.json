@@ -1,0 +1,114 @@
+{
+  "agent": "api-tester-validate-header-propagation",
+  "lane": "request-header-forwarding",
+  "cases": [
+    {
+      "role": "forward_authorization",
+      "disposition": "forwarded",
+      "headers": [
+        "Authorization"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "forward_traceparent",
+      "disposition": "forwarded",
+      "headers": [
+        "traceparent"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log",
+        "traceparent_continued_same_trace_id"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "forward_tracestate",
+      "disposition": "forwarded",
+      "headers": [
+        "tracestate"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "forward_b3",
+      "disposition": "forwarded",
+      "headers": [
+        "X-B3-TraceId",
+        "X-B3-SpanId"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "forward_x_forwarded",
+      "disposition": "forwarded",
+      "headers": [
+        "X-Forwarded-For",
+        "X-Forwarded-Host",
+        "X-Forwarded-Proto"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "forward_custom_header",
+      "disposition": "forwarded",
+      "headers": [
+        "X-Custom-Header-Role"
+      ],
+      "assertions": [
+        "forwarded_to_each_downstream",
+        "unmodified_in_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "strip_hop_by_hop",
+      "disposition": "not_forwarded",
+      "headers": [
+        "Connection",
+        "Keep-Alive",
+        "Transfer-Encoding",
+        "Upgrade"
+      ],
+      "assertions": [
+        "not_forwarded_to_downstream",
+        "absent_from_downstream_log"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "traceparent_continuation",
+      "disposition": "forwarded",
+      "headers": [
+        "traceparent"
+      ],
+      "assertions": [
+        "traceparent_continued_same_trace_id",
+        "same_trace_id_to_each_downstream"
+      ],
+      "also_accept": []
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "header_propagation_fidelity",
+    "value": 1.0
+  }
+}

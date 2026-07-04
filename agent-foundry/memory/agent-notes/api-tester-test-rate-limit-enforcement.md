@@ -10,3 +10,6 @@
 - [2026-06-29T17:34:35.170716+00:00] run=2026-06-29_17-10-02 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
 - [2026-06-29T19:52:50.211172+00:00] run=2026-06-29_19-27-43 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
 - [2026-06-29T22:24:56.146722+00:00] run=2026-06-29_22-00-33 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-02T00:49:33.633042+00:00] run=RUN-20260702-000138 rate-limit-test run: correctness_rate=0.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-02T17:34:33.476838+00:00] run=20260702T172508-4df148 rate-limit-test run: correctness_rate=0.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-03T20:18:42.224527+00:00] run=RUN-20260703-181017 rate-limit-test run: correctness_rate=0.0% enforced=False over 6 endpoints (48 scenarios)

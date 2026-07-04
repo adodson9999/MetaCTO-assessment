@@ -1,0 +1,241 @@
+{
+  "required_state": [
+    {
+      "field": "required_string_field",
+      "state": "key-absent",
+      "body": { "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "json-null",
+      "body": { "required_string_field": null, "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "empty-string",
+      "body": { "required_string_field": "", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "integer-zero",
+      "body": { "required_string_field": 0, "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "boolean-false",
+      "body": { "required_string_field": false, "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "empty-array",
+      "body": { "required_string_field": [], "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "empty-object",
+      "body": { "required_string_field": {}, "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_string_field",
+      "state": "whitespace-only",
+      "body": { "required_string_field": "   ", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "key-absent",
+      "body": { "required_string_field": "v", "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "json-null",
+      "body": { "required_string_field": "v", "required_object_field": null, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "empty-string",
+      "body": { "required_string_field": "v", "required_object_field": "", "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "integer-zero",
+      "body": { "required_string_field": "v", "required_object_field": 0, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "boolean-false",
+      "body": { "required_string_field": "v", "required_object_field": false, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "empty-array",
+      "body": { "required_string_field": "v", "required_object_field": [], "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "empty-object",
+      "body": { "required_string_field": "v", "required_object_field": {}, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "whitespace-only",
+      "body": { "required_string_field": "v", "required_object_field": "   ", "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_object_field",
+      "state": "null sub-field",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": null }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "key-absent",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "json-null",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": null, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "empty-string",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": "", "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "integer-zero",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": 0, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "boolean-false",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": false, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "empty-array",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": [], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "empty-object",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": {}, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "whitespace-only",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": "   ", "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "field": "required_array_field",
+      "state": "null first array element",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": [null], "optional_count_field": 1, "optional_flag_field": true }
+    }
+  ],
+  "optional_state": [
+    {
+      "field": "optional_count_field",
+      "state": "key-absent",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_flag_field": true }
+    },
+    {
+      "field": "optional_count_field",
+      "state": "json-null",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": null, "optional_flag_field": true }
+    },
+    {
+      "field": "optional_count_field",
+      "state": "empty-string",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": "", "optional_flag_field": true }
+    },
+    {
+      "field": "optional_count_field",
+      "state": "integer-zero",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 0, "optional_flag_field": true }
+    },
+    {
+      "field": "optional_count_field",
+      "state": "empty-array",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": [], "optional_flag_field": true }
+    },
+    {
+      "field": "optional_count_field",
+      "state": "empty-object",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": {}, "optional_flag_field": true }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "key-absent",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1 }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "json-null",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": null }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "empty-string",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": "" }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "integer-zero",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": 0 }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "empty-array",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": [] }
+    },
+    {
+      "field": "optional_flag_field",
+      "state": "empty-object",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": {} }
+    }
+  ],
+  "all_required_null": {
+    "label": "all-required-null",
+    "body": { "required_string_field": null, "required_object_field": null, "required_array_field": null, "optional_count_field": 1, "optional_flag_field": true }
+  },
+  "each_required_null": [
+    {
+      "label": "each-required-null",
+      "field": "required_string_field",
+      "body": { "required_string_field": null, "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "label": "each-required-null",
+      "field": "required_object_field",
+      "body": { "required_string_field": "v", "required_object_field": null, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "label": "each-required-null",
+      "field": "required_array_field",
+      "body": { "required_string_field": "v", "required_object_field": { "sub_field": "v" }, "required_array_field": null, "optional_count_field": 1, "optional_flag_field": true }
+    }
+  ],
+  "combo_required_null": [
+    {
+      "label": "combo",
+      "fields": ["required_string_field", "required_object_field"],
+      "body": { "required_string_field": null, "required_object_field": null, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "label": "combo",
+      "fields": ["required_string_field", "required_array_field"],
+      "body": { "required_string_field": null, "required_object_field": { "sub_field": "v" }, "required_array_field": null, "optional_count_field": 1, "optional_flag_field": true }
+    },
+    {
+      "label": "combo",
+      "fields": ["required_object_field", "required_array_field"],
+      "body": { "required_string_field": "v", "required_object_field": null, "required_array_field": null, "optional_count_field": 1, "optional_flag_field": true }
+    }
+  ],
+  "string_null": [
+    {
+      "label": "\"null\"",
+      "field": "required_string_field",
+      "body": { "required_string_field": "null", "required_object_field": { "sub_field": "v" }, "required_array_field": ["v"], "optional_count_field": 1, "optional_flag_field": true }
+    }
+  ]
+}

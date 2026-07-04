@@ -108,3 +108,138 @@
 - [2026-06-30T16:41:53.909170+00:00] run=chaos-tourney-r09-972d84 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
 - [2026-06-30T16:53:47.174183+00:00] run=chaos-tourney-r10-422ae9 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
 - [2026-06-30T17:05:03.732845+00:00] run=chaos-tourney-recheck-a88512 chaos-engineering run: rating_band_accuracy=0.875 over 8 held-out cases; schema_pass=100.0% band_pass=87.5%
+- [2026-07-02T16:19:32.392542+00:00] run=20260702T161850-2ed91d ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T16:22:23.192905+00:00] run=20260702T162138-12716d ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T16:36:45.995501+00:00] run=20260702T163634-673cc7 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-07-02T16:38:44.995958+00:00] run=20260702T163709-c74065 run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T16:39:40.272882+00:00] run=20260702T163926-9f0fc8 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-07-02T16:42:42.182223+00:00] run=20260702T164138-8bb9b9 run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T16:43:51.685087+00:00] run=20260702T164307-52f6ba api-gateway-routing run: route_forwarding_accuracy=0.0% over 6 routes (0 forwarded correctly)
+- [2026-07-02T16:50:20.156670+00:00] run=20260702T164951-72a45e auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-02T16:56:11.763648+00:00] run=20260702T165549-fd89df auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-02T16:57:32.649118+00:00] run=20260702T165718-dbae65 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-07-02T16:59:17.224790+00:00] run=20260702T165851-894a60 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
+- [2026-07-02T17:05:24.773964+00:00] run=20260702T170201-26c32d event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-02T17:06:38.681272+00:00] run=20260702T170601-9cb177 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-02T17:10:47.570790+00:00] run=20260702T170939-3fb836 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-07-02T17:16:09.784088+00:00] run=20260702T171339-03f184 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-02T17:18:04.705271+00:00] run=20260702T171739-90b4a5 long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-02T17:19:52.204519+00:00] run=20260702T171929-64cb97 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-07-02T17:22:13.570983+00:00] run=20260702T172108-41ea44 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-07-02T17:27:10.960667+00:00] run=20260702T172508-4df148 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-02T17:34:41.596288+00:00] run=20260702T173237-c7bfb4 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-02T17:36:49.152011+00:00] run=20260702T173637-15b526 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-07-02T17:37:29.360536+00:00] run=20260702T173701-ce81dc timeout-handling run: enforcement_rate=0.0% over 3 services (0/6 endpoints enforced)
+- [2026-07-02T18:17:23.306383+00:00] run=20260702T181200-6c9ed1 webhook-delivery run: contract_correctness=62.5% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
+- [2026-07-02T18:20:21.676069+00:00] run=20260702T181859-83cfbe track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
+- [2026-07-02T18:23:41.041714+00:00] run=20260702T182300-f3a481 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-07-02T18:27:13.702975+00:00] run=20260702T182700-3eff9c correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T18:28:34.382459+00:00] run=20260702T182803-ca8685 graphql-depth run: enforcement=15.38% over 2 endpoints (26 scenarios)
+- [2026-07-02T18:30:49.606795+00:00] run=20260702T182928-848c15 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-07-02T18:36:32.404137+00:00] run=20260702T183527-c72aa1 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-07-02T18:41:27.204304+00:00] run=20260702T183928-1c4dfb retry-after-compliance run: accuracy=0.0% (0/6 honored), enforced=False over 6 endpoints (36 scenarios)
+- [2026-07-02T18:43:21.846204+00:00] run=20260702T184248-dc68f5 search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-02T18:44:48.451913+00:00] run=20260702T184344-45b985 audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-07-02T18:48:50.279771+00:00] run=20260702T184744-dcf6ba caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-07-02T18:56:55.167681+00:00] run=20260702T185544-9a5e2b enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
+- [2026-07-02T19:00:04.513673+00:00] run=20260702T185944-8d9597 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-07-02T19:00:56.634084+00:00] run=20260702T190023-508e24 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-07-02T19:07:38.662015+00:00] run=20260702T190423-25f524 bug-reporter run: fidelity=93.33% over 9 bug reports (45 fields); completeness=90.0%; crit/high=True (exit1=True)
+- [2026-07-02T19:09:33.744178+00:00] run=20260702T190823-a6f04a documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-07-02T19:10:41.164358+00:00] run=20260702T190955-e7ce01 run-cicd-pipeline run: fidelity=100.0% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=-1
+- [2026-07-02T19:47:15.261278+00:00] run=20260702T194432-bd654d schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
+- [2026-07-02T20:03:40.117712+00:00] run=20260702T195432-5edfb9 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
+- [2026-07-02T20:20:28.562642+00:00] run=20260702T201506-cb2280 content-type-negotiation run: accuracy_rate=36.76% over 36 endpoints (136 scenarios)
+- [2026-07-02T20:26:37.335808+00:00] run=20260702T202506-d6c38e crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-07-02T20:34:38.273722+00:00] run=20260702T203259-269d76 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-07-02T20:44:46.575521+00:00] run=20260702T204259-475c13 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
+- [2026-07-02T20:54:56.122073+00:00] run=20260702T205259-c0b433 test-case-creator run: coverage=100.0% field_accuracy=99.3% (13/13 gold cases)
+- [2026-07-02T21:24:18.063740+00:00] run=20260702T212333-c969f7 ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T21:43:04.487008+00:00] run=20260702T214214-ffa047 ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T21:45:24.981125+00:00] run=20260702T214437-dfcdbf ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T22:22:53.871405+00:00] run=20260702T222211-b95adf ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T22:25:25.932839+00:00] run=20260702T222436-2f423f ssl-tls-enforcement run: enforcement_rate=100.0% (17/17 scenarios) target=https://localhost:9443
+- [2026-07-02T22:37:16.435774+00:00] run=20260702T223647-9cdec9 graphql-depth run: enforcement=15.38% over 2 endpoints (26 scenarios)
+- [2026-07-02T22:40:05.585990+00:00] run=20260702T223940-15ec41 graphql-depth run: enforcement=15.38% over 2 endpoints (26 scenarios)
+- [2026-07-02T22:45:53.400740+00:00] run=20260702T224451-909886 audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-07-02T22:49:19.440212+00:00] run=20260702T224811-915928 audit-log-verification run: coverage_rate=0.0% (0/18 auditable ops) over 6 collections (54 scenarios)
+- [2026-07-02T22:53:37.538447+00:00] run=20260702T225131-f6337d retry-after-compliance run: accuracy=0.0% (0/6 honored), enforced=False over 6 endpoints (36 scenarios)
+- [2026-07-02T23:00:17.740103+00:00] run=20260702T225451-3ddfb0 retry-after-compliance run: accuracy=0.0% (0/6 honored), enforced=False over 6 endpoints (36 scenarios)
+- [2026-07-02T23:01:20.153422+00:00] run=20260702T230103-8126f0 correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T23:03:16.830083+00:00] run=20260702T230304-19121c correlation-id-propagation run: propagation_rate=0.0% over 10 scenarios (propagated=0)
+- [2026-07-02T23:03:37.959626+00:00] run=20260702T210017-b7e726 contract-test run: rejection_rate=0.0% produced 0 labeled cases over 22 endpoints
+- [2026-07-02T23:05:39.410400+00:00] run=20260702T230424-b9938e track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
+- [2026-07-02T23:09:09.144735+00:00] run=20260702T230744-778ff0 track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
+- [2026-07-02T23:12:30.127970+00:00] run=20260702T231105-3e870b run-regression-suite run: fidelity=96.43% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T23:15:39.382145+00:00] run=20260702T231425-609196 run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T23:18:02.139002+00:00] run=20260702T231745-86921e nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-07-02T23:18:35.053968+00:00] run=20260702T231823-f84f8b nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-07-02T23:28:28.169057+00:00] run=20260702T232704-84bc36 enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
+- [2026-07-02T23:31:32.200317+00:00] run=20260702T233025-bf119c enum-value-restriction test run: rate=38.3% over 4 endpoints (47 cases); invalid-rejection=0.0%
+- [2026-07-02T23:37:57.022276+00:00] run=20260702T233705-577af4 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-07-02T23:41:28.675975+00:00] run=20260702T234026-6dd3ec query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-07-02T23:44:21.954458+00:00] run=20260702T234346-75e38a search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-02T23:48:06.973322+00:00] run=20260702T234707-fde0c7 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-07-02T23:51:25.613117+00:00] run=20260702T235027-cfba98 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-07-02T23:54:08.451060+00:00] run=20260702T235347-72afc5 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-07-02T23:56:06.470086+00:00] run=20260702T235548-dbb233 sorting-behavior run: sorting_accuracy=100.0% over 4 sort cases, scenario_accuracy=100.0%
+- [2026-07-02T23:59:30.021872+00:00] run=20260702T235749-ce357e status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
+- [2026-07-03T00:03:05.193037+00:00] run=20260703T000109-53b415 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
+- [2026-07-03T00:06:06.850918+00:00] run=20260703T000430-7d9cd0 error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-07-03T00:09:17.515668+00:00] run=20260703T000750-a1886e error-clarity run: pass_rate=0.0% passed=0/15 msg=15 code=0 p1_leaks=0 covered=15 over 14 operations
+- [2026-07-03T00:14:03.214008+00:00] run=20260703T001110-f8efb2 schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
+- [2026-07-03T00:17:26.061612+00:00] run=20260703T001431-7c2f3b schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
+- [2026-07-03T00:19:26.062844+00:00] run=20260703T001751-2b2451 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-07-03T00:22:49.716266+00:00] run=20260703T002111-565eec header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-07-03T00:25:29.636161+00:00] run=20260703T002432-ae2ce1 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-07-03T00:28:57.751114+00:00] run=20260703T002752-4e4d4d caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-07-03T00:38:34.772606+00:00] run=20260703T003753-b59b63 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-07-03T00:41:56.826925+00:00] run=20260703T004113-f32020 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-07-03T00:46:42.564389+00:00] run=20260703T004434-15e48c rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-03T00:49:55.081700+00:00] run=20260703T004754-849439 rate-limit-test run: correctness_rate=25.0% enforced=False over 6 endpoints (48 scenarios)
+- [2026-07-03T00:51:38.354204+00:00] run=20260703T005115-3a1f5e timeout-handling run: enforcement_rate=0.0% over 3 services (0/6 endpoints enforced)
+- [2026-07-03T00:55:01.472063+00:00] run=20260703T005435-ea7879 timeout-handling run: enforcement_rate=0.0% over 3 services (0/6 endpoints enforced)
+- [2026-07-03T00:58:40.490742+00:00] run=20260703T005755-743131 api-gateway-routing run: route_forwarding_accuracy=0.0% over 6 routes (0 forwarded correctly)
+- [2026-07-03T01:01:54.056469+00:00] run=20260703T010115-68e9d2 api-gateway-routing run: route_forwarding_accuracy=0.0% over 6 routes (0 forwarded correctly)
+- [2026-07-03T01:06:57.859392+00:00] run=20260703T010436-837628 webhook-delivery run: contract_correctness=75.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
+- [2026-07-03T01:10:18.119812+00:00] run=20260703T010756-78163e webhook-delivery run: contract_correctness=75.0% delivery_success=0.0% over 6 subjects (168 scenarios); deliveries=0
+- [2026-07-03T01:14:59.908375+00:00] run=20260703T011437-7d1aaa long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-03T01:18:29.522813+00:00] run=20260703T011757-895ceb long-polling run: response_accuracy=0.0% over 3 channels (0/6 cases passed)
+- [2026-07-03T01:21:57.506189+00:00] run=20260703T012118-e3bc27 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-03T01:25:16.648909+00:00] run=20260703T012438-b49875 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-03T01:28:29.295757+00:00] run=20260703T012758-73f687 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-07-03T01:31:41.995163+00:00] run=20260703T013118-baeb13 multipart-form-data run: accuracy=33.33% over 2 endpoints (18 scenarios)
+- [2026-07-03T01:35:58.788290+00:00] run=20260703T013439-f74cdd crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-07-03T01:39:27.508796+00:00] run=20260703T013759-97c8ae crud-integrity run: rate=0.0% passing=0/7 covered_steps=42 over 7 resources
+- [2026-07-03T01:42:23.488244+00:00] run=20260703T014120-b93aef idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-07-03T01:45:42.541236+00:00] run=20260703T014440-602c25 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-07-03T01:48:10.208478+00:00] run=20260703T014800-5f4204 soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-07-03T01:50:19.253856+00:00] run=20260703T014953-e3f645 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
+- [2026-07-03T01:53:40.522462+00:00] run=20260703T015313-06867c concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
+- [2026-07-03T01:56:58.893956+00:00] run=20260703T015633-924f16 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-07-03T01:59:00.750685+00:00] run=20260703T015834-4b93e1 bulk-operation-endpoints run: accuracy=0.0% (cases_passed=0/3, mixed_db_delta=0)
+- [2026-07-03T02:01:36.459797+00:00] run=20260703T020034-dd3cf0 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T02:07:51.957678+00:00] run=20260703T020715-5a921b oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-07-03T02:11:14.236667+00:00] run=20260703T021035-340e80 oauth-integration-test run: completion_rate=0.0% (0/3 flows) over 57 assertions
+- [2026-07-03T02:16:18.623100+00:00] run=20260703T021356-0fe24e ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T04:35:29.197968+00:00] run=20260703T043451-78143d search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-03T04:41:42.058815+00:00] run=20260703T043825-52b1df event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T04:44:13.616707+00:00] run=20260703T044402-c5e03b soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-07-03T04:45:51.152444+00:00] run=20260703T044449-6ff3b2 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T04:55:05.668562+00:00] run=20260703T045029-c8737f authz run: access_control_accuracy=0.0% core 0/0
+- [2026-07-03T04:57:34.404586+00:00] run=20260703T045506-b06544 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T16:47:13.024305+00:00] run=20260703T164631-1d7ce3 search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-03T16:49:12.685714+00:00] run=20260703T164859-f38c5e soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-07-03T16:49:40.305438+00:00] run=20260703T164859-a9a368 search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-03T16:49:58.321052+00:00] run=20260703T164948-fe40dd soft-delete-behavior run: correctness_rate=0.0% (correct_cases=0/5, scenarios_ok=0/13)
+- [2026-07-03T16:51:20.760100+00:00] run=20260703T165054-1144d3 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T16:52:25.792810+00:00] run=20260703T164859-70db10 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T16:53:34.324374+00:00] run=20260703T165300-f99e79 search-filter run: accuracy=0.0% over 2 collections (28 scenarios)
+- [2026-07-03T16:57:33.184035+00:00] run=20260703T165411-b38142 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T16:58:30.861138+00:00] run=20260703T165729-a7936f auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T17:01:21.529226+00:00] run=20260703T165646-ecf809 authz run: access_control_accuracy=0.0% core 0/0
+- [2026-07-03T17:01:48.469671+00:00] run=20260703T165914-86bb90 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T17:06:37.986229+00:00] run=20260703T170202-036abd authz run: access_control_accuracy=0.0% core 0/0
+- [2026-07-03T17:09:36.156574+00:00] run=20260703T170719-bdaed0 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T17:14:06.625529+00:00] run=20260703T170020-66444e contract-test run: rejection_rate=0.0% produced 0 labeled cases over 3 endpoints
+- [2026-07-03T17:28:13.940639+00:00] run=20260703T171406-514e4e contract-test run: rejection_rate=0.0% produced 0 labeled cases over 3 endpoints

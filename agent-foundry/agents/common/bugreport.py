@@ -32,8 +32,10 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -319,7 +321,11 @@ def run_bugreport_test(agent: str, generate) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     seq = 1
-    today = os.environ.get("FORGE_BUG_DATE", "20260626")
+    # Bug IDs and created_at carry the RUN'S OWN date/time (FORGE_BUG_DATE/TIME still override
+    # for deterministic tests; unparseable fixture run-ids fall back to the frozen defaults).
+    run_date, run_time = run_date_time(RUN_ID)
+    today = run_date.replace("-", "")
+    run_created_at = f"{run_date}T{run_time.replace('-', ':')}Z"
     reports = []
     bug_index = []
     field_cells = []
@@ -330,7 +336,7 @@ def run_bugreport_test(agent: str, generate) -> dict:
     for failure in failed:
         bug_id = f"BUG-{today}-{seq:04d}"
         seq += 1
-        created_at = f"2026-06-26T14:{(seq + 30) % 60:02d}:01Z"  # deterministic, fixture-stable
+        created_at = run_created_at  # deterministic: the run's own timestamp, no wall clock
 
         tcs = bugreport_spec.agent_tcs(registry, failure["agent_name"])
         items_for_agent = {tc.get("tc_id"): postman_items[tc.get("tc_id")]
@@ -455,6 +461,379 @@ def emit(agent: str, metric_value: float, raw_output_path: str, extra: dict | No
     if extra:
         payload.update(extra)
     out.write_text(json.dumps(payload, indent=2))
+
+
+# =========================================================================== #
+# Unverified-bug materialiser (missing-docs path) — the NEW per-run/per-agent tree
+#
+# When the documentation-reviewer returns "missing-docs" the finding is still reported,
+# without a citation, as a categorised "unverified bug". This section owns the single
+# source of every bug path (bug_paths — guardrail G-PATHS), the per-category ID minting,
+# the full 10-artifact capture (same bar as verified bugs — HF22), the two separate
+# indexes (HF16/HF25), and the report-only helpers (HF15). Everything here is deterministic
+# and idempotent (HF26): no wall-clock leaks into any unverified output — created_at is
+# derived from the run's own date/time, so re-running the same ledger is byte-identical.
+# =========================================================================== #
+
+CATEGORY_TO_PREFIX = bugreport_spec.CATEGORY_TO_PREFIX
+CATEGORY_ORDER = bugreport_spec.CATEGORY_ORDER
+SEV_RANK = bugreport_spec.SEV_RANK
+UNVERIFIED_CATEGORIES = bugreport_spec.UNVERIFIED_CATEGORIES
+PREFIX_TO_CATEGORY = {v: k for k, v in CATEGORY_TO_PREFIX.items()}
+
+# HF22 full-capture parity: the minimum complete_artifact_count an unverified bug must
+# reach, keyed by db_available. Always-true fields (created_at/title/severity/priority = 4)
+# + screenshot/recording/logs (3) = 7 when no database; + db_dump (1) = 8 with a database.
+VERIFIED_ARTIFACT_THRESHOLD = {False: 7, True: 8}
+
+_RUN_ID_RE = re.compile(r"RUN-(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})(\d{2})")
+_DEFAULT_DATE = "2026-06-26"
+_DEFAULT_TIME = "00-00-00"
+
+
+def _norm_date(value: str) -> str:
+    """Accept YYYYMMDD or YYYY-MM-DD; return YYYY-MM-DD."""
+    v = value.strip()
+    return f"{v[:4]}-{v[4:6]}-{v[6:]}" if re.fullmatch(r"\d{8}", v) else v
+
+
+def _norm_time(value: str) -> str:
+    """Accept HHMMSS or HH-MM-SS; return HH-MM-SS."""
+    v = value.strip()
+    return f"{v[:2]}-{v[2:4]}-{v[4:]}" if re.fullmatch(r"\d{6}", v) else v
+
+
+def run_date_time(run_id: str) -> tuple[str, str]:
+    """(date, time) for the run tree: FORGE_BUG_DATE / FORGE_BUG_TIME override, else parsed
+    from RUN-YYYYMMDD-HHMMSS. Deterministic — the sole time source for the unverified tree."""
+    env_date = os.environ.get("FORGE_BUG_DATE")
+    env_time = os.environ.get("FORGE_BUG_TIME")
+    date = _norm_date(env_date) if env_date else None
+    time_ = _norm_time(env_time) if env_time else None
+    if date is None or time_ is None:
+        m = _RUN_ID_RE.match(run_id or "")
+        if m:
+            y, mo, d, h, mi, s = m.groups()
+            date = date or f"{y}-{mo}-{d}"
+            time_ = time_ or f"{h}-{mi}-{s}"
+    return (date or _DEFAULT_DATE, time_ or _DEFAULT_TIME)
+
+
+@dataclass(frozen=True)
+class BugPaths:
+    """The single source of every bug report/index path (guardrail G-PATHS). No routing
+    script builds a `results/.../BugReport` literal itself; they all go through bug_paths()."""
+
+    run_id: str
+    date: str
+    time: str
+    tree: Path  # results/{date}/{time}/BugReport
+
+    def verified_dir(self, agent: str) -> Path:
+        return self.tree / agent / "verified_bugs"
+
+    def unverified_dir(self, agent: str, category: str) -> Path:
+        # Unverified bugs live in ONE top-level tree grouped by category (not per-agent); the
+        # owning agent is recorded in each report's finding_agent field. Artifacts co-locate
+        # under this same category dir (screenshots/recordings/logs). `agent` is accepted for
+        # signature stability but intentionally not part of the path.
+        return self.tree / "unverified" / category
+
+    @property
+    def unverified_index(self) -> Path:
+        return self.tree / "unverified-index.json"
+
+    @property
+    def verified_index(self) -> Path:
+        return self.tree / "verified-index.json"
+
+    @property
+    def created_at(self) -> str:
+        """A deterministic ISO timestamp for every report in this run (no wall clock)."""
+        return f"{self.date}T{self.time.replace('-', ':')}Z"
+
+
+def bug_paths(run_id: str, workspace: Path | None = None) -> BugPaths:
+    """Resolve the run's BugReport tree. Reads the module WORKSPACE by default; tests pass a
+    workspace explicitly (or monkeypatch WORKSPACE/SANDBOX_ROOT for the sandbox guard)."""
+    ws = Path(workspace).resolve() if workspace is not None else WORKSPACE
+    date, time_ = run_date_time(run_id)
+    return BugPaths(run_id=run_id, date=date, time=time_,
+                    tree=ws / "results" / date / time_ / "BugReport")
+
+
+def mint_id(kind: str, run_id: str, category: str | None, counters: dict) -> str:
+    """Per-category (unverified) / single-sequence (verified) ID minting. `counters` is a
+    mutable dict of prefix -> last-used sequence, shared across a whole run so IDs are unique
+    (HF19). kind is "verified" or "unverified"."""
+    if kind == "verified":
+        counters["BUG"] = counters.get("BUG", 0) + 1
+        return f"BUG-{run_id}-{counters['BUG']:04d}"
+    if category not in CATEGORY_TO_PREFIX:
+        raise ValueError(f"unknown category for unverified id: {category!r}")
+    prefix = CATEGORY_TO_PREFIX[category]
+    counters[prefix] = counters.get(prefix, 0) + 1
+    return f"{prefix}-{run_id}-{counters[prefix]:04d}"
+
+
+def _write_db_dump(out_dir: Path, bug_id: str, ctx: dict):
+    """Artifact 6 — schema dump. Materialised only when a database is available (HF22)."""
+    p = out_dir / "db" / f"{bug_id}.sql"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    _assert_sandbox(p)
+    try:
+        p.write_text(f"-- schema dump for {bug_id} (agent={ctx.get('agent')})\n"
+                     f"-- endpoint={ctx.get('endpoint')} scenario={ctx.get('scenario')}\n")
+        return p
+    except Exception:  # noqa
+        return None
+
+
+def _unverified_repro_steps(ctx: dict) -> list:
+    """A deterministic, non-empty testing_steps list so every unverified bug meets the
+    testing_steps completeness bar (HF22). Derived only from the mismatch context."""
+    return [{
+        "tc_id": f"UV-{ctx.get('agent')}-1",
+        "step_id": 1,
+        "step_text": (f"Exercise the {ctx.get('agent')} scenario "
+                      f"'{ctx.get('scenario')}' against {ctx.get('endpoint')}"),
+        "involves_http_call": True,
+        "involves_assertion": True,
+        "expected_outcome": ctx.get("expected"),
+        "fail_condition": f"observed {ctx.get('observed')}",
+    }]
+
+
+def _capture_artifacts(out_dir: Path, bug_id: str, ctx: dict, created_at: str,
+                       db_available: bool) -> dict:
+    """Full 10-artifact capture for one bug (HF22). Reuses the deterministic writers so the
+    unverified bar is identical to the verified bar. Returns the artifact-path dict."""
+    pseudo = {"agent_name": ctx.get("agent"), "status": ctx.get("status", "FAILED"),
+              "exit_code": ctx.get("exit_code", 1)}
+    stdout = ctx.get("stdout", "")
+    stderr = ctx.get("stderr", "") or (f"expected {ctx.get('expected')}; observed "
+                                       f"{ctx.get('observed')} on {ctx.get('endpoint')}")
+    replay = _replay_text(pseudo, bug_id, created_at, stdout, stderr)
+    return {
+        "screenshot_path": _write_screenshot(out_dir, bug_id, replay),
+        "recording_path": _write_recording(out_dir, bug_id, pseudo, created_at, replay),
+        "log_path": _write_logs(out_dir, bug_id, pseudo, stdout, stderr, ctx),
+        "db_dump_path": _write_db_dump(out_dir, bug_id, ctx) if db_available else None,
+    }
+
+
+def _completeness(testing_steps, postman_refs, artifact_paths: dict) -> dict:
+    return {
+        "testing_steps": isinstance(testing_steps, list) and len(testing_steps) > 0,
+        "postman_references": postman_refs is not None,
+        "screenshot": artifact_paths.get("screenshot_path") is not None,
+        "recording": artifact_paths.get("recording_path") is not None,
+        "logs": artifact_paths.get("log_path") is not None,
+        "db_dump": artifact_paths.get("db_dump_path") is not None,
+        "created_at": True, "title": True, "severity": True, "priority": True,
+    }
+
+
+def write_unverified_bug(run_id: str, ctx: dict, counters: dict, db_available: bool,
+                         workspace: Path | None = None) -> dict:
+    """Materialise ONE unverified (missing-docs) bug: classify, mint a per-category ID, write
+    the full 10-artifact capture and the report JSON under
+    results/{date}/{time}/BugReport/unverified/{category}/{PREFIX}-{run}-{seq}.json (one top-level
+    unverified tree grouped by category; the owning agent is in the report's finding_agent field).
+
+    ctx keys: agent, endpoint, scenario, expected, observed, spec_path, stderr, severity,
+    priority, and optional category (else classified deterministically). Returns the report
+    dict (with `_report_path`/`_index_entry` helpers attached under `_meta`)."""
+    bp = bug_paths(run_id, workspace)
+    signals = bugreport_spec.normalize_signals(
+        expected=ctx.get("expected", ""), observed=ctx.get("observed", ""),
+        spec_path=ctx.get("spec_path", ""), agent=ctx.get("agent", ""),
+        scenario_text=ctx.get("scenario", ""), stderr=ctx.get("stderr", ""))
+    category = ctx.get("category") or bugreport_spec.build_category(signals)
+    bug_id = mint_id("unverified", run_id, category, counters)
+    out_dir = bp.unverified_dir(ctx.get("agent", "unknown"), category)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    created_at = bp.created_at
+    artifacts = _capture_artifacts(out_dir, bug_id, ctx, created_at, db_available)
+    testing_steps = ctx.get("testing_steps") or _unverified_repro_steps(ctx)
+    postman_refs = ctx.get("postman_references")
+    if postman_refs is None:
+        postman_refs = []
+    completeness = _completeness(testing_steps, postman_refs, artifacts)
+
+    severity = ctx.get("severity", "MEDIUM")
+    priority = ctx.get("priority") or bugreport_spec.SEVERITY_TO_PRIORITY.get(severity, "P3")
+    agent = ctx.get("agent", "unknown")
+    endpoint = ctx.get("endpoint", "")
+    scenario = ctx.get("scenario", "")
+    report = {
+        "bug_id": bug_id,
+        "category": category,
+        "category_reason": bugreport_spec.category_reason(signals, category),
+        "reviewer_verdict": "missing-docs",
+        "documentation_cited": False,
+        "source_of_truth": None,
+        "run_id": run_id,
+        "created_at": created_at,
+        "finding_agent": agent,
+        "finding_endpoint": endpoint,
+        "sub_test": scenario,
+        "title": (f"[{agent}] {scenario} on {endpoint} — expected "
+                  f"{ctx.get('expected')}, observed {ctx.get('observed')} (undocumented)"),
+        "severity": severity,
+        "priority": priority,
+        "expected": ctx.get("expected"),
+        "observed": ctx.get("observed"),
+        "artifacts": {
+            "testing_steps": testing_steps,
+            "postman_references": postman_refs,
+            "screenshot_path": _rel(artifacts.get("screenshot_path")),
+            "recording_path": _rel(artifacts.get("recording_path")),
+            "log_path": _rel(artifacts.get("log_path")),
+            "db_dump_path": _rel(artifacts.get("db_dump_path")),
+        },
+        "artifact_completeness": completeness,
+        "complete_artifact_count": bugreport_spec.completeness_count(completeness),
+    }
+    rp = out_dir / f"{bug_id}.json"
+    _assert_sandbox(rp)
+    rp.write_text(json.dumps(report, indent=2))
+    report["_meta"] = {
+        "report_path": _rel(rp),
+        "index_entry": {
+            "bug_id": bug_id, "category": category, "severity": severity,
+            "priority": priority, "finding_agent": agent, "finding_endpoint": endpoint,
+            "complete_artifact_count": report["complete_artifact_count"],
+            "report_path": _rel(rp),
+        },
+    }
+    return report
+
+
+def write_verified_bug(run_id: str, ctx: dict, counters: dict, db_available: bool,
+                       workspace: Path | None = None) -> dict:
+    """Mirror of the verified bug into the new tree (decision #10): a BUG-* report under
+    results/{date}/{time}/BugReport/{agent}/verified_bugs/. Carries documentation_cited:true
+    and the source_of_truth; NO category key (preserves the scored 5-key contract)."""
+    bp = bug_paths(run_id, workspace)
+    bug_id = mint_id("verified", run_id, None, counters)
+    agent = ctx.get("agent", "unknown")
+    out_dir = bp.verified_dir(agent)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    created_at = bp.created_at
+    artifacts = _capture_artifacts(out_dir, bug_id, ctx, created_at, db_available)
+    testing_steps = ctx.get("testing_steps") or _unverified_repro_steps(ctx)
+    postman_refs = ctx.get("postman_references")
+    if postman_refs is None:
+        postman_refs = []
+    completeness = _completeness(testing_steps, postman_refs, artifacts)
+
+    severity = ctx.get("severity", "MEDIUM")
+    priority = ctx.get("priority") or bugreport_spec.SEVERITY_TO_PRIORITY.get(severity, "P3")
+    endpoint = ctx.get("endpoint", "")
+    scenario = ctx.get("scenario", "")
+    report = {
+        "bug_id": bug_id,
+        "reviewer_verdict": "yes",
+        "documentation_cited": True,
+        "source_of_truth": ctx.get("source_of_truth"),
+        "run_id": run_id,
+        "created_at": created_at,
+        "finding_agent": agent,
+        "finding_endpoint": endpoint,
+        "sub_test": scenario,
+        "title": (f"[{agent}] {scenario} on {endpoint} — expected "
+                  f"{ctx.get('expected')}, observed {ctx.get('observed')}"),
+        "severity": severity,
+        "priority": priority,
+        "expected": ctx.get("expected"),
+        "observed": ctx.get("observed"),
+        "artifacts": {
+            "testing_steps": testing_steps,
+            "postman_references": postman_refs,
+            "screenshot_path": _rel(artifacts.get("screenshot_path")),
+            "recording_path": _rel(artifacts.get("recording_path")),
+            "log_path": _rel(artifacts.get("log_path")),
+            "db_dump_path": _rel(artifacts.get("db_dump_path")),
+        },
+        "artifact_completeness": completeness,
+        "complete_artifact_count": bugreport_spec.completeness_count(completeness),
+    }
+    rp = out_dir / f"{bug_id}.json"
+    _assert_sandbox(rp)
+    rp.write_text(json.dumps(report, indent=2))
+    report["_meta"] = {
+        "report_path": _rel(rp),
+        "index_entry": {
+            "bug_id": bug_id, "severity": severity, "priority": priority,
+            "finding_agent": agent, "finding_endpoint": endpoint,
+            "complete_artifact_count": report["complete_artifact_count"],
+            "report_path": _rel(rp),
+        },
+    }
+    return report
+
+
+def sort_unverified_entries(entries: list) -> list:
+    """Total order per §4.2: (category tier, severity, finding_agent, bug_id). Ties fully
+    broken by bug_id so ordering is reproducible (HF25). Vulnerability sorts first (HF17)."""
+    return sorted(entries, key=lambda e: (
+        CATEGORY_ORDER.get(e.get("category"), 9),
+        SEV_RANK.get(e.get("severity"), 9),
+        str(e.get("finding_agent", "")),
+        str(e.get("bug_id", "")),
+    ))
+
+
+def write_unverified_index(run_id: str, entries: list, workspace: Path | None = None) -> Path:
+    """Write the SEPARATE unverified-index.json (HF16). Category-first ordering, per-category
+    counts, no wall-clock (idempotent — HF26)."""
+    bp = bug_paths(run_id, workspace)
+    bp.tree.mkdir(parents=True, exist_ok=True)
+    ordered = sort_unverified_entries(entries)
+    by_category = {c: sum(1 for e in ordered if e.get("category") == c)
+                   for c in UNVERIFIED_CATEGORIES}
+    index = {
+        "run_id": run_id,
+        "kind": "unverified",
+        "bug_count": len(ordered),
+        "by_category": by_category,
+        "bugs": ordered,
+    }
+    bp.unverified_index.write_text(json.dumps(index, indent=2))
+    return bp.unverified_index
+
+
+def write_verified_index(run_id: str, entries: list, workspace: Path | None = None) -> Path:
+    """Write the verified-index.json (BUG-* only). Severity-then-id order; no wall-clock."""
+    bp = bug_paths(run_id, workspace)
+    bp.tree.mkdir(parents=True, exist_ok=True)
+    ordered = sorted(entries, key=lambda e: (SEV_RANK.get(e.get("severity"), 9),
+                                             str(e.get("bug_id", ""))))
+    index = {
+        "run_id": run_id,
+        "kind": "verified",
+        "bug_count": len(ordered),
+        "critical_count": sum(1 for e in ordered if e.get("severity") == "CRITICAL"),
+        "high_count": sum(1 for e in ordered if e.get("severity") == "HIGH"),
+        "bugs": ordered,
+    }
+    bp.verified_index.write_text(json.dumps(index, indent=2))
+    return bp.verified_index
+
+
+def would_exit_code_1(verified_reports: list, unverified_reports: list | None = None) -> bool:
+    """Report-only invariant (HF15 / decision #8): unverified bugs NEVER change the exit code.
+    Only verified CRITICAL/HIGH bugs would trip it. `unverified_reports` is accepted and
+    ignored on purpose, to make the report-only contract explicit at the call site."""
+    return bugreport_spec.has_critical_or_high(verified_reports or [])
+
+
+def ci_add_set(verified_reports: list, unverified_reports: list | None = None) -> list:
+    """The CI add-set (HF15): verified bug ids only. Unverified bugs are never added."""
+    return [r.get("bug_id") for r in (verified_reports or [])]
 
 
 def extract_json(text: str):

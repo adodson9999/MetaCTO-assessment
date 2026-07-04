@@ -1,0 +1,92 @@
+{
+  "agent": "api-tester-test-long-polling-support",
+  "lane": "long-poll-transport-lifecycle",
+  "channel": {
+    "channel": "channel_role",
+    "poll_endpoint": "poll_endpoint",
+    "trigger_endpoint": "trigger_endpoint",
+    "poll_timeout": 30,
+    "cursor": "last_event_id_role",
+    "concurrent_rule": "documented_concurrent_poller_rule",
+    "expected_event_type": "expected_event_type_role"
+  },
+  "client_max_time": 35,
+  "cases": [
+    {
+      "name": "no_event",
+      "primary": "204",
+      "also_accept": [],
+      "steps": [
+        "open a long-poll connection with client_max_time = poll_timeout + 5",
+        "publish no event during the window",
+        "wait for the poll window to elapse",
+        "assert the connection returns 204 within the window",
+        "assert the response body is empty"
+      ]
+    },
+    {
+      "name": "event",
+      "primary": "200",
+      "also_accept": [],
+      "steps": [
+        "open a long-poll connection with client_max_time = poll_timeout + 5",
+        "trigger one event mid-poll",
+        "assert the connection returns 200 within two seconds of the trigger",
+        "assert the delivered payload carries the expected event_type"
+      ]
+    },
+    {
+      "name": "multiple_events",
+      "primary": "200",
+      "also_accept": [],
+      "steps": [
+        "open a long-poll connection with client_max_time = poll_timeout + 5",
+        "trigger two events during one window",
+        "assert both events are delivered",
+        "assert the events are queued and none is dropped"
+      ]
+    },
+    {
+      "name": "resume_after_gap",
+      "primary": "200",
+      "also_accept": [],
+      "steps": [
+        "complete one poll and record the documented cursor / Last-Event-ID",
+        "publish an event in the gap between polls",
+        "open a new poll supplying the recorded cursor / Last-Event-ID",
+        "assert the gap event is delivered and not lost"
+      ]
+    },
+    {
+      "name": "concurrent_pollers",
+      "primary": "200",
+      "also_accept": [
+        "204"
+      ],
+      "steps": [
+        "open two concurrent poll connections with client_max_time = poll_timeout + 5",
+        "publish a broadcast event",
+        "assert both clients receive it if broadcast is documented, or exactly one receives it per the documented single-consumer rule",
+        "assert behaviour matches the documented policy"
+      ]
+    },
+    {
+      "name": "connection_drop",
+      "primary": "200",
+      "also_accept": [
+        "204"
+      ],
+      "steps": [
+        "open a poll connection and disconnect the client mid-poll",
+        "assert the dropped client frees its slot",
+        "open a fresh poll on the same channel",
+        "assert the channel is not wedged and continues to serve new pollers"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "longpoll_lifecycle_fidelity",
+    "value": 1.0
+  }
+}

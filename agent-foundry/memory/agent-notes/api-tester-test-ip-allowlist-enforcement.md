@@ -9,3 +9,8 @@
 - [2026-06-29T18:11:51.830199+00:00] run=2026-06-29_17-10-02 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
 - [2026-06-29T20:29:07.278347+00:00] run=2026-06-29_19-27-43 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
 - [2026-06-29T22:59:28.438012+00:00] run=2026-06-29_22-00-33 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-02T02:39:39.479619+00:00] run=RUN-20260702-000138 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T05:03:16.295063+00:00] run=20260703T045506-b06544 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T17:07:19.284292+00:00] run=20260703T165914-86bb90 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T17:14:47.164946+00:00] run=20260703T170719-bdaed0 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)
+- [2026-07-03T23:49:36.437267+00:00] run=RUN-20260703-181017 ip-allowlist-test run: enforcement_rate=0.0% bypass_detected=False over 6 endpoints (30 cases)

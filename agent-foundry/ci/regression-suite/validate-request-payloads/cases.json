@@ -1,0 +1,250 @@
+[
+  {
+    "test_case_id": "TC-REQPAY-001",
+    "agent": "validate-request-payloads",
+    "title_summary": "Auth login: verify validate request payloads returns 2xx.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  },
+  {
+    "test_case_id": "TC-REQPAY-002",
+    "agent": "validate-request-payloads",
+    "title_summary": "Auth login: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-003",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username:key absent: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-004",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password:key absent: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-005",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username,password:key absent: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-006",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-007",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-008",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-009",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-010",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-011",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-012",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-015",
+    "agent": "validate-request-payloads",
+    "title_summary": "Expiresinmins:?: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-019",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-020",
+    "agent": "validate-request-payloads",
+    "title_summary": "Username: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-021",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-022",
+    "agent": "validate-request-payloads",
+    "title_summary": "Password: verify validate request payloads returns 400.",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      400
+    ],
+    "expected_result": "The API returns 400."
+  },
+  {
+    "test_case_id": "TC-REQPAY-023",
+    "agent": "validate-request-payloads",
+    "title_summary": "Products add: verify validate request payloads returns 2xx.",
+    "method": "POST",
+    "path": "/products/add",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [],
+    "expected_result": "The API returns 2xx."
+  }
+]

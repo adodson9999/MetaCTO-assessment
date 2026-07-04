@@ -25,11 +25,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 AGENTS = {
-    "langgraph": ["agents/status/langgraph/run.py"],
-    "crewai": ["agents/status/crewai/run.py"],
-    "claude_sdk": ["agents/status/claude_sdk/run.py"],
+    "langgraph": ["agents/api-tester/verify-response-status-codes/langgraph/run.py"],
+    "crewai": ["agents/api-tester/verify-response-status-codes/crewai/run.py"],
+    "claude_sdk": ["agents/api-tester/verify-response-status-codes/claude_sdk/run.py"],
     "api-tester-verify-response-status-codes":
-        ["agents/status/api-tester-verify-response-status-codes/run.py"],
+        ["agents/api-tester/verify-response-status-codes/subagent/run.py"],
 }
 
 

@@ -58,8 +58,9 @@ explicit and guards it so a different outcome is impossible.
 - **Orchestrator (you):** Calls the producer first, freezes the registry, passes the SAME
   registry unchanged to every executor, verifies tc_id-set equality (HF10), then owns the
   adjudication loop in §3. Compares actual vs expected; on a mismatch it **sends the case to the
-  documentation-reviewer** and acts on the verdict — `yes` → bug-reporter, `no` → producer
-  correction + re-test, `missing-docs` → record the missing-docs outcome. Decides nothing about
+  documentation-reviewer** and acts on the verdict — `yes` → bug-reporter (documented bug),
+  `no` → producer correction + re-test, `missing-docs` → bug-reporter for a citation-free,
+  categorized, report-only **unverified** bug (never dropped, never in CI). Decides nothing about
   the docs itself; the reviewer is the doc authority. Guarantees completeness. Never authors or
   edits a case itself.
 - **documentation-reviewer (sole doc adjudicator):** Receives a mismatch, scans the documentation
@@ -67,9 +68,13 @@ explicit and guards it so a different outcome is impossible.
   `other_matches`, `documented_expected`, `observed`, and `reason`. It is the only agent that
   decides whether a mismatch is a real bug, a wrong expectation, or undocumented. It never files
   bugs or edits cases.
-- **bug-reporter agent:** Receives a confirmed failing case (with the reviewer's
-  `source_of_truth`) **only when the verdict is "yes"**, and produces the bug report + artifacts.
-  Sole writer of bug reports.
+- **bug-reporter agent:** the sole writer of bug reports, invoked in two cases. On verdict
+  **"yes"** it receives the failing case **with** the reviewer's `source_of_truth` and produces a
+  **documented** bug (`BUG-…`, `documentation_cited: true`) under `…/verified_bugs/`. On verdict
+  **"missing-docs"** it receives the failing case **without** a source of truth and produces a
+  citation-free **unverified** bug (`VULN-/BIZ-/SW-…`, `documentation_cited: false`) under
+  `…/unverified_bugs/{category}/`, classified into one of the three categories (§3 step 4c). It
+  files nothing on verdict **"no"**.
 
 **Data ownership:** the producer **writes nothing to the filesystem** — it only RETURNS the case
 array as text. The **orchestrator** is the sole WRITER of `test-case-registry.json`, and it writes
@@ -123,8 +128,10 @@ and surface the violation before proceeding.
    40 and runs per-endpoint like the rest. No agent is skipped.
 3. **Cases are sent one at a time and adjudicated one at a time** (§3). The orchestrator sees
    each `actual` before the next case is sent.
-4. **Every confirmed mismatch (real bug) triggers the halt → bug-reporter → resume detour**
-   (§3.4). Live capture + reproduction runs during the detour. The loop always resumes.
+4. **Every reportable mismatch triggers the halt → bug-reporter → resume detour** (§3.4) — a
+   documented bug (verdict "yes") and a citation-free unverified bug (verdict "missing-docs")
+   alike. Live capture + reproduction (full 10 artifacts) runs during the detour. The loop always
+   resumes.
 5. **"Code Update" means exactly that.** A case for a step needing a code change is labeled
    `Code Update`. No bug report, no pass/fail, no blocking. Advance immediately.
 6. **Agents run sequentially within an endpoint.** Agent n+1 does not start until agent n has
@@ -134,7 +141,7 @@ and surface the violation before proceeding.
 8. **The general agents always run, in their proper places, per endpoint:** test-case-creator
    (producer) FIRST before each tester; documentation-reviewer on every mismatch (mid-loop);
    run-cicd-pipeline then bug-reporter after the 40 testers (bug-reporter also mid-loop on a
-   verdict "yes").
+   verdict "yes" → documented bug and on "missing-docs" → unverified bug).
 9. **State is written after every agent completes** so an interrupted run resumes from the last
    completed agent.
 10. **No output is discarded.** Every agent's stdout/stderr is persisted under
@@ -200,43 +207,70 @@ ADJUDICATE(c):
               mismatch must terminate cleanly.
 
      4c. verdict == "missing-docs" → after a full doc scan, neither cli/ nor reference/ documents
-         the behavior; it cannot be adjudicated against docs.
-            - Record outcome = **"missing-docs"** (NOT FAIL, NOT a bug). `source_of_truth` and
-              `documented_expected` are null.
-            - The **orchestrator** sets this tc_id's registry status to "missing-docs" and flags
-              `exclude_from_cicd: true`.
-            - Do NOT call bug-reporter. **run-cicd-pipeline MUST NOT add a missing-docs case to
-              the CI suite** (see §7 G-CICD). Advance to the next case.
+         the behavior; it cannot be adjudicated **against docs**, but it is **no longer dropped** —
+         it is filed as a citation-free **"unverified bug"**.
+            - Record outcome = **"missing-docs"** (still NOT a documented bug). `source_of_truth`
+              and `documented_expected` stay null, `exclude_from_cicd: true` (report-only).
+            - Classify the finding deterministically into exactly one category by the first rule
+              that matches, V → B → S: **vulnerability** (a user can access something they should
+              not or bypass a required step — expected denotes a deny while observed denotes
+              success/access, or the surface is authentication/authorization, or a bypass token is
+              present), else **business-workflow** (user-visible: no system signal and a user-facing
+              signal exists), else **computer-software** (the default / any system-internal signal).
+            - **Enter the §3.4d detour in UNVERIFIED mode** (`documentation_cited: false`,
+              `source_of_truth: null`, `category` as classified). The detour mints a **per-category
+              id** (`VULN-`/`BIZ-`/`SW-`), performs the full live-capture (all **10 artifacts**,
+              same bar as a documented bug), and writes the report to
+              `…/BugReport/{agent}/unverified_bugs/{category}/{id}.json` plus the SEPARATE
+              `unverified-index.json`. The ledger row gains `unverified_bug_id` + `category`.
+            - **Report-only:** an unverified bug NEVER changes the exit code and is NEVER added to
+              the CI suite (`missing-docs` stays `exclude_from_cicd: true` — see §7 G-CICD). The
+              documented-bug (`yes`) and expected-behavior (`no`) paths are unchanged. The detour
+              resumes to the next case (§3.4d vii).
 
-  4d. CONFIRMED BUG (reached only from verdict "yes") → HALT (pause this agent; do NOT abort
-      remaining cases):
+  4d. BUG DETOUR (reached from verdict "yes" → DOCUMENTED, and from §3 step 4c verdict
+      "missing-docs" → UNVERIFIED) → HALT (pause this agent; do NOT abort remaining cases):
         i.   Call bug-reporter mode "live-start" with A.name, E.endpoint_id, c.sub_test,
-             c.method, c.path, c.expected, c.actual, body excerpt, data-exposure flag, and the
-             reviewer's **source_of_truth** (file, line, text — the documented feature the bug is
-             judged against).
+             c.method, c.path, c.expected, c.actual, body excerpt, data-exposure flag, and —
+             for a DOCUMENTED bug, the reviewer's **source_of_truth** (file, line, text) with
+             `documentation_cited: true`; for an UNVERIFIED bug, `source_of_truth: null`,
+             `documentation_cited: false`, and the classified **category** (§3 step 4c).
         ii.  Start ffmpeg screen recording of the reproduction.
         iii. Reproduce c (and any prerequisite setup) in exact order while recording.
         iv.  Stop ffmpeg.
-        v.   Call bug-reporter mode "finalize" — all 10 artifacts required, plus the embedded
-             source_of_truth reference and the documented_expected/observed pair.
-        vi.  Assert agent-foundry/results/bug-reports/[BUG_ID].json exists.   [HF5]
+        v.   Call bug-reporter mode "finalize" — all 10 artifacts required. A DOCUMENTED bug also
+             embeds the source_of_truth reference and the documented_expected/observed pair; an
+             UNVERIFIED bug embeds the category, category_reason, and finding_agent/finding_endpoint.
+        vi.  Assert the report exists at the run's BugReport tree (via `bug_paths(run_id)`):
+             `…/BugReport/{agent}/verified_bugs/[BUG_ID].json` (documented) [HF5] **or**
+             `…/BugReport/{agent}/unverified_bugs/{category}/{VULN|BIZ|SW}-….json` (unverified)
+             [HF13], and that the matching index (`verified-index.json` / `unverified-index.json`)
+             gained the entry [HF16/HF18].
         vii. RESUME: advance to the next case. Never re-run c. Never abort.   [HF4]
 
   5. After the last case: agent A's adjudication is complete → proceed to B5 checks (§7). The
      producer (test-case-creator) already ran first in B3a; no post-hoc case authoring occurs.
 ```
 
-**Bug trigger definition (locked):** a bug is filed **only when documentation-reviewer returns
-verdict "yes"** for a mismatch — the docs document an expected behavior and the observed result
-differs from it. A **"no"** verdict routes to a test-case correction (re-test, no bug); a
-**"missing-docs"** verdict records the `missing-docs` outcome (no bug, excluded from CI). No
-mismatch reaches the bug-reporter without a "yes". Severity tag (set on the bug report):
+**Bug trigger definition (locked):** a mismatch produces one of **two** report classes, decided
+solely by the documentation-reviewer verdict — and **neither is ever silently dropped**:
+- **verdict "yes" → a DOCUMENTED bug** (`BUG-…`, `documentation_cited: true`, cited against the
+  reviewer's `source_of_truth`), written under `…/verified_bugs/`.
+- **verdict "missing-docs" → an UNVERIFIED bug** (`VULN-/BIZ-/SW-…`, `documentation_cited: false`,
+  no citation), categorized V→B→S and written under `…/unverified_bugs/{category}/` — **report-only**
+  (never in CI, never changes the exit code).
+- **verdict "no" → NO bug** (test-case correction + re-test).
+
+Both report classes are written by the bug-reporter and get the full 10-artifact capture. Severity
+tag (set on **every** report, documented or unverified — it sets priority only, never *whether* the
+bug is reported):
 - **CRITICAL** — expected 401/403 (or any deny) returned 2xx **with data exposed**, or any
   auth/authorization bypass.
 - **HIGH** — wrong status class (e.g. expected 4xx, got 5xx) or incorrect data returned.
 - **MEDIUM/LOW** — cosmetic/message/format mismatches with no data or access impact.
 
-Severity never changes the rule that a "yes" bug is **reported**. It only sets priority.
+For unverified bugs, **category** (vulnerability > business-workflow > computer-software) is the
+primary ordering key in `unverified-index.json`; severity/priority break ties within a category.
 
 ---
 
@@ -249,8 +283,9 @@ continuously and again in Phase 3.
   surfaced, the run is BROKEN. Bulk-fire batches are forbidden.
 - **HF2 — Every mismatch is resolved by the reviewer's verdict.** Each MISMATCH must be sent to
   documentation-reviewer and must terminate in exactly one of: (a) verdict "no" →
-  EXPECTED-CORRECTED + retest that resolves to PASS, (b) verdict "yes" → a written bug report, or
-  (c) verdict "missing-docs" → the `missing-docs` outcome recorded. A mismatch that was never
+  EXPECTED-CORRECTED + retest that resolves to PASS, (b) verdict "yes" → a written documented bug
+  report, or (c) verdict "missing-docs" → the `missing-docs` outcome recorded **plus a written,
+  categorized unverified bug report** (HF13). A mismatch that was never
   sent to the reviewer, or that does not reach one of these three terminals within the retest cap,
   is BROKEN. A mismatch must never be silently dropped or labeled "failed".
 - **HF3 — Completeness / denominator intact.** Every case in the registry must have a final
@@ -258,8 +293,9 @@ continuously and again in Phase 3.
   never executed counts as mismatch(0) and BREAKS the run.
 - **HF4 — Resume always.** After a bug detour the loop MUST continue to the remaining cases.
   An early abort of remaining cases is BROKEN.
-- **HF5 — Every confirmed bug has a report.** `count(bug-reports for this run)` must equal
-  `count(CONFIRMED BUG outcomes)`. A confirmed bug with no `[BUG_ID].json` is BROKEN.
+- **HF5 — Every confirmed (documented) bug has a report.** `count(documented BUG- reports for this
+  run)` must equal `count(CONFIRMED BUG outcomes)` (verdict "yes"). A confirmed bug with no
+  `verified_bugs/[BUG_ID].json` is BROKEN. (Unverified report counts are covered by HF13/HF18.)
 - **HF6 — Writer isolation.** Only the orchestrator writes the registry, and it writes ONLY the
   producer's verbatim returned array — never its own or an executor's cases. A registry entry whose
   content differs from the producer's returned text, or any registry write by an api-tester, is
@@ -288,16 +324,49 @@ continuously and again in Phase 3.
   orchestrator and stops; it never fabricates (enforcement point 4).
 - **HF12 — Reviewer is the doc authority.** Every mismatch MUST be adjudicated by
   documentation-reviewer (yes/no/missing-docs); the orchestrator never decides doc validity
-  itself. Every BUG row must carry `reviewer_verdict == "yes"`; every `missing-docs` row must
-  carry `exclude_from_cicd: true` and be absent from the run-cicd-pipeline add-set. A bug filed
-  without a "yes", or a missing-docs case added to CI, is BROKEN.
+  itself. Every **documented** `BUG-` row must carry `reviewer_verdict == "yes"`; every
+  `missing-docs` row must carry `exclude_from_cicd: true`, a matching unverified report (HF13), and
+  be absent from the run-cicd-pipeline add-set. A **documented** bug filed without a "yes", or a
+  missing-docs/unverified case added to CI, is BROKEN.
+
+**Unverified-bug guardrails (HF13–HF26).** Because `missing-docs` now files a citation-free
+unverified bug, the following are checked continuously and in Phase 3 by
+`adjudicate.reconcile()` and the forge gate `agents/general/bug-reporter/forge-gate/unverified_bug_gate.py`.
+Any violation is BROKEN.
+- **HF13 — Undocumented ≠ dropped.** Every `missing-docs` row carries a non-null
+  `unverified_bug_id` + a legal `category`, with a report file at the category path.
+- **HF14 — Category is deterministic.** `row.category == build_category(signals)`.
+- **HF15 — Report-only.** No missing-docs/unverified row has `exclude_from_cicd == false`;
+  unverified bugs are never in the CI add-set and never change the exit code.
+- **HF16 — ID/index separation.** Unverified reports carry `VULN-/BIZ-/SW-` and appear only in
+  `unverified-index.json`; `BUG-` appears only in the verified index.
+- **HF17 — Vulnerability visibility.** Every vulnerability bug is present and sorted first in
+  `unverified-index.json`.
+- **HF18 — Bidirectional denominator.** `count(unverified files) == count(missing-docs rows with
+  an id)`; every index entry maps 1:1 to a file and a row (no orphan file, no dangling row).
+- **HF19 — ID uniqueness.** No two reports share a `bug_id`; per-category sequences are unique.
+- **HF20 — Path↔category↔prefix agreement.** The on-disk `{category}` segment, the report's
+  `category` field, and the id's category (via the prefix) are identical.
+- **HF21 — Finding-agent integrity.** `finding_agent` is non-empty and equals the `{agent}` path
+  segment AND the ledger row's agent; `finding_endpoint` is present.
+- **HF22 — Full-capture parity.** Screenshot/recording/logs present; `db_dump` present iff
+  `db_available`; `complete_artifact_count` ≥ the verified threshold for the same `db_available`.
+- **HF23 — Citation isolation.** Unverified ⇒ `documentation_cited == false` + `source_of_truth
+  == null`; verified ⇒ the inverse.
+- **HF24 — Verdict↔branch agreement.** Only `missing-docs` rows produce `VULN-/BIZ-/SW-` reports;
+  only `yes` rows produce `BUG-` reports.
+- **HF25 — Index integrity & total sort.** Each report appears once in the correct index;
+  `by_category` counts match; the `bugs` array is in the total §4.2 sort order.
+- **HF26 — Determinism / idempotency.** Re-materialising the same ledger with the same
+  date/time/run_id produces byte-identical files and indexes (no wall-clock leaks).
 
 Maintain a live ledger at `agent-foundry/results/runs/[RUN_ID]/adjudication-ledger.json`:
 one row per case — `{endpoint_id, agent, sub_test, expected, actual, cited_feature,
-retest_count, reviewer_verdict, source_of_truth, outcome, exclude_from_cicd, bug_id?}`.
+retest_count, reviewer_verdict, source_of_truth, outcome, exclude_from_cicd, bug_id?,
+unverified_bug_id?, category?}`.
 `outcome` ∈ {PASS, Code Update, EXPECTED-CORRECTED→PASS, BUG, missing-docs}. Phase 3 reconciles
-this ledger against the bug-reports directory and the reviewer verdicts; any inconsistency is a
-hard fail.
+this ledger against BOTH the legacy bug-reports directory and the new per-run BugReport tree
+(verified + unverified indexes) and the reviewer verdicts; any inconsistency is a hard fail.
 
 ---
 
@@ -353,6 +422,12 @@ Ensure these entries exist in `.understand-anything/.understandignore`, appendin
 `orchestration-state.json` with `run_type: "full"`, `env_mode`, `forge_workspace`,
 `started_at`, empty `endpoints`, `completed: false`. Initialize an empty
 `adjudication-ledger.json` and `expected-corrections.json`.
+The per-run bug tree lives at `results/{date}/{time}/BugReport/`, with `date` = `YYYY-MM-DD`
+and `time` = `HH-MM-SS` derived from `RUN_ID` (`RUN-YYYYMMDD-HHMMSS`), overridable by
+`FORGE_BUG_DATE` / `FORGE_BUG_TIME` for deterministic tests. Under it, each finding agent gets
+`{agent}/verified_bugs/` (documented `BUG-` mirrors) and `{agent}/unverified_bugs/{category}/`
+(`VULN-`/`BIZ-`/`SW-`), plus the two run-level indexes `verified-index.json` and
+`unverified-index.json`. All bug paths come from the single `bug_paths(run_id)` helper (G-PATHS).
 
 ### 0d. Build endpoint list
 ```bash
@@ -424,9 +499,11 @@ create-postman-collection
   every mismatch (§3 step 4); returns `yes`/`no`/`missing-docs`. It is never skipped — a mismatch
   not sent to it is BROKEN (HF2).
 - `run-cicd-pipeline` and `bug-reporter` — run after the 40 executors per endpoint, in that
-  order. bug-reporter is also invoked mid-loop by the §3.4d bug detour (only on verdict "yes").
-  run-cicd-pipeline must EXCLUDE every case whose ledger outcome is `missing-docs`
-  (`exclude_from_cicd: true`) from the suite it proposes to add (§7 G-CICD).
+  order. bug-reporter is invoked mid-loop by the §3.4d bug detour on verdict **"yes"** (a
+  documented bug) **and** on verdict **"missing-docs"** (a citation-free, categorized,
+  report-only unverified bug — §3 step 4c). run-cicd-pipeline must EXCLUDE every case whose
+  ledger outcome is `missing-docs` (`exclude_from_cicd: true`) from the suite it proposes to add
+  (§7 G-CICD); unverified bugs never enter CI and never change the exit code.
 
 Spec resolution:
 ```bash
@@ -504,8 +581,11 @@ For EACH agent A in order:
   - **G-REVIEW doc adjudication:** every mismatch (§3 step 4) is sent to documentation-reviewer
     before any bug or correction. The verdict (`yes`/`no`/`missing-docs`) and `source_of_truth`
     are written to the ledger row. A mismatch not sent to the reviewer is BROKEN (HF2).
-  - **G3 bug detour:** handled inside §3.4d, reached **only on verdict "yes"** (live-start →
-    ffmpeg → reproduce → finalize → assert report → resume). Severity per §3.
+  - **G3 bug detour:** handled inside §3.4d, reached on verdict **"yes"** (documented bug) and on
+    verdict **"missing-docs"** (unverified bug, §3 step 4c) — live-start → ffmpeg → reproduce →
+    finalize → assert report + index entry → resume. Severity per §3; a documented bug asserts the
+    `verified_bugs/` path + `verified-index.json`, an unverified bug the `unverified_bugs/{category}/`
+    path + `unverified-index.json`.
   - **G4 Code Update:** §3 step 3 — label, no report, no block.
   - **G-CICD missing-docs exclusion:** when run-cicd-pipeline executes for E, it must read the
     ledger and **exclude every case with outcome `missing-docs` / `exclude_from_cicd: true`** from
@@ -539,20 +619,41 @@ to `pipeline-summary.json`.
    (executor-authored case → HF11). Every EXPECTED-CORRECTED event must be attributed to
    test-case-creator (HF11). Any discrepancy → set `status:"BROKEN"`, write the reasons to
    `agent-foundry/results/runs/${RUN_ID}/broken-reasons.json`, exit non-zero.
+1b. **Reconcile the UNVERIFIED bugs (HF13–HF26).** Every `missing-docs` row carries a non-null
+   `unverified_bug_id` + a legal `category` with a report at the category path (HF13); the category
+   equals `build_category(signals)` (HF14); `count(unverified report files) == count(missing-docs
+   rows with an id)` in a 1:1 map to `unverified-index.json` — no orphan file, no dangling row
+   (HF18); ids are unique and their `VULN-/BIZ-/SW-` prefix matches both the on-disk `{category}`
+   segment and the report's `category` field (HF16/HF19/HF20); every unverified row is report-only
+   (`exclude_from_cicd: true`, absent from the CI add-set, zero exit-code effect — HF15);
+   `finding_agent`/`finding_endpoint` present and consistent (HF21); artifacts meet the verified bar
+   (HF22); `documentation_cited == false` and `source_of_truth == null` (HF23); only `missing-docs`
+   rows produced `VULN-/BIZ-/SW-` reports (HF24); `unverified-index.json` is in total category-first
+   order (vulnerabilities first) with correct `by_category` counts (HF17/HF25); and re-materialising
+   is byte-identical (HF26). Run the forge gate
+   `agents/general/bug-reporter/forge-gate/unverified_bug_gate.py`; any failure → `status:"BROKEN"`,
+   exit non-zero.
 2. **Pipeline summary** → `pipeline-summary.json`:
    `{run_id, run_type:"full", started_at, completed_at, total_endpoints,
    total_agents_per_endpoint:43, total_cases, total_pass, total_code_updates,
    total_expected_corrections, total_missing_docs, total_bugs, bugs_by_severity,
-   denominator_intact:true}`.
+   total_unverified_bugs, unverified_by_category:{vulnerability, business-workflow,
+   computer-software}, denominator_intact:true}`.
 3. **Update registry** with all tc_ids and final status.
-4. **Regenerate** `agent-foundry/results/bug-reports/index.json`.
+4. **Regenerate** the bug indexes: the legacy `agent-foundry/results/bug-reports/index.json`
+   (back-compat) AND, under the run's BugReport tree, `verified-index.json` and
+   `unverified-index.json` (the latter in total category-first order — HF17/HF25).
 5. **Mark complete:** `completed:true` in `orchestration-state.json` (only if not BROKEN).
-6. **Exit code:** BROKEN → exit 2. Any CRITICAL/HIGH bug → exit 1. Else exit 0.
+6. **Exit code:** BROKEN → exit 2. Any CRITICAL/HIGH **documented** bug → exit 1. Else exit 0.
+   **Unverified bugs never affect the exit code** (report-only, HF15) — a run whose only findings
+   are unverified (even vulnerabilities) still exits 0.
 
 A clean exit 0 asserts: every endpoint × every agent ran, every registry case was adjudicated,
-every mismatch was sent to documentation-reviewer and resolved to a correction (no), a bug (yes),
-or missing-docs, the bug count matches the report count, and no missing-docs case entered CI.
-That is the only "successful" outcome.
+every mismatch was sent to documentation-reviewer and resolved to a correction ("no"), a
+documented bug ("yes"), or a categorized unverified bug ("missing-docs") — **none dropped** — the
+documented-bug count matches the `verified_bugs/` report count, every missing-docs row has a
+matching unverified report, and no unverified/missing-docs case entered CI or changed the exit
+code. That is the only "successful" outcome.
 
 ---
 

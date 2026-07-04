@@ -8,3 +8,11 @@
 - [2026-06-29T18:02:27.212410+00:00] run=2026-06-29_17-10-02 ssl-tls-enforcement run: enforcement_rate=52.94% (9/17 scenarios) target=https://localhost:9443
 - [2026-06-29T20:19:33.130681+00:00] run=2026-06-29_19-27-43 ssl-tls-enforcement run: enforcement_rate=52.94% (9/17 scenarios) target=https://localhost:9443
 - [2026-06-29T22:50:42.502270+00:00] run=2026-06-29_22-00-33 ssl-tls-enforcement run: enforcement_rate=52.94% (9/17 scenarios) target=https://localhost:9443
+- [2026-07-02T02:03:55.468496+00:00] run=RUN-20260702-000138 ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-02T16:23:55.022100+00:00] run=20260702T162138-12716d ssl-tls-enforcement run: enforcement_rate=76.47% (13/17 scenarios) target=https://localhost:9443
+- [2026-07-02T21:25:51.349040+00:00] run=20260702T212333-c969f7 ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-02T21:44:37.216918+00:00] run=20260702T214214-ffa047 ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-02T21:47:08.633633+00:00] run=20260702T214437-dfcdbf ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-02T22:24:36.357529+00:00] run=20260702T222211-b95adf ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-02T22:27:08.605288+00:00] run=20260702T222436-2f423f ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443
+- [2026-07-03T22:53:04.769009+00:00] run=RUN-20260703-181017 ssl-tls-enforcement run: enforcement_rate=0.0% (0/17 scenarios) target=https://localhost:9443

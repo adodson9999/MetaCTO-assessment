@@ -1,3 +1,6 @@
 - [2026-06-26T21:47:16.012119+00:00] run=RUN-20260626-200550 run-cicd-pipeline run: fidelity=87.5% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=200
 - [2026-06-28T04:40:33.805753+00:00] run=RUN-20260628-025411 run-cicd-pipeline run: fidelity=87.5% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=200
 - [2026-06-28T19:33:08.574043+00:00] run=RUN-20260628-171526 run-cicd-pipeline run: fidelity=87.5% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=200
+- [2026-07-02T03:19:40.666927+00:00] run=RUN-20260702-000138 run-cicd-pipeline run: fidelity=87.5% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=200
+- [2026-07-02T19:10:47.626792+00:00] run=20260702T190955-e7ce01 run-cicd-pipeline run: fidelity=100.0% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=-1
+- [2026-07-04T00:42:59.871811+00:00] run=RUN-20260703-181017 run-cicd-pipeline run: fidelity=100.0% over 4 scenarios (40 fields); runs to block=['disabled_and_empty_stdout', 'mixed_batch', 'timeout_precedence']; ollama=200

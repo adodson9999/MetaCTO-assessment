@@ -34,10 +34,10 @@ def _pyexe() -> str:
 
 PYEXE = _pyexe()
 AGENTS = {
-    "langgraph": [PYEXE, "agents/langgraph/run.py"],
-    "crewai": [PYEXE, "agents/crewai/run.py"],
-    "api-tester-validate-request-payloads": [PYEXE, "agents/api-tester/validate-request-payloads/run.py"],
-    "claude_sdk": [PYEXE, "agents/claude_sdk/run.py"],
+    "langgraph": [PYEXE, "agents/api-tester/validate-request-payloads/langgraph/run.py"],
+    "crewai": [PYEXE, "agents/api-tester/validate-request-payloads/crewai/run.py"],
+    "api-tester-validate-request-payloads": [PYEXE, "agents/api-tester/validate-request-payloads/subagent/run.py"],
+    "claude_sdk": [PYEXE, "agents/api-tester/validate-request-payloads/claude_sdk/run.py"],
 }
 
 
@@ -65,14 +65,40 @@ def _launch(name: str, cmd: list[str], workspace: Path, run_id: str) -> dict:
     return result
 
 
+def _run_only(workspace: Path, only: str) -> int:
+    """Re-judge ONE agent by <group>/<name> (or bare <name>): dispatch to its
+    per-lane runner, score it, and write the nested timestamped leaderboard that
+    update_agent.py reads. The foundry uses per-lane runners (run_<x>_agents__*.py),
+    not this module's generic AGENTS table, so this delegates to regen_outputs —
+    the single nested-aware driver — rather than the hardwired flat AGENTS above."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import regen_outputs as ro
+    group, _, name = only.partition("/")
+    if not name:              # bare name -> resolve its group from the judge tree
+        name = group
+        matches = [(g, n) for g, n in ro.judged_agents() if n == name]
+        if not matches:
+            print(f"run_agents --only: no judged agent named {name!r}")
+            return 1
+        group, name = matches[0]
+    res = ro.regen_one(group, name, force=True)
+    print(json.dumps(res, indent=2))
+    return 0 if res.get("status") == "ok" else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workspace", default=".")
     ap.add_argument("--run-id", default="auto")
     ap.add_argument("--max-concurrency", type=int, default=4)
+    ap.add_argument("--only", default=None,
+                    help="re-judge exactly one agent by <group>/<name> (or bare <name>) "
+                         "via its per-lane runner + scorer + leaderboard")
     a = ap.parse_args()
 
     workspace = Path(a.workspace).resolve()
+    if a.only:
+        return _run_only(workspace, a.only)
     run_id = (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
               + "-" + uuid.uuid4().hex[:6]) if a.run_id == "auto" else a.run_id
 

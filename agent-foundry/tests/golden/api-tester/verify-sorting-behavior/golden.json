@@ -1,0 +1,202 @@
+{
+  "agent": "api-tester-verify-sorting-behavior",
+  "lane": "sorting-ordering-correctness",
+  "seed": {
+    "count": 20,
+    "note": "twenty deliberately unordered reference records with distinct string, numeric, timestamp, secondary, and null values, seeded by the harness into an isolated reference resource",
+    "record_role": {
+      "string_field_role": "string_field",
+      "numeric_field_role": "numeric_field",
+      "timestamp_field_role": "timestamp_field",
+      "secondary_field_role": "secondary_field",
+      "nullable_field_role": "nullable_field"
+    }
+  },
+  "cases": [
+    {
+      "role": "sort_string_asc",
+      "dimension": "string_field",
+      "params": {
+        "sort": "string_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted ascending by the string field",
+        "assert every adjacent record pair is in ascending string order"
+      ]
+    },
+    {
+      "role": "sort_string_desc",
+      "dimension": "string_field",
+      "params": {
+        "sort": "string_field_role",
+        "order": "desc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted descending by the string field",
+        "assert every adjacent record pair is in descending string order"
+      ]
+    },
+    {
+      "role": "sort_numeric_asc",
+      "dimension": "numeric_field",
+      "params": {
+        "sort": "numeric_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted ascending by the numeric field",
+        "assert numeric order so 9 precedes 100 and never lexicographic; every adjacent pair ascending"
+      ]
+    },
+    {
+      "role": "sort_numeric_desc",
+      "dimension": "numeric_field",
+      "params": {
+        "sort": "numeric_field_role",
+        "order": "desc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted descending by the numeric field",
+        "assert numeric order so 100 precedes 9 and never lexicographic; every adjacent pair descending"
+      ]
+    },
+    {
+      "role": "sort_timestamp_asc",
+      "dimension": "timestamp_field",
+      "params": {
+        "sort": "timestamp_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted ascending by the timestamp field",
+        "assert every adjacent record pair is in ascending chronological order"
+      ]
+    },
+    {
+      "role": "sort_timestamp_desc",
+      "dimension": "timestamp_field",
+      "params": {
+        "sort": "timestamp_field_role",
+        "order": "desc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted descending by the timestamp field",
+        "assert every adjacent record pair is in descending chronological order"
+      ]
+    },
+    {
+      "role": "multi_field_secondary_stability",
+      "dimension": "primary_and_secondary",
+      "params": {
+        "sort": "string_field_role,secondary_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty records with repeated primary keys and distinct secondary values",
+        "GET the collection sorted by the primary field then the secondary field",
+        "assert records with equal primary keys keep their secondary order (stability assertion)"
+      ]
+    },
+    {
+      "role": "null_value_ordering",
+      "dimension": "nullable_field",
+      "params": {
+        "sort": "nullable_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed records including some with a null nullable-field value",
+        "GET the collection sorted by the nullable field",
+        "assert null values are placed per the documented nulls-first or nulls-last policy"
+      ]
+    },
+    {
+      "role": "collation_case_sensitivity",
+      "dimension": "string_field",
+      "params": {
+        "sort": "string_field_role",
+        "order": "asc"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed records with mixed-case string values",
+        "GET the collection sorted by the string field",
+        "assert ordering follows the documented collation/case-sensitivity policy"
+      ]
+    },
+    {
+      "role": "sort_with_pagination",
+      "dimension": "string_field",
+      "params": {
+        "sort": "string_field_role",
+        "order": "asc",
+        "limit": "page_size_role"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET each page of the sorted collection using the page-size role across page boundaries",
+        "assert ordering is stable and correct across page boundaries with no duplicate or dropped record"
+      ]
+    },
+    {
+      "role": "invalid_sort_field_400",
+      "dimension": "invalid_field",
+      "params": {
+        "sort": "nonexistent_field_role"
+      },
+      "expected_class": "400",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection sorted by a field the contract does not list",
+        "assert the request is rejected with a 400"
+      ]
+    },
+    {
+      "role": "invalid_order_direction_400",
+      "dimension": "invalid_order",
+      "params": {
+        "sort": "string_field_role",
+        "order": "invalid_direction_role"
+      },
+      "expected_class": "400",
+      "also_accept": [],
+      "steps": [
+        "seed twenty unordered reference records",
+        "GET the collection with an order value that is neither asc nor desc",
+        "assert the request is rejected with a 400"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "sort_order_fidelity",
+    "value": 1.0
+  }
+}

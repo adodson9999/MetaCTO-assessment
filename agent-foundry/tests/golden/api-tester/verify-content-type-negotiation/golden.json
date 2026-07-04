@@ -1,0 +1,149 @@
+{
+  "agent": "api-tester-verify-content-type-negotiation",
+  "lane": "accept-content-type-negotiation",
+  "cases": [
+    {
+      "role": "accept_supported_format_1",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_media_type",
+        "header": "Accept",
+        "media_type": "application/json"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_supported_format_2",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_media_type",
+        "header": "Accept",
+        "media_type": "application/xml"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_supported_format_3",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_media_type",
+        "header": "Accept",
+        "media_type": "text/csv"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_unsupported",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_media_type",
+        "header": "Accept",
+        "media_type": "application/unsupported-media-type-probe"
+      },
+      "expected_class": "406",
+      "also_accept": []
+    },
+    {
+      "role": "accept_wildcard",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_wildcard",
+        "header": "Accept",
+        "media_type": "*/*"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_charset",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_charset",
+        "header": "Accept",
+        "media_type": "application/json; charset=utf-8",
+        "assert": "echoed_charset_matches"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_q_value",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_q_value",
+        "header": "Accept",
+        "media_type": "application/xml;q=0.5, application/json;q=0.9",
+        "assert": "higher_q_supported_format_chosen"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "accept_encoding",
+      "channel": "response",
+      "recipe": {
+        "kind": "accept_encoding",
+        "header": "Accept-Encoding",
+        "media_type": "gzip, br",
+        "assert": "matching_content_encoding"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "200"
+      ]
+    },
+    {
+      "role": "content_type_supported",
+      "channel": "request",
+      "recipe": {
+        "kind": "request_content_type",
+        "header": "Content-Type",
+        "media_type": "application/json"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "content_type_unsupported",
+      "channel": "request",
+      "recipe": {
+        "kind": "request_content_type",
+        "header": "Content-Type",
+        "media_type": "application/unsupported-request-media-type"
+      },
+      "expected_class": "415",
+      "also_accept": []
+    },
+    {
+      "role": "content_type_missing",
+      "channel": "request",
+      "recipe": {
+        "kind": "request_content_type_missing",
+        "header": "Content-Type"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "415"
+      ]
+    },
+    {
+      "role": "content_type_charset",
+      "channel": "request",
+      "recipe": {
+        "kind": "request_content_type_charset",
+        "header": "Content-Type",
+        "media_type": "application/json; charset=utf-8"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "content_negotiation_fidelity",
+    "value": 1.0
+  }
+}

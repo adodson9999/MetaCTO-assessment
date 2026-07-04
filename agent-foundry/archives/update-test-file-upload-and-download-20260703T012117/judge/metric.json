@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-file-upload-and-download",
+  "metric_name": "upload_download_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch against a real gold token; when gold itself is 'missing' for a scenario (structurally unobservable against this target, e.g. a download that cannot run because no accepted upload returned a URL), the agent reproducing 'missing' is a match. Denominator = all gold scenarios (endpoints x 14).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-file-upload-and-download/gold.json",
+  "headline_metric": "file_upload_download_pass",
+  "headline_definition": "Overall pass requires all three task rates = 100%: File Integrity Rate = (uploaded+downloaded files whose MD5(original) == MD5(downloaded) / total files uploaded and downloaded) x 100; Over-Size Rejection Rate = (over-size attempts returning exactly 413 / total over-size attempts) x 100; Invalid MIME Rejection Rate = (invalid-MIME attempts returning exactly 415 / total invalid-MIME attempts) x 100. Pass = all three = 100%.",
+  "scenarios_per_endpoint": 14,
+  "rationale": "All four agents hit the same local DummyJSON fork, whose real multipart handling produces identical three rates for every agent: File Integrity Rate = 0% (an accepted upload returns success_code but NO downloadable 'url', so the byte-for-byte MD5 round-trip cannot run), Over-Size Rejection Rate = 0% (a single over-limit file returns 400 'Error processing multipart data: File too large' from multer's LIMIT_FILE_SIZE, not the documented 413, and the limit is exclusive so a file of exactly max_size_bytes is also rejected), and Invalid MIME Rejection Rate = 0% (there is no MIME filter, so an application/octet-stream file is accepted, never 415). That headline is a property of the target, not the agent, and is emitted by every agent as the task's QA finding. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct request set (the four uploads at exactly 1024, max_size_bytes, max_size_bytes+1, and an application/octet-stream file, plus the two downloads that MD5-compare each accepted file) and faithfully exercise every scenario. The headline upload_contract_correctness_rate_pct is also emitted (empirically ~21%: per endpoint only upload_1kb_status, upload_over_url_absent, and upload_invalid_url_absent match the idealized contract).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any request mis-constructed so the observed token diverges from gold)"
+}

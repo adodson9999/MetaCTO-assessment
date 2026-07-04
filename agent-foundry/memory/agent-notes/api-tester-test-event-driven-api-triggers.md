@@ -7,3 +7,8 @@
 - [2026-06-29T18:10:14.208196+00:00] run=2026-06-29_17-10-02 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
 - [2026-06-29T20:27:35.147848+00:00] run=2026-06-29_19-27-43 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
 - [2026-06-29T22:58:16.455438+00:00] run=2026-06-29_22-00-33 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-02T02:32:45.828622+00:00] run=RUN-20260702-000138 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T04:44:02.546898+00:00] run=20260703T043825-52b1df event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T16:54:11.054248+00:00] run=20260703T164859-70db10 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T16:59:13.673063+00:00] run=20260703T165411-b38142 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)
+- [2026-07-03T23:41:00.281414+00:00] run=RUN-20260703-181017 event-trigger-test run: event_processing=0.0% dlq_delivery=0.0% over 4 topics (32 scenarios)

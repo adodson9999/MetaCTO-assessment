@@ -1,0 +1,11 @@
+{
+  "metric_name": "response_validation_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold endpoints where the agent's recorded response matches the gold reference on ALL of: real response class (actual_class), documented_schema flag, conformance verdict, validation_error_count, AND the agent correctly reported whether a JSON response schema is documented for the matched response key (schema_claim_correct). An endpoint the agent did not cover (no usable request produced) counts as a mismatch. Denominator = all gold endpoints.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/schema/gold.json",
+  "headline_metric": "schema_conformance_rate_pct",
+  "tie_breakers": ["coverage_cases", "valid_2xx_success", "wall_clock_seconds"],
+  "rationale": "The headline Schema Conformance Rate = (responses with zero ajv errors / responses validated) x 100, pass=100%. Under the current spec NO endpoint documents a response schema, so 0 responses are validated and the conformance rate is N/A for ALL four agents — it cannot separate them. Fidelity-to-gold instead measures each framework's test quality: full coverage of the 22 endpoints, a correctly constructed valid request that elicits the real success status (right method/path/body/auth), faithful recording, and honest gap reporting (correctly stating has_json_schema=false rather than hallucinating a schema or a conformance verdict). The N/A conformance rate is itself the headline QA finding: response schemas are undocumented and must be authored before conformance can be measured."
+}

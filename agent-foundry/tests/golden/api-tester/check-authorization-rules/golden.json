@@ -1,0 +1,221 @@
+{
+  "agent": "api-tester-check-authorization-rules",
+  "lane": "authorization-access-control-matrix",
+  "baseline": {
+    "metric": "authz_matrix_fidelity",
+    "value": 1.0
+  },
+  "cases": [
+    {
+      "role": "authorized_get_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "GET",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_get_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "GET",
+      "recipe": {
+        "kind": "foreign_owner_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "authorized_put_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "PUT",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_put_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "PUT",
+      "recipe": {
+        "kind": "foreign_owner_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "authorized_delete_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_delete_endpoint_1",
+      "endpoint_role": "protected_endpoint_1",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "no_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "authorized_get_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "GET",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_get_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "GET",
+      "recipe": {
+        "kind": "foreign_owner_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "authorized_put_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "PUT",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_put_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "PUT",
+      "recipe": {
+        "kind": "foreign_owner_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "authorized_delete_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "permitted_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    },
+    {
+      "role": "unauthorized_delete_endpoint_2",
+      "endpoint_role": "protected_endpoint_2",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "no_token",
+        "cross_tenant_idor": {
+          "target": "foreign_owner_resource_id"
+        }
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ],
+      "leakage": {
+        "assert_no_forbidden_field_value": true,
+        "assert_no_internal_detail_substring": true,
+        "no_resource_data_on_failure": true
+      }
+    }
+  ],
+  "out_of_scope": null
+}

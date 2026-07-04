@@ -1,0 +1,71 @@
+{
+  "agent": "api-tester-verify-error-message-clarity",
+  "lane": "error-message-clarity",
+  "descriptors": [
+    {
+      "role": "not_found",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "not_found_id"
+      },
+      "expected_class": "404",
+      "also_accept": [],
+      "clarity_checks": [
+        "clear_message",
+        "machine_code",
+        "envelope_consistency",
+        "status_code_alignment",
+        "request_id",
+        "no_leak"
+      ]
+    },
+    {
+      "role": "invalid_input",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "malformed_body"
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "422"
+      ],
+      "clarity_checks": [
+        "clear_message",
+        "machine_code",
+        "envelope_consistency",
+        "field_level_detail",
+        "status_code_alignment",
+        "request_id",
+        "no_leak"
+      ]
+    },
+    {
+      "role": "missing_auth",
+      "endpoint_role": "protected_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "no_auth"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ],
+      "clarity_checks": [
+        "clear_message",
+        "machine_code",
+        "envelope_consistency",
+        "status_code_alignment",
+        "request_id",
+        "no_leak"
+      ]
+    }
+  ],
+  "leakage_list_owner": "api-tester-check-authorization-rules",
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "error_clarity_fidelity",
+    "value": 1.0
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "agent": "api-tester-test-idempotency-of-endpoints",
+  "lane": "repeated-request-idempotency-contract",
+  "idempotency_key_header": "idempotency_key_header_role",
+  "write_persistence": "as_documented",
+  "cases": [
+    {
+      "role": "read_replay",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "repeat_read"
+      },
+      "replay_count": 3,
+      "idempotency_key": null,
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "update_replay",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "recipe": {
+        "kind": "repeat_update"
+      },
+      "replay_count": 3,
+      "idempotency_key": "a1111111-1111-4111-8111-111111111111",
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "delete_replay",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "repeat_delete"
+      },
+      "replay_count": 3,
+      "idempotency_key": null,
+      "expected_class": "2xx",
+      "also_accept": [
+        "404"
+      ]
+    },
+    {
+      "role": "same_key_conflict",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "recipe": {
+        "kind": "same_key_different_body"
+      },
+      "replay_count": 1,
+      "idempotency_key": "a1111111-1111-4111-8111-111111111111",
+      "expected_class": "409",
+      "also_accept": [
+        "422",
+        "400"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "idempotency_contract_fidelity",
+    "value": 1.0
+  }
+}

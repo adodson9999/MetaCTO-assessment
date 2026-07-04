@@ -9,3 +9,6 @@
 - [2026-06-28T16:24:14.663372+00:00] run=VERIFY-docrev documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
 - [2026-06-28T19:32:03.459912+00:00] run=RUN-20260628-171526 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
 - [2026-06-29T14:58:37.665388+00:00] run=VERIFY-docrev-cli documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-07-02T03:18:37.303619+00:00] run=RUN-20260702-000138 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-07-02T19:09:44.962292+00:00] run=20260702T190823-a6f04a documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%
+- [2026-07-04T00:42:22.720795+00:00] run=RUN-20260703-181017 documentation-reviewer run: verdict_accuracy=100.0% over 4 reports; source-of-truth match=100.0%

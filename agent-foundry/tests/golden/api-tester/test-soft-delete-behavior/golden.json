@@ -1,0 +1,96 @@
+{
+  "agent": "api-tester-test-soft-delete-behavior",
+  "lane": "soft-delete-semantics",
+  "cases": [
+    {
+      "role": "delete_soft_markers",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "path_template": "{ITEM_ENDPOINT}/{RESOURCE_ID}",
+      "recipe": {
+        "kind": "soft_delete"
+      },
+      "expected_class": "200",
+      "also_accept": [],
+      "assert_resource_echoed": true,
+      "assert_documented_soft_delete_markers_present": true,
+      "assert_no_unexpected_internal_fields": true,
+      "steps": [
+        "resolve the item endpoint and the documented resource-id placeholder from the runtime brief",
+        "send a DELETE to the item endpoint at {RESOURCE_ID}",
+        "assert the response is the documented success class 200",
+        "assert the deleted resource is echoed in the response body",
+        "assert the documented soft-delete markers are present on the echoed resource",
+        "assert the response leaks no unexpected internal fields beyond the documented shape"
+      ]
+    },
+    {
+      "role": "delete_non_persistence",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "path_template": "{ITEM_ENDPOINT}/{RESOURCE_ID}",
+      "recipe": {
+        "kind": "follow_up_get",
+        "after": "simulated_delete"
+      },
+      "expected_class": "200",
+      "also_accept": [],
+      "assert_original_record_returned": true,
+      "assert_not_404": true,
+      "assert_no_unexpected_internal_fields": true,
+      "steps": [
+        "using the same {RESOURCE_ID} from the simulated delete lifecycle",
+        "send a follow-up GET to the item endpoint at {RESOURCE_ID}",
+        "assert the item endpoint still returns the original record rather than 404",
+        "assert this proves the delete was not actually persisted (non-persistence write proof)",
+        "assert the response leaks no unexpected internal fields beyond the documented shape"
+      ]
+    },
+    {
+      "role": "delete_missing_404",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "path_template": "{ITEM_ENDPOINT}/{RESOURCE_ID}",
+      "recipe": {
+        "kind": "delete_nonexistent",
+        "id_source": "known_nonexistent_item_id"
+      },
+      "expected_class": "404",
+      "also_accept": [],
+      "assert_no_unexpected_internal_fields": true,
+      "steps": [
+        "resolve the known-nonexistent item id supplied by the runtime brief into {RESOURCE_ID}",
+        "send a DELETE to the item endpoint at {RESOURCE_ID}",
+        "assert the missing-resource negative returns the documented 404 class",
+        "assert the response leaks no unexpected internal fields beyond the documented shape"
+      ]
+    },
+    {
+      "role": "delete_double",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "path_template": "{ITEM_ENDPOINT}/{RESOURCE_ID}",
+      "recipe": {
+        "kind": "repeat_delete",
+        "sequence": "second_delete_same_id"
+      },
+      "expected_class": "200",
+      "also_accept": [
+        "404"
+      ],
+      "assert_consistent_behavior": true,
+      "assert_no_unexpected_internal_fields": true,
+      "steps": [
+        "reuse the same {RESOURCE_ID} already targeted by the first delete lifecycle",
+        "send a second DELETE to the item endpoint at {RESOURCE_ID}",
+        "assert the double-delete behaves consistently with the documented delete semantics",
+        "assert the response leaks no unexpected internal fields beyond the documented shape"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "soft_delete_fidelity",
+    "value": 1.0
+  }
+}

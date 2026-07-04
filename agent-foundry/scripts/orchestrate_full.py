@@ -293,9 +293,32 @@ def main() -> None:
     except Exception as exc:  # noqa: BLE001
         print(f"BUG-REPORTER ERROR: {exc}", flush=True)
 
+    # Phase 3e — DELIVERABLE MATERIALIZATION + GATE. Build the clean per-run tree
+    # (TestCases/ + Postman/ + BugReport/) under results/{date}/{time}/ and run the deliverable
+    # gate (G13-G20) HARD. This is what the full-orchestration driver historically skipped: it
+    # left only a BugReport in the dated tree, never materialized TestCases/Postman, and never ran
+    # the deterministic Core-Requirements contract — so a documented AUTH-ME-MALFORMED 500 bug was
+    # missed. Running it here restores that coverage and enforces the separation contract every run.
+    deliverables = {}
+    deliverable_hard_fail = False
+    try:
+        import build_deliverables as BD  # noqa: E402
+        do_bugs = os.environ.get("FORGE_DELIVERABLE_BUGS", "1") in ("1", "true")
+        deliverables = BD.finalize(run_id, target=TARGET, do_bugs=do_bugs)
+        deliverable_hard_fail = bool(deliverables.get("hard_fail"))
+        print("DELIVERABLES:", json.dumps({k: deliverables.get(k) for k in
+              ("out_root", "testcase_agents", "hard_fail")}), flush=True)
+        for g in deliverables.get("gates", []):
+            print(f"  {g['id']} {g['name']}: {g['status']} — {g['detail']}", flush=True)
+    except Exception as exc:  # noqa: BLE001 — a missing deliverable tree IS a hard failure
+        print(f"DELIVERABLES ERROR: {exc}", flush=True)
+        deliverable_hard_fail = True
+
     # HARD guardrail enforcement: a hard-check failure (e.g. G11 per-agent producer not
-    # enforced) marks the run BROKEN and exits non-zero. This is the "force it to happen".
+    # enforced, or a missing/incomplete deliverable tree) marks the run BROKEN and exits
+    # non-zero. This is the "force it to happen".
     producer_summary = _read_json(run_dir / "producer-invocations.json", {})
+    hard_fail = hard_fail or deliverable_hard_fail
     if hard_fail:
         state["completed"] = False
         state["status"] = "BROKEN"
@@ -312,6 +335,11 @@ def main() -> None:
                             "timeouts": producer_summary.get("timeouts")},
                "adjudication": adjudication,           # §3 ledger summary (mismatch -> verdict -> bug)
                "bug_reporting": bug_reporting,         # bug-reporter agent over live failures
+               "deliverables": {k: deliverables.get(k) for k in       # §3e clean deliverable tree + gate
+                                ("out_root", "date", "time", "testcase_agents",
+                                 "bug_reporting", "hard_fail")} if deliverables else {},
+               "deliverable_gate": [{"id": g["id"], "name": g["name"], "status": g["status"]}
+                                    for g in deliverables.get("gates", [])] if deliverables else [],
                "guardrails_any_fail": guardrail_fail,
                "guardrails_any_hard_fail": hard_fail,
                "status": "BROKEN" if hard_fail else "completed",
@@ -321,8 +349,21 @@ def main() -> None:
     print("DONE: execution=", json.dumps(execution_status), "quality=", json.dumps(quality),
           "status=", summary["status"], flush=True)
     if hard_fail:
-        print("RUN BROKEN: a HARD guardrail failed (see G11/per-agent-producer).", flush=True)
+        reason = "deliverable gate G13-G20" if deliverable_hard_fail else "G11/per-agent-producer"
+        print(f"RUN BROKEN: a HARD guardrail failed (see {reason}).", flush=True)
         sys.exit(2)
+
+    # SUCCESS — the dated deliverable is self-contained, so delete this run's transient working
+    # data immediately (results/runs/<RUN_ID>, legacy results/bug-reports, registry strays). A
+    # BROKEN run keeps them for debugging (we exited above before reaching here).
+    try:
+        import build_deliverables as BD  # noqa: E402
+        tidy = BD.tidy_results(run_id)
+        print(f"TIDY: removed {tidy['removed']}"
+              + (f" | REMAINING STRAYS {tidy['remaining_strays']}" if tidy["remaining_strays"] else ""),
+              flush=True)
+    except Exception as exc:  # noqa: BLE001 — cleanup must never fail an otherwise-good run
+        print(f"TIDY ERROR: {exc}", flush=True)
 
 
 def _read_json(p: Path, default):

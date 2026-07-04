@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""CrewAI file-upload-and-download-testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-endpoint
+Task. CrewAI routes the model through LiteLLM, so claude-haiku works via an
+"anthropic/<model>" string and the air-gapped default works via "ollama/<model>".
+Deterministic execution (build exact files, multipart-POST upload, GET download,
+MD5-compare), recording, and emit are the shared harness's job (agents/common/upload.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import upload  # noqa: E402
+from upload_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API file-upload-and-download-testing agent",
+        goal="Convert one upload endpoint's file-handling contract into a single JSON upload-and-download test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = upload.endpoint_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the nine upload/download-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return upload.extract_json(str(out)) or {}
+
+    summary = upload.run_upload_test(AGENT, generate)
+    print(f"[{AGENT}] integrity={summary['file_integrity_rate_pct']}% "
+          f"over413={summary['over_size_rejection_rate_pct']}% "
+          f"invalid415={summary['invalid_mime_rejection_rate_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

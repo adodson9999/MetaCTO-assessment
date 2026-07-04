@@ -1,0 +1,14 @@
+[
+  {
+    "round": 0,
+    "edit": "(baseline)",
+    "score": -Infinity,
+    "kept": true
+  },
+  {
+    "round": 1,
+    "score": -Infinity,
+    "kept": false,
+    "gate_fail": -9
+  }
+]

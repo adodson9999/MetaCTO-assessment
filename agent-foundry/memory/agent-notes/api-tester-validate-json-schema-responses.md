@@ -17,3 +17,5 @@
 - [2026-06-29T17:29:29.841801+00:00] run=2026-06-29_17-10-02 schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
 - [2026-06-29T19:47:44.647492+00:00] run=2026-06-29_19-27-43 schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
 - [2026-06-29T22:20:14.329664+00:00] run=2026-06-29_22-00-33 schema-validation run: conformance_rate=N/A validated=0 covered=22/22 endpoints
+- [2026-07-02T00:28:53.899062+00:00] run=RUN-20260702-000138 schema-validation run: conformance_rate=N/A validated=0 covered=0/22 endpoints
+- [2026-07-03T19:25:59.964881+00:00] run=RUN-20260703-181017 schema-validation run: conformance_rate=N/A validated=0 covered=13/22 endpoints

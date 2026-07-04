@@ -1,0 +1,18 @@
+{
+  "task": "api-tester / validate-header-propagation",
+  "metric_name": "header_propagation_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request/assertion not emitted -> observed 'missing' or divergent) counts as a mismatch. Denominator = all gold scenarios (endpoints x 13).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-header-propagation/gold.json",
+  "headline_metric": "header_propagation_rate_pct",
+  "scenarios_per_endpoint": 13,
+  "scenario_families": {
+    "plan": "5 plan-correctness scenarios (did the agent emit the correct, complete propagation test plan: verbatim correlation_id, exact header_name casing, a with-header request carrying X-Correlation-ID + Bearer, a no-header request free of the correlation header, and the complete ordered assertions array). These give the leaderboard its resolution.",
+    "runtime": "8 runtime-observation scenarios (what DummyJSON actually did: response echo, API-log presence/unmodified, downstream count/propagation, no-header auto-UUID + its propagation). For DummyJSON every runtime scenario is degenerate (absent/false/n-a), so every agent matches gold on them for free; differentiation comes from the plan family."
+  },
+  "rationale": "All four agents hit the same local DummyJSON, so the raw Header Propagation Rate (0% — DummyJSON echoes/logs/generates no correlation id and has no downstream services) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's TEST quality: did it construct the propagation plan correctly — the verbatim id, the exact header name casing, both requests with the right header presence/absence, and the full assertion set — so the harness could observe the true behavior. The headline header_propagation_rate_pct (empirically 0%) is still emitted by every agent as the task's QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token, i.e. emits a fully correct plan)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold). For the headline QA metric: Header Propagation Rate < 100% — any downstream/API log missing the id, or any modified (truncated/lowercased) id — fails; DummyJSON fails at 0%."
+}

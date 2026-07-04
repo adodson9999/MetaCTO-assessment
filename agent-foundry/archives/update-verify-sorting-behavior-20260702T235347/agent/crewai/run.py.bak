@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI sorting-behavior agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-
+collection Task. CrewAI routes the model through LiteLLM, so claude-haiku works via
+an "anthropic/<model>" string and the local Ollama backend via "ollama/<model>".
+Deterministic execution (seed an isolated reference resource, read-only GETs),
+recording, and emit are the shared harness's job (agents/common/sorting.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import sorting  # noqa: E402
+from sorting_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API sorting-behavior testing agent",
+        goal="Convert one collection's documented sort contract into a single JSON sort test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = sorting.resource_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the six sort-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return sorting.extract_json(str(out)) or {}
+
+    summary = sorting.run_sorting_test(AGENT, generate)
+    print(f"[{AGENT}] sorting_accuracy={summary['sorting_accuracy_rate_pct']}% "
+          f"sort_cases={summary['sort_cases_in_order']}/{summary['sort_cases_total']}")
+
+
+if __name__ == "__main__":
+    main()

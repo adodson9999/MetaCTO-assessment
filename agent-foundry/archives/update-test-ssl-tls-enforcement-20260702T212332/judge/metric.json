@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / test-ssl-tls-enforcement",
+  "metric_name": "tls_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (probe/assertion/cipher not emitted -> observed 'missing') counts as a mismatch. Denominator = all 17 gold scenarios.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-ssl-tls-enforcement/gold.json",
+  "headline_metric": "tls_enforcement_rate_pct",
+  "scenarios_total": 17,
+  "rationale": "All four agents probe the same local TLS fixture, so the raw TLS Enforcement Rate (the share of the 17 scenarios the target satisfies under the idealized TLS contract) is a property of the target, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct seven-key plan (all five protocol probes with the right expected accept/reject, all four certificate assertions, and all five forbidden weak-cipher families), so the harness exercises every scenario and reproduces the gold token. The headline tls_enforcement_rate_pct is still emitted by every agent as the task's QA finding (empirically 100% because the fixture enforces TLS 1.2/1.3-only, an HTTP->HTTPS redirect, a CA-signed non-expired CN/SAN-matched certificate, and strong-only ciphers).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered because the plan omitted a probe/assertion/cipher, or any probe mis-constructed so the observed token diverges from gold)",
+  "headline_pass": "tls_enforcement_rate_pct = 100",
+  "headline_fail": "any successful TLS 1.0/1.1 handshake, any API data over plain HTTP, any expired/self-signed cert, any failed chain of trust, or any weak cipher (RC4/DES/3DES/EXPORT/NULL) offered — each a critical (P1) TLS-enforcement failure"
+}

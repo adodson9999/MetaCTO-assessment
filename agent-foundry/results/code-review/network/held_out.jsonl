@@ -1,8 +1,0 @@
-{"id": "nw-001", "input_code": "r = http.get(url, timeout=2.0)\nr.raise_for_status()", "gold_band": [80, 100]}
-{"id": "nw-002", "input_code": "while True:\n    try:\n        return http.post(url, body)\n    except Exception:\n        continue", "gold_band": [0, 35]}
-{"id": "nw-003", "input_code": "for attempt in range(3):\n    try:\n        r = http.get(url, timeout=2.0)\n        r.raise_for_status()\n        return r.json()\n    except TimeoutError:\n        time.sleep((2 ** attempt) + random.random())", "gold_band": [85, 100]}
-{"id": "nw-004", "input_code": "r = http.get(url)\nreturn r.json()", "gold_band": [0, 40]}
-{"id": "nw-005", "input_code": "def charge(card, amount):\n    for _ in range(3):\n        try:\n            return http.post('/charge', {'card': card, 'amount': amount}, timeout=5)\n        except TimeoutError:\n            continue", "gold_band": [0, 35]}
-{"id": "nw-006", "input_code": "def load_users(ids):\n    users = []\n    for uid in ids:\n        users.append(http.get(f'/users/{uid}', timeout=2).json())\n    return users", "gold_band": [40, 69]}
-{"id": "nw-007", "input_code": "def render_page():\n    ads = http.get('/ads', timeout=1).json()  # ads service is optional\n    return {'ads': ads}", "gold_band": [55, 80]}
-{"id": "nw-008", "input_code": "def handler(request):  # must return within 3s\n    return http.get(url, timeout=30).json()", "gold_band": [30, 60]}

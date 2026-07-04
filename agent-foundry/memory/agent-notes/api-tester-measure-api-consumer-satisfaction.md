@@ -11,3 +11,8 @@
 - [2026-06-29T18:18:39.685249+00:00] run=2026-06-29_17-10-02 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
 - [2026-06-29T20:35:54.364723+00:00] run=2026-06-29_19-27-43 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
 - [2026-06-29T23:22:14.563542+00:00] run=2026-06-29_22-00-33 nps run [current]: nps=22 validity=valid plan_accuracy=100.0% (26/26 scenarios)
+- [2026-07-02T03:14:52.234568+00:00] run=RUN-20260702-000138 nps run [current]: nps=0 validity=missing plan_accuracy=46.15% (12/26 scenarios)
+- [2026-07-02T16:40:13.162327+00:00] run=20260702T163926-9f0fc8 nps run [current]: nps=0 validity=missing plan_accuracy=23.08% (6/26 scenarios)
+- [2026-07-02T23:18:23.512716+00:00] run=20260702T231745-86921e nps run [current]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)
+- [2026-07-02T23:20:23.757454+00:00] run=20260702T231823-f84f8b nps run [current]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)
+- [2026-07-04T00:39:39.269505+00:00] run=RUN-20260703-181017 nps run [current]: nps=0 validity=missing plan_accuracy=0.0% (0/26 scenarios)

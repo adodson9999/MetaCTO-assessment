@@ -1,0 +1,11 @@
+{
+  "metric_name": "authorization_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold sub_tests where the agent's recorded tuple (its assigned expected_code, observed actual_class, data_exposed, leak_safe) equals the gold tuple for the same sub_test. A sub_test the agent did not produce/send counts as a mismatch. Denominator = number of gold sub_tests (8).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/authz/gold.json",
+  "headline_metric": "access_control_accuracy_rate_pct",
+  "tie_breakers": ["coverage_sub_tests", "control_case_correctness", "wall_clock_seconds"],
+  "rationale": "All four agents hit the same local API, so the raw Access Control Accuracy Rate is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: full matrix coverage, correct contract-code + leakage-assertion assignment, correct role/method/endpoint, and faithful recording of the real outcome (status, data exposure, leak safety). The headline access_control_accuracy_rate_pct is still emitted by every agent as the task's critical QA finding (any expected-403 case returning 2xx is a critical data-exposure failure)."
+}

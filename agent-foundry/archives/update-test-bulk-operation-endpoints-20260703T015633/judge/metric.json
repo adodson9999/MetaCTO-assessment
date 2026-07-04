@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / test-bulk-operation-endpoints",
+  "metric_name": "bulk_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (plan field omitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (11).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-bulk-operation-endpoints/gold.json",
+  "headline_metric": "bulk_operation_accuracy_pct",
+  "scenarios_total": 11,
+  "rationale": "The batch construction, sending, and direct SQLite count all live in the shared harness, identical for all four agents, so the raw Bulk Operation Accuracy is a property of the target endpoint, not the agent. Fidelity-to-gold instead measures each framework's test-PLAN quality: did its LLM transcribe the bulk contract into the correct fourteen-key plan (right endpoint, max_batch_size, required_fields array, valid_item_template with the literal [N], valid_count=8, the missing_field / wrongtype_field / wrongtype_value defect selectors, oversize_count=101, and the five expected_* integers)? A framework whose plan omits a key, quotes an integer, expands [N], swaps a defect selector, or mistypes a value diverges from gold and scores lower. The headline bulk_operation_accuracy_pct is still emitted by every agent as the task's QA finding (empirically 100% against the spec-conformant local target: the mixed batch returns 207 with 8x2xx + 2x400 naming the offending fields and DB delta exactly 8; the all-invalid batch returns 207 with all-400 and inserts 0; the oversize batch is rejected 413 and inserts 0).",
+  "headline_pass_threshold": "bulk_operation_accuracy_pct = 100 (all three bulk test cases pass: valid items 2xx AND invalid items 400 AND DB delta = valid item count, for mixed/all-invalid/oversize)",
+  "headline_fail_condition": "any valid item returning non-2xx, any invalid item returning non-400, any DB delta differing from the valid item count, or an oversize batch not rejected with 413/400",
+  "rank_pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "rank_fail_condition": "fidelity < 100% (any scenario uncovered or any plan field mis-transcribed so the observed token diverges from gold)"
+}

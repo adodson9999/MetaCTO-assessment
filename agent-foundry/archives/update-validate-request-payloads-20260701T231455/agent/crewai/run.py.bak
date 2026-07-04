@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""CrewAI request-payload validation testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the system prompt) handles a per-
+endpoint Task. CrewAI routes the model through LiteLLM, so the local Ollama
+backend works via an "ollama/<model>" string. Deterministic execution,
+recording, and emit are the shared harness's job (agents/common/contract.py).
+"""
+import os
+import re
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import contract  # noqa: E402
+from prompt import user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+SPEC = backend_config.resolve(WS)
+SUBAGENT_MD = (
+    Path(__file__).resolve().parents[1]
+    / "subagent"
+    / "api-tester-validate-request-payloads.md"
+)
+
+
+def _system_prompt() -> str:
+    doc = os.environ.get("FORGE_SKILL_DOC")
+    if doc and Path(doc).exists():
+        return Path(doc).read_text().strip()
+    text = SUBAGENT_MD.read_text()
+    return re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL).strip()
+
+
+def _llm():
+    from crewai import LLM
+    if SPEC["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{SPEC['native']['model']}", temperature=0)
+    return LLM(
+        model=f"ollama/{SPEC['native']['model']}",
+        base_url=SPEC["base_url"].replace("/v1", ""),
+        temperature=0,
+        response_format={"type": "json_object"},
+    )
+
+
+def main():
+    from crewai import Agent, Task, Crew
+
+    system = _system_prompt()
+    worker = Agent(
+        role="API request-payload validation testing agent",
+        goal="Convert one endpoint's payload contract into a JSON validation test plan.",
+        backstory=system,
+        llm=_llm(),
+        verbose=False,
+        allow_delegation=False,
+    )
+
+    def generate(endpoint: dict) -> dict:
+        brief = contract.endpoint_brief(endpoint)
+        task = Task(
+            description=user_message(brief),
+            agent=worker,
+            expected_output="A single JSON object with the request validation test plan.",
+        )
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return contract.extract_json(str(out)) or {}
+
+    summary = contract.run_contract_test(AGENT, generate)
+    print(
+        f"[{AGENT}] rejection_rate={summary['payload_rejection_rate_pct']}% "
+        f"coverage={summary['coverage']['covered']}/{summary['coverage']['applicable']}"
+    )
+
+
+if __name__ == "__main__":
+    main()

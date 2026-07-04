@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / verify-third-party-oauth-integration",
+  "metric_name": "oauth_integration_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (flow x assertion) cases where the agent's harness-observed token equals the gold observed token. An assertion the agent did not plan (its stage omitted -> observed 'missing') counts as a mismatch. Denominator = all gold assertions (flows x 19).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-third-party-oauth-integration/gold.json",
+  "headline_metric": "oauth_flow_completion_rate_pct",
+  "headline_definition": "OAuth Flow Completion Rate = (OAuth flows where ALL FIVE stages produce the correct documented outcome / total OAuth test flows executed) x 100. A stage 'produces the correct documented outcome' iff every assertion under it matches its idealized token (Stage 1: 302 + Location carrying client_id/redirect_uri/scope/state>=8 over HTTPS; Stage 2: non-empty code + CSRF state match; Stage 3: 200 + access_token/token_type Bearer/refresh_token/expires_in>0; Stage 4: 200 + non-empty profile field; Stage 5: 200 + a new access_token != the first + userinfo 200). Pass = 100%. Each stage failure is tracked separately via stage_pass_counts.",
+  "assertions_per_flow": 19,
+  "stages_per_flow": 5,
+  "rationale": "All four agents drive the same flow plan against the same local DummyJSON, and DummyJSON ships no OAuth2 authorization-code flow, so the raw OAuth Flow Completion Rate is identical for every agent (0% — every stage fails the idealized contract). That headline is a property of the target API, not the agent, and is emitted by every agent as the task's QA finding. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct 5-stage plan (the right stage objects, names, methods, endpoint targets, and the exact per-stage assertion keys) so the harness faithfully exercised every assertion. The headline oauth_flow_completion_rate_pct (0%) and an assertion_correctness_rate_pct are also emitted.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any assertion uncovered or any stage mis-constructed so the observed token diverges from gold)"
+}

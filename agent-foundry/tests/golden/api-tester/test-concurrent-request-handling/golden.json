@@ -1,0 +1,148 @@
+{
+  "agent": "api-tester-test-concurrent-request-handling",
+  "lane": "concurrent-simultaneous-request-behavior",
+  "vu_id_template_token": "[VU_ID]",
+  "plan": {
+    "concurrency": "as_provided",
+    "read_endpoint": "read_endpoint_role",
+    "write_endpoint": "write_endpoint_role",
+    "update_endpoint": "write_endpoint_role",
+    "create_endpoint": "write_endpoint_role"
+  },
+  "cases": [
+    {
+      "role": "concurrent_read_identical_bodies",
+      "endpoint_role": "read_endpoint_role",
+      "method": "GET",
+      "recipe": {
+        "kind": "concurrent_read"
+      },
+      "concurrency": "as_provided",
+      "expected_class": "read_expected_status",
+      "also_accept": [],
+      "asserts": {
+        "assert_identical_bodies": true
+      },
+      "steps": [
+        {"step": "fire_n_simultaneous_gets", "detail": "issue concurrency identical GET requests to read_endpoint_role at once"},
+        {"step": "collect_response_bodies", "detail": "capture every response body from the concurrent fan-out"},
+        {"step": "assert_identical_bodies", "detail": "every concurrent GET body is byte-for-byte identical"},
+        {"step": "assert_read_expected_status", "detail": "every concurrent GET returns read_expected_status"}
+      ]
+    },
+    {
+      "role": "concurrent_write_unique_id",
+      "endpoint_role": "write_endpoint_role",
+      "method": "POST",
+      "recipe": {
+        "kind": "concurrent_write_unique_id",
+        "vu_id_field": "test_id_field_role",
+        "vu_id_template": "[VU_ID]"
+      },
+      "concurrency": "as_provided",
+      "expected_class": "write_expected_status",
+      "also_accept": [],
+      "asserts": {
+        "assert_count_delta_equals_concurrency": true,
+        "assert_zero_duplicates": true,
+        "assert_zero_missing": true
+      },
+      "steps": [
+        {"step": "build_per_vu_unique_ids", "detail": "substitute [VU_ID] with each virtual-user number to form one unique id per writer"},
+        {"step": "fire_n_simultaneous_posts", "detail": "issue concurrency simultaneous POSTs each carrying its unique id"},
+        {"step": "query_database_directly", "detail": "run a direct database query — no HTTP — to read the persisted rows"},
+        {"step": "assert_count_delta_equals_concurrency", "detail": "the row-count delta equals the concurrency count exactly"},
+        {"step": "assert_zero_duplicates", "detail": "no unique id was persisted more than once"},
+        {"step": "assert_zero_missing", "detail": "no unique id from a 2xx writer is missing from the database"}
+      ]
+    },
+    {
+      "role": "concurrent_update_optimistic_lock",
+      "endpoint_role": "write_endpoint_role",
+      "method": "PUT",
+      "recipe": {
+        "kind": "concurrent_update_optimistic_lock"
+      },
+      "concurrency": "as_provided",
+      "expected_class": "write_expected_status",
+      "also_accept": [
+        "409",
+        "412"
+      ],
+      "asserts": {
+        "assert_exactly_one_winner": true,
+        "assert_stale_writers_rejected": true,
+        "assert_no_lost_update": true
+      },
+      "steps": [
+        {"step": "fire_n_simultaneous_updates", "detail": "issue concurrency simultaneous updates to one shared resource"},
+        {"step": "collect_update_outcomes", "detail": "capture which writers were accepted and which were rejected"},
+        {"step": "assert_exactly_one_winner", "detail": "exactly one concurrent writer succeeds"},
+        {"step": "assert_stale_writers_rejected", "detail": "every stale writer is rejected with 409 or 412"},
+        {"step": "assert_no_lost_update", "detail": "the persisted resource reflects the winning write with no lost update"}
+      ]
+    },
+    {
+      "role": "concurrent_create_same_unique_key",
+      "endpoint_role": "write_endpoint_role",
+      "method": "POST",
+      "recipe": {
+        "kind": "concurrent_create_same_unique_key"
+      },
+      "concurrency": "as_provided",
+      "expected_class": "201",
+      "also_accept": [
+        "409"
+      ],
+      "asserts": {
+        "assert_exactly_one_201": true,
+        "assert_rest_conflict": true,
+        "assert_exactly_one_db_row": true
+      },
+      "steps": [
+        {"step": "fire_n_simultaneous_creates", "detail": "issue concurrency simultaneous creates all carrying the same unique key"},
+        {"step": "collect_create_outcomes", "detail": "capture the status of every concurrent create"},
+        {"step": "assert_exactly_one_201", "detail": "exactly one concurrent create returns 201"},
+        {"step": "assert_rest_conflict", "detail": "every other concurrent create returns 409"},
+        {"step": "query_database_directly", "detail": "run a direct database query — no HTTP — to count rows for the shared unique key"},
+        {"step": "assert_exactly_one_db_row", "detail": "exactly one row exists in the database for the shared unique key"}
+      ]
+    },
+    {
+      "role": "assert_zero_500",
+      "endpoint_role": "all_endpoint_roles",
+      "method": "ALL",
+      "recipe": {
+        "kind": "assert_zero_500"
+      },
+      "concurrency": "as_provided",
+      "expected_class": "no_5xx",
+      "also_accept": [],
+      "asserts": {
+        "assert_zero_500": true
+      },
+      "steps": [
+        {"step": "collect_all_statuses", "detail": "gather every status returned across all concurrent cases above"},
+        {"step": "assert_zero_500", "detail": "no request anywhere in the plan returned a 500 or any 5xx"}
+      ]
+    }
+  ],
+  "execution": {
+    "mode": "deterministic_harness",
+    "network_by_agent": false,
+    "note": "the harness fires the simultaneous requests and queries the database directly; the agent emits plan only"
+  },
+  "log": {
+    "steps_logged": true,
+    "note": "each case carries a maximally granular, fully-logged steps array"
+  },
+  "report": {
+    "cases_total": 5,
+    "out_of_scope": null
+  },
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "concurrency_contract_fidelity",
+    "value": 1.0
+  }
+}

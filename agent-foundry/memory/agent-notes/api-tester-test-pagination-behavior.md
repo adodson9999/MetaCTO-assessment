@@ -8,3 +8,5 @@
 - [2026-06-29T17:30:43.912063+00:00] run=2026-06-29_17-10-02 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
 - [2026-06-29T19:49:00.657044+00:00] run=2026-06-29_19-27-43 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
 - [2026-06-29T22:21:17.542079+00:00] run=2026-06-29_22-00-33 pagination-test run: correctness_rate=77.78% over 6 collections (108 scenarios)
+- [2026-07-02T00:37:49.234153+00:00] run=RUN-20260702-000138 pagination-test run: correctness_rate=0.0% over 6 collections (108 scenarios)
+- [2026-07-03T19:38:41.561889+00:00] run=RUN-20260703-181017 pagination-test run: correctness_rate=0.0% over 6 collections (108 scenarios)

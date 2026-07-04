@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""CrewAI defect-density-reporting agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-sprint
+Task. CrewAI routes the model through LiteLLM, so Claude Haiku works via an
+"anthropic/<model>" string (and Ollama via "ollama/<model>"). Deterministic scoring
+vs gold, recording, and emit are the shared harness's job
+(agents/common/defectdensity.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import defectdensity  # noqa: E402
+from defectdensity_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    if spec["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API defect-density reporting agent",
+        goal="Convert one sprint's defect and code-change data into a single JSON defect-density report.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = defectdensity.sprint_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the ten defect-density-report keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return defectdensity.extract_json(str(out)) or {}
+
+    summary = defectdensity.run_defectdensity_test(AGENT, generate)
+    print(f"[{AGENT}] report_accuracy={summary['defect_density_report_accuracy_pct']}% "
+          f"fields={summary['fields_correct']}/{summary['fields_total']}")
+
+
+if __name__ == "__main__":
+    main()

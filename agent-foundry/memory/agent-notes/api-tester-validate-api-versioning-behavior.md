@@ -6,3 +6,5 @@
 - [2026-06-29T18:02:15.769510+00:00] run=2026-06-29_17-10-02 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
 - [2026-06-29T20:19:19.569580+00:00] run=2026-06-29_19-27-43 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
 - [2026-06-29T22:50:32.145400+00:00] run=2026-06-29_22-00-33 versioning-behavior run: accuracy=30.77% over 4 endpoints (52 scenarios)
+- [2026-07-02T02:01:46.990426+00:00] run=RUN-20260702-000138 versioning-behavior run: accuracy=0.0% over 4 endpoints (52 scenarios)
+- [2026-07-03T22:50:04.462882+00:00] run=RUN-20260703-181017 versioning-behavior run: accuracy=0.0% over 4 endpoints (52 scenarios)

@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / test-event-driven-api-triggers",
+  "metric_name": "event_trigger_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (topic x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (event not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (topics x 8).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-event-driven-api-triggers/gold.json",
+  "headline_metric": "event_processing_success_rate_pct + dead_letter_queue_delivery_rate_pct",
+  "headline_definition": "Event Processing Success Rate = (well-formed events that drove the target resource to the correct state within 5 seconds with no consumer errors / total well-formed events published) x 100; pass = 100%. Dead-Letter Queue Delivery Rate = (malformed events that landed in the DLQ within 30 seconds / total malformed events published) x 100; pass = 100%. A well-formed event 'succeeds' only if the resource reached the expected value within the 5s SLA with zero consumer ERROR/WARN; a run fails on a state change after 5s, an incorrect state value, or a consumer crash.",
+  "scenarios_per_topic": 8,
+  "rationale": "All four agents publish to the same local air-gapped event-driven substrate, which implements the documented consumer correctly, so a correct test plan yields Event Processing Success Rate = 100% and Dead-Letter Queue Delivery Rate = 100% (the headline pass). Those headline rates are a property of the system under test plus the test's correctness, and are emitted by every agent. The QA finding for the real target is recorded in gold.json: DummyJSON consumes no message topics, ships no consumer, no DLQ, and no consumer-liveness signal (only AWS usage is S3), so against DummyJSON both rates are 0% and DummyJSON is never modified. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct well-formed event (exactly the required fields with the supplied values), the correct minimal malformed event (the valid event minus exactly the one drop_field), the 500ms/5s poll, and the malformed-side assertions, and faithfully exercise every scenario.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any event mis-constructed so the observed token diverges from gold)"
+}

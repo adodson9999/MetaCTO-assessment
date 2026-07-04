@@ -9,3 +9,5 @@
 - [2026-06-29T17:35:29.678653+00:00] run=2026-06-29_17-10-02 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
 - [2026-06-29T19:53:56.703519+00:00] run=2026-06-29_19-27-43 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
 - [2026-06-29T22:25:57.147293+00:00] run=2026-06-29_22-00-33 query-param-handling run: accuracy=91.67% over 4 collections (48 scenarios)
+- [2026-07-02T00:53:01.924556+00:00] run=RUN-20260702-000138 query-param-handling run: accuracy=0.0% over 4 collections (48 scenarios)
+- [2026-07-03T20:27:04.581224+00:00] run=RUN-20260703-181017 query-param-handling run: accuracy=0.0% over 4 collections (48 scenarios)

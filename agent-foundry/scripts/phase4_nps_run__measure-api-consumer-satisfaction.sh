@@ -69,7 +69,7 @@ YAML
       curl -fsS "http://127.0.0.1:${PROXY_PORT}/health/liveliness" >/dev/null 2>&1 && break; sleep 1
     done
   fi
-else
+elif [ "$FORGE_PROVIDER" = "ollama" ]; then
   # 1. Ollama backend: NO proxy needed. Do NOT start the server (owner instruction) — only
   #    health-warn so a misconfiguration is visible rather than silent.
   OLLAMA_URL="$(python -c "import tomllib;print(tomllib.load(open('config.toml','rb'))['backend']['ollama_base_url'])" 2>/dev/null || echo http://127.0.0.1:11434/v1)"

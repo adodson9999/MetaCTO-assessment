@@ -1,0 +1,96 @@
+{
+  "agent": "api-tester-validate-json-schema-responses",
+  "lane": "json-response-schema-validation",
+  "descriptors": [
+    {
+      "role": "descriptor_2xx",
+      "endpoint_role": "endpoint_under_test",
+      "method": "POST",
+      "expected_class": "2xx",
+      "also_accept": [],
+      "recipe": {
+        "kind": "valid_request",
+        "auth": "valid",
+        "body": "known_valid_example_body"
+      },
+      "steps": [
+        "build the valid request from the runtime-supplied method, path, auth, and known-valid body",
+        "send the request to the one local target",
+        "validate the response body against the documented 2xx schema with ajv v8",
+        "assert additionalProperties:false, every required field present and typed, list items each valid and the list non-empty, and Content-Type application/json"
+      ]
+    },
+    {
+      "role": "descriptor_400",
+      "endpoint_role": "endpoint_under_test",
+      "method": "POST",
+      "expected_class": "400",
+      "also_accept": [],
+      "steps": [
+        "build the request that elicits the documented 400 response",
+        "send the request to the one local target",
+        "validate the response body against the documented 400 schema with ajv v8",
+        "assert additionalProperties:false, every required field present and typed, and Content-Type application/json"
+      ]
+    },
+    {
+      "role": "descriptor_404",
+      "endpoint_role": "endpoint_under_test",
+      "method": "POST",
+      "expected_class": "404",
+      "also_accept": [],
+      "steps": [
+        "build the request that elicits the documented 404 response",
+        "send the request to the one local target",
+        "validate the response body against the documented 404 schema with ajv v8",
+        "assert additionalProperties:false, every required field present and typed, and Content-Type application/json"
+      ]
+    },
+    {
+      "role": "descriptor_500",
+      "endpoint_role": "endpoint_under_test",
+      "method": "POST",
+      "expected_class": "500",
+      "also_accept": [],
+      "steps": [
+        "build the request that elicits the documented 500 response",
+        "send the request to the one local target",
+        "validate the response body against the documented 500 schema with ajv v8",
+        "assert additionalProperties:false, every required field present and typed, and Content-Type application/json"
+      ]
+    }
+  ],
+  "response_schema_map": [
+    {
+      "code": "2xx",
+      "has_json_schema": true,
+      "is_list": true
+    },
+    {
+      "code": "400",
+      "has_json_schema": true,
+      "is_list": false
+    },
+    {
+      "code": "404",
+      "has_json_schema": true,
+      "is_list": false
+    },
+    {
+      "code": "500",
+      "has_json_schema": false,
+      "is_list": false
+    }
+  ],
+  "validation_flags": {
+    "additional_properties": false,
+    "required_present_and_typed": true,
+    "list_item_validation": true,
+    "content_type": "application/json"
+  },
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "response_schema_fidelity",
+    "value": 1.0
+  }
+}

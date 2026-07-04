@@ -1,0 +1,15 @@
+{
+  "task": "api-tester / validate-api-versioning-behavior",
+  "metric_name": "version_routing_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token EQUALS the gold observed token, including legitimately-'missing' tokens. Against unversioned DummyJSON the gold itself records 'missing' for the schema/Deprecation-header scenarios (no version returns a 200 body), so a faithful agent that reproduces those 'missing' tokens scores them as matches; an agent that fails to EMIT a case instead diverges on that case's routing/status scenario (gold holds a real code there) and is penalised. Denominator = all gold scenarios (endpoints x 13).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-api-versioning-behavior/gold.json",
+  "headline_metric": "version_routing_accuracy_pct",
+  "scenarios_per_endpoint": 13,
+  "discriminator_stack": "When fidelity ties, the leaderboard breaks ties lexicographically: fidelity (desc) > plan_conformance (desc, deterministic structural exactness of the RAW emitted plan vs the canonical reference plan before the tolerant harness normalises it) > tokens_total (asc) > elapsed_seconds (asc). Computed by judge/validate-api-versioning-behavior/score.py, which also renders the leaderboard.",
+  "rationale": "All four agents hit the same local DummyJSON read-only, so the raw Version Routing Accuracy (how many scenarios the API satisfies under the idealized strict versioning contract) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct five-case version matrix (the current v2 GET, the deprecated v1 GET, and the unsupported v0/v99/vbeta GETs with correctly concatenated /<version><endpoint> paths), so that the harness can observe — per case — the status code, the per-version ajv schema conformance, the presence/absence and ISO-8601/future validity of the Deprecation header, and the v2-only schema-diff field's presence in v2 and absence in v1, and faithfully reproduce every gold observed token. The headline version_routing_accuracy_pct is still emitted by every agent as the task's QA finding (empirically far below 100% because DummyJSON implements no API versioning: every versioned URL 404s, so the documented current/deprecated versions wrongly 404 and carry no Deprecation header, while only the unsupported versions match the ideal 404).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered, any case mis-constructed, or any observed token diverges from gold). Under the user's acceptance rule the underlying Version Routing Accuracy must be 100% to pass; against unversioned DummyJSON it is not, which is the recorded QA finding rather than an agent fault."
+}

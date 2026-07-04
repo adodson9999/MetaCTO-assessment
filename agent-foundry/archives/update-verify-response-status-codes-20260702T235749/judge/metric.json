@@ -1,0 +1,11 @@
+{
+  "metric_name": "status_code_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (operation x documented-code) cases where the agent's observed actual_code equals the gold actual_code. A case the agent did not cover (no descriptor produced / not sent) counts as a mismatch. Denominator = all testable gold cases.",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/status/gold.json",
+  "headline_metric": "status_code_accuracy_rate_pct",
+  "tie_breakers": ["coverage_cases", "valid_2xx_success", "wall_clock_seconds"],
+  "rationale": "All four agents hit the same local API, so the raw Status Code Accuracy Rate is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: full matrix coverage, correct per-code request construction (drop a required field for 400, omit auth for 401, swap the id for 404, malformed token for 500, route hook codes), and faithful recording of the real code. The headline status_code_accuracy_rate_pct is still emitted by every agent as the task's QA finding (DummyJSON < 100% because several /add endpoints document 400 but return 201)."
+}

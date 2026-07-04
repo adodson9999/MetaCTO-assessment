@@ -1,0 +1,20 @@
+{
+  "task": "api-tester / validate-query-parameter-handling",
+  "metric_name": "query_param_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 12).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/validate-query-parameter-handling/gold.json",
+  "headline_metric": "query_param_handling_accuracy_pct",
+  "scenarios_per_collection": 12,
+  "rationale": "All four agents hit the same local DummyJSON read-only, so the raw Query Parameter Handling Accuracy (how many scenarios the API satisfies under the idealized strict query-parameter contract) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct nine-case request matrix (the missing-required search probe with q absent, the three wrong-type probes with the exact non-numeric/out-of-enum values, the three valid+filter probes whose filter effect the harness verifies record-by-record, the valid search probe, and the undocumented-parameter probe), and faithfully exercise every scenario. The headline query_param_handling_accuracy_pct is still emitted by every agent as the task's QA finding (empirically below 100% because DummyJSON is strict on parameter type but lenient on parameter presence: the /search route does not require its q parameter).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered, any request mis-constructed, or any valid-case filter effect not realized so the observed token diverges from gold)",
+  "discriminator": {
+    "why": "Fidelity saturates on an easy task with a strong backend (all four frameworks hit 100%), because the harness is deliberately tolerant — it normalises a sloppy plan before executing it. The discriminator stack breaks the tie so the leaderboard is strictly ranked.",
+    "rank_order": ["fidelity desc", "plan_conformance desc", "tokens_total asc", "elapsed_seconds asc"],
+    "plan_conformance": "Deterministic structural exactness of the agent's RAW emitted plan vs the canonical debate-gated reference plan, scored BEFORE the harness normalises it. Penalises missing/extra keys, wrong case count/order, wrong route/type, wrong param keys/values, and — critically — any value emitted with the wrong JSON type (e.g. the number 5 where the gated spec required the string \"5\"), which the harness would otherwise silently accept. Computed in agents/common/queryparam_spec.plan_conformance.",
+    "efficiency": "tokens_total = LLM tokens consumed to produce all correct plans (lower is better; captured per framework, best-effort); elapsed_seconds = wall-clock for the agent's run (lower is better). These vary by framework even at equal correctness because each framework wraps the same gated prompt differently (e.g. CrewAI's role/goal/backstory scaffolding vs LangGraph's bare call)."
+  }
+}

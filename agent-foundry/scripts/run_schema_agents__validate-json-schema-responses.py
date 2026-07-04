@@ -26,11 +26,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 AGENTS = {
-    "langgraph": ["agents/schema/langgraph/run.py"],
-    "crewai": ["agents/schema/crewai/run.py"],
-    "claude_sdk": ["agents/schema/claude_sdk/run.py"],
+    "langgraph": ["agents/api-tester/validate-json-schema-responses/langgraph/run.py"],
+    "crewai": ["agents/api-tester/validate-json-schema-responses/crewai/run.py"],
+    "claude_sdk": ["agents/api-tester/validate-json-schema-responses/claude_sdk/run.py"],
     "api-tester-validate-json-schema-responses":
-        ["agents/schema/api-tester-validate-json-schema-responses/run.py"],
+        ["agents/api-tester/validate-json-schema-responses/subagent/run.py"],
 }
 
 

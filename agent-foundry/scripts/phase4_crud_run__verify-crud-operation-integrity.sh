@@ -32,7 +32,7 @@ if [ "$FORGE_PROVIDER" = "claude-haiku" ]; then
     echo "       export ANTHROPIC_API_KEY=... (or run with FORGE_PROVIDER=ollama)." >&2
     exit 3
   fi
-else
+elif [ "$FORGE_PROVIDER" = "ollama" ]; then
   if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
     echo "FATAL: FORGE_PROVIDER=ollama but the Ollama server is not reachable at" >&2
     echo "       http://127.0.0.1:11434. Start it yourself ('ollama serve') and re-run." >&2

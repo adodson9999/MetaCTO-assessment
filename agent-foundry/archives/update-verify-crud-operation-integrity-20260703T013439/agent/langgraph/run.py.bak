@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""LangGraph CRUD-integrity-testing agent.
+
+A StateGraph whose single node turns one resource's brief into the ordered 8-step
+CRUD plan via the central backend (ChatAnthropic for claude-haiku, ChatOllama for
+the air-gapped default). The deterministic execution, DB reads, integrity scoring,
+and emit are handled by the shared harness (agents/common/crud_contract.py), so
+this file's only framework-specific job is LLM elicitation through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import crud_contract  # noqa: E402
+from crud_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+
+
+def _model():
+    spec = backend_config.resolve(WS)
+    if spec["native"]["kind"] == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=spec["native"]["model"], temperature=0)
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=spec["native"]["model"],
+                      base_url=spec["base_url"].replace("/v1", ""),
+                      temperature=0, format="json")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    llm = _model()
+
+    def generate_node(state: S) -> S:
+        msg = llm.invoke(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": getattr(msg, "content", str(msg))}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(resource: dict) -> dict:
+        brief = crud_contract.resource_brief(resource)
+        result = graph.invoke({"brief": brief, "output": ""})
+        return crud_contract.extract_json(result["output"]) or {}
+
+    summary = crud_contract.run_crud_test(AGENT, generate)
+    print(f"[{AGENT}] crud_integrity_rate={summary['crud_integrity_rate_pct']}% "
+          f"passing={summary['resource_types_passing']}/{summary['resource_types']} "
+          f"covered_steps={summary['covered_step_cells']}")
+
+
+if __name__ == "__main__":
+    main()

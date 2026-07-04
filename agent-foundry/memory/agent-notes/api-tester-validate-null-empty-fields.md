@@ -10,3 +10,6 @@
 - [2026-06-29T17:51:37.422977+00:00] run=2026-06-29_17-10-02 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
 - [2026-06-29T20:08:59.473194+00:00] run=2026-06-29_19-27-43 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
 - [2026-06-29T22:40:30.641224+00:00] run=2026-06-29_22-00-33 null-empty test run: accuracy=36.15% over 22 endpoints (462 cases); required-rejection=35.23%
+- [2026-07-02T01:27:52.569181+00:00] run=RUN-20260702-000138 null-empty test run: accuracy=21.62% over 22 endpoints (481 cases); required-rejection=30.07%
+- [2026-07-04T03:23:02.319985+00:00] run=RUN-20260703-181017 null-empty test run: accuracy=0.0% over 22 endpoints (0 cases); required-rejection=None%
+- [2026-07-04T17:02:09.677841+00:00] run=RUN-20260703-181017 null-empty test run: accuracy=27.73% over 22 endpoints (119 cases); required-rejection=30.88%

@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+"""CrewAI api-gateway-routing testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the gated prompt) handles a per-route
+Task. CrewAI routes the model through LiteLLM, so the local Ollama backend works via
+an "ollama/<model>" string and Claude via "anthropic/<model>". Deterministic execution
+(send to the local gateway, query each backend journal), recording, and emit are the
+shared harness's job (agents/common/routing.py).
+"""
+import os
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import routing  # noqa: E402
+from routing_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+APPROVED_PROMPT = active_prompt()
+
+
+def _llm():
+    spec = backend_config.resolve(WS)
+    from crewai import LLM
+    kind = spec["native"]["kind"]
+    if kind == "anthropic":
+        return LLM(model=f"anthropic/{spec['native']['model']}", temperature=0)
+    if kind == "openai-cli":
+        # OpenAI-compatible shim over `claude -p` (subscription); litellm openai/ path.
+        return LLM(model=f"openai/{spec['native']['model']}",
+                   base_url=spec["base_url"], api_key="local-shim", temperature=0)
+    return LLM(model=f"ollama/{spec['native']['model']}",
+               base_url=spec["base_url"].replace("/v1", ""), temperature=0,
+               response_format={"type": "json_object"})
+
+
+def _build_agent():
+    from crewai import Agent
+    return Agent(
+        role="API-gateway-routing testing agent",
+        goal="Convert one gateway route's routing contract into a single JSON routing test plan.",
+        backstory=APPROVED_PROMPT,
+        llm=_llm(), verbose=False, allow_delegation=False,
+    )
+
+
+def main():
+    from crewai import Task, Crew
+    worker = _build_agent()
+
+    def generate(cfg: dict) -> dict:
+        brief = routing.route_brief(cfg)
+        task = Task(description=user_message(brief), agent=worker,
+                    expected_output="A single JSON object with the seven routing-plan keys.")
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return routing.extract_json(str(out)) or {}
+
+    summary = routing.run_routing_test(AGENT, generate)
+    print(f"[{AGENT}] route_forwarding_accuracy={summary['route_forwarding_accuracy_pct']}% "
+          f"routes={summary['routes_forwarded']}/{summary['routes_total']}")
+
+
+if __name__ == "__main__":
+    main()

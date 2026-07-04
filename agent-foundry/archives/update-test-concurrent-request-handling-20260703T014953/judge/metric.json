@@ -1,0 +1,16 @@
+{
+  "task": "api-tester / test-concurrent-request-handling",
+  "metric_name": "concurrency_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold scenarios where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (10).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/test-concurrent-request-handling/gold.json",
+  "headline_metric": "concurrent_request_success_rate_pct",
+  "scenarios_total": 10,
+  "rationale": "The concurrency execution mechanism (one asyncio barrier-release of 50 simultaneous requests + a direct SQLite query for the count delta / duplicates / missing) lives in the shared harness, identical for all four agents, so the raw Concurrent Request Success Rate is a property of the targets, not the agent. Fidelity-to-gold instead measures each framework's test-PLAN quality: did its LLM construct the correct read descriptor (GET, right endpoint, concurrency 50, expected 200, identical-bodies assertion) and the correct write descriptor (POST, right endpoint, concurrency 50, expected 201, verbatim test_id_template with the literal [VU_ID], vu_start 1 / vu_end 50, and the three DB assertions count_delta=50 / zero-duplicates / zero-missing). A framework whose plan omits a key, quotes an integer, expands [VU_ID], or points at the wrong endpoint diverges from gold and scores lower. The headline concurrent_request_success_rate_pct is still emitted by every agent as the task's QA finding (empirically 100%: both targets handle 50-way concurrency with zero lost writes, zero duplicates, zero partial reads, zero 500s, DB delta exactly 50).",
+  "headline_pass_threshold": "concurrent_request_success_rate_pct = 100 AND db_count_delta = 50 AND zero duplicates AND zero missing AND zero non-2xx AND zero 500",
+  "headline_fail_condition": "any non-2xx response, any db_count_delta != 50, or any duplicate/missing record",
+  "rank_pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "rank_fail_condition": "fidelity < 100% (any scenario uncovered or any plan field mis-constructed so the observed token diverges from gold)"
+}

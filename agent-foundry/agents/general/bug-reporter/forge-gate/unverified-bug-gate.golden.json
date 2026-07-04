@@ -1,0 +1,31 @@
+{
+  "suite": "unverified-bug-gate",
+  "contract": "unverified_bug_gate.evaluate(rows, reports_root, unverified_index, verified_index, db_available) -> GateResult (HF13-HF26)",
+  "baseline": {"metric_name": "gate_exit_code", "value": 0, "direction": "lower_is_better"},
+  "tolerance": 0.0,
+  "comment": "Runs with NO model. The gate's evaluate() is deterministic: a clean materialised run passes (exit 0); each injected HF13-HF26 violation fails (exit 1); a setup gap (rows present, tree absent) errors (exit 2). test_unverified_gate_end_to_end.py materialises the base_rows, asserts pass, then applies each break and asserts the named HF check flips to false.",
+  "db_available": false,
+  "base_rows": [
+    {"agent": "test-authentication-flows", "endpoint": "/auth/login", "scenario": "login without password", "expected": "401", "observed": "200"},
+    {"agent": "verify-sorting-behavior", "endpoint": "/products", "scenario": "sort by price", "expected": "sorted list", "observed": "unsorted data"},
+    {"agent": "verify-crud-operation-integrity", "endpoint": "/carts", "scenario": "create cart", "expected": "row created", "observed": "500 error"}
+  ],
+  "expect_clean": {"status": "pass", "exit_code": 0},
+  "injections": [
+    {"id": "HF13-drop-id", "break": "clear_unverified_bug_id", "expect_check": "HF13", "expect_status": "fail"},
+    {"id": "HF14-wrong-category", "break": "flip_row_category", "expect_check": "HF14", "expect_status": "fail"},
+    {"id": "HF15-not-excluded", "break": "unexclude_from_cicd", "expect_check": "HF15", "expect_status": "fail"},
+    {"id": "HF16-bug-in-unverified-index", "break": "inject_bug_prefix_in_unverified_index", "expect_check": "HF16", "expect_status": "fail"},
+    {"id": "HF17-vuln-not-first", "break": "reverse_unverified_index", "expect_check": "HF17", "expect_status": "fail"},
+    {"id": "HF18-orphan-file", "break": "inject_orphan_report_file", "expect_check": "HF18", "expect_status": "fail"},
+    {"id": "HF19-duplicate-id", "break": "inject_duplicate_id_file", "expect_check": "HF19", "expect_status": "fail"},
+    {"id": "HF20-misfiled", "break": "misfile_report", "expect_check": "HF20", "expect_status": "fail"},
+    {"id": "HF21-blank-finding-agent", "break": "blank_finding_agent", "expect_check": "HF21", "expect_status": "fail"},
+    {"id": "HF22-missing-recording", "break": "drop_recording", "expect_check": "HF22", "expect_status": "fail"},
+    {"id": "HF23-citation-leak", "break": "leak_citation", "expect_check": "HF23", "expect_status": "fail"},
+    {"id": "HF24-yes-in-unverified", "break": "flip_verdict_to_yes", "expect_check": "HF24", "expect_status": "fail"},
+    {"id": "HF25-count-mismatch", "break": "corrupt_by_category_count", "expect_check": "HF25", "expect_status": "fail"},
+    {"id": "HF26-wallclock", "break": "inject_generated_at", "expect_check": "HF26", "expect_status": "fail"}
+  ],
+  "expect_setup_error": {"break": "remove_tree_keep_rows", "expect_status": "error", "exit_code": 2}
+}

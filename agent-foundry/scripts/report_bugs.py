@@ -22,6 +22,11 @@ import sys
 from pathlib import Path
 
 WS = Path(os.environ.get("FORGE_WORKSPACE", str(Path(__file__).resolve().parents[1]))).resolve()
+sys.path.insert(0, str(WS / "agents" / "common"))  # noqa: E402
+import bugreport as BR  # noqa: E402  (bug_paths — single path source; unverified materialiser)
+
+BR.WORKSPACE = WS
+BR.SANDBOX_ROOT = WS
 PY = str(WS / ".venv" / "bin" / "python")
 BUG_OUTCOMES = {"FAIL", "EMPTY", "ERROR"}
 # Generals are pipeline machinery, not API features under test — never bug-report them.
@@ -91,10 +96,17 @@ def run(run_id: str) -> dict:
     live_dir.mkdir(parents=True, exist_ok=True)
     fx_path = live_dir / "fixture.json"
     fx_path.write_text(json.dumps(fixture, indent=2))
+    # Emit the new per-run tree paths (single path source — G-PATHS). The legacy per-agent
+    # folder is retained for one release (dual-write, §8) so existing readers keep working.
+    bp = BR.bug_paths(run_id, workspace=WS)
+    legacy_out = f"results/runs/{run_id}/general-bug-reporter.bug-reports"
     spec = {"task": "n602", "alias": "bug-reporter-live", "fixture": str(fx_path),
             "fixture_run_id": run_id,
-            "bug_reports_out": f"results/runs/{run_id}/general-bug-reporter.bug-reports",
-            "index_out": f"results/runs/{run_id}/general-bug-reporter.bug-reports/index.json"}
+            "bug_reports_out": str(bp.tree.relative_to(WS)),
+            "index_out": str(bp.verified_index.relative_to(WS)),
+            "unverified_index_out": str(bp.unverified_index.relative_to(WS)),
+            "legacy_bug_reports_out": legacy_out,
+            "legacy_index_out": f"{legacy_out}/index.json"}
     spec_path = live_dir / "bugreport_spec.json"
     spec_path.write_text(json.dumps(spec, indent=2))
 
@@ -114,9 +126,33 @@ def run(run_id: str) -> dict:
     if proc.returncode != 0:
         print(f"[report_bugs] bug-reporter rc={proc.returncode}; see {live_dir}/bug-reporter-stderr.txt", flush=True)
 
-    reports = list((run_dir / "general-bug-reporter.bug-reports").glob("BUG-*.json"))
-    print(f"[report_bugs] materialized {len(reports)} bug report(s) via the bug-reporter agent.", flush=True)
+    # Any failure carrying a missing-docs reviewer verdict is routed through the unverified
+    # writer (HF13) — a no-op for the ordinary FAIL/EMPTY/ERROR features, but the routing is
+    # here so a missing-docs-bearing failure can never be silently dropped.
+    counters: dict = {}
+    uv_entries: list = []
+    for a in failed:
+        if a.get("reviewer_verdict") == "missing-docs":
+            ctx = {"agent": a["agent_name"], "endpoint": a.get("spec_path", ""),
+                   "scenario": a.get("quality_outcome", ""), "expected": a.get("expected", ""),
+                   "observed": a.get("observed", ""), "spec_path": a.get("spec_path", ""),
+                   "stderr": a.get("stderr", "")}
+            rep = BR.write_unverified_bug(run_id, ctx, counters, fixture.get("db_available", False),
+                                          workspace=WS)
+            uv_entries.append(rep["_meta"]["index_entry"])
+    if uv_entries:
+        BR.write_unverified_index(run_id, uv_entries, workspace=WS)
+
+    # Count the materialised reports from both the legacy per-agent folder (where the agent
+    # driver writes) and the new verified tree (dual-write window, §8).
+    legacy_reports = list((run_dir / "general-bug-reporter.bug-reports").glob("BUG-*.json"))
+    tree = BR.bug_paths(run_id, workspace=WS).tree
+    tree_reports = list(tree.rglob("verified_bugs/*.json")) if tree.is_dir() else []
+    reports = legacy_reports
+    print(f"[report_bugs] materialized {len(legacy_reports)} bug report(s) via the bug-reporter "
+          f"agent (+{len(tree_reports)} in the new tree, {len(uv_entries)} unverified).", flush=True)
     return {"failed": len(failed), "reports": len(reports),
+            "unverified": len(uv_entries),
             "report_dir": str(run_dir / "general-bug-reporter.bug-reports")}
 
 

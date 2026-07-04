@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK authentication-flows testing agent.
+
+Native Claude is used when the backend is set to claude-haiku; under the default
+air-gapped Ollama backend the SDK's cloud path is unavailable, so it falls back
+to the OpenAI-compatible local endpoint (Ollama /v1). Either way it elicits the
+auth flow test plan; the shared harness executes it and records/emits.
+"""
+import asyncio
+import json
+import os
+import re
+import sys
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import auth_harness  # noqa: E402
+from auth_prompt import user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+SPEC = backend_config.resolve(WS)
+SUBAGENT_MD = (
+    Path(__file__).resolve().parents[1]
+    / "subagent"
+    / "api-tester-test-authentication-flows.md"
+)
+
+
+def _system_prompt() -> str:
+    doc = os.environ.get("FORGE_SKILL_DOC")
+    if doc and Path(doc).exists():
+        return Path(doc).read_text().strip()
+    text = SUBAGENT_MD.read_text()
+    return re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL).strip()
+
+
+async def _native(system: str, brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=system, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _openai_compat(system: str, brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"],
+        "temperature": 0,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user_message(brief)},
+        ],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(
+        SPEC["base_url"] + "/chat/completions",
+        data=body,
+        headers={"Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(system: str, brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return asyncio.run(_native(system, brief))
+        except Exception:  # noqa -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(system, brief)
+
+
+def main():
+    system = _system_prompt()
+    brief = auth_harness.scheme_brief()
+
+    def generate() -> dict:
+        return auth_harness.extract_json(_elicit(system, brief)) or {}
+
+    summary = auth_harness.run_auth_test(AGENT, generate)
+    print(
+        f"[{AGENT}] pass_rate={summary['auth_flow_pass_rate_pct']}% "
+        f"FAR={summary['false_acceptance_rate_pct']}% "
+        f"FRR={summary['false_rejection_rate_pct']}% "
+        f"executed={summary['executed_cases']}"
+    )
+
+
+if __name__ == "__main__":
+    main()

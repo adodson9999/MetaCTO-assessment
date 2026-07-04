@@ -1,0 +1,140 @@
+{
+  "agent": "api-tester-verify-audit-log-generation",
+  "lane": "audit-log-generation",
+  "audit_query": {
+    "filter_user_id": "{test_user_id}",
+    "window_before_seconds": 5,
+    "window_after_seconds": 10,
+    "expected_entry_count": 3,
+    "required_fields": [
+      "user_id",
+      "action_type",
+      "resource_id",
+      "timestamp",
+      "ip_address"
+    ],
+    "timestamp_tolerance_seconds": 5,
+    "action_types": [
+      "CREATE",
+      "UPDATE",
+      "DELETE"
+    ]
+  },
+  "cases": [
+    {
+      "role": "create_entry",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "create_op",
+        "audited_action_type": "CREATE"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "update_entry",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "recipe": {
+        "kind": "update_op",
+        "audited_action_type": "UPDATE"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "delete_entry",
+      "endpoint_role": "item_endpoint",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "delete_op",
+        "audited_action_type": "DELETE"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "204"
+      ]
+    },
+    {
+      "role": "read_audit",
+      "endpoint_role": "read_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "read_op",
+        "audited_action_type": "READ",
+        "sensitive": true
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "failed_action_audit",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "recipe": {
+        "kind": "denied_or_unauthenticated_op",
+        "audited_action_type": "FAILED"
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ]
+    },
+    {
+      "role": "login_audit",
+      "endpoint_role": "login_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "login_op",
+        "audited_action_type": "LOGIN"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "logout_audit",
+      "endpoint_role": "logout_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "logout_op",
+        "audited_action_type": "LOGOUT"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "before_after_on_update",
+      "endpoint_role": "item_endpoint",
+      "method": "PUT",
+      "recipe": {
+        "kind": "before_after_capture",
+        "asserts_on": "update_entry",
+        "captures": [
+          "before",
+          "after"
+        ]
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "immutability",
+      "endpoint_role": "audit_entry_endpoint",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "modify_or_delete_audit_entry_rejected"
+      },
+      "expected_class": "403",
+      "also_accept": [
+        "401",
+        "405"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "audit_log_fidelity",
+    "value": 1.0
+  }
+}

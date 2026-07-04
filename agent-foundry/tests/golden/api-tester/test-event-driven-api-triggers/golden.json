@@ -1,0 +1,80 @@
+{
+  "agent": "api-tester-test-event-driven-api-triggers",
+  "lane": "message-broker-topic-event-semantics",
+  "cases": [
+    {
+      "label": "well-formed-drives-state",
+      "stage": "publish-well-formed-event",
+      "endpoint_role": "documented_topic",
+      "primary": 200,
+      "also_accept": [202],
+      "steps": [
+        "publish a well-formed event to the documented topic",
+        "poll the target resource within the documented poll window",
+        "assert the resource reaches its documented expected state within the window",
+        "record the observed state and the latency to convergence"
+      ]
+    },
+    {
+      "label": "malformed-dead-letters",
+      "stage": "publish-malformed-event",
+      "endpoint_role": "documented_topic",
+      "primary": 422,
+      "also_accept": [400],
+      "steps": [
+        "publish a malformed event with exactly one required field dropped",
+        "assert the consumer ERROR-logs the malformed event",
+        "assert the event is dead-lettered within the documented deadline",
+        "re-read the target resource",
+        "assert state is unchanged",
+        "assert the consumer did not crash and remains healthy"
+      ]
+    },
+    {
+      "label": "duplicate-applied-once",
+      "stage": "publish-duplicate-event",
+      "endpoint_role": "documented_topic",
+      "primary": 200,
+      "also_accept": [202],
+      "steps": [
+        "publish a well-formed event",
+        "publish an exact duplicate of the same event with the same idempotency key",
+        "poll the resource",
+        "assert the idempotent consumer applied the effect exactly once",
+        "assert no double-application side effect is observed"
+      ]
+    },
+    {
+      "label": "out-of-order-resolution",
+      "stage": "publish-out-of-order-pair",
+      "endpoint_role": "documented_topic",
+      "primary": 200,
+      "also_accept": [202],
+      "steps": [
+        "publish two events for one key out of documented order",
+        "apply the documented ordering/versioning rule",
+        "assert the later/higher-version event wins or the stale event is dropped per policy",
+        "assert final state matches the documented winner"
+      ]
+    },
+    {
+      "label": "poison-retry-then-dead-letter",
+      "stage": "publish-poison-message",
+      "endpoint_role": "documented_topic",
+      "primary": 422,
+      "also_accept": [400],
+      "steps": [
+        "publish a poison message that fails processing",
+        "assert it is retried exactly the documented number of times",
+        "assert it is dead-lettered after the documented retry count is exhausted",
+        "assert it is not retried beyond the documented count",
+        "assert the consumer remains healthy"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "event_trigger_fidelity",
+    "value": 1.0
+  }
+}

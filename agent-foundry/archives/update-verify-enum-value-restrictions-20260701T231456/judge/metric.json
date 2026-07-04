@@ -1,0 +1,17 @@
+{
+  "task": "api-tester / verify-enum-value-restrictions",
+  "metric_name": "enum_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (slug x category x label) cases where the agent's harness-observed status class equals the gold observed status class. A case the agent did not emit (its request was never sent -> observed 'none'/absent) counts as a mismatch. Denominator = all gold cases (47 across 4 endpoints, 6 enum fields).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-enum-value-restrictions/gold.json",
+  "headline_metric": "enum_validation_rate_pct",
+  "sub_metrics": [
+    "invalid_value_rejection_rate_pct",
+    "valid_value_acceptance_rate_pct"
+  ],
+  "rationale": "All four agents send to the same local DummyJSON, so the raw Enum Validation Rate (how often the API's real behavior matches the idealized enum contract: every VALID_ENUMS value -> 2xx, every off-enum value -> 400 naming the field, null -> 2xx only when nullable) is a property of the API, not the agent. DummyJSON performs NO enum validation on add/update bodies (it echoes any value and returns 2xx), so the headline rate and the Invalid-Value Rejection Rate are well below 100% by design (the genuine QA finding). Fidelity-to-gold instead measures each framework's TEST-CONSTRUCTION quality: did it build the full matrix (one body per VALID_ENUMS value + the five off-enum probes per enum field, including the lowercase case-variant on uppercase enums) with byte-correct bodies, and faithfully exercise every case so its observed token reproduces gold. The headline rate + the two sub-metrics (Invalid-Value Rejection Rate, Valid-Value Acceptance Rate) are still emitted by every agent as the QA finding.",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any case uncovered or any body mis-constructed so the observed token diverges from gold)"
+}

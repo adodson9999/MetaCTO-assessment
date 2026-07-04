@@ -118,6 +118,9 @@ CLI/
 
 # Claude Code machine-local settings
 .claude/settings.local.json
+# Local agent-build skills (not part of the deliverable)
+.claude/skills/forge-agents/
+.claude/skills/update-agent/
 .venv/
 .models/
 references/*.lance/

@@ -1,0 +1,183 @@
+[
+  {
+    "agent": "api-tester/check-authorization-rules",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/measure-api-consumer-satisfaction",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/run-regression-suite",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-api-gateway-routing",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-authentication-flows",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-bulk-operation-endpoints",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-concurrent-request-handling",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-event-driven-api-triggers",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-file-upload-and-download",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-idempotency-of-endpoints",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-ip-allowlist-enforcement",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-long-polling-support",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-multipart-form-data-handling",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-pagination-behavior",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-rate-limit-enforcement",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-soft-delete-behavior",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-ssl-tls-enforcement",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-timeout-handling",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/test-webhook-delivery",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/track-defect-density",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-api-versioning-behavior",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-correlation-id-propagation",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-graphql-depth-limits",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-header-propagation",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-json-schema-responses",
+    "status": "ok",
+    "rid": "20260702T194432-bd654d"
+  },
+  {
+    "agent": "api-tester/validate-null-empty-fields",
+    "status": "ok",
+    "rid": "20260702T195432-5edfb9"
+  },
+  {
+    "agent": "api-tester/validate-query-parameter-handling",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-request-payloads",
+    "status": "FAIL: score.py rc=1",
+    "rid": "20260702T200432-1209f3",
+    "log": "Contract-Test Fidelity (denominator = 558 applicable gold cases)\nagent                    fidelity%  matches  coverage rej_rate%\n[warn] no agent results found for this run.\n"
+  },
+  {
+    "agent": "api-tester/validate-retry-after-header-compliance",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/validate-search-and-filter-queries",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/verify-audit-log-generation",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/verify-caching-headers",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/verify-content-type-negotiation",
+    "status": "ok",
+    "rid": "20260702T201506-cb2280"
+  },
+  {
+    "agent": "api-tester/verify-crud-operation-integrity",
+    "status": "ok",
+    "rid": "20260702T202506-d6c38e"
+  },
+  {
+    "agent": "api-tester/verify-enum-value-restrictions",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/verify-error-message-clarity",
+    "status": "ok",
+    "rid": "20260702T203259-269d76"
+  },
+  {
+    "agent": "api-tester/verify-response-status-codes",
+    "status": "ok",
+    "rid": "20260702T204259-475c13"
+  },
+  {
+    "agent": "api-tester/verify-sorting-behavior",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "api-tester/verify-third-party-oauth-integration",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "general/bug-reporter",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "general/documentation-reviewer",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "general/run-cicd-pipeline",
+    "status": "skip (leaderboard exists)"
+  },
+  {
+    "agent": "general/test-case-creator",
+    "status": "ok",
+    "rid": "20260702T205259-c0b433"
+  }
+]

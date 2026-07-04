@@ -1,0 +1,138 @@
+{
+  "agent": "api-tester-test-authentication-flows",
+  "lane": "jwt-full-token-lifecycle",
+  "cases": [
+    {
+      "role": "login_valid",
+      "endpoint_role": "login_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "valid_credentials"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "login_wrong_password",
+      "endpoint_role": "login_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "wrong_password"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "login_unknown_user",
+      "endpoint_role": "login_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "unknown_user"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "login_missing_fields",
+      "endpoint_role": "login_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "missing_fields"
+      },
+      "expected_class": "400",
+      "also_accept": []
+    },
+    {
+      "role": "identity_valid_token",
+      "endpoint_role": "protected_identity_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "valid_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "identity_missing_token",
+      "endpoint_role": "protected_identity_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "no_auth"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ]
+    },
+    {
+      "role": "identity_malformed_token",
+      "endpoint_role": "protected_identity_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "truncate_token",
+        "drop_chars": 8
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ]
+    },
+    {
+      "role": "identity_expired_token",
+      "endpoint_role": "protected_identity_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "expired_token",
+        "exp_delta_sec": -3600
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ]
+    },
+    {
+      "role": "identity_revoked_token",
+      "endpoint_role": "protected_identity_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "revoked_token",
+        "revoke_via": "revoke_equivalent_endpoint"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "403"
+      ]
+    },
+    {
+      "role": "refresh_valid",
+      "endpoint_role": "token_refresh_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "valid_refresh_token"
+      },
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "refresh_missing",
+      "endpoint_role": "token_refresh_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "missing_refresh_token"
+      },
+      "expected_class": "401",
+      "also_accept": [
+        "400"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "auth_flow_fidelity",
+    "value": 1.0
+  }
+}

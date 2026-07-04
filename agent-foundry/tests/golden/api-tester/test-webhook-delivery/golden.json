@@ -1,0 +1,118 @@
+{
+  "agent": "api-tester-test-webhook-delivery",
+  "lane": "http-callback-webhook-delivery",
+  "cases": [
+    {
+      "label": "register-trigger-poll-delivers-within-deadline",
+      "endpoint_role": "registration_endpoint",
+      "method": "POST",
+      "path": "registration_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented registration endpoint, trigger event, local receiver and delivery deadline",
+        "emit a registration request descriptor tagged register-trigger-poll-delivers-within-deadline",
+        "emit a trigger request descriptor for the resource event",
+        "emit a poll instruction against the local receiver",
+        "instruct harness: register the receiver and capture status",
+        "instruct harness: trigger the resource event",
+        "instruct harness: poll the local receiver until the deadline",
+        "instruct harness: assert a delivery arrives within the deadline",
+        "instruct harness: assert the payload event_type equals the expected event_type",
+        "instruct harness: assert the payload resource_id equals the triggering resource_id",
+        "instruct harness: assert the timestamp is valid ISO-8601",
+        "instruct harness: assert the HMAC-SHA256 signature is present and valid"
+      ]
+    },
+    {
+      "label": "event-filtering-only-subscribed-delivered",
+      "endpoint_role": "registration_endpoint",
+      "method": "POST",
+      "path": "registration_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented event-type filter",
+        "emit a registration request descriptor tagged event-filtering-only-subscribed-delivered subscribing to a subset of event types",
+        "emit trigger descriptors for both a subscribed and an unsubscribed event",
+        "instruct harness: register with the filter and capture status",
+        "instruct harness: trigger a subscribed event and assert it is delivered to the receiver",
+        "instruct harness: trigger an unsubscribed event and assert it is NOT delivered",
+        "instruct harness: assert only subscribed event types reach the receiver"
+      ]
+    },
+    {
+      "label": "multi-retry-backoff-on-repeated-500s",
+      "endpoint_role": "trigger_endpoint",
+      "method": "POST",
+      "path": "trigger_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented retry backoff schedule and max attempts",
+        "emit a registration descriptor pointing at a receiver that returns 500",
+        "emit a trigger descriptor tagged multi-retry-backoff-on-repeated-500s",
+        "instruct harness: register the failing receiver and capture status",
+        "instruct harness: trigger the event",
+        "instruct harness: observe redelivery attempts and assert intervals follow the documented increasing backoff schedule",
+        "instruct harness: assert the number of attempts does not exceed max attempts"
+      ]
+    },
+    {
+      "label": "dead-letter-or-disable-after-max-attempts",
+      "endpoint_role": "trigger_endpoint",
+      "method": "POST",
+      "path": "trigger_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented max attempts and dead-letter/disable behavior",
+        "emit a registration descriptor for a permanently failing receiver",
+        "emit a trigger descriptor tagged dead-letter-or-disable-after-max-attempts",
+        "instruct harness: register and trigger",
+        "instruct harness: allow attempts to exhaust the documented maximum",
+        "instruct harness: assert the delivery is dead-lettered or the subscription is disabled per contract after max attempts",
+        "instruct harness: assert no further attempts are made beyond the maximum"
+      ]
+    },
+    {
+      "label": "non-retryable-4xx-not-retried",
+      "endpoint_role": "trigger_endpoint",
+      "method": "POST",
+      "path": "trigger_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented non-retryable 4xx semantics",
+        "emit a registration descriptor for a receiver returning a non-retryable 4xx",
+        "emit a trigger descriptor tagged non-retryable-4xx-not-retried",
+        "instruct harness: register and trigger",
+        "instruct harness: observe delivery attempts",
+        "instruct harness: assert the delivery is NOT retried after the non-retryable 4xx",
+        "instruct harness: assert exactly one attempt was made"
+      ]
+    },
+    {
+      "label": "tamper-negative-altered-payload-fails-signature",
+      "endpoint_role": "trigger_endpoint",
+      "method": "POST",
+      "path": "trigger_endpoint",
+      "primary": 200,
+      "also_accept": [201, 202],
+      "steps": [
+        "resolve the documented HMAC-SHA256 signing scheme",
+        "emit a registration descriptor and a trigger descriptor tagged tamper-negative-altered-payload-fails-signature",
+        "instruct harness: register and trigger to obtain a signed delivery",
+        "instruct harness: alter one byte of the delivered payload",
+        "instruct harness: recompute HMAC-SHA256 over the altered payload using the signing secret",
+        "instruct harness: assert signature verification at the consumer fails for the tampered payload",
+        "instruct harness: assert an untampered payload verifies successfully"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "webhook_delivery_fidelity",
+    "value": 1.0
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "agent": "api-tester-test-api-gateway-routing",
+  "lane": "gateway-routing-correctness",
+  "cases": [
+    {
+      "label": "routes-to-correct-single-backend",
+      "method": "GET",
+      "path": "/<routed-path>",
+      "primary": 200,
+      "also_accept": [201, 202, 204],
+      "other_backends": [],
+      "steps": [
+        "send a request matching a documented route",
+        "assert it reaches exactly the correct single backend",
+        "assert path, method, headers, and body arrive at the backend unchanged",
+        "assert the response is returned to the client unchanged",
+        "assert no other_backend received the request"
+      ]
+    },
+    {
+      "label": "path-rewrite-prefix-strip",
+      "method": "GET",
+      "path": "/<prefixed-path>",
+      "primary": 200,
+      "also_accept": [201, 202, 204],
+      "steps": [
+        "send a request to a route with a documented prefix-strip/rewrite rule",
+        "capture the path the backend observes",
+        "assert the backend sees the rewritten/stripped path",
+        "assert the response is returned unchanged"
+      ]
+    },
+    {
+      "label": "unknown-route-gateway-404",
+      "method": "GET",
+      "path": "/<unknown-path>",
+      "primary": 404,
+      "also_accept": [],
+      "steps": [
+        "send a request to a path with no matching route",
+        "assert the gateway itself returns 404",
+        "assert no backend is hit"
+      ]
+    },
+    {
+      "label": "method-not-allowed-at-gateway",
+      "method": "DELETE",
+      "path": "/<get-only-path>",
+      "primary": 405,
+      "also_accept": [],
+      "steps": [
+        "send a method not permitted on a documented route",
+        "assert the gateway returns 405 Method Not Allowed itself",
+        "assert no backend is hit"
+      ]
+    },
+    {
+      "label": "load-balancing-per-policy",
+      "method": "GET",
+      "path": "/<balanced-path>",
+      "primary": 200,
+      "also_accept": [201, 202, 204],
+      "other_backends": [],
+      "steps": [
+        "send the documented number of requests to a load-balanced route",
+        "tally which backends served them",
+        "assert the distribution matches the documented weighting/policy within tolerance"
+      ]
+    },
+    {
+      "label": "gateway-injected-headers",
+      "method": "GET",
+      "path": "/<routed-path>",
+      "primary": 200,
+      "also_accept": [201, 202, 204],
+      "steps": [
+        "send a request through the gateway",
+        "capture the headers the backend observes",
+        "assert X-Forwarded-For is added before the backend",
+        "assert X-Forwarded-Proto is added before the backend",
+        "assert X-Request-ID is added before the backend"
+      ]
+    },
+    {
+      "label": "service-down-503",
+      "method": "GET",
+      "path": "/<routed-path>",
+      "primary": 503,
+      "also_accept": [502],
+      "other_backends": [],
+      "steps": [
+        "route to a backend that is down/unavailable",
+        "assert the gateway returns 503",
+        "assert no other_backend silently absorbs the request"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "route_forwarding_accuracy",
+    "value": 1.0
+  }
+}

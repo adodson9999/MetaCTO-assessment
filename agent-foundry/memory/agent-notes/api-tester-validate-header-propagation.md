@@ -7,3 +7,5 @@
 - [2026-06-29T17:55:45.810475+00:00] run=2026-06-29_17-10-02 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
 - [2026-06-29T20:13:37.264153+00:00] run=2026-06-29_19-27-43 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
 - [2026-06-29T22:44:52.159873+00:00] run=2026-06-29_22-00-33 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-07-02T01:43:31.911332+00:00] run=RUN-20260702-000138 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)
+- [2026-07-03T22:09:33.865288+00:00] run=RUN-20260703-181017 header-propagation run: propagation_rate=0.0% over 6 endpoints (78 scenarios)

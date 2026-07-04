@@ -1,0 +1,94 @@
+{
+  "agent": "api-tester-verify-response-status-codes",
+  "lane": "response-status-code-conformance",
+  "descriptors": [
+    {
+      "role": "success_read",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "status": 200,
+      "trigger": {
+        "kind": "valid_read"
+      },
+      "also_accept": []
+    },
+    {
+      "role": "created",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "status": 201,
+      "trigger": {
+        "kind": "valid_create"
+      },
+      "also_accept": [
+        200
+      ]
+    },
+    {
+      "role": "bad_request",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "status": 400,
+      "trigger": {
+        "kind": "malformed_body"
+      },
+      "also_accept": []
+    },
+    {
+      "role": "not_found",
+      "endpoint_role": "item_endpoint",
+      "method": "GET",
+      "status": 404,
+      "trigger": {
+        "kind": "nonexistent_item_id"
+      },
+      "also_accept": []
+    },
+    {
+      "role": "method_not_allowed",
+      "endpoint_role": "target_endpoint",
+      "method": "TRACE",
+      "status": 405,
+      "trigger": {
+        "kind": "unsupported_method"
+      },
+      "assert_header": "Allow",
+      "also_accept": []
+    },
+    {
+      "role": "conflict",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "status": 409,
+      "trigger": {
+        "kind": "duplicate_conflict"
+      },
+      "also_accept": []
+    },
+    {
+      "role": "unprocessable",
+      "endpoint_role": "create_endpoint",
+      "method": "POST",
+      "status": 422,
+      "trigger": {
+        "kind": "unprocessable_body"
+      },
+      "also_accept": []
+    },
+    {
+      "role": "server_error",
+      "endpoint_role": "target_endpoint",
+      "method": "GET",
+      "status": 500,
+      "trigger": {
+        "kind": "induce_server_error"
+      },
+      "also_accept": []
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "status_code_conformance_fidelity",
+    "value": 1.0
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "agent": "api-tester-verify-caching-headers",
+  "lane": "http-caching-header-semantics",
+  "cases": [
+    {
+      "label": "cacheable-get-cache-control-etag",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [],
+      "steps": [
+        "GET the cacheable resource",
+        "assert status 200",
+        "assert a Cache-Control header is present",
+        "assert an ETag header is present",
+        "record the ETag and Last-Modified values"
+      ]
+    },
+    {
+      "label": "conditional-get-if-none-match-304",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 304,
+      "also_accept": [],
+      "steps": [
+        "GET the resource with If-None-Match set to the recorded ETag",
+        "assert status 304",
+        "assert the response body is empty",
+        "assert the ETag is echoed or consistent"
+      ]
+    },
+    {
+      "label": "conditional-get-if-modified-since-304",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 304,
+      "also_accept": [],
+      "steps": [
+        "GET the resource with If-Modified-Since set to the recorded Last-Modified",
+        "assert status 304",
+        "assert the response body is empty"
+      ]
+    },
+    {
+      "label": "vary-header-present",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [],
+      "steps": [
+        "GET the resource",
+        "assert status 200",
+        "assert the documented Vary header is present and lists the documented varying dimensions"
+      ]
+    },
+    {
+      "label": "if-match-stale-etag-412",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 412,
+      "also_accept": [],
+      "steps": [
+        "GET the resource conditionally with If-Match set to a stale/incorrect ETag",
+        "assert status 412 Precondition Failed",
+        "re-read the row",
+        "assert the row is unchanged by the failed precondition"
+      ]
+    },
+    {
+      "label": "update-changes-etag",
+      "method": "PUT",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [
+        204
+      ],
+      "steps": [
+        "record the current ETag via a GET",
+        "issue an update that changes a documented field",
+        "GET the resource again",
+        "assert the field changed",
+        "assert the new ETag differs from the recorded ETag"
+      ]
+    },
+    {
+      "label": "freshness-max-age-matches-documented",
+      "method": "GET",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [],
+      "steps": [
+        "GET the resource",
+        "parse the Cache-Control header",
+        "assert max-age matches the documented value",
+        "assert s-maxage matches the documented value where documented"
+      ]
+    },
+    {
+      "label": "mutation-post-no-store",
+      "method": "POST",
+      "path": "/<resource>",
+      "primary": 201,
+      "also_accept": [
+        200,
+        202
+      ],
+      "steps": [
+        "issue a POST mutation",
+        "assert the response Cache-Control carries no-store",
+        "assert the mutation response is not declared cacheable"
+      ]
+    },
+    {
+      "label": "mutation-put-no-store",
+      "method": "PUT",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [
+        204
+      ],
+      "steps": [
+        "issue a PUT mutation",
+        "assert the response Cache-Control carries no-store",
+        "assert the mutation response is not declared cacheable"
+      ]
+    },
+    {
+      "label": "mutation-patch-no-store",
+      "method": "PATCH",
+      "path": "/<resource>",
+      "primary": 200,
+      "also_accept": [
+        204
+      ],
+      "steps": [
+        "issue a PATCH mutation",
+        "assert the response Cache-Control carries no-store",
+        "assert the mutation response is not declared cacheable"
+      ]
+    },
+    {
+      "label": "mutation-delete-no-store",
+      "method": "DELETE",
+      "path": "/<resource>",
+      "primary": 204,
+      "also_accept": [
+        200,
+        202
+      ],
+      "steps": [
+        "issue a DELETE mutation",
+        "assert the response Cache-Control carries no-store",
+        "assert the mutation response is not declared cacheable"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "caching_header_fidelity",
+    "value": 1.0
+  }
+}

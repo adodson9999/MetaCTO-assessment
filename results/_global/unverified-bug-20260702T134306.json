@@ -1,0 +1,12 @@
+{
+  "gate": "unverified-bug",
+  "run_id": "RUN-20260702-000138",
+  "applies": false,
+  "status": "pass",
+  "ts": "2026-07-02T13:43:06.850178+00:00",
+  "checks": {},
+  "problems": [],
+  "counts": {
+    "missing_docs_rows": 0
+  }
+}

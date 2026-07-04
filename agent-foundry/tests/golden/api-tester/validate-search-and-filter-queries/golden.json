@@ -1,0 +1,73 @@
+{
+  "agent": "api-tester-validate-search-and-filter-queries",
+  "lane": "search-and-filter-contract",
+  "cases": [
+    {
+      "role": "keyword search",
+      "endpoint_role": "search_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "keyword_search",
+        "input_role": "provided_query_term"
+      },
+      "assertion": "every_returned_record_matches_filter",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    },
+    {
+      "role": "category filter",
+      "endpoint_role": "category_filter_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "category_filter",
+        "input_role": "provided_category_value"
+      },
+      "assertion": "every_returned_record_matches_filter",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    },
+    {
+      "role": "categories list",
+      "endpoint_role": "categories_list_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "categories_list"
+      },
+      "assertion": "result_set_equals_known_expected_set",
+      "also_accept": []
+    },
+    {
+      "role": "field selection",
+      "endpoint_role": "search_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "field_selection",
+        "input_role": "field_selection_parameter"
+      },
+      "assertion": "returned_fields_equal_requested_fields",
+      "also_accept": [
+        "every_returned_record_matches_filter"
+      ]
+    },
+    {
+      "role": "ordering",
+      "endpoint_role": "search_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "ordering",
+        "input_role": "sort_and_order_parameters"
+      },
+      "assertion": "result_set_ordered_by_sort_and_order",
+      "also_accept": [
+        "result_set_equals_known_expected_set"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "search_filter_fidelity",
+    "value": 1.0
+  }
+}

@@ -19,3 +19,5 @@
 - [2026-06-29T17:25:50.654249+00:00] run=2026-06-29_17-10-02 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
 - [2026-06-29T19:43:52.996437+00:00] run=2026-06-29_19-27-43 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
 - [2026-06-29T22:16:36.750730+00:00] run=2026-06-29_22-00-33 status-code run: accuracy=88.46% correct=23/26 covered=26 over 15 operations
+- [2026-07-02T00:15:25.782438+00:00] run=RUN-20260702-000138 status-code run: accuracy=0.0% correct=0/26 covered=0 over 15 operations
+- [2026-07-03T19:04:08.816707+00:00] run=RUN-20260703-181017 status-code run: accuracy=0.0% correct=0/26 covered=0 over 15 operations

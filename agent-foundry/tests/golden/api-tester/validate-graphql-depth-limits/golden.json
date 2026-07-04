@@ -1,0 +1,170 @@
+{
+  "agent": "api-tester-validate-graphql-depth-limits",
+  "lane": "graphql-query-depth-complexity-protection",
+  "cases": [
+    {
+      "role": "depth_3_accept",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "depth_query",
+        "depth": 3
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "build a query whose nested selection-set depth equals 3",
+        "POST it to the GraphQL endpoint",
+        "assert the query is accepted with no depth or complexity error",
+        "assert data is returned"
+      ]
+    },
+    {
+      "role": "at_limit_accept",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "depth_query",
+        "depth": "max_depth"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "build a query whose nested selection-set depth equals max_depth exactly",
+        "POST it to the GraphQL endpoint",
+        "assert the at-limit query is accepted with no depth error"
+      ]
+    },
+    {
+      "role": "one_over_reject",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "depth_query",
+        "depth": "max_depth+1"
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "build a query whose nested selection-set depth equals max_depth+1",
+        "POST it to the GraphQL endpoint",
+        "assert the query is rejected with a depth or complexity error (400, or 200 carrying a GraphQL errors array)",
+        "assert no full data payload is returned"
+      ]
+    },
+    {
+      "role": "deep_timed_reject",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "depth_query",
+        "depth": 15
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "build a query whose nested selection-set depth equals 15",
+        "POST it to the GraphQL endpoint",
+        "assert it is rejected with a depth error",
+        "assert the rejection returns within one second"
+      ]
+    },
+    {
+      "role": "complexity_cost",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "complexity_query"
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "build a shallow but very broad query that exceeds the documented complexity or cost budget",
+        "POST it to the GraphQL endpoint",
+        "assert it is rejected on complexity or cost grounds",
+        "assert no full data payload is returned"
+      ]
+    },
+    {
+      "role": "alias_amplification",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "alias_amplification_query"
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "build a query requesting the same expensive field under many aliases",
+        "POST it to the GraphQL endpoint",
+        "assert the alias-amplification query is rejected",
+        "assert it is not fully executed"
+      ]
+    },
+    {
+      "role": "fragment_cycle",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "fragment_cycle_query"
+      },
+      "expected_class": "400",
+      "also_accept": [
+        "200"
+      ],
+      "steps": [
+        "build a query containing a circular fragment reference",
+        "POST it to the GraphQL endpoint",
+        "assert the circular fragment is rejected and not infinitely expanded",
+        "assert the server does not hang"
+      ]
+    },
+    {
+      "role": "introspection",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "introspection_query"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "400",
+        "403"
+      ],
+      "steps": [
+        "issue an introspection query",
+        "assert the documented production introspection policy is enforced (allowed and answered, or disabled and rejected per policy)"
+      ]
+    },
+    {
+      "role": "batched_query",
+      "endpoint_role": "graphql_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "batched_query"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "400"
+      ],
+      "steps": [
+        "POST an array of operations exceeding the documented batch limit",
+        "assert the batch is capped or rejected at the documented batch limit",
+        "assert operations beyond the limit are not executed"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "graphql_depth_complexity_fidelity",
+    "value": 1.0
+  }
+}

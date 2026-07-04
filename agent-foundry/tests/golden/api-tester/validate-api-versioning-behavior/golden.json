@@ -1,0 +1,154 @@
+{
+  "agent": "api-tester-validate-api-versioning-behavior",
+  "lane": "api-version-contract",
+  "cases": [
+    {
+      "role": "path_current",
+      "channel": "path",
+      "method": "GET",
+      "version_status": "current",
+      "schema": "current_schema",
+      "recipe": {
+        "kind": "path_version",
+        "select": "current"
+      },
+      "assertions": [
+        "no_deprecation_header"
+      ],
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "path_deprecated",
+      "channel": "path",
+      "method": "GET",
+      "version_status": "deprecated",
+      "schema": "deprecated_schema",
+      "recipe": {
+        "kind": "path_version",
+        "select": "deprecated"
+      },
+      "assertions": [
+        "deprecation_header_future_dated",
+        "sunset_header_present",
+        "successor_link_header_present"
+      ],
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "path_unsupported_numeric",
+      "channel": "path",
+      "method": "GET",
+      "version_status": "unsupported",
+      "schema": null,
+      "recipe": {
+        "kind": "path_version",
+        "select": "unsupported_numeric"
+      },
+      "assertions": [],
+      "expected_class": "404",
+      "also_accept": []
+    },
+    {
+      "role": "path_unsupported_nonnumeric",
+      "channel": "path",
+      "method": "GET",
+      "version_status": "unsupported",
+      "schema": null,
+      "recipe": {
+        "kind": "path_version",
+        "select": "unsupported_nonnumeric"
+      },
+      "assertions": [],
+      "expected_class": "400",
+      "also_accept": []
+    },
+    {
+      "role": "media_type_current",
+      "channel": "media_type",
+      "method": "GET",
+      "version_status": "current",
+      "schema": "current_schema",
+      "recipe": {
+        "kind": "accept_media_type",
+        "media_type": "application/vnd.api.v2+json"
+      },
+      "assertions": [
+        "no_deprecation_header"
+      ],
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "media_type_deprecated",
+      "channel": "media_type",
+      "method": "GET",
+      "version_status": "deprecated",
+      "schema": "deprecated_schema",
+      "recipe": {
+        "kind": "accept_media_type",
+        "media_type": "application/vnd.api.v1+json"
+      },
+      "assertions": [
+        "deprecation_header_future_dated",
+        "sunset_header_present",
+        "successor_link_header_present"
+      ],
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "media_type_unsupported",
+      "channel": "media_type",
+      "method": "GET",
+      "version_status": "unsupported",
+      "schema": null,
+      "recipe": {
+        "kind": "accept_media_type",
+        "media_type": "application/vnd.api.v0+json"
+      },
+      "assertions": [],
+      "expected_class": "404",
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "query_param_version",
+      "channel": "query_param",
+      "method": "GET",
+      "version_status": "current",
+      "schema": "current_schema",
+      "recipe": {
+        "kind": "query_param_version",
+        "select": "documented"
+      },
+      "assertions": [],
+      "expected_class": "2xx",
+      "also_accept": []
+    },
+    {
+      "role": "default_version",
+      "channel": "default",
+      "method": "GET",
+      "version_status": null,
+      "schema": "default_schema",
+      "recipe": {
+        "kind": "no_version_supplied"
+      },
+      "assertions": [
+        "documented_default_or_explicit_error"
+      ],
+      "expected_class": "2xx",
+      "also_accept": [
+        "400"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "versioning_contract_fidelity",
+    "value": 1.0
+  }
+}

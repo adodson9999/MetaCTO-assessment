@@ -1,0 +1,129 @@
+{
+  "agent": "api-tester-validate-retry-after-header-compliance",
+  "lane": "retry-after-header-compliance",
+  "cases": [
+    {
+      "label": "over-limit-429-carries-retry-after",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "over_limit_burst"
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "steps": [
+        "send an at-limit burst of requests up to the documented limit",
+        "send one more over-limit request",
+        "assert the over-limit request returns 429",
+        "assert the 429 response carries a Retry-After header",
+        "record the advertised Retry-After value and compute the deadline"
+      ]
+    },
+    {
+      "label": "probe-one-second-before-deadline-still-limited",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "deadline_anchored_probe",
+        "offset_seconds": -1
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "steps": [
+        "anchor to the advertised Retry-After deadline",
+        "wait until one second before the deadline",
+        "send a probe request",
+        "assert the probe is still limited with 429"
+      ]
+    },
+    {
+      "label": "probe-one-second-after-deadline-succeeds",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "deadline_anchored_probe",
+        "offset_seconds": 1
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "201",
+        "202",
+        "204"
+      ],
+      "steps": [
+        "anchor to the advertised Retry-After deadline",
+        "wait until one second after the deadline",
+        "send a probe request",
+        "assert the probe now succeeds"
+      ]
+    },
+    {
+      "label": "retry-after-seconds-integer-form-honored",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "seconds_integer_form"
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "steps": [
+        "trigger a 429 whose Retry-After is a positive-integer seconds value",
+        "assert the value parses as a positive integer",
+        "honor the seconds delay",
+        "assert the limit clears after that many seconds"
+      ]
+    },
+    {
+      "label": "retry-after-http-date-form-honored",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "http_date_form"
+      },
+      "expected_class": "429",
+      "also_accept": [],
+      "steps": [
+        "trigger a 429 whose Retry-After is a valid future RFC 7231 HTTP-date",
+        "assert the value parses as a valid HTTP-date in the future",
+        "honor the date deadline",
+        "assert the limit clears after that instant"
+      ]
+    },
+    {
+      "label": "maintenance-503-advertises-retry-after",
+      "endpoint_role": "maintenance_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "maintenance_state"
+      },
+      "expected_class": "503",
+      "also_accept": [],
+      "steps": [
+        "drive the endpoint into a documented maintenance/overload state",
+        "assert it returns 503",
+        "assert the 503 also advertises a Retry-After header"
+      ]
+    },
+    {
+      "label": "retry-after-within-reasonable-maximum",
+      "endpoint_role": "rate_limited_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "reasonable_maximum_bound"
+      },
+      "expected_class": "429",
+      "also_accept": [
+        "503"
+      ],
+      "steps": [
+        "capture an advertised Retry-After value",
+        "assert the advertised delay does not exceed the documented reasonable maximum"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "retry_after_accuracy",
+    "value": 1.0
+  }
+}

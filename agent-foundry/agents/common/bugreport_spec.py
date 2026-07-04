@@ -89,6 +89,10 @@ TITLE_MAX = 120
 # The five decision keys the agent emits, in order. Each is one scored cell per failure.
 DECISION_FIELDS = ["title", "severity", "priority", "testing_steps", "postman_references"]
 
+# Unverified (missing-docs) reports carry one extra scored key: the deterministic category.
+# The base DECISION_FIELDS list is intentionally left unchanged (verified-path byte-identity).
+DECISION_FIELDS_UNVERIFIED = DECISION_FIELDS + ["category"]
+
 SEVERITY_TO_PRIORITY = {"CRITICAL": "P1", "HIGH": "P2", "MEDIUM": "P3", "LOW": "P4"}
 
 # The ten artifact-completeness keys (Artifact assembly). created_at/title/severity/
@@ -311,20 +315,196 @@ def build_postman_references(failure: dict, tcs: list, postman_items: dict) -> l
 
 
 # --------------------------------------------------------------------------- #
+# Unverified-bug classification (missing-docs path) — pure, total, deterministic
+# --------------------------------------------------------------------------- #
+# When the documentation-reviewer returns "missing-docs" the finding is still reported,
+# without a citation, classified into exactly one of three categories by first-match rules
+# V -> B -> S (see the implementation plan §4.1). All constants live here so tuning is
+# visible and pinned by golden category_cases / precedence_matrix_cases. build_category is
+# TOTAL: it never raises and always returns one legal category (default computer-software).
+
+UNVERIFIED_CATEGORIES: tuple[str, ...] = (
+    "vulnerability", "business-workflow", "computer-software",
+)
+CATEGORY_TO_PREFIX = {
+    "vulnerability": "VULN", "business-workflow": "BIZ", "computer-software": "SW",
+}
+CATEGORY_ORDER = {"vulnerability": 0, "business-workflow": 1, "computer-software": 2}
+SEV_RANK = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
+
+# Rule V — VULNERABILITY (a user can access/do something they should not).
+# Deny side: the expected result denotes a refusal. Success side: the observed result denotes
+# access/success (reuses the same deny->2xx signal adjudicate.severity() flags CRITICAL).
+VULN_DENY_TOKENS: tuple[str, ...] = (
+    "401", "403", "405", "407", "denied", "unauthorized", "forbidden",
+    "requires auth", "must be authenticated",
+)
+VULN_SUCCESS_TOKENS: tuple[str, ...] = ("true", "200", "201", "204")
+VULN_SUCCESS_SUBSTRINGS: tuple[str, ...] = ("returned", "granted", "data")
+VULN_SPEC_SUBSTRINGS: tuple[str, ...] = ("authentication", "authorization")
+VULN_BYPASS_SUBSTRINGS: tuple[str, ...] = (
+    "data exposed", "allowlist bypass", "sql injection", "without password",
+    "without token", "without credential", "no auth", "bypass",
+)
+
+# Rule S — system/internal signals (drive the computer-software bucket; also veto Rule B).
+SYSTEM_SIGNAL_SUBSTRINGS: tuple[str, ...] = (
+    "500", "503", "database", "connection refused", "schema validation", "crud",
+    "traceback", "exception", "timeout", "timed out", "oom", "memory", "stack trace",
+)
+
+# Rule B — user-visible signals (a user-facing behaviour, no system signal present).
+USER_VISIBLE_TOKENS: tuple[str, ...] = (
+    "data", "field", "value", "product", "user", "page", "pagination", "sort",
+    "filter", "search", "result", "returned", "list", "count", "order", "price", "name",
+)
+
+_TWO_XX = re.compile(r"^2\d\d")
+_STATUS_2XX_4XX = re.compile(r"\b([24]\d\d)\b")
+
+
+def normalize_signals(
+    expected: object = "",
+    observed: object = "",
+    spec_path: object = "",
+    agent: object = "",
+    scenario_text: object = "",
+    stderr: object = "",
+) -> dict:
+    """Coerce whatever context is available (an adjudicate mismatch or a bug-reporter
+    failure) into the six string fields build_category reads. Every value is forced to a
+    string (None/int/etc. -> str), so downstream matching is total and never raises."""
+    def _s(v: object) -> str:
+        return "" if v is None else str(v)
+
+    return {
+        "expected": _s(expected),
+        "observed": _s(observed),
+        "spec_path": _s(spec_path),
+        "agent": _s(agent),
+        "scenario_text": _s(scenario_text),
+        "stderr": _s(stderr),
+    }
+
+
+def _observed_is_success(observed_low: str) -> bool:
+    """Observed value denotes access/success (the 2xx side of the deny->2xx vuln signal)."""
+    stripped = observed_low.strip()
+    if _TWO_XX.match(stripped):
+        return True
+    if stripped in VULN_SUCCESS_TOKENS:
+        return True
+    return _contains_any(observed_low, list(VULN_SUCCESS_SUBSTRINGS))
+
+
+def _is_vulnerability(sig: dict) -> bool:
+    expected_low = sig["expected"].lower()
+    observed_low = sig["observed"].lower()
+    spec_low = sig["spec_path"].lower()
+    agent_low = sig["agent"].lower()
+    scenario_low = sig["scenario_text"].lower()
+    stderr_low = sig["stderr"].lower()
+
+    # Access/bypass proxy: expected denies AND observed succeeds.
+    if _contains_any(expected_low, list(VULN_DENY_TOKENS)) and _observed_is_success(observed_low):
+        return True
+    # Spec proxy: the finding is on an auth surface.
+    if _contains_any(spec_low, list(VULN_SPEC_SUBSTRINGS)) or _contains_any(
+        agent_low, list(VULN_SPEC_SUBSTRINGS)
+    ):
+        return True
+    # Bypass indicator anywhere in the free-text signals.
+    haystack = f"{stderr_low}\n{observed_low}\n{scenario_low}"
+    return _contains_any(haystack, list(VULN_BYPASS_SUBSTRINGS))
+
+
+def _has_system_signal(sig: dict) -> bool:
+    haystack = " ".join(
+        sig[k].lower() for k in ("expected", "observed", "scenario_text", "stderr")
+    )
+    return _contains_any(haystack, list(SYSTEM_SIGNAL_SUBSTRINGS))
+
+
+def _is_user_visible(sig: dict) -> bool:
+    if _has_system_signal(sig):
+        return False
+    # A user-facing HTTP status (2xx/4xx) in expected or observed, ...
+    if _STATUS_2XX_4XX.search(sig["expected"]) or _STATUS_2XX_4XX.search(sig["observed"]):
+        return True
+    # ... or an explicit user-visible token in the scenario/observed text.
+    haystack = f"{sig['scenario_text'].lower()}\n{sig['observed'].lower()}"
+    return _contains_any(haystack, list(USER_VISIBLE_TOKENS))
+
+
+def build_category(signals: dict) -> str:
+    """Deterministic, total classifier. First-match-wins V -> B -> S; the default (and
+    catch-all per decision #4) is computer-software. Never raises; always returns a member
+    of UNVERIFIED_CATEGORIES."""
+    sig = signals if isinstance(signals, dict) else {}
+    sig = normalize_signals(**{k: sig.get(k, "") for k in
+                               ("expected", "observed", "spec_path", "agent",
+                                "scenario_text", "stderr")})
+    if _is_vulnerability(sig):
+        return "vulnerability"
+    if _is_user_visible(sig):
+        return "business-workflow"
+    return "computer-software"
+
+
+def category_reason(signals: dict, category: str) -> str:
+    """A short, deterministic human explanation of why this category was chosen. Prose only;
+    never scored — kept stable so idempotent re-materialisation stays byte-identical."""
+    sig = normalize_signals(**{k: (signals or {}).get(k, "") for k in
+                               ("expected", "observed", "spec_path", "agent",
+                                "scenario_text", "stderr")})
+    exp, obs = sig["expected"], sig["observed"]
+    if category == "vulnerability":
+        if _contains_any(exp.lower(), list(VULN_DENY_TOKENS)) and _observed_is_success(obs.lower()):
+            return f"expected deny ({exp}) but observed access/success ({obs})"
+        if _contains_any(sig["spec_path"].lower(), list(VULN_SPEC_SUBSTRINGS)) or _contains_any(
+            sig["agent"].lower(), list(VULN_SPEC_SUBSTRINGS)
+        ):
+            return "finding is on an authentication/authorization surface"
+        return "a workflow-bypass indicator is present in the captured signals"
+    if category == "business-workflow":
+        return f"user-visible behaviour differs (expected {exp}, observed {obs}); no system signal"
+    return f"system/internal signal or no positively user-visible signal (expected {exp}, observed {obs})"
+
+
+# --------------------------------------------------------------------------- #
 # The full per-failure decision (gold reference / what the agent must emit)
 # --------------------------------------------------------------------------- #
-def build_reference_decision(failure: dict, registry: list, postman_items: dict) -> dict:
-    """The canonical CORRECT five-key decision for one failure, derived deterministically.
-    An agent that emits this decision reproduces the gold report's judgement fields."""
+def build_reference_decision(
+    failure: dict, registry: list, postman_items: dict, verdict: str | None = None
+) -> dict:
+    """The canonical CORRECT decision for one failure, derived deterministically.
+
+    With ``verdict`` left None (the default), returns EXACTLY the historical five-key
+    decision — byte-identical to what every existing caller receives. Only when
+    ``verdict == "missing-docs"`` is a sixth key ``category`` added (the unverified-bug
+    classification). No other verdict value changes the output. This keeps the scored
+    5-key contract and the verified-bug leaderboard fidelity untouched (see the
+    ``test_verified_decision_unchanged`` regression guard)."""
     tcs = agent_tcs(registry, failure["agent_name"])
     severity = build_severity(failure)
-    return {
+    decision = {
         "title": build_title(failure),
         "severity": severity,
         "priority": build_priority(severity),
         "testing_steps": build_testing_steps(tcs),
         "postman_references": build_postman_references(failure, tcs, postman_items),
     }
+    if verdict == "missing-docs":
+        signals = normalize_signals(
+            expected=failure.get("expected", ""),
+            observed=failure.get("observed", ""),
+            spec_path=failure.get("spec_path", ""),
+            agent=failure.get("agent_name", ""),
+            scenario_text=failure.get("scenario", failure.get("sub_test", "")),
+            stderr=failure.get("stderr", ""),
+        )
+        decision["category"] = build_category(signals)
+    return decision
 
 
 def build_postman_items(collection: dict) -> dict:
@@ -398,6 +578,11 @@ def score_decision(agent_decision: dict, gold_decision: dict) -> dict:
     cells["priority"] = str(a.get("priority")) == str(gold_decision["priority"])
     cells["testing_steps"] = _steps_key(a.get("testing_steps")) == _steps_key(gold_decision["testing_steps"])
     cells["postman_references"] = _refs_key(a.get("postman_references")) == _refs_key(gold_decision["postman_references"])
+    # The unverified category is scored only when the gold decision carries one (missing-docs
+    # path). Verified decisions have no "category" key, so this cell is absent for them and the
+    # 5-field DECISION_FIELDS scoring loop is unaffected (verified-path byte-identity).
+    if "category" in gold_decision:
+        cells["category"] = str(a.get("category")) == str(gold_decision["category"])
     return cells
 
 

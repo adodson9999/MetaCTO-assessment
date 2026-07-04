@@ -1,0 +1,291 @@
+{
+  "_about": {
+    "purpose": "Lane-ownership / MECE coverage manifest (agent-authoring-standard.md, Part C, G8/G9/G11). Declares each agent's exclusive lane and its named handoffs to the sibling that owns each adjacent concern.",
+    "schema": "{ agents: { '<group>/<name>': { lane, owns[], handoffs{} } } }",
+    "owns": "Each agent's 'owns' is the set of canonical case-identities sha1(method+path+recipe.kind+sorted(params)+assertion-signature) computed BY THE MECE GATE from the agent's emitted plan on the canonical brief. It is seeded empty here and refreshed per agent on each build/update. Do not hand-write hashes.",
+    "status": "seed-v1 — lanes and handoffs declared for the api-tester group (the test-surface owners the MECE invariant governs). 'owns' pending mece_gate.py, which is not yet present in the foundry.",
+    "notes": [
+      "code-review/* agents are single-lens reviewers; they emit {rating,notes}, not test-case plans, so they own no test-surface case-identities and are not part of this case-identity partition.",
+      "Remove agent-foundry/agents/api-tester/_updated-drafts/ before any discover_agents/MECE pass — those flat draft files duplicate the api-tester-* names."
+    ],
+    "generated": "2026-06-30"
+  },
+  "agents": {
+    "api-tester/test-authentication-flows": {
+      "lane": "First-party credential validity — login / identity / token-refresh lifecycle (valid, missing, malformed, expired, revoked; login success/wrong-password/unknown-user/missing-fields/lockout; JWT tampering; Authorization-header malformation; api-key location).",
+      "owns": [],
+      "handoffs": {
+        "role-based access control / RBAC on protected resources": "api-tester/check-authorization-rules",
+        "third-party OAuth authorization-code flow": "api-tester/verify-third-party-oauth-integration"
+      }
+    },
+    "api-tester/check-authorization-rules": {
+      "lane": "Authorization / access control on protected resources — RBAC, owner-positive, cross-tenant IDOR, privilege-escalation / mass-assignment, with per-case field+substring leakage assertions.",
+      "owns": [],
+      "handoffs": {
+        "credential validity, expiry and revocation": "api-tester/test-authentication-flows"
+      }
+    },
+    "api-tester/verify-crud-operation-integrity": {
+      "lane": "Hard CRUD lifecycle integrity — ordered create/read/update/patch/delete with field-echo, list membership, negative lifecycle (update/delete-missing 404, duplicate 409), and database-state verification at each step.",
+      "owns": [],
+      "handoffs": {
+        "soft-delete database semantics": "api-tester/test-soft-delete-behavior",
+        "repeated-call idempotency": "api-tester/test-idempotency-of-endpoints"
+      }
+    },
+    "api-tester/test-idempotency-of-endpoints": {
+      "lane": "Sequential idempotency — PUT/DELETE/GET replays under one Idempotency-Key with stable server-managed fields, create primary+fresh key dedupe, and same-key-different-body conflict.",
+      "owns": [],
+      "handoffs": {
+        "parallel / concurrent same-key races": "api-tester/test-concurrent-request-handling",
+        "create/read/update/delete lifecycle proof": "api-tester/verify-crud-operation-integrity"
+      }
+    },
+    "api-tester/test-soft-delete-behavior": {
+      "lane": "Soft-delete semantics — delete markers, post-delete visibility / non-persistence, restore, double-delete, update-on-deleted, unique-key reuse, cascade, DB row survival within tolerance.",
+      "owns": [],
+      "handoffs": {
+        "hard-delete / full CRUD lifecycle": "api-tester/verify-crud-operation-integrity"
+      }
+    },
+    "api-tester/validate-search-and-filter-queries": {
+      "lane": "Search and filter semantics — keyword/substring search, category/range/multi-value filters, invalid-value, unknown-parameter, empty-result, injection-safety, every-record-matches and count-equals-DB.",
+      "owns": [],
+      "handoffs": {
+        "generic query-parameter mechanics": "api-tester/validate-query-parameter-handling",
+        "page math (limit/skip)": "api-tester/test-pagination-behavior"
+      }
+    },
+    "api-tester/test-pagination-behavior": {
+      "lane": "Pagination page math — first/middle/last/beyond-last pages, default size, oversize cap, page metadata (total/limit/offset or Link), zero overlap and zero gaps across pages, invalid page params.",
+      "owns": [],
+      "handoffs": {
+        "generic wrong-type parameter coercion": "api-tester/validate-query-parameter-handling",
+        "ordering": "api-tester/verify-sorting-behavior"
+      }
+    },
+    "api-tester/validate-query-parameter-handling": {
+      "lane": "Generic query-parameter mechanics — missing-required, wrong-type coercion, valid single, undocumented-ignored, multi-value, comma-list, URL-encoding, default-application, name-case, duplicate-key.",
+      "owns": [],
+      "handoffs": {
+        "filtering / search semantics": "api-tester/validate-search-and-filter-queries",
+        "ordering": "api-tester/verify-sorting-behavior",
+        "page math (limit/skip)": "api-tester/test-pagination-behavior"
+      }
+    },
+    "api-tester/validate-request-payloads": {
+      "lane": "Request-body constraints — missing-required, wrong-type, extra field, string-length boundaries, format/pattern, numeric range, array, nested-object — across create/update/patch bodies.",
+      "owns": [],
+      "handoffs": {
+        "pure null/empty/whitespace states": "api-tester/validate-null-empty-fields",
+        "enum membership": "api-tester/verify-enum-value-restrictions"
+      }
+    },
+    "api-tester/validate-null-empty-fields": {
+      "lane": "Null/empty/absent request-body states (sole owner) — per-field absent/json-null/empty-string/zero/false/empty-array/empty-object/whitespace, all/each/combo-required-null, string-\"null\", nested and array-element nulls.",
+      "owns": [],
+      "handoffs": {
+        "type/format/range/length constraints": "api-tester/validate-request-payloads",
+        "enum membership": "api-tester/verify-enum-value-restrictions"
+      }
+    },
+    "api-tester/verify-response-status-codes": {
+      "lane": "Generic status-code conformance — 200, 201, 202, 204, 301/302, 400, 404, 405, 409, 410, 422, 500 (the codes no dedicated agent owns).",
+      "owns": [],
+      "handoffs": {
+        "401 authentication": "api-tester/test-authentication-flows",
+        "403 authorization": "api-tester/check-authorization-rules",
+        "406/415 content negotiation": "api-tester/verify-content-type-negotiation",
+        "429 rate limiting": "api-tester/test-rate-limit-enforcement"
+      }
+    },
+    "api-tester/verify-error-message-clarity": {
+      "lane": "Error-response clarity — clear human-readable message, machine-readable code, consistent error envelope, field-level validation detail, status↔code alignment, request-id, zero internal-detail leak.",
+      "owns": [],
+      "handoffs": {
+        "response-body schema conformance": "api-tester/validate-json-schema-responses"
+      }
+    },
+    "api-tester/verify-enum-value-restrictions": {
+      "lane": "Request-body enum membership — each valid enum value accepted; unknown-string/empty-string/null/wrong-type/case-variant/numeric/array-multiselect/whitespace-padded/unicode-lookalike rejected.",
+      "owns": [],
+      "handoffs": {
+        "enum-in-query-parameter probes": "api-tester/validate-query-parameter-handling",
+        "enum/order in sort parameters": "api-tester/verify-sorting-behavior"
+      }
+    },
+    "api-tester/validate-json-schema-responses": {
+      "lane": "Response-body schema conformance — every documented response code's body validated with ajv under strict rules (additionalProperties:false, required+typed fields, list-item validation, application/json content-type).",
+      "owns": [],
+      "handoffs": {
+        "error-message wording / internal-leak checks": "api-tester/verify-error-message-clarity"
+      }
+    },
+    "api-tester/validate-header-propagation": {
+      "lane": "Generic request-header forwarding — Authorization, W3C traceparent/tracestate, B3, X-Forwarded-*, one custom header reach downstream unmodified; hop-by-hop headers stripped; inbound traceparent continued.",
+      "owns": [],
+      "handoffs": {
+        "X-Correlation-ID echo / UUIDv4 auto-generation / correlation logs": "api-tester/validate-correlation-id-propagation"
+      }
+    },
+    "api-tester/test-rate-limit-enforcement": {
+      "lane": "Rate-limit enforcement — at-limit burst, over-limit throttle, window reset, per-key isolation, limit scope, RateLimit-Limit/Remaining/Reset header decrement.",
+      "owns": [],
+      "handoffs": {
+        "429 Retry-After header presence/format/honoring": "api-tester/validate-retry-after-header-compliance"
+      }
+    },
+    "api-tester/verify-content-type-negotiation": {
+      "lane": "Content negotiation — Accept per supported media type, 406 unsupported, wildcard, charset, q-value preference, Accept-Encoding; request Content-Type accepted/415, missing Content-Type, charset-in-Content-Type.",
+      "owns": [],
+      "handoffs": {
+        "version negotiation": "api-tester/validate-api-versioning-behavior"
+      }
+    },
+    "api-tester/validate-api-versioning-behavior": {
+      "lane": "API versioning — path / header-media-type / query versioning; current (no Deprecation), deprecated (Deprecation+Sunset+successor Link), unsupported (404/400); default-version; per-version schema validation.",
+      "owns": [],
+      "handoffs": {
+        "generic Accept/Content-Type negotiation": "api-tester/verify-content-type-negotiation"
+      }
+    },
+    "api-tester/test-webhook-delivery": {
+      "lane": "HTTP-callback webhook delivery — register/trigger/poll; payload + ISO timestamp + HMAC signature; event filtering; multi-retry backoff; dead-letter after max; non-retryable 4xx; tamper-negative.",
+      "owns": [],
+      "handoffs": {
+        "message-broker / topic semantics": "api-tester/test-event-driven-api-triggers"
+      }
+    },
+    "api-tester/test-timeout-handling": {
+      "lane": "Timeout behaviour — injected upstream delay yields gateway timeout within max_wait with a safe error body and recovery; slow-client/slowloris; connect-vs-read distinction; retry-on-timeout.",
+      "owns": [],
+      "handoffs": {
+        "gateway routing": "api-tester/test-api-gateway-routing"
+      }
+    },
+    "api-tester/test-concurrent-request-handling": {
+      "lane": "Concurrency races — N concurrent identical reads; N concurrent unique writes verified in DB (count delta, zero dup, zero missing); concurrent update optimistic-lock; concurrent same-unique-key; zero 500s.",
+      "owns": [],
+      "handoffs": {
+        "sequential idempotent replay": "api-tester/test-idempotency-of-endpoints"
+      }
+    },
+    "api-tester/verify-sorting-behavior": {
+      "lane": "Ordering — ascending/descending by string/numeric/timestamp, multi-field secondary with stability, null ordering, collation/case, sort+pagination interaction, invalid-sort-field and invalid-order 400.",
+      "owns": [],
+      "handoffs": {
+        "generic parameter coercion": "api-tester/validate-query-parameter-handling"
+      }
+    },
+    "api-tester/verify-third-party-oauth-integration": {
+      "lane": "Third-party OAuth2 authorization-code flow — redirect/code-receipt/token-exchange/userinfo/refresh stages plus CSRF-state, bad-redirect-uri, replayed/expired code, wrong client_secret, PKCE mismatch, denied-consent negatives.",
+      "owns": [],
+      "handoffs": {
+        "first-party credential validity": "api-tester/test-authentication-flows"
+      }
+    },
+    "api-tester/validate-correlation-id-propagation": {
+      "lane": "Correlation-ID semantics (sole owner) — exact echo, propagation to API + downstream logs, no-header UUIDv4 auto-generation, uniqueness across requests, id-in-error, malformed-id reject/sanitize.",
+      "owns": [],
+      "handoffs": {
+        "generic header forwarding": "api-tester/validate-header-propagation"
+      }
+    },
+    "api-tester/verify-caching-headers": {
+      "lane": "Caching headers — Cache-Control/ETag, If-None-Match 304, If-Modified-Since 304, Vary, If-Match 412, post-update ETag change, max-age freshness, mutation no-store.",
+      "owns": [],
+      "handoffs": {
+        "idempotent-replay semantics": "api-tester/test-idempotency-of-endpoints"
+      }
+    },
+    "api-tester/test-event-driven-api-triggers": {
+      "lane": "Broker/topic event semantics — well-formed event drives state in window; malformed event ERROR-logged + dead-lettered + state-unchanged + consumer-healthy; duplicate idempotent; out-of-order; poison-retry then DLQ.",
+      "owns": [],
+      "handoffs": {
+        "HTTP-callback webhooks": "api-tester/test-webhook-delivery"
+      }
+    },
+    "api-tester/verify-audit-log-generation": {
+      "lane": "Audit-log semantics — create/update/delete entries with required fields and window/tolerance, read-audit, failed-action audit, login/logout audit, before/after on update, immutability.",
+      "owns": [],
+      "handoffs": {
+        "correlation / trace log propagation": "api-tester/validate-correlation-id-propagation"
+      }
+    },
+    "api-tester/test-api-gateway-routing": {
+      "lane": "Gateway routing correctness — request reaches exactly the correct single backend unchanged, other backends untouched; path-rewrite; unknown-route 404; method-not-allowed; load-balancing/weighting; injected X-Forwarded-*/X-Request-ID; service-down 503.",
+      "owns": [],
+      "handoffs": {
+        "upstream timeout behaviour": "api-tester/test-timeout-handling"
+      }
+    },
+    "api-tester/validate-retry-after-header-compliance": {
+      "lane": "Retry-After header (sole owner) — 429 and 503 carrying Retry-After, both integer-seconds and RFC 7231 HTTP-date forms, deadline-anchored honoring, sanity bound.",
+      "owns": [],
+      "handoffs": {
+        "limit counting / window reset / per-key isolation / RateLimit-* headers": "api-tester/test-rate-limit-enforcement"
+      }
+    },
+    "api-tester/validate-graphql-depth-limits": {
+      "lane": "GraphQL query-protection — depth (accept / at-limit / one-over reject / deep timed reject), complexity/cost, alias amplification, fragment-cycle, introspection policy, batched-query cap.",
+      "owns": [],
+      "handoffs": {}
+    },
+    "api-tester/test-long-polling-support": {
+      "lane": "Long-poll transport — no-event 204-empty within window, event 200-within-2s with correct type, multiple-events queued, resume-after-gap via Last-Event-ID, concurrent-pollers, connection-drop.",
+      "owns": [],
+      "handoffs": {
+        "broker / topic message semantics": "api-tester/test-event-driven-api-triggers"
+      }
+    },
+    "api-tester/test-file-upload-and-download": {
+      "lane": "File handling and security — size limits (incl. 0-byte and over-max), MIME, magic-byte-vs-declared-MIME mismatch, path-traversal filename, byte-for-byte MD5 download round-trip, download-404, download-authorization.",
+      "owns": [],
+      "handoffs": {
+        "multipart parsing mechanics": "api-tester/test-multipart-form-data-handling"
+      }
+    },
+    "api-tester/test-multipart-form-data-handling": {
+      "lane": "Multipart encoding mechanics — text+file parts, returned-file-URL field, MD5 round-trip, persisted readback, multi-file array, part-without-filename, duplicate field, field-order independence, malformed boundary.",
+      "owns": [],
+      "handoffs": {
+        "file size / MIME / integrity policy": "api-tester/test-file-upload-and-download"
+      }
+    },
+    "api-tester/track-defect-density": {
+      "lane": "Defect-density reporting (pure calculator over the brief) — density per 1000 changed lines (test-files excluded), severity-weighted density, per-area densities, rolling 3-sprint average, deviation %, alert flag, P1–P4 counts, trend.",
+      "owns": [],
+      "handoffs": {}
+    },
+    "api-tester/test-ip-allowlist-enforcement": {
+      "lane": "IP-allowlist enforcement — allowlisted 200, non-allowlisted 403, X-Forwarded-For spoof 403, CIDR/subnet, IPv6, multi-hop XFF trusted-proxy depth, denylist precedence, allowlist add/remove via management API.",
+      "owns": [],
+      "handoffs": {
+        "role-based authorization": "api-tester/check-authorization-rules"
+      }
+    },
+    "api-tester/run-regression-suite": {
+      "lane": "Regression-suite reporting (pure two-artifact comparator, no execution) — JUnit/Jest/pytest/TAP/TRX-NUnit: total, prev-passed, regressions, newly-passing, flaky, slowed, overall status.",
+      "owns": [],
+      "handoffs": {}
+    },
+    "api-tester/test-ssl-tls-enforcement": {
+      "lane": "TLS enforcement — protocol probes (plain HTTP + TLS1.0/1.1 reject, TLS1.2/1.3 accept), certificate assertions incl. OCSP, HSTS, forward-secrecy/cipher-order, forbidden weak-cipher families, SNI/wildcard.",
+      "owns": [],
+      "handoffs": {}
+    },
+    "api-tester/test-bulk-operation-endpoints": {
+      "lane": "Bulk/batch operations — all-valid, mixed 207-Multi-Status with offending-field naming, all-invalid, empty, single-item, duplicate-within-batch, oversize reject, atomicity rollback, bulk-update/delete, DB delta.",
+      "owns": [],
+      "handoffs": {
+        "concurrency": "api-tester/test-concurrent-request-handling"
+      }
+    },
+    "api-tester/measure-api-consumer-satisfaction": {
+      "lane": "Consumer-satisfaction measurement plan (plan-only over a local fixture) — NPS+CSAT+CES, recipient/collection windows, bands, NPS formula, validity threshold, per-segment, quarter-over-quarter trend, themes clustering, dashboard fields.",
+      "owns": [],
+      "handoffs": {}
+    }
+  }
+}

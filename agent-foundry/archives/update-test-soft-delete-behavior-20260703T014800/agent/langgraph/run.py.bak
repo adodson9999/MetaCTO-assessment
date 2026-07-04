@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""LangGraph soft-delete-behavior agent.
+
+A StateGraph whose single node turns one soft-delete-test brief into the soft-delete
+test plan via the central backend (ChatAnthropic when provider=claude-haiku, else
+ChatOllama). Deterministic execution (the case_count create->delete->verify lifecycles
+and the direct DB query), recording, and emit are handled by the shared harness
+(agents/common/softdelete.py) so this file's only framework-specific job is LLM
+elicitation through LangGraph.
+"""
+import os
+import sys
+from pathlib import Path
+from typing import TypedDict
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import softdelete  # noqa: E402
+from softdelete_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "langgraph"
+APPROVED_PROMPT = active_prompt()
+
+
+def _caller():
+    """Return call(prompt)->str for the central backend.
+        - anthropic   : ChatAnthropic (native API key)
+        - openai-cli  : the OpenAI client pointed at the local `claude -p` shim
+                        (claude.ai subscription; used when the API key has no credit)
+        - ollama      : ChatOllama (local)
+    """
+    spec = backend_config.resolve(WS)
+    kind = spec["native"]["kind"]
+    if kind == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        llm = ChatAnthropic(model=spec["native"]["model"], temperature=0, max_tokens=1024)
+        return lambda p: getattr(llm.invoke(p), "content", "")
+    if kind == "openai-cli":
+        from openai import OpenAI
+        client = OpenAI(base_url=spec["base_url"], api_key="local-shim")
+
+        def call(p):
+            r = client.chat.completions.create(
+                model=spec["native"]["model"], temperature=0,
+                messages=[{"role": "user", "content": p}])
+            return r.choices[0].message.content or ""
+        return call
+    from langchain_ollama import ChatOllama
+    llm = ChatOllama(model=spec["native"]["model"],
+                     base_url=spec["base_url"].replace("/v1", ""),
+                     temperature=0, format="json")
+    return lambda p: getattr(llm.invoke(p), "content", "")
+
+
+def _build_graph():
+    from langgraph.graph import StateGraph, END
+
+    class S(TypedDict):
+        brief: str
+        output: str
+
+    call = _caller()
+
+    def generate_node(state: S) -> S:
+        out = call(f"{APPROVED_PROMPT}\n\n{user_message(state['brief'])}")
+        return {"brief": state["brief"], "output": out if isinstance(out, str) else str(out)}
+
+    g = StateGraph(S)
+    g.add_node("generate", generate_node)
+    g.set_entry_point("generate")
+    g.add_edge("generate", END)
+    return g.compile()
+
+
+def main():
+    graph = _build_graph()
+
+    def generate(cfg: dict) -> dict:
+        b = softdelete.brief(cfg)
+        result = graph.invoke({"brief": b, "output": ""})
+        return softdelete.extract_json(result["output"]) or {}
+
+    summary = softdelete.run_softdelete_test(AGENT, generate)
+    print(f"[{AGENT}] correctness_rate={summary['soft_delete_correctness_rate_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']} "
+          f"cases_ok={summary['correct_cases']}/{summary['total_cases']}")
+
+
+if __name__ == "__main__":
+    main()

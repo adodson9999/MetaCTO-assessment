@@ -1,0 +1,70 @@
+{
+  "agent": "api-tester-validate-request-payloads",
+  "lane": "malformed-request-body-contract",
+  "schema_roles": {
+    "create_body": {
+      "field_a": { "type": "string", "required": true, "min_length": 3, "max_length": 10, "pattern": "^[a-z0-9]+$" },
+      "field_b": { "type": "integer", "required": true, "minimum": 1, "maximum": 100, "exclusive_maximum": 100, "multipleOf": 5 },
+      "field_c": { "type": "array", "required": false, "items": { "type": "string" } },
+      "field_d": { "type": "object", "required": false, "properties": { "inner": { "type": "string", "required": true } } }
+    },
+    "update_body": {
+      "field_a": { "type": "string", "required": true, "min_length": 3, "max_length": 10, "pattern": "^[a-z0-9]+$" },
+      "field_b": { "type": "integer", "required": true, "minimum": 1, "maximum": 100, "exclusive_maximum": 100, "multipleOf": 5 }
+    }
+  },
+  "payloads": {
+    "create_body": {
+      "valid": { "field_a": "abc123", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } },
+      "cases": [
+        { "field": "field_a", "category": "missing-required", "variant": "key-absent", "body": { "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_a", "category": "missing-required", "variant": "key-present-null", "body": { "field_a": null, "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "missing-required", "variant": "key-absent", "body": { "field_a": "abc123", "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "missing-required", "variant": "key-present-null", "body": { "field_a": "abc123", "field_b": null, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_a", "category": "wrong-type", "expected_type": "string", "body": { "field_a": 42, "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "wrong-type", "expected_type": "integer", "body": { "field_a": "abc123", "field_b": "not_an_int", "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "extra_field", "category": "extra", "body": { "field_a": "abc123", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" }, "unexpected_field": "x" } },
+        { "field": "field_a", "category": "string-length", "variant": "max-accepted", "length": 10, "body": { "field_a": "aaaaaaaaaa", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_a", "category": "string-length", "variant": "max-plus-1-rejected", "length": 11, "body": { "field_a": "aaaaaaaaaaa", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_a", "category": "string-length", "variant": "min-minus-1-rejected", "length": 2, "body": { "field_a": "aa", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_a", "category": "format", "pattern": "^[a-z0-9]+$", "body": { "field_a": "AB C!", "field_b": 25, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "numeric-range", "variant": "below-min", "body": { "field_a": "abc123", "field_b": 0, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "numeric-range", "variant": "above-max", "body": { "field_a": "abc123", "field_b": 105, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "numeric-range", "variant": "exclusive-bound", "body": { "field_a": "abc123", "field_b": 100, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_b", "category": "numeric-range", "variant": "multipleOf", "body": { "field_a": "abc123", "field_b": 23, "field_c": ["x"], "field_d": { "inner": "y" } } },
+        { "field": "field_c", "category": "array", "variant": "item-wrong-type", "body": { "field_a": "abc123", "field_b": 25, "field_c": [42], "field_d": { "inner": "y" } } },
+        { "field": "field_d", "category": "nested-object", "variant": "inner-required-key-absent", "body": { "field_a": "abc123", "field_b": 25, "field_c": ["x"], "field_d": {} } }
+      ]
+    },
+    "update_body": {
+      "valid": { "field_a": "abc123", "field_b": 25 },
+      "cases": [
+        { "field": "field_a", "category": "missing-required", "variant": "key-absent", "body": { "field_b": 25 } },
+        { "field": "field_a", "category": "missing-required", "variant": "key-present-null", "body": { "field_a": null, "field_b": 25 } },
+        { "field": "field_b", "category": "missing-required", "variant": "key-absent", "body": { "field_a": "abc123" } },
+        { "field": "field_b", "category": "missing-required", "variant": "key-present-null", "body": { "field_a": "abc123", "field_b": null } },
+        { "field": "field_a", "category": "wrong-type", "expected_type": "string", "body": { "field_a": 42, "field_b": 25 } },
+        { "field": "field_b", "category": "wrong-type", "expected_type": "integer", "body": { "field_a": "abc123", "field_b": "not_an_int" } },
+        { "field": "extra_field", "category": "extra", "body": { "field_a": "abc123", "field_b": 25, "unexpected_field": "x" } },
+        { "field": "field_a", "category": "string-length", "variant": "max-accepted", "length": 10, "body": { "field_a": "aaaaaaaaaa", "field_b": 25 } },
+        { "field": "field_a", "category": "string-length", "variant": "max-plus-1-rejected", "length": 11, "body": { "field_a": "aaaaaaaaaaa", "field_b": 25 } },
+        { "field": "field_a", "category": "string-length", "variant": "min-minus-1-rejected", "length": 2, "body": { "field_a": "aa", "field_b": 25 } },
+        { "field": "field_a", "category": "format", "pattern": "^[a-z0-9]+$", "body": { "field_a": "AB C!", "field_b": 25 } },
+        { "field": "field_b", "category": "numeric-range", "variant": "below-min", "body": { "field_a": "abc123", "field_b": 0 } },
+        { "field": "field_b", "category": "numeric-range", "variant": "above-max", "body": { "field_a": "abc123", "field_b": 105 } },
+        { "field": "field_b", "category": "numeric-range", "variant": "exclusive-bound", "body": { "field_a": "abc123", "field_b": 100 } },
+        { "field": "field_b", "category": "numeric-range", "variant": "multipleOf", "body": { "field_a": "abc123", "field_b": 23 } }
+      ]
+    }
+  },
+  "expected_class": {
+    "valid": "2xx",
+    "malformed": "4xx",
+    "also_accept": ["422"]
+  },
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "malformed_body_contract_fidelity",
+    "value": 1.0
+  }
+}

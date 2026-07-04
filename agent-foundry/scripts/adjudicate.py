@@ -40,8 +40,19 @@ WS = Path(os.environ.get("FORGE_WORKSPACE", str(Path(__file__).resolve().parents
 sys.path.insert(0, str(WS / "agents" / "common"))
 sys.path.insert(0, str(WS / "scripts"))
 
+import bugreport as BR  # noqa: E402  (materialiser: bug_paths, write_unverified_bug, indexes)
+import bugreport_spec  # noqa: E402,F401  (re-exported: deterministic classifier constants for reconcile/tests)
 import docreview  # noqa: E402  (run_cfg -> {cli_dir, reference_dir, doc_manifest})
 import docreview_spec  # noqa: E402  (load_corpus, grep_corpus — newest-first)
+
+# The materialiser reads its workspace/sandbox from module globals; bind them to this run's
+# workspace so bug_paths() writes the BugReport tree under WS (the single path source — G-PATHS).
+BR.WORKSPACE = WS
+BR.SANDBOX_ROOT = WS
+
+# The DummyJSON target is air-gapped (no [database]); unverified bugs capture the full
+# artifact set minus the db dump (HF22 threshold keyed on this).
+ADJUDICATE_DB_AVAILABLE = False
 
 CAP_PATH = WS / "data" / "target-capabilities.json"
 # Richer behavior corpus harvested from the live docs (project-root references/, OUTSIDE
@@ -314,6 +325,51 @@ def _next_bug_index(run_id: str) -> int:
     return len(list(BUG_DIR.glob(f"BUG-{run_id}-*.json"))) + 1
 
 
+def _ctx_from_row(row: dict) -> dict:
+    """The mismatch context handed to the materialiser (one bug's worth of signals)."""
+    return {
+        "agent": row.get("agent", ""),
+        "endpoint": row.get("endpoint", ""),
+        "scenario": row.get("scenario", ""),
+        "expected": row.get("expected", ""),
+        "observed": row.get("observed", ""),
+        "spec_path": row.get("spec_path", ""),
+        "stderr": row.get("stderr", ""),
+        "severity": row.get("severity") or severity(row),
+    }
+
+
+def materialize_new_tree(run_id: str, rows: list) -> dict:
+    """Phase-B materialisation over the FINAL adjudication rows (run after escalation so no
+    reclassified row leaves an orphan file — HF18). Writes:
+      * every missing-docs row -> an unverified bug under unverified_bugs/{category}/ and
+        stamps the row with unverified_bug_id + category (HF13);
+      * every BUG (verdict yes) row -> a verified mirror under verified_bugs/ (decision #10);
+      * the two SEPARATE indexes (HF16).
+    Report-only: nothing here touches CI membership or the exit code (HF15)."""
+    counters: dict = {}
+    unverified_entries: list = []
+    verified_entries: list = []
+    for row in rows:
+        if row.get("outcome") == "missing-docs":
+            report = BR.write_unverified_bug(run_id, _ctx_from_row(row), counters,
+                                             ADJUDICATE_DB_AVAILABLE, workspace=WS)
+            row["unverified_bug_id"] = report["bug_id"]
+            row["category"] = report["category"]
+            row["category_reason"] = report["category_reason"]
+            unverified_entries.append(report["_meta"]["index_entry"])
+        elif row.get("outcome") == "BUG":
+            sot = row.get("source_of_truth") or {
+                "file": None, "line": None, "text": row.get("documented_expected")}
+            ctx = dict(_ctx_from_row(row), source_of_truth=sot)
+            report = BR.write_verified_bug(run_id, ctx, counters, ADJUDICATE_DB_AVAILABLE, workspace=WS)
+            row["verified_report_path"] = report["_meta"]["report_path"]
+            verified_entries.append(report["_meta"]["index_entry"])
+    BR.write_unverified_index(run_id, unverified_entries, workspace=WS)
+    BR.write_verified_index(run_id, verified_entries, workspace=WS)
+    return {"unverified": len(unverified_entries), "verified": len(verified_entries)}
+
+
 def run(run_id: str, do_escalate: bool = False, escalate_limit: int = 40) -> dict:
     run_dir = WS / "results" / "runs" / run_id
     caps = load_caps()
@@ -364,20 +420,43 @@ def run(run_id: str, do_escalate: bool = False, escalate_limit: int = 40) -> dic
     counts.update(Counter(r["outcome"] for r in rows))
     bug_ids = [r["bug_id"] for r in rows if r["outcome"] == "BUG" and r.get("bug_id")]
 
+    # Phase-B materialisation of the NEW per-run/per-agent tree (unverified + verified mirror
+    # + the two indexes). Runs after escalation so a reclassified row never orphans a file.
+    tree_counts = materialize_new_tree(run_id, rows)
+
     ledger = {"run_id": run_id, "total_mismatches": len(mismatches),
-              "outcomes": counts, "escalation": escalation, "rows": rows}
+              "outcomes": counts, "escalation": escalation,
+              "unverified_tree": tree_counts, "rows": rows}
     (run_dir / "adjudication-ledger.json").write_text(json.dumps(ledger, indent=2))
 
-    # Bug index
+    # Bug index (legacy — dual-written for one release for readers of results/bug-reports/)
     BUG_DIR.mkdir(parents=True, exist_ok=True)
     (BUG_DIR / "index.json").write_text(json.dumps(
         {"run_id": run_id, "bug_ids": bug_ids, "count": len(bug_ids)}, indent=2))
 
-    # Phase-3 reconciliation (HF2/HF3/HF5/HF12)
+    # Phase-3 reconciliation (HF2/HF3/HF5/HF12) + unverified HF13-HF26
     recon = reconcile(run_id, run_dir, rows, bug_ids)
     ledger["reconciliation"] = recon
     (run_dir / "adjudication-ledger.json").write_text(json.dumps(ledger, indent=2))
     return ledger
+
+
+def _unverified_gate(run_id: str, rows: list) -> dict:
+    """HF13-HF26 over the new tree via the pure forge-gate evaluate core (single source of the
+    invariant logic — the gate and reconcile agree by construction)."""
+    gate_dir = WS / "agents" / "general" / "bug-reporter" / "forge-gate"
+    if str(gate_dir) not in sys.path:
+        sys.path.insert(0, str(gate_dir))
+    try:
+        import unverified_bug_gate as G  # noqa: E402
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "problems": [f"gate import failed: {exc}"], "checks": {}}
+    bp = BR.bug_paths(run_id, workspace=WS)
+    unv = json.loads(bp.unverified_index.read_text()) if bp.unverified_index.is_file() else {}
+    ver = json.loads(bp.verified_index.read_text()) if bp.verified_index.is_file() else {}
+    result = G.evaluate(rows, bp.tree, unv, ver, ADJUDICATE_DB_AVAILABLE)
+    return {"status": result.status, "problems": result.problems, "checks": result.checks,
+            "counts": result.counts}
 
 
 def reconcile(run_id: str, run_dir: Path, rows: list, bug_ids: list) -> dict:
@@ -394,8 +473,15 @@ def reconcile(run_id: str, run_dir: Path, rows: list, bug_ids: list) -> dict:
             problems.append(f"HF12: missing-docs not excluded from CI: {r.get('scenario')}")
         if r["outcome"] not in ("BUG", "EXPECTED-CORRECTED", "missing-docs", "ENV-LIMITED", "PASS"):
             problems.append(f"HF2: non-terminal outcome: {r.get('scenario')}")
+
+    # HF13-HF26: the unverified-bug tree, indexes, and report-only invariants.
+    unverified = _unverified_gate(run_id, rows)
+    if unverified.get("status") != "pass":
+        problems.extend(unverified.get("problems", []))
+
     return {"ok": not problems, "problems": problems,
-            "bug_rows": len(bug_rows), "bug_files": len(files)}
+            "bug_rows": len(bug_rows), "bug_files": len(files),
+            "unverified": unverified}
 
 
 def main() -> None:

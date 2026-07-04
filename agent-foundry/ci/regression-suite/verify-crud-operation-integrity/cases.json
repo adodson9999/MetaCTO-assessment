@@ -1,0 +1,128 @@
+[
+  {
+    "test_case_id": "TC-CRUD-001",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "GET /products returns a paginated product list (200)",
+    "method": "GET",
+    "path": "/products",
+    "query": {
+      "limit": 5
+    },
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; products is array; body has 'total'; len(products) <= 5."
+  },
+  {
+    "test_case_id": "TC-CRUD-002",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "GET /products/1 returns a single product with the expected shape (200)",
+    "method": "GET",
+    "path": "/products/1",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; id == 1; body has 'title'; body has 'price'."
+  },
+  {
+    "test_case_id": "TC-CRUD-003",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "POST /products/add echoes the new product with an id (201, simulated)",
+    "method": "POST",
+    "path": "/products/add",
+    "query": {},
+    "body": {
+      "title": "Forge Test Widget",
+      "price": 42,
+      "category": "groceries",
+      "stock": 7
+    },
+    "auth": null,
+    "expected_statuses": [
+      200,
+      201
+    ],
+    "expected_result": "status in [200, 201]; title == 'Forge Test Widget'; id is number."
+  },
+  {
+    "test_case_id": "TC-CRUD-005",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "PUT /products/1 echoes the changed field (200, simulated)",
+    "method": "PUT",
+    "path": "/products/1",
+    "query": {},
+    "body": {
+      "title": "Forge Updated Title"
+    },
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; id == 1; title == 'Forge Updated Title'."
+  },
+  {
+    "test_case_id": "TC-CRUD-006",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "DELETE /products/1 returns the product flagged isDeleted + deletedOn (200, simulated)",
+    "method": "DELETE",
+    "path": "/products/1",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; isDeleted == True; body has 'deletedOn'."
+  },
+  {
+    "test_case_id": "TC-CRUD-007",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "GET /products/99999 returns 404 with a clear message",
+    "method": "GET",
+    "path": "/products/99999",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      404
+    ],
+    "expected_result": "status == 404; message contains 'not found'."
+  },
+  {
+    "test_case_id": "TC-CRUD-008",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "PUT /products/99999 (nonexistent) returns 404",
+    "method": "PUT",
+    "path": "/products/99999",
+    "query": {},
+    "body": {
+      "title": "x"
+    },
+    "auth": null,
+    "expected_statuses": [
+      404,
+      400
+    ],
+    "expected_result": "status in [404, 400]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-CRUD-009",
+    "agent": "verify-crud-operation-integrity",
+    "title_summary": "DELETE /products/99999 (nonexistent) returns 404",
+    "method": "DELETE",
+    "path": "/products/99999",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      404,
+      400
+    ],
+    "expected_result": "status in [404, 400]; body has 'message'."
+  }
+]

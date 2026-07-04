@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""CrewAI authentication-flows testing agent.
+
+One CrewAI Agent (role/goal/backstory carry the system prompt) handles a
+single Task per auth scheme. CrewAI routes the model through LiteLLM, so the
+local Ollama backend works via an "ollama/<model>" string. Deterministic
+execution, recording, and emit are the shared harness's job (auth_harness.py).
+"""
+import os
+import re
+import sys
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import auth_harness  # noqa: E402
+from auth_prompt import user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "crewai"
+SPEC = backend_config.resolve(WS)
+SUBAGENT_MD = (
+    Path(__file__).resolve().parents[1]
+    / "subagent"
+    / "api-tester-test-authentication-flows.md"
+)
+
+
+def _system_prompt() -> str:
+    doc = os.environ.get("FORGE_SKILL_DOC")
+    if doc and Path(doc).exists():
+        return Path(doc).read_text().strip()
+    text = SUBAGENT_MD.read_text()
+    return re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL).strip()
+
+
+def _llm():
+    from crewai import LLM
+    if SPEC["native"]["kind"] == "anthropic":
+        return LLM(model=f"anthropic/{SPEC['native']['model']}", temperature=0)
+    return LLM(
+        model=f"ollama/{SPEC['native']['model']}",
+        base_url=SPEC["base_url"].replace("/v1", ""),
+        temperature=0,
+        response_format={"type": "json_object"},
+    )
+
+
+def main():
+    from crewai import Agent, Task, Crew
+
+    system = _system_prompt()
+    brief = auth_harness.scheme_brief()
+    worker = Agent(
+        role="API authentication-flows testing agent",
+        goal="Convert one API authentication scheme into a JSON flow-test plan.",
+        backstory=system,
+        llm=_llm(),
+        verbose=False,
+        allow_delegation=False,
+    )
+
+    def generate() -> dict:
+        task = Task(
+            description=user_message(brief),
+            agent=worker,
+            expected_output="A single JSON object with the authentication flow test plan.",
+        )
+        crew = Crew(agents=[worker], tasks=[task], verbose=False)
+        out = crew.kickoff()
+        return auth_harness.extract_json(str(out)) or {}
+
+    summary = auth_harness.run_auth_test(AGENT, generate)
+    print(
+        f"[{AGENT}] pass_rate={summary['auth_flow_pass_rate_pct']}% "
+        f"FAR={summary['false_acceptance_rate_pct']}% "
+        f"FRR={summary['false_rejection_rate_pct']}% "
+        f"executed={summary['executed_cases']}"
+    )
+
+
+if __name__ == "__main__":
+    main()

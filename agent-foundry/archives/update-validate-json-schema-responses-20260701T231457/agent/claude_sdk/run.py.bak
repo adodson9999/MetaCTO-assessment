@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK response-schema-validation agent.
+
+Standalone program mirroring the other three. Native Claude is used when the
+backend is claude-haiku; under the default air-gapped Ollama backend the SDK's
+cloud path is unavailable, so it falls back to the OpenAI-compatible local
+endpoint (Ollama /v1). Either way it elicits the valid request descriptor +
+documented-schema map; the shared harness sends/validates/records/emits.
+"""
+import asyncio
+import json
+import os
+import sys
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import schema_contract  # noqa: E402
+from schema_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native(brief: str) -> str:
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    chunks = []
+    async for msg in query(prompt=user_message(brief), options=opts):
+        chunks.append(getattr(msg, "content", str(msg)))
+    return "".join(map(str, chunks))
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        return json.loads(r.read())["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return asyncio.run(_native(brief))
+        except Exception:  # noqa: BLE001  -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(op: dict) -> dict:
+        brief = schema_contract.endpoint_brief(op)
+        return schema_contract.extract_json(_elicit(brief)) or {}
+
+    summary = schema_contract.run_schema_test(AGENT, generate)
+    rate = summary["schema_conformance_rate_pct"]
+    print(f"[{AGENT}] conformance_rate={'N/A' if rate is None else str(rate)+'%'} "
+          f"validated={summary['responses_validated']} "
+          f"covered={summary['endpoints_covered']}/{summary['endpoints_total']}")
+
+
+if __name__ == "__main__":
+    main()

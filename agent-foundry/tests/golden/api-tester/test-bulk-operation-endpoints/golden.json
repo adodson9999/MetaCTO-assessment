@@ -1,0 +1,284 @@
+{
+  "agent": "api-tester-test-bulk-operation-endpoints",
+  "lane": "bulk-batch-operations",
+  "endpoint": {
+    "role": "bulk_endpoint",
+    "method": "POST",
+    "max_batch_size": "[MAX]"
+  },
+  "item_template": {
+    "role": "batch_item",
+    "index_literal": "[N]",
+    "required_fields": "[REQUIRED_FIELDS]",
+    "shape": "[N]"
+  },
+  "cases": [
+    {
+      "name": "all_valid",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "all_valid_batch",
+        "size": "[MAX]"
+      },
+      "primary": {
+        "per_item_class": "2xx",
+        "expected_db_delta": "batch_size"
+      },
+      "also_accept": [
+        "200_per_item_success_report",
+        "201"
+      ],
+      "steps": [
+        "build a batch of [N] valid items indexed [0..batch_size-1] from the item template",
+        "record the pre-count of the target collection",
+        "POST the batch to the bulk endpoint",
+        "assert each item [N] returned 2xx",
+        "assert post-count minus pre-count equals the batch size"
+      ]
+    },
+    {
+      "name": "mixed_207",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "mixed_batch",
+        "defects": [
+          {
+            "index": "[i]",
+            "defect": "missing_required"
+          },
+          {
+            "index": "[j]",
+            "defect": "wrong_type"
+          }
+        ]
+      },
+      "primary": {
+        "overall_class": "207",
+        "valid_item_class": "2xx",
+        "invalid_item_class": "400",
+        "offending_field": "named_per_invalid_item",
+        "expected_db_delta": "valid_count"
+      },
+      "also_accept": [
+        "200_envelope_per_item_status"
+      ],
+      "steps": [
+        "build the batch with valid items plus one missing-required item [i] and one wrong-type item [j]",
+        "record the pre-count",
+        "POST the batch to the bulk endpoint",
+        "assert the overall response is 207 Multi-Status",
+        "assert item [i] returned 400 naming the offending (missing required) field",
+        "assert item [j] returned 400 naming the offending (wrong type) field",
+        "assert the valid items each returned 2xx",
+        "assert post-count minus pre-count equals the valid count"
+      ]
+    },
+    {
+      "name": "all_invalid",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "all_invalid_batch"
+      },
+      "primary": {
+        "per_item_class": "400",
+        "expected_db_delta": 0
+      },
+      "also_accept": [
+        "400",
+        "422"
+      ],
+      "steps": [
+        "build a batch where every item [N] is malformed",
+        "record the pre-count",
+        "POST the batch to the bulk endpoint",
+        "assert each item [N] returned 400 or the whole batch was rejected top-level",
+        "assert post-count minus pre-count equals 0"
+      ]
+    },
+    {
+      "name": "empty",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "empty_batch",
+        "body": []
+      },
+      "primary": {
+        "documented_class": "empty_behavior",
+        "expected_db_delta": 0
+      },
+      "also_accept": [
+        "200",
+        "204",
+        "400"
+      ],
+      "steps": [
+        "POST an empty batch [] to the bulk endpoint",
+        "assert the documented empty-batch status",
+        "assert post-count minus pre-count equals 0"
+      ]
+    },
+    {
+      "name": "single_item",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "single_item_batch",
+        "size": 1
+      },
+      "primary": {
+        "item_class": "2xx",
+        "expected_db_delta": 1
+      },
+      "also_accept": [
+        "201",
+        "200_envelope"
+      ],
+      "steps": [
+        "build a one-element batch containing item [0] from the item template",
+        "record the pre-count",
+        "POST the one-element batch to the bulk endpoint",
+        "assert item [0] returned 2xx",
+        "assert post-count minus pre-count equals 1"
+      ]
+    },
+    {
+      "name": "duplicate_within_batch",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "duplicate_pair",
+        "indices": [
+          "[i]",
+          "[j]"
+        ]
+      },
+      "primary": {
+        "one_item_class": "2xx",
+        "other_item_class": "409",
+        "expected_db_delta": 1
+      },
+      "also_accept": [
+        "both_409_wholesale_reject"
+      ],
+      "steps": [
+        "build a batch containing a duplicate pair [i] and [j] that violate the uniqueness rule against each other",
+        "record the pre-count",
+        "POST the batch to the bulk endpoint",
+        "assert exactly one of the pair returned 2xx and the other returned 409 Conflict",
+        "assert the net delta for the pair is 1"
+      ]
+    },
+    {
+      "name": "oversize_reject",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "oversize_batch",
+        "size": "[MAX]+1"
+      },
+      "primary": {
+        "reject_class": "413",
+        "expected_db_delta": 0
+      },
+      "also_accept": [
+        "400"
+      ],
+      "steps": [
+        "build a batch of max+1 items exceeding the configured maximum batch size",
+        "record the pre-count",
+        "POST the batch to the bulk endpoint",
+        "assert the batch is rejected naming the size limit",
+        "assert post-count minus pre-count equals 0"
+      ]
+    },
+    {
+      "name": "atomicity_rollback",
+      "endpoint_role": "bulk_endpoint",
+      "method": "POST",
+      "conditional": "if_transactional_mode_documented",
+      "recipe": {
+        "kind": "atomic_batch_one_invalid",
+        "invalid_index": "[k]"
+      },
+      "primary": {
+        "overall_class": "top_level_failure",
+        "expected_db_delta": 0
+      },
+      "also_accept": [
+        "documented_atomic_failure_status"
+      ],
+      "steps": [
+        "assert or enable the documented transactional (atomic) mode",
+        "build a batch of valid items plus one invalid item [k]",
+        "record the pre-count",
+        "POST the batch to the bulk endpoint",
+        "assert the whole batch failed atomically with no partial writes",
+        "assert post-count minus pre-count equals 0"
+      ]
+    },
+    {
+      "name": "bulk_update",
+      "endpoint_role": "bulk_update_endpoint",
+      "method": "POST",
+      "conditional": "if_supported",
+      "recipe": {
+        "kind": "bulk_update_batch",
+        "indices": {
+          "valid": "[i]",
+          "invalid": "[j]"
+        }
+      },
+      "primary": {
+        "valid_item_class": "2xx",
+        "invalid_item_class": "per_item_error",
+        "expected_db_delta": "only_valid_updates_applied"
+      },
+      "also_accept": [
+        "207",
+        "200_envelope"
+      ],
+      "steps": [
+        "build an update batch with valid items and invalid items at known indices",
+        "record the pre-state of the affected records",
+        "POST the update batch to the bulk update endpoint",
+        "assert per-item statuses for valid and invalid items",
+        "assert only the valid items changed state and invalid items were unchanged"
+      ]
+    },
+    {
+      "name": "bulk_delete",
+      "endpoint_role": "bulk_delete_endpoint",
+      "method": "POST",
+      "conditional": "if_supported",
+      "recipe": {
+        "kind": "bulk_delete_batch",
+        "ids": "mixed_existing_and_missing"
+      },
+      "primary": {
+        "valid_id_class": "2xx",
+        "missing_id_class": "per_item_error",
+        "expected_db_delta": "count_deleted"
+      },
+      "also_accept": [
+        "207",
+        "200_envelope"
+      ],
+      "steps": [
+        "build a delete batch mixing existing and non-existing ids at known indices",
+        "record the pre-count",
+        "POST the delete batch to the bulk delete endpoint",
+        "assert per-item statuses for existing (deleted) and missing (reported) ids",
+        "assert post-count minus pre-count equals the count of successfully deleted ids"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "bulk_operation_fidelity",
+    "value": 1.0
+  }
+}

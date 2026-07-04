@@ -24,11 +24,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 AGENTS = {
-    "langgraph": ["agents/clarity/langgraph/run.py"],
-    "crewai": ["agents/clarity/crewai/run.py"],
-    "claude_sdk": ["agents/clarity/claude_sdk/run.py"],
+    "langgraph": ["agents/api-tester/verify-error-message-clarity/langgraph/run.py"],
+    "crewai": ["agents/api-tester/verify-error-message-clarity/crewai/run.py"],
+    "claude_sdk": ["agents/api-tester/verify-error-message-clarity/claude_sdk/run.py"],
     "api-tester-verify-error-message-clarity":
-        ["agents/clarity/api-tester-verify-error-message-clarity/run.py"],
+        ["agents/api-tester/verify-error-message-clarity/subagent/run.py"],
 }
 
 

@@ -1,0 +1,85 @@
+# Update Spec — verify-third-party-oauth-integration
+
+## User prompt
+Expand this agent's lane to the COMPLETE third-party OAuth2 authorization-code-flow bug surface — the five happy-path stages plus the full RFC 9700 / RFC 6819 security-negative matrix (state CSRF & fixation, open-redirect/redirect_uri tampering, code replay/expiry/injection, client-secret & PKCE enforcement, scope tampering/upgrade, mix-up, and denied consent) — while remaining a pure planner that emits ONE JSON object with a `cases` array and nothing else.
+
+PRESERVE ALL EXISTING INVARIANTS. Keep emitting exactly one JSON object; keep the top-level shape (`agent`, `lane`, `cases`, `out_of_scope`, `baseline`). Every case keeps this agent's own schema exactly: `role`, `endpoint_role`, `method`, `stage_kind` (an object with `kind` from the CLOSED vocabulary, plus optional flags like `requires`), `expected_class`, `asserts` (a granular assertion-key list), `also_accept`. Per the contract-oracle guardrail already in this prompt, every case MUST carry `expected_by_contract` (read from `agent-foundry/references/contract-oracle.md` — Validation/AuthN rows: malformed/invalid → 4xx, never 5xx; missing/invalid credential → 401 — never from provider docs) and, only when docs differ, `expected_by_docs`. Keep all references feature-agnostic and role-only — never name a URL/path/host/provider/resource/feature; echo runtime-provided identifiers, endpoint roles, field names, and the minimum state length byte-for-byte. Emit staged-flow RECIPES only — never a real authorization code, state, token, secret, PKCE verifier, expiry, or profile field, and no network call; the deterministic harness drives the real flow and records real responses, so never state a concrete numeric status/redirect/token. Keep the self-awareness / code-review clause (≥85, loop until it does) and the fail-closed out-of-lane sentinel naming the owning sibling in `out_of_scope`. Explicitly continue to DEFER first-party credential validity/login/token-lifecycle to `api-tester-test-authentication-flows`.
+
+Keep the existing conditional rule for PKCE (emit the PKCE case only when PKCE is documented) and GENERALIZE it: any case whose `stage_kind.requires` is not satisfied by the runtime input is omitted and fails the count check rather than fabricating that surface. Remove the hard "exactly eleven cases / never a twelfth / never omit one" wording and replace with: "emit the full enumeration below; the canonical count is NINETEEN (19) cases, reduced by any case whose `requires` runtime input is absent." Preserve all 11 existing cases unchanged. Then ADD the following 8 cases, grouped by bug class. Every new `stage_kind.kind` MUST be added to the closed vocabulary. Each new case keeps the `asserts` list style.
+
+### GROUP A — state CSRF hardening & session fixation (RFC 6819 §5.3.5; RFC 9700 §4.7). endpoint_role = callback_endpoint / authorize_endpoint.
+- role `missing_state`, endpoint_role `authorize_endpoint`, method GET, stage_kind `{ "kind": "authorize_without_state" }`, expected_class "400", also_accept ["302","401"], asserts `["rejected_or_no_flow","no_code_issued"]` — an authorize request with NO `state`; a compliant AS/client must not proceed without CSRF binding.
+- role `state_fixation`, endpoint_role `callback_endpoint`, method GET, stage_kind `{ "kind": "attacker_fixed_state" }`, expected_class "400", also_accept ["401"], asserts `["rejected","no_token_issued","state_bound_to_session"]` — a callback whose `state` is an attacker-planted fixed value not bound to the victim session; must be rejected.
+- role `short_state_entropy`, endpoint_role `authorize_endpoint`, method GET, stage_kind `{ "kind": "state_below_min_length" }`, expected_class "400", also_accept ["302"], asserts `["rejected_or_regenerated","state_present_min_length"]` — a `state` shorter than the runtime-provided minimum length; must be rejected or replaced with a compliant-length state.
+
+### GROUP B — open-redirect / redirect_uri tampering beyond exact-match (RFC 9700 §4.1; RFC 6819 §5.2.3.5). endpoint_role = authorize_endpoint, method GET, expected_class "400", also_accept ["401"], asserts `["rejected","no_code_issued"]`.
+- role `redirect_uri_open_redirect`, stage_kind `{ "kind": "redirect_uri_open_redirect_suffix" }` — a `redirect_uri` that is the registered host plus an attacker-controlled path/subdomain/`@`-userinfo/query trick (partial-match/open-redirect); must be rejected by exact-match, no code leaked.
+- role `redirect_uri_scheme_downgrade`, stage_kind `{ "kind": "redirect_uri_scheme_or_localhost_variant" }` — a `redirect_uri` downgraded to `http`/a differing port/`localhost` variant of the registered one; must be rejected.
+
+### GROUP C — code injection & token-endpoint hardening (RFC 9700 §4.5 authorization-code injection; RFC 6749 §10.6). endpoint_role = token_endpoint, method POST.
+- role `code_injection_cross_client`, stage_kind `{ "kind": "authorization_code_injection", "requires": "second_client_context" }`, expected_class "400", also_accept ["401"], asserts `["rejected","no_token_issued","code_bound_to_client_and_pkce"]` — a valid code minted for one client/redirect_uri presented by a different client (code not bound); must be rejected. (Emit only when a second-client context is documented; PKCE-bound codes are the mitigation.)
+
+### GROUP D — scope tampering / privilege upgrade (RFC 6749 §3.3; RFC 9700 scope handling). endpoint_role = token_endpoint, method POST.
+- role `scope_upgrade`, stage_kind `{ "kind": "scope_escalation_beyond_grant" }`, expected_class "400", also_accept ["200","401"], asserts `["granted_scope_not_exceeded","no_extra_scope_issued"]` — the token request asks for a broader scope than the user consented to; the issued token's scope MUST NOT exceed the consented grant (assert downgrade/rejection, never silent upgrade).
+
+### GROUP E — mix-up defense (RFC 9700 §4.4). endpoint_role = callback_endpoint, method GET.
+- role `mixup_wrong_issuer`, stage_kind `{ "kind": "mixup_issuer_mismatch", "requires": "iss_or_multi_as_documented" }`, expected_class "400", also_accept ["401"], asserts `["rejected","issuer_verified","no_token_issued"]` — a callback whose `iss`/authorization-server identity does not match where the flow began; must be rejected via `iss`/distinct-redirect-URI defense. (Emit only when `iss` or a multi-AS context is documented.)
+
+New total: 19 cases (11 preserved + 8 added). GROUP C's `code_injection_cross_client` and GROUP E's `mixup_wrong_issuer` (and the existing `pkce_mismatch`) are `requires`-gated; when their runtime input is absent, omit exactly those cases and fail the count check rather than fabricating the surface.
+
+Closed stage_kind vocabulary AFTER this change (kinds): authorize_redirect, callback_code_receipt, code_for_token_exchange, bearer_userinfo, refresh_token_exchange, mismatched_state, unregistered_redirect_uri, replayed_or_expired_code, wrong_client_secret, pkce_verifier_mismatch, denied_consent_access_denied, authorize_without_state, attacker_fixed_state, state_below_min_length, redirect_uri_open_redirect_suffix, redirect_uri_scheme_or_localhost_variant, authorization_code_injection, scope_escalation_beyond_grant, mixup_issuer_mismatch.
+
+De-dup: every added case is a third-party authorization-code-flow STAGE probe — none tests a first-party login/token-lifecycle credential (that is `test-authentication-flows`), a protected-resource RBAC/BOLA decision (that is `check-authorization-rules`), or a network-origin allowlist decision (that is `test-ip-allowlist-enforcement`). Per the map, non-OAuth open redirect belongs to `verify-response-status-codes`, but the redirect_uri open-redirect here is the OAuth-specific `redirect_uri` exfiltration vector, which the map assigns to THIS owner ("Open redirect … unless OAuth → verify-third-party-oauth-integration").
+
+## ADDENDUM (v2 — exhaustive test-case + reporting standard)
+When running update-agent for this agent, pass the Change prompt above AND this ADDENDUM together as a single change prompt.
+
+This agent is a pure, exhaustive TEST-CASE GENERATOR and makes NO bug judgement. It fills Expected Result (the definition of correct behavior); it leaves `actual_result` = "TO BE FILLED DURING EXECUTION" and `status` = `Not Executed`; it emits NO deviations/verdict/pass-fail — a separate judge agent decides bugs. Governed by 00-AUTHORING-STANDARD-exhaustive-testcases.md.
+
+Test Case ID prefix: TC-OAUTH-NNN (zero-padded, sequential, stable).
+
+Render EVERY case — the existing cases AND all cases added by the Change prompt above — in the human-readable schema (test_case_id, title, description, category, feature_under_test, preconditions, test_data, test_steps, expected_result, actual_result, status, postconditions, severity_hint, references, tags), preserving the agent's existing machine fields under a `machine` sub-key of each case. Output stays ONE JSON object with a `test_cases[]` array.
+
+### Exhaustive in-lane coverage checklist (OAUTH — third-party authorization-code flow stages)
+
+**happy** — the five valid authorization-code-flow stages complete end to end:
+- Authorize redirect issued with a valid `state` and registered `redirect_uri`.
+- Callback receives the authorization code bound to the originating session/state.
+- Code-for-token exchange with correct client credentials returns a token.
+- Bearer token retrieves userinfo/profile successfully.
+- Refresh-token exchange mints a fresh access token.
+
+**negative** — each malformed/invalid flow input rejected (4xx, never 5xx):
+- Mismatched `state` at callback rejected, no token issued.
+- Unregistered / exact-mismatch `redirect_uri` rejected, no code issued.
+- Replayed or expired authorization code rejected, no token issued.
+- Wrong client_secret at the token endpoint rejected.
+- Denied consent (`access_denied`) surfaced as an error, no code/token issued.
+- PKCE verifier mismatch rejected, when PKCE is documented.
+
+**boundary** — the exact security thresholds around state and redirect matching:
+- `state` exactly at vs just-below the runtime-provided minimum length — rejected or regenerated to compliant length.
+- Authorization code at vs just-past its expiry window (just-valid vs just-expired).
+- Requested scope exactly equal to vs one increment beyond the consented grant — issued scope must not exceed consent.
+- `redirect_uri` exact registered match vs a single-character/suffix deviation from it.
+
+**edge** — the RFC 9700/6819 hardening and normalization vectors:
+- Authorize request with NO `state` — must not proceed without CSRF binding.
+- Attacker-fixed `state` not bound to the victim session (fixation) — rejected.
+- `redirect_uri` = registered host plus attacker path/subdomain/`@`-userinfo/query trick (open-redirect/partial-match) — rejected, no code leaked.
+- `redirect_uri` scheme downgrade to `http` / differing port / `localhost` variant — rejected.
+- Cross-client authorization-code injection (code minted for one client presented by another) — rejected, when a second-client context is documented.
+- AS mix-up: callback whose `iss`/AS identity does not match flow origin — rejected, when `iss`/multi-AS context is documented.
+
+**broad** — the full authorization-code security-negative matrix across stages:
+- Every flow stage (authorize, callback, token, userinfo, refresh) covered on both the happy and applicable negative paths.
+- Every state-attack class (absent, mismatched, fixed, short-entropy) enumerated.
+- Every redirect_uri class (unregistered, open-redirect suffix, scheme/port/localhost downgrade) enumerated.
+- Scope handling (upgrade beyond grant) and code-binding (injection) covered where runtime `requires` inputs are supplied.
+- Repeat each case the configured soak count; a varying result is a `flaky` observation for the judge (not a verdict here).
+- Cite siblings for adjacent concerns: first-party login/token-lifecycle credentials → test-authentication-flows; protected-resource RBAC/BOLA → check-authorization-rules; network-origin allow/deny → test-ip-allowlist-enforcement; non-OAuth open redirect (3xx Location) → verify-response-status-codes.
+
+Coverage is exhaustive in-lane but MECE across agents — no duplicate cases within this agent or shared with a sibling.
+
+## Tradeoff authorized
+False

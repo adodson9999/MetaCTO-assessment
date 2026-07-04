@@ -9,3 +9,5 @@
 - [2026-06-29T18:03:42.626696+00:00] run=2026-06-29_17-10-02 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
 - [2026-06-29T20:20:43.969145+00:00] run=2026-06-29_19-27-43 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
 - [2026-06-29T22:51:56.929608+00:00] run=2026-06-29_22-00-33 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-07-02T02:12:00.285910+00:00] run=RUN-20260702-000138 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)
+- [2026-07-03T23:04:17.910028+00:00] run=RUN-20260703-181017 caching-headers-test run: compliance_rate=0.0% (0/6 cacheable endpoints) over 6 collections (66 scenarios)

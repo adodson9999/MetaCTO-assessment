@@ -1,0 +1,14 @@
+{
+  "task": "api-tester / verify-content-type-negotiation",
+  "metric_name": "content_type_negotiation_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (endpoint x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (probe not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (14 accept endpoints x 5 + 22 consumes endpoints x 3 = 136).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-content-type-negotiation/gold.json",
+  "headline_metric": "content_type_negotiation_accuracy_pct",
+  "scenarios_total": 136,
+  "rationale": "All four agents hit the same local DummyJSON, so the raw Content-Type Negotiation Accuracy (how many scenarios the API satisfies under the idealized RFC-7231 negotiation contract) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct probe matrix per endpoint kind (the five Accept-header probes with the right media types in the right labels for an 'accept' endpoint; the three request Content-Type probes for a 'consumes' endpoint) and faithfully exercise every scenario. The headline content_type_negotiation_accuracy_pct is still emitted by every agent as the task's QA finding: empirically ~36.76% — DummyJSON ignores the Accept header (every request returns 200 + application/json, so application/xml and text/csv negotiation fail and text/html returns 200 instead of 406) and ignores the request Content-Type header (an application/xml or text/plain body is accepted with 200/201/400, never 415).",
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any probe mis-constructed so the observed token diverges from gold)"
+}

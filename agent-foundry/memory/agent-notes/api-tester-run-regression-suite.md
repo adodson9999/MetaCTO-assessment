@@ -10,3 +10,7 @@
 - [2026-06-29T20:17:10.122446+00:00] run=2026-06-29_19-27-43 run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
 - [2026-06-29T21:38:32.213125+00:00] run=inspect2-1782769012 run-regression-suite run: fidelity=92.86% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
 - [2026-06-29T22:48:22.868170+00:00] run=2026-06-29_22-00-33 run-regression-suite run: fidelity=100.0% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T01:56:28.815293+00:00] run=RUN-20260702-000138 run-regression-suite run: fidelity=28.57% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T16:39:21.330033+00:00] run=20260702T163709-c74065 run-regression-suite run: fidelity=32.14% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-02T16:43:07.602133+00:00] run=20260702T164138-8bb9b9 run-regression-suite run: fidelity=28.57% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200
+- [2026-07-03T22:31:17.218090+00:00] run=RUN-20260703-181017 run-regression-suite run: fidelity=7.14% over 4 build pairs (28 fields); builds to block=['ci-1043', 'gh-2002', 'rel-10']; health=200

@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK caching-headers testing agent.
+
+Standalone program mirroring the other three. Native Claude is used when the backend
+is set to claude-haiku; under the air-gapped Ollama backend the SDK's cloud path is
+unavailable, so it falls back to the OpenAI-compatible local endpoint (Ollama /v1).
+Either way it elicits the caching test plan; the shared harness executes it (the
+GET/conditional/PUT/re-GET/stale/mutation sequence, header capture, scoring) and
+records/emits.
+"""
+import json
+import os
+import sys
+import asyncio
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import caching  # noqa: E402
+from caching_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+async def _native(brief: str) -> str:
+    """Elicit via the Claude Agent SDK. The SDK yields message objects; the plan text
+    lives in AssistantMessage TextBlocks and is re-assembled in the final ResultMessage.
+    Prefer ResultMessage.result, else concatenate TextBlock texts."""
+    from claude_agent_sdk import query, ClaudeAgentOptions
+    opts = ClaudeAgentOptions(system_prompt=APPROVED_PROMPT, model=SPEC["native"]["model"])
+    texts, result = [], None
+    async for msg in query(prompt=user_message(brief), options=opts):
+        content = getattr(msg, "content", None)
+        if isinstance(content, list):
+            for block in content:
+                t = getattr(block, "text", None)
+                if t:
+                    texts.append(t)
+        r = getattr(msg, "result", None)
+        if r:
+            result = r
+    return result or "".join(texts)
+
+
+def _direct_anthropic(brief: str) -> str:
+    """Fallback that still uses Claude (the native backend), via the Anthropic SDK
+    directly — used only if the Agent SDK path yields nothing parseable."""
+    import anthropic
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model=SPEC["native"]["model"], max_tokens=1024, temperature=0,
+        system=APPROVED_PROMPT,
+        messages=[{"role": "user", "content": user_message(brief)}])
+    return "".join(b.text for b in msg.content if getattr(b, "type", None) == "text")
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            out = asyncio.run(_native(brief))
+            if caching.extract_json(out):
+                return out
+        except Exception:  # noqa  -- Agent SDK unavailable; fall through
+            pass
+        try:
+            return _direct_anthropic(brief)  # still Claude, just the plain SDK
+        except Exception:  # noqa
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(cfg: dict) -> dict:
+        brief = caching.collection_brief(cfg)
+        return caching.extract_json(_elicit(brief)) or {}
+
+    summary = caching.run_caching_test(AGENT, generate)
+    print(f"[{AGENT}] compliance_rate={summary['caching_header_compliance_rate_pct']}% "
+          f"correctness={summary['caching_correctness_rate_pct']}% "
+          f"scenarios={summary['scenarios_api_correct']}/{summary['scenarios_total']}")
+
+
+if __name__ == "__main__":
+    main()

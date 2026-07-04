@@ -27,6 +27,10 @@ SECTIONS = ("TestCases", "BugReport")
 FILES = set(GOLD["agent_dir_files"])
 POSTMAN_FILES = set(GOLD.get("postman_files", ["collection.json", "environment.json"]))
 IGNORE = set(GOLD["ignored"])
+# The unverified-bug feature adds, under BugReport/, two run-level indexes and — per finding
+# agent — verified_bugs/ + unverified_bugs/ subtrees (alongside or instead of cases.json/cases.md).
+BUG_INDEXES = {"verified-index.json", "unverified-index.json"}
+BUG_SUBDIRS = {"verified_bugs", "unverified_bugs"}
 
 
 def validate(results: Path) -> list[str]:
@@ -63,11 +67,21 @@ def validate(results: Path) -> list[str]:
                 for agent in entry.iterdir():
                     if agent.name in IGNORE:
                         continue
+                    # the two run-level bug indexes live directly under BugReport/
+                    if entry.name == "BugReport" and agent.is_file() and agent.name in BUG_INDEXES:
+                        continue
                     if not agent.is_dir():
                         bad.append(f"{entry.name}/{agent.name}: loose file (must be <agent>/ dir)")
                         continue
                     names = {f.name for f in agent.iterdir() if f.name not in IGNORE}
-                    if names != FILES:
+                    if entry.name == "BugReport" and (names & BUG_SUBDIRS):
+                        # a finding-agent dir may hold verified_bugs/ + unverified_bugs/ alone or
+                        # alongside the cases.json/cases.md pair.
+                        core = names - BUG_SUBDIRS
+                        if not core.issubset(FILES):
+                            bad.append(f"{entry.name}/{agent.name}: files {sorted(core)} "
+                                       f"not a subset of {sorted(FILES)} (+ bug subdirs)")
+                    elif names != FILES:
                         bad.append(f"{entry.name}/{agent.name}: files {sorted(names)} != {sorted(FILES)}")
     return bad
 
@@ -93,6 +107,36 @@ def test_validator_on_synthetic_layouts():
         v = validate(r)
         assert not any("runs" in x for x in v) and not any("code-review" in x for x in v), f"infra must be tolerated: {v}"
         assert any("verify-sorting-behavior" in x for x in v) and any("bad-agent" in x for x in v), v
+
+
+def test_new_bug_tree_is_tolerated():
+    """The unverified-bug tree (verified_bugs/ + unverified_bugs/{category}/ + the two indexes
+    under BugReport/) must not be flagged as a layout violation."""
+    with tempfile.TemporaryDirectory() as td:
+        r = Path(td) / "results"
+        run = r / "2026-07-01" / "12-00-00"
+        # a normal TestCases agent
+        tc = run / "TestCases" / "verify-sorting-behavior"
+        tc.mkdir(parents=True)
+        (tc / "cases.json").write_text("[]")
+        (tc / "cases.md").write_text("# x")
+        # BugReport with the new tree: a finding agent with both bug subtrees + the run indexes
+        br = run / "BugReport"
+        vb = br / "test-authentication-flows" / "verified_bugs"
+        uv = br / "test-authentication-flows" / "unverified_bugs" / "vulnerability"
+        vb.mkdir(parents=True)
+        uv.mkdir(parents=True)
+        (vb / "BUG-RUN-1-0001.json").write_text("{}")
+        (uv / "VULN-RUN-1-0001.json").write_text("{}")
+        (br / "verified-index.json").write_text("{}")
+        (br / "unverified-index.json").write_text("{}")
+        assert validate(r) == [], f"new bug tree should pass: {validate(r)}"
+
+        # a genuinely broken agent dir under BugReport (unexpected loose file) is still flagged
+        bad = br / "bad-agent"
+        bad.mkdir()
+        (bad / "notes.txt").write_text("x")
+        assert any("bad-agent" in x for x in validate(r))
 
 
 def test_current_results_layout():

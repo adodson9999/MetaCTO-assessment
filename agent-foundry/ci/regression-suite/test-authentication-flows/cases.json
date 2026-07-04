@@ -1,0 +1,162 @@
+[
+  {
+    "test_case_id": "TC-AUTH-001",
+    "agent": "test-authentication-flows",
+    "title_summary": "Login with valid credentials returns 200 + accessToken + refreshToken",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": {
+      "username": "emilys",
+      "password": "emilyspass"
+    },
+    "auth": null,
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; body has 'accessToken'; body has 'refreshToken'; username == 'emilys'."
+  },
+  {
+    "test_case_id": "TC-AUTH-002",
+    "agent": "test-authentication-flows",
+    "title_summary": "Login with wrong password is rejected (400)",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": {
+      "username": "emilys",
+      "password": "wrong-password"
+    },
+    "auth": null,
+    "expected_statuses": [
+      400,
+      401
+    ],
+    "expected_result": "status in [400, 401]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-AUTH-003",
+    "agent": "test-authentication-flows",
+    "title_summary": "Login with unknown username is rejected (400)",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": {
+      "username": "no-such-user-zzz",
+      "password": "whatever"
+    },
+    "auth": null,
+    "expected_statuses": [
+      400,
+      401
+    ],
+    "expected_result": "status in [400, 401]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-AUTH-004",
+    "agent": "test-authentication-flows",
+    "title_summary": "Login with missing credentials is rejected (400)",
+    "method": "POST",
+    "path": "/auth/login",
+    "query": {},
+    "body": {},
+    "auth": null,
+    "expected_statuses": [
+      400,
+      401
+    ],
+    "expected_result": "status in [400, 401]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-AUTH-005",
+    "agent": "test-authentication-flows",
+    "title_summary": "GET /auth/me with a valid Bearer token returns the current user (200)",
+    "method": "GET",
+    "path": "/auth/me",
+    "query": {},
+    "body": null,
+    "auth": "bearer",
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; username == 'emilys'; body has 'email'."
+  },
+  {
+    "test_case_id": "TC-AUTH-006",
+    "agent": "test-authentication-flows",
+    "title_summary": "GET /auth/me without a token is rejected (401/403)",
+    "method": "GET",
+    "path": "/auth/me",
+    "query": {},
+    "body": null,
+    "auth": null,
+    "expected_statuses": [
+      401,
+      403
+    ],
+    "expected_result": "status in [401, 403]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-AUTH-008",
+    "agent": "test-authentication-flows",
+    "title_summary": "GET /auth/me with an expired token is rejected (401/403)",
+    "method": "GET",
+    "path": "/auth/me",
+    "query": {},
+    "body": null,
+    "auth": "expired",
+    "expected_statuses": [
+      401,
+      403
+    ],
+    "expected_result": "status in [401, 403]; body has 'message'."
+  },
+  {
+    "test_case_id": "TC-AUTH-009",
+    "agent": "test-authentication-flows",
+    "title_summary": "GET /auth/me after logout (revoked) \u2014 JWT is stateless, so behaviour is a coverage gap",
+    "method": "GET",
+    "path": "/auth/me",
+    "query": {},
+    "body": null,
+    "auth": "revoked",
+    "expected_statuses": [
+      200,
+      401,
+      403
+    ],
+    "expected_result": "status in [200, 401, 403]."
+  },
+  {
+    "test_case_id": "TC-AUTH-010",
+    "agent": "test-authentication-flows",
+    "title_summary": "POST /auth/refresh with a valid refreshToken mints a new accessToken (200)",
+    "method": "POST",
+    "path": "/auth/refresh",
+    "query": {},
+    "body": {
+      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3ODMxODQ5MDMsImV4cCI6MTc4NTc3NjkwM30.Uw2v7NlJXf7SGeFwNjIEjJ3E2eN7Pb8hElIqnd3xqMA"
+    },
+    "auth": "refresh",
+    "expected_statuses": [
+      200
+    ],
+    "expected_result": "status == 200; body has 'accessToken'; body has 'refreshToken'."
+  },
+  {
+    "test_case_id": "TC-AUTH-011",
+    "agent": "test-authentication-flows",
+    "title_summary": "POST /auth/refresh without a refreshToken is rejected (401/403)",
+    "method": "POST",
+    "path": "/auth/refresh",
+    "query": {},
+    "body": {},
+    "auth": null,
+    "expected_statuses": [
+      400,
+      401,
+      403
+    ],
+    "expected_result": "status in [400, 401, 403]; body has 'message'."
+  }
+]

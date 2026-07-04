@@ -2,52 +2,217 @@
   "_doc": "Declares which capabilities the LOCAL DummyJSON target (the system under test) actually supports. The guardrail layer uses this to classify an agent's low score as ENV-LIMITED (the probed feature is absent on the target) versus a real FAIL or an EMPTY agent output. This file is AGENT-SIDE: it never modifies the DummyJSON app; it only tells the harness how to interpret results so absent-feature 0%s stop masquerading as bugs or as agent failures.",
   "target": "http://localhost:8899",
   "capabilities": {
-    "correlation_id_echo":      {"supported": false, "env_dependent": false, "reason": "Clone does not echo X-Correlation-ID in responses."},
-    "downstream_services":      {"supported": false, "env_dependent": false, "reason": "No downstream/microservice tracing exists behind the clone."},
-    "api_request_logging":      {"supported": false, "env_dependent": true,  "env": "LOG_ENABLED", "reason": "Log-presence assertions require LOG_ENABLED=true at node boot; run launched LOG_ENABLED=false."},
-    "audit_log":                {"supported": false, "env_dependent": false, "reason": "No audit-log subsystem in the clone."},
-    "webhook_delivery":         {"supported": false, "env_dependent": false, "reason": "Clone does not deliver webhooks."},
-    "event_processing":         {"supported": false, "env_dependent": false, "reason": "No event bus / dead-letter queue."},
-    "rate_limiting":            {"supported": false, "env_dependent": true,  "env": "NODE_ENV", "reason": "express-rate-limit only active when booted NODE_ENV=production; run booted development."},
-    "retry_after_header":       {"supported": false, "env_dependent": true,  "env": "NODE_ENV", "reason": "Retry-After only emitted by the limiter under NODE_ENV=production."},
-    "ip_allowlist":             {"supported": false, "env_dependent": false, "reason": "No IP allowlist enforcement."},
-    "third_party_oauth":        {"supported": false, "env_dependent": false, "reason": "No external OAuth provider integration."},
-    "api_gateway_routing":      {"supported": false, "env_dependent": false, "reason": "No gateway/route-forwarding layer."},
-    "api_versioning":           {"supported": false, "env_dependent": false, "reason": "Clone exposes a single unversioned API surface."},
-    "caching_headers":          {"supported": false, "env_dependent": false, "reason": "Clone does not emit ETag/Cache-Control compliance headers."},
-    "tls_enforcement":          {"supported": false, "env_dependent": true,  "env": "scheme", "reason": "Local target served over http on localhost; no TLS termination."},
-    "long_polling":             {"supported": false, "env_dependent": false, "reason": "No long-poll endpoints."},
-    "graphql":                  {"supported": false, "env_dependent": false, "reason": "DummyJSON exposes REST only; no GraphQL endpoint."},
-    "file_storage":             {"supported": false, "env_dependent": false, "reason": "No real binary file upload/download/persistence."},
-    "soft_delete":              {"supported": true,  "env_dependent": false, "reason": "DummyJSON returns the object with isDeleted=true/deletedOn (simulated soft delete)."},
-    "crud":                     {"supported": true,  "env_dependent": false, "reason": "Create/read/update/delete are simulated and return representative bodies."},
-    "pagination":               {"supported": true,  "env_dependent": false, "reason": "limit/skip supported."},
-    "sorting":                  {"supported": true,  "env_dependent": false, "reason": "sortBy/order supported."},
-    "search_filter":            {"supported": true,  "env_dependent": false, "reason": "/search and filter query params supported."},
-    "status_codes":             {"supported": true,  "env_dependent": false, "reason": "Standard HTTP status codes returned."},
-    "auth":                     {"supported": true,  "env_dependent": false, "reason": "JWT login/refresh/me supported."}
+    "correlation_id_echo": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "Clone does not echo X-Correlation-ID in responses."
+    },
+    "downstream_services": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No downstream/microservice tracing exists behind the clone."
+    },
+    "api_request_logging": {
+      "supported": false,
+      "env_dependent": true,
+      "env": "LOG_ENABLED",
+      "reason": "Log-presence assertions require LOG_ENABLED=true at node boot; run launched LOG_ENABLED=false."
+    },
+    "audit_log": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No audit-log subsystem in the clone."
+    },
+    "webhook_delivery": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "Clone does not deliver webhooks."
+    },
+    "event_processing": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No event bus / dead-letter queue."
+    },
+    "rate_limiting": {
+      "supported": false,
+      "env_dependent": true,
+      "env": "NODE_ENV",
+      "reason": "express-rate-limit only active when booted NODE_ENV=production; run booted development."
+    },
+    "retry_after_header": {
+      "supported": false,
+      "env_dependent": true,
+      "env": "NODE_ENV",
+      "reason": "Retry-After only emitted by the limiter under NODE_ENV=production."
+    },
+    "ip_allowlist": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No IP allowlist enforcement."
+    },
+    "third_party_oauth": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No external OAuth provider integration."
+    },
+    "api_gateway_routing": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No gateway/route-forwarding layer."
+    },
+    "api_versioning": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "Clone exposes a single unversioned API surface."
+    },
+    "caching_headers": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "Clone does not emit ETag/Cache-Control compliance headers."
+    },
+    "tls_enforcement": {
+      "supported": false,
+      "env_dependent": true,
+      "env": "scheme",
+      "reason": "Local target served over http on localhost; no TLS termination."
+    },
+    "long_polling": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No long-poll endpoints."
+    },
+    "graphql": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "DummyJSON exposes REST only; no GraphQL endpoint."
+    },
+    "file_storage": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No real binary file upload/download/persistence."
+    },
+    "soft_delete": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "DummyJSON returns the object with isDeleted=true/deletedOn (simulated soft delete)."
+    },
+    "crud": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "Create/read/update/delete are simulated and return representative bodies."
+    },
+    "pagination": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "limit/skip supported."
+    },
+    "sorting": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "sortBy/order supported."
+    },
+    "search_filter": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "/search and filter query params supported."
+    },
+    "status_codes": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "Standard HTTP status codes returned."
+    },
+    "auth": {
+      "supported": true,
+      "env_dependent": false,
+      "reason": "JWT login/refresh/me supported."
+    },
+    "access_control": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No role/permission gating: GET /products returns 200 without a token; only /auth/me is token-gated. The clone has authentication but no AUTHORIZATION layer to probe."
+    },
+    "enum_validation": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "No enum/allowed-value enforcement: POST /products/add with category='__notarealcategory__' returns 201 (accepted). The clone does not reject out-of-enum field values."
+    },
+    "response_schema_docs": {
+      "supported": false,
+      "env_dependent": false,
+      "reason": "data/openapi.json documents 0/22 response schemas, so there is nothing for schema-conformance validation to assert against (responses_validated=0, rate=None)."
+    }
   },
   "agent_capability_map": {
-    "validate-correlation-id-propagation": ["correlation_id_echo", "downstream_services", "api_request_logging"],
-    "validate-header-propagation":        ["downstream_services", "api_request_logging"],
-    "verify-audit-log-generation":        ["audit_log", "api_request_logging"],
-    "test-webhook-delivery":              ["webhook_delivery"],
-    "test-event-driven-api-triggers":     ["event_processing"],
-    "test-rate-limit-enforcement":        ["rate_limiting"],
-    "validate-retry-after-header-compliance": ["retry_after_header", "rate_limiting"],
-    "test-ip-allowlist-enforcement":      ["ip_allowlist"],
-    "verify-third-party-oauth-integration": ["third_party_oauth"],
-    "test-api-gateway-routing":           ["api_gateway_routing"],
-    "validate-api-versioning-behavior":   ["api_versioning"],
-    "verify-caching-headers":             ["caching_headers"],
-    "test-ssl-tls-enforcement":           ["tls_enforcement"],
-    "test-long-polling-support":          ["long_polling"],
-    "validate-graphql-depth-limits":      ["graphql"],
-    "test-file-upload-and-download":      ["file_storage"],
-    "test-multipart-form-data-handling":  ["file_storage"],
-    "test-timeout-handling":              ["api_request_logging"]
+    "validate-correlation-id-propagation": [
+      "correlation_id_echo",
+      "downstream_services",
+      "api_request_logging"
+    ],
+    "validate-header-propagation": [
+      "downstream_services",
+      "api_request_logging"
+    ],
+    "verify-audit-log-generation": [
+      "audit_log",
+      "api_request_logging"
+    ],
+    "test-webhook-delivery": [
+      "webhook_delivery"
+    ],
+    "test-event-driven-api-triggers": [
+      "event_processing"
+    ],
+    "test-rate-limit-enforcement": [
+      "rate_limiting"
+    ],
+    "validate-retry-after-header-compliance": [
+      "retry_after_header",
+      "rate_limiting"
+    ],
+    "test-ip-allowlist-enforcement": [
+      "ip_allowlist"
+    ],
+    "verify-third-party-oauth-integration": [
+      "third_party_oauth"
+    ],
+    "test-api-gateway-routing": [
+      "api_gateway_routing"
+    ],
+    "validate-api-versioning-behavior": [
+      "api_versioning"
+    ],
+    "verify-caching-headers": [
+      "caching_headers"
+    ],
+    "test-ssl-tls-enforcement": [
+      "tls_enforcement"
+    ],
+    "test-long-polling-support": [
+      "long_polling"
+    ],
+    "validate-graphql-depth-limits": [
+      "graphql"
+    ],
+    "test-file-upload-and-download": [
+      "file_storage"
+    ],
+    "test-multipart-form-data-handling": [
+      "file_storage"
+    ],
+    "test-timeout-handling": [
+      "api_request_logging"
+    ],
+    "check-authorization-rules": [
+      "access_control"
+    ],
+    "verify-enum-value-restrictions": [
+      "enum_validation"
+    ],
+    "validate-json-schema-responses": [
+      "response_schema_docs"
+    ]
   },
   "pass_threshold_pct": 70.0,
   "partial_threshold_pct": 30.0,
-  "_thresholds_doc": "metric >= pass_threshold_pct => PASS; >= partial_threshold_pct => PARTIAL; below => FAIL — UNLESS the agent maps to an unsupported capability, in which case ENV-LIMITED (excluded from real-fail accounting)."
+  "_thresholds_doc": "metric >= pass_threshold_pct => PASS; >= partial_threshold_pct => PARTIAL; below => FAIL \u2014 UNLESS the agent maps to an unsupported capability, in which case ENV-LIMITED (excluded from real-fail accounting)."
 }

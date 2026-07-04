@@ -28,10 +28,10 @@ def _pyexe() -> str:
 
 PYEXE = _pyexe()
 AGENTS = {
-    "langgraph": [PYEXE, "agents/langgraph/run_authz.py"],
-    "crewai": [PYEXE, "agents/crewai/run_authz.py"],
-    "api-tester-check-authorization-rules": [PYEXE, "agents/api-tester/check-authorization-rules/run.py"],
-    "claude_sdk": [PYEXE, "agents/claude_sdk/run_authz.py"],
+    "langgraph": [PYEXE, "agents/api-tester/check-authorization-rules/langgraph/run.py"],
+    "crewai": [PYEXE, "agents/api-tester/check-authorization-rules/crewai/run.py"],
+    "api-tester-check-authorization-rules": [PYEXE, "agents/api-tester/check-authorization-rules/subagent/run.py"],
+    "claude_sdk": [PYEXE, "agents/api-tester/check-authorization-rules/claude_sdk/run.py"],
 }
 
 

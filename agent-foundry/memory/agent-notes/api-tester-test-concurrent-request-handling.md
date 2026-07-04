@@ -8,3 +8,8 @@
 - [2026-06-29T17:54:18.159185+00:00] run=2026-06-29_17-10-02 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
 - [2026-06-29T20:12:06.553805+00:00] run=2026-06-29_19-27-43 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
 - [2026-06-29T22:43:04.982369+00:00] run=2026-06-29_22-00-33 concurrent-request-handling run: success_rate=50.0% (read_ok=50/50, write_ok=0/50, db_delta=0)
+- [2026-07-02T01:39:09.151343+00:00] run=RUN-20260702-000138 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
+- [2026-07-02T17:01:34.837975+00:00] run=20260702T165851-894a60 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
+- [2026-07-03T01:52:47.355459+00:00] run=20260703T014953-e3f645 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
+- [2026-07-03T01:56:09.720556+00:00] run=20260703T015313-06867c concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)
+- [2026-07-03T22:01:57.623152+00:00] run=RUN-20260703-181017 concurrent-request-handling run: success_rate=0.0% (read_ok=0/0, write_ok=0/0, db_delta=None)

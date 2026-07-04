@@ -1,0 +1,88 @@
+{
+  "agent": "api-tester-measure-api-consumer-satisfaction",
+  "lane": "consumer-satisfaction-measurement-plan",
+  "recipient_window_days": 90,
+  "survey_questions": [
+    {
+      "id": "nps",
+      "kind": "nps",
+      "type": "scale",
+      "scale": "0-10",
+      "text": "On a scale of 0-10, how likely are you to recommend this API to a colleague?"
+    },
+    {
+      "id": "csat",
+      "kind": "csat",
+      "type": "scale",
+      "scale": "1-5",
+      "top_2_box": "share of respondents rating 4-5",
+      "text": "How satisfied are you with this API? (1-5)"
+    },
+    {
+      "id": "ces",
+      "kind": "ces",
+      "type": "scale",
+      "scale": "1-5",
+      "text": "How easy was it to accomplish what you needed with this API? (1-5)"
+    },
+    {
+      "id": "pain_point",
+      "kind": "open_text",
+      "type": "free_response",
+      "text": "What is the biggest pain point you experience with this API?"
+    },
+    {
+      "id": "improvement",
+      "kind": "open_text",
+      "type": "free_response",
+      "text": "What one improvement would most increase your satisfaction?"
+    },
+    {
+      "id": "other",
+      "kind": "open_text",
+      "type": "free_response",
+      "text": "Any other feedback you would like to share?"
+    }
+  ],
+  "collection_window_days": 14,
+  "bands": {
+    "promoter": [9, 10],
+    "passive": [7, 8],
+    "detractor": [0, 6]
+  },
+  "nps_formula": "round(promoter_pct - detractor_pct)",
+  "validity_threshold_pct": 30,
+  "per_segment": {
+    "segment_by": "plan_tier_or_call_volume_band",
+    "metrics": ["nps", "csat"],
+    "entries": []
+  },
+  "quarter_over_quarter_trend": {
+    "current_quarter": {"nps": null, "csat": null},
+    "prior_quarter": {"nps": null, "csat": null},
+    "delta": {"nps": null, "csat": null}
+  },
+  "clustering_config": {
+    "algorithm": "k-means",
+    "vectorizer": "tf-idf",
+    "corpus": "combined open-text pain_point, improvement, and other responses",
+    "top_themes": 3,
+    "max_label_words": 5
+  },
+  "dashboard_fields": [
+    "overall_nps",
+    "overall_csat",
+    "overall_ces",
+    "response_rate_pct",
+    "validity_flag",
+    "per_segment_nps_csat",
+    "qoq_nps_delta",
+    "qoq_csat_delta",
+    "top_3_themes"
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "satisfaction_plan_fidelity",
+    "value": 1.0
+  }
+}

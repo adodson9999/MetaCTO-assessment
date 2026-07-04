@@ -9,3 +9,11 @@
 - [2026-06-29T17:25:59.971320+00:00] run=2026-06-29_17-10-02 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
 - [2026-06-29T19:44:03.293380+00:00] run=2026-06-29_19-27-43 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
 - [2026-06-29T22:16:52.104262+00:00] run=2026-06-29_22-00-33 auth-flow run: pass_rate=60.0% executed=5 FAR=20.0% FRR=0.0% CRITICAL:false-acceptance
+- [2026-07-02T00:17:23.018323+00:00] run=RUN-20260702-000138 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-02T16:50:45.538803+00:00] run=20260702T164951-72a45e auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-02T16:56:31.760938+00:00] run=20260702T165549-fd89df auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T02:03:39.440541+00:00] run=20260703T020034-dd3cf0 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T04:47:15.078838+00:00] run=20260703T044449-6ff3b2 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T16:52:21.687508+00:00] run=20260703T165054-1144d3 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T16:59:56.708876+00:00] run=20260703T165729-a7936f auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%
+- [2026-07-03T19:05:51.114523+00:00] run=RUN-20260703-181017 auth-flow run: pass_rate=0.0% executed=0 FAR=0.0% FRR=0.0%

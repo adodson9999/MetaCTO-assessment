@@ -1,0 +1,165 @@
+{
+  "agent": "api-tester-test-ssl-tls-enforcement",
+  "lane": "transport-layer-tls-enforcement-contract",
+  "target": {
+    "target_host_role": "target_host",
+    "https_port_role": "https_port",
+    "http_port_role": "http_port",
+    "endpoint_role": "endpoint_under_test",
+    "min_tls_role": "documented_min_tls"
+  },
+  "cases": [
+    {
+      "name": "protocol_probes",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "protocol_version_sweep"
+      },
+      "probes": [
+        {"label": "plain_http", "scheme": "http", "version": "none", "expect": "reject"},
+        {"label": "tls1_0", "scheme": "https", "version": "tls1", "expect": "reject"},
+        {"label": "tls1_1", "scheme": "https", "version": "tls1_1", "expect": "reject"},
+        {"label": "tls1_2", "scheme": "https", "version": "tls1_2", "expect": "accept"},
+        {"label": "tls1_3", "scheme": "https", "version": "tls1_3", "expect": "accept"}
+      ],
+      "primary": "plain HTTP is refused or redirected to HTTPS serving no data in the clear, TLS 1.0 and TLS 1.1 handshakes are rejected, and TLS 1.2 and TLS 1.3 handshakes complete and serve the endpoint",
+      "also_accept": [
+        "for a reject probe: connection refused or connection reset at the protocol layer instead of a redirect, per the documented twin"
+      ],
+      "asserts": {
+        "plain_http_serves_no_clear_data": true,
+        "tls1_0_rejected": true,
+        "tls1_1_rejected": true,
+        "tls1_2_accepted_and_endpoint_served": true,
+        "tls1_3_accepted_and_endpoint_served": true
+      },
+      "steps": [
+        "resolve the target host, the HTTPS port, the plaintext HTTP port, and the endpoint under test from the runtime brief by role",
+        "open a cleartext request to the endpoint over the plaintext HTTP port via the harness; assert the target refuses or 301/308 redirects to the https scheme and serves no payload in the clear",
+        "offer only TLS 1.0 to the HTTPS port via the harness; assert the handshake is refused and no application data flows",
+        "offer only TLS 1.1 to the HTTPS port via the harness; assert the handshake is refused and no application data flows",
+        "offer TLS 1.2 to the HTTPS port via the harness; assert the handshake completes and the endpoint is served",
+        "offer TLS 1.3 to the HTTPS port via the harness; assert the handshake completes and the endpoint is served"
+      ]
+    },
+    {
+      "name": "certificate_assertions",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "leaf_and_chain_inspection"
+      },
+      "primary": "the served leaf certificate is not expired, its CN or a SAN entry matches the documented host, its chain of trust is valid to a trusted root, it is CA-issued not self-signed, and its OCSP/revocation status is not revoked",
+      "also_accept": [
+        "stapled-OCSP evidence vs. live-OCSP evidence per the documented contract"
+      ],
+      "asserts": {
+        "not_expired": true,
+        "cn_or_san_match": true,
+        "chain_of_trust_ok": true,
+        "not_self_signed": true,
+        "ocsp_revocation_not_revoked": true
+      },
+      "steps": [
+        "resolve the target host and endpoint under test and the documented certificate posture from the runtime brief by role",
+        "capture the presented leaf certificate and its issuer chain over an accepted TLS handshake via the harness",
+        "assert notBefore and notAfter bracket the current time so the certificate is not expired",
+        "assert the documented host matches the certificate CN or a SAN entry",
+        "assert each link chains to a trusted root anchor and the leaf is CA-issued not self-signed",
+        "assert the OCSP/revocation status is good and the certificate is not revoked"
+      ]
+    },
+    {
+      "name": "hsts",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "hsts_header_read"
+      },
+      "primary": "the HTTPS response carries a Strict-Transport-Security header meeting the documented minimum max-age, plus includeSubDomains and preload directives if the contract requires them",
+      "also_accept": [
+        "a Strict-Transport-Security max-age longer than the documented minimum"
+      ],
+      "asserts": {
+        "hsts_header_present": true,
+        "max_age_meets_documented_minimum": true,
+        "include_subdomains_and_preload_if_required": true
+      },
+      "steps": [
+        "resolve the endpoint under test and the documented HSTS policy from the runtime brief by role",
+        "send a read-only GET over an accepted TLS handshake via the harness and read the Strict-Transport-Security header",
+        "assert the header is present and its max-age meets the documented minimum",
+        "assert the includeSubDomains and preload directives are present if the documented policy requires them"
+      ]
+    },
+    {
+      "name": "forward_secrecy_cipher_order",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "negotiated_suite_and_ordering"
+      },
+      "primary": "the negotiated suite is an ECDHE forward-secret suite and the server enforces its own cipher order over the client's preference",
+      "also_accept": [
+        "a DHE forward-secret suite if the documented contract permits it"
+      ],
+      "asserts": {
+        "negotiated_suite_is_forward_secret": true,
+        "server_cipher_order_prevails": true
+      },
+      "steps": [
+        "resolve the endpoint under test and the documented cipher-suite and ordering policy from the runtime brief by role",
+        "negotiate with a mixed client cipher preference over an accepted TLS handshake via the harness",
+        "assert the chosen suite is ECDHE-based (forward-secret)",
+        "assert the server's cipher order prevails over the client's preference"
+      ]
+    },
+    {
+      "name": "forbidden_weak_ciphers",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "weak_family_sweep"
+      },
+      "forbidden_weak_ciphers": ["RC4", "DES", "3DES", "EXPORT", "NULL"],
+      "primary": "the RC4, DES, 3DES, EXPORT, and NULL weak-cipher families are all refused and none appears in the server's offered set",
+      "also_accept": [],
+      "asserts": {
+        "RC4_not_offered": true,
+        "DES_not_offered": true,
+        "3DES_not_offered": true,
+        "EXPORT_not_offered": true,
+        "NULL_not_offered": true
+      },
+      "steps": [
+        "resolve the endpoint under test and the documented cipher policy from the runtime brief by role",
+        "offer each forbidden family in turn — RC4, DES, 3DES, EXPORT, NULL — to the HTTPS port via the harness",
+        "assert each forbidden-family handshake fails",
+        "assert none of the five forbidden families appears in the server's offered cipher set"
+      ]
+    },
+    {
+      "name": "sni",
+      "endpoint_role": "endpoint_under_test",
+      "probe": {
+        "kind": "sni_and_wildcard_scope"
+      },
+      "primary": "the correct SNI succeeds and a wrong or empty SNI behaves per the documented contract (served by wildcard scope if applicable, else refused or served the default)",
+      "also_accept": [
+        "the documented twin outcome for the wrong/empty SNI (refused vs. default) per the contract"
+      ],
+      "asserts": {
+        "correct_sni_succeeds": true,
+        "wrong_or_empty_sni_per_contract": true,
+        "wildcard_scope_covers_in_scope_names_only_if_applicable": true
+      },
+      "steps": [
+        "resolve the target host, the endpoint under test, and the documented SNI/wildcard scope from the runtime brief by role",
+        "handshake with the correct SNI over the HTTPS port via the harness and assert success",
+        "handshake with a wrong or empty SNI via the harness and assert the documented outcome",
+        "if a wildcard certificate is in scope, assert covered subdomains succeed and out-of-scope names do not"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "tls_enforcement_fidelity",
+    "value": 1.0
+  }
+}

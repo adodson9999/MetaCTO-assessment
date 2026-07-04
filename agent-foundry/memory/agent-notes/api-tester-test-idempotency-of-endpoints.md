@@ -9,3 +9,5 @@
 - [2026-06-29T17:36:43.802176+00:00] run=2026-06-29_17-10-02 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
 - [2026-06-29T19:55:09.930184+00:00] run=2026-06-29_19-27-43 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
 - [2026-06-29T22:27:05.023872+00:00] run=2026-06-29_22-00-33 idempotency-test run: compliance_rate=50.0% (6/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-07-02T00:56:28.786565+00:00] run=RUN-20260702-000138 idempotency-test run: compliance_rate=0.0% (0/12 endpoint cases) over 6 collections (54 scenarios)
+- [2026-07-03T20:38:09.004061+00:00] run=RUN-20260703-181017 idempotency-test run: compliance_rate=0.0% (0/12 endpoint cases) over 6 collections (54 scenarios)

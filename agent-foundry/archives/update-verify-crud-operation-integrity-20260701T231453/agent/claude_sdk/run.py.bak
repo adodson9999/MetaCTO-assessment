@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""Claude Agent SDK CRUD-integrity-testing agent.
+
+Standalone program mirroring the other three. Native Claude is used when the backend
+is claude-haiku; under the air-gapped Ollama backend the SDK's cloud path is
+unavailable, so it falls back to the OpenAI-compatible local endpoint (Ollama /v1).
+Either way it elicits the 8-step CRUD plan; the shared harness executes/reads-DB/
+scores/emits.
+"""
+import json
+import os
+import sys
+import urllib.request
+from pathlib import Path
+
+WS = Path(os.environ.get("FORGE_WORKSPACE", Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(WS / "agents" / "common"))
+sys.path.insert(0, str(WS / "scripts"))
+
+import crud_contract  # noqa: E402
+from crud_prompt import active_prompt, user_message  # noqa: E402
+import backend_config  # noqa: E402
+
+AGENT = "claude_sdk"
+APPROVED_PROMPT = active_prompt()
+SPEC = backend_config.resolve(WS)
+
+
+def _native(brief: str) -> str:
+    """Claude (Anthropic SDK) single-turn elicitation. The Claude Agent SDK's `query`
+    is an agentic loop (spawns the claude CLI) and does not deterministically return a
+    bare JSON object headless, so for this measure-one-thing emit we use the Anthropic
+    Messages API directly — the same SDK family, one deterministic call."""
+    import anthropic
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model=SPEC["native"]["model"], max_tokens=1500, temperature=0,
+        system=APPROVED_PROMPT,
+        messages=[{"role": "user", "content": user_message(brief)}])
+    return "".join(b.text for b in msg.content if getattr(b, "type", None) == "text")
+
+
+def _openai_compat(brief: str) -> str:
+    body = json.dumps({
+        "model": SPEC["model"], "temperature": 0,
+        "messages": [{"role": "system", "content": APPROVED_PROMPT},
+                     {"role": "user", "content": user_message(brief)}],
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }).encode()
+    req = urllib.request.Request(SPEC["base_url"] + "/chat/completions", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = json.loads(r.read())
+    return data["choices"][0]["message"]["content"]
+
+
+def _elicit(brief: str) -> str:
+    if SPEC["native"]["kind"] == "anthropic":
+        try:
+            return _native(brief)
+        except Exception:  # noqa  -- cloud path unavailable air-gapped
+            pass
+    return _openai_compat(brief)
+
+
+def main():
+    def generate(resource: dict) -> dict:
+        brief = crud_contract.resource_brief(resource)
+        return crud_contract.extract_json(_elicit(brief)) or {}
+
+    summary = crud_contract.run_crud_test(AGENT, generate)
+    print(f"[{AGENT}] crud_integrity_rate={summary['crud_integrity_rate_pct']}% "
+          f"passing={summary['resource_types_passing']}/{summary['resource_types']} "
+          f"covered_steps={summary['covered_step_cells']}")
+
+
+if __name__ == "__main__":
+    main()

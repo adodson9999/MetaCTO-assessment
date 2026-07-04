@@ -70,7 +70,7 @@ YAML
       curl -fsS "http://127.0.0.1:${PROXY_PORT}/health/liveliness" >/dev/null 2>&1 && break; sleep 1
     done
   fi
-else
+elif [ "$FORGE_PROVIDER" = "ollama" ]; then
   # ollama backend: natively OpenAI-compatible at :11434/v1 — NO shim. All four
   # frameworks reach it directly. Ollama is NOT started here (per the owner: "no reason
   # to start the ollama server right now"); this check only fires when you actually run

@@ -1,0 +1,17 @@
+{
+  "task": "api-tester / verify-audit-log-generation",
+  "metric_name": "audit_log_test_fidelity",
+  "direction": "higher_is_better",
+  "unit": "percent",
+  "how_computed": "Percentage of gold (collection x scenario) cases where the agent's harness-observed token equals the gold observed token. A scenario the agent did not exercise (request/query not emitted -> observed 'missing') counts as a mismatch. Denominator = all gold scenarios (collections x 9).",
+  "emit_fields": ["metric_name", "metric_value", "raw_output_path"],
+  "gold_path": "data/verify-audit-log-generation/gold.json",
+  "headline_metric": "audit_log_coverage_rate_pct",
+  "secondary_metric": "audit_correctness_rate_pct",
+  "scenarios_per_collection": 9,
+  "rationale": "All four agents drive the same local DummyJSON, so the raw Audit Log Coverage Rate (auditable operations producing a correctly-populated audit entry with all required fields non-null and timestamp within 5s) is a property of the API, not the agent. Fidelity-to-gold instead measures each framework's test quality: did it construct the correct create (POST /<col>/add), update (PUT /<col>/{resource_id}), and delete (DELETE /<col>/{resource_id}) operations with the right action_types and expected statuses, and the correct audit_query (filter_user_id, window 5/10, expected_entry_count 3, the five required fields, tolerance 5, the three action_types), and faithfully exercise every scenario. The headline audit_log_coverage_rate_pct is still emitted by every agent as the task's QA finding (empirically 0% over all 18 auditable ops: DummyJSON has no audit-log system; its winston request-log carries timestamp + ip but no user_id/action_type/resource_id and is not user-scoped, so no captured line qualifies as a correctly-populated audit entry). The secondary audit_correctness_rate_pct (empirically 3.7%, 2/54 scenarios) credits only the CREATE-status check for the two collections whose create returns 201 (/products, /users); /recipes/add returns 200 and /posts,/comments,/todos/add return 400 (they require fields the fixed probe body omits), so those create_status checks read false too; UPDATE/DELETE return 404 on the non-persistent phantom id; and all 6x audit assertions fail for every collection.",
+  "headline_value_empirical_pct": 0.0,
+  "secondary_value_empirical_pct": 3.7,
+  "pass_threshold": "fidelity = 100% (agent reproduces every gold observed token)",
+  "fail_condition": "fidelity < 100% (any scenario uncovered or any operation/audit_query mis-constructed so the observed token diverges from gold)"
+}

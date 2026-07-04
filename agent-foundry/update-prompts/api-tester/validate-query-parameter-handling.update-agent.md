@@ -1,0 +1,69 @@
+# update-agent: api-tester-validate-query-parameter-handling
+
+## Invocation
+
+```
+update-agent api-tester-validate-query-parameter-handling "<CHANGE PROMPT below>"
+```
+
+## Change prompt (verbatim, exhaustive)
+
+Expand this agent's lane to the FULL generic query-parameter *mechanics* surface — the wire-level handling of parameters independent of any filter/sort/page semantics: missing-required, wrong-type coercion, valid single, undocumented-parameter policy, URL-encoding (including plus-vs-%20 and reserved characters), default-application, parameter-name-case, duplicate-same-key precedence, HTTP Parameter Pollution across the query/body boundary, array-bracket syntax (`a[]=`), comma-separated-list expansion, and boolean parsing (`true`/`1`/`yes`) — while keeping every prior invariant intact; grow the `cases` array from **8 to 13**, keep emitting **one JSON object only** with the same per-case schema (`role`, `endpoint_role`, `method`, `recipe{kind,input_role}`, `assertion`, `also_accept[]`), refer to every input strictly by ROLE (target collection, search endpoint, page-size param role, offset param role, field-selection param role, provided query term — never a concrete URL, path, host, field literal, or feature), use ONLY documented parameters as the probe surface, reproduce runtime-supplied parameter names, regexes, and percent-encoded values byte-for-byte (never normalize/re-encode/decode), emit JSON only (no HTTP call — a deterministic harness runs read-only GETs and fills `observed`), take every `expected_by_contract` from `references/contract-oracle.md` (Validation row: malformed/invalid → `4xx` with a machine-readable error, **never `5xx` on a well-formed request**; Documented-capability row: a documented parameter that is ignored/404 is a `missing_capability` deviation), verify BLACK-BOX by observing the applied-vs-ignored effect on the returned set (never a DB row/log/instrumentation), repeat each case the configured soak count and flag non-determinism, and PRESERVE the self-awareness/code-review clause (all emitted code reviewed by every `agents/code-review/` agent, score ≥85, loop until it passes).
+
+KEEP the 8 existing cases unchanged: `missing-required` (kind `missing_required`), `wrong-type coercion` (kind `wrong_type_coercion`), `valid single-parameter` (kind `valid_single_param`), `undocumented-parameter` (kind `undocumented_param`), `URL-encoding` (kind `url_encoding`), `default-application` (kind `default_application`), `parameter-name-case` (kind `param_name_case`), `duplicate-key` (kind `duplicate_same_key`).
+
+ADD these 5 NEW cases, each mirroring the golden schema exactly (`role`, `endpoint_role`, `method: "GET"`, `recipe{kind, input_role}`, `assertion`, `also_accept[]`), grouped by class. Extend the closed recipe-`kind` vocabulary and the closed `assertion` vocabulary with every new value named below.
+
+Class A — multi-value encodings (mechanics, not filter semantics):
+1. `role: "array_bracket_syntax"`, `endpoint_role: "target_collection"`, `recipe{kind: "array_bracket_param", input_role: "documented_multi_value_param_bracket_form"}`, `assertion: "bracket_array_parsed_per_policy"`, `also_accept: ["documented_error_class"]` — a documented multi-value parameter sent in `key[]=a&key[]=b` bracket form is parsed into an array (or handled per documented policy), asserting only the PARSING mechanic, not which records match.
+2. `role: "comma_list_expansion"`, `endpoint_role: "target_collection"`, `recipe{kind: "comma_list_param", input_role: "documented_multi_value_param_comma_form"}`, `assertion: "comma_list_split_per_policy"`, `also_accept: ["documented_error_class"]` — a documented multi-value parameter sent as `key=a,b,c` is split into discrete values per documented policy (parsing mechanic only).
+
+Class B — precedence & pollution:
+3. `role: "parameter_pollution"`, `endpoint_role: "target_collection"`, `recipe{kind: "http_parameter_pollution", input_role: "same_key_conflicting_values_across_locations"}`, `assertion: "pollution_resolved_deterministically_no_5xx"`, `also_accept: ["documented_error_class"]` — the same key supplied with conflicting values (repeated in the query string, and where applicable across query-vs-other locations) resolves to a single deterministic value (first-wins/last-wins per policy) with no `5xx` and no ambiguous double-application. (Distinct from `duplicate-key`, which probes the same key twice with the SAME intent; this probes CONFLICTING values / cross-location pollution.)
+
+Class C — value-format coercion:
+4. `role: "boolean_parsing_variants"`, `endpoint_role: "target_collection"`, `recipe{kind: "boolean_param_variants", input_role: "documented_boolean_param_truthy_falsy_forms"}`, `assertion: "boolean_forms_parsed_per_policy"`, `also_accept: ["documented_error_class"]` — a documented boolean parameter sent as `true`/`false`, `1`/`0`, `yes`/`no` is coerced per documented policy and unrecognized forms are rejected rather than silently defaulting, with no `5xx`.
+5. `role: "plus_vs_percent20_encoding"`, `endpoint_role: "search_endpoint"`, `recipe{kind: "space_encoding_variants", input_role: "query_term_space_as_plus_and_as_percent20"}`, `assertion: "plus_and_percent20_both_decode_to_space"`, `also_accept: ["result_set_equals_known_expected_set"]` — the same query term with the space encoded once as `+` and once as `%20` both decode to a space and are applied identically (encoding mechanic only). (Complements `url_encoding`, which covers reserved-character percent-encoding.)
+
+New closed recipe-`kind` vocabulary (add): `array_bracket_param`, `comma_list_param`, `http_parameter_pollution`, `boolean_param_variants`, `space_encoding_variants`. New closed `assertion` vocabulary (add): `bracket_array_parsed_per_policy`, `comma_list_split_per_policy`, `pollution_resolved_deterministically_no_5xx`, `boolean_forms_parsed_per_policy`, `plus_and_percent20_both_decode_to_space`. Update the description/lane sentence and the "exactly eight param-mechanics probes" wording to "exactly thirteen param-mechanics probes"; keep `out_of_scope` and the `baseline{metric: "query_parameter_mechanics_fidelity", value: 1.0}` object.
+
+REMOVE from this agent: nothing to delete outright, but ENFORCE these boundaries so no added case crosses a line — the new multi-value cases (1,2) and boolean case (4) assert ONLY the parsing/coercion mechanic (was the wire form split/parsed into the right shape and not `5xx`); they MUST NOT assert filter-predicate correctness (which records match the parsed values) — that is owned by **api-tester-validate-search-and-filter-queries** (its multi-value/OR and combined-filter cases). Keep exercising page-size and offset params ONLY as generic wrong-type/missing/default *mechanics* — never assert page-math outcomes (record counts per page, caps, overlap/gap); page MATH is owned by **api-tester-test-pagination-behavior**. Never assert ordering outcomes (monotonicity, null placement, collation); ORDERING is owned by **api-tester-verify-sorting-behavior**. Keep confining injection concerns out of this lane — SQL/NoSQL operator injection via values is owned by **api-tester-validate-search-and-filter-queries** (this lane's HPP case 3 is a *precedence-resolution* mechanic, not an injection probe).
+
+New total case count: **13**.
+
+## Research basis
+- Budibase #4844 / Jetty #2074 / got #1814 / Drupal #3361843: duplicate query keys handled inconsistently — many stacks silently drop all but the last; "no HTTP spec for duplicates, PHP chose last-wins" — motivates cases 3 (pollution/precedence) and validates keeping `duplicate-key`.
+- Sitebulb repetitive-query-string + OWASP HPP background: HTTP Parameter Pollution — same key, conflicting values, cross-location — motivates case 3.
+- Speakeasy/Strapi filtering conventions: comma-list = multiple values, bracket `key[]=` array form — motivates cases 1,2 (parsing mechanic).
+- 400-vs-422 discussions (FastAPI #643, Beeceptor, webargs #180): syntactic (missing/malformed param) → 400, semantic → 422; never `5xx` on well-formed request — backs the `no_5xx` clauses and the contract-oracle Validation row.
+- URL-encoding: `application/x-www-form-urlencoded` encodes space as `+`, RFC 3986 percent-encoding uses `%20` — both must decode to space — motivates case 5.
+
+## Gap summary
+Before: 8 probes; no array-bracket syntax, no comma-list expansion mechanic, no HTTP Parameter Pollution / conflicting-value precedence, no boolean-form parsing, no plus-vs-%20 space-encoding probe. 5 gaps closed. (Missing-required, wrong-type, undocumented, url-encoding-reserved, default, name-case, duplicate-same-key already covered.)
+
+## De-dup notes
+- Filter/search SEMANTICS (which records match multi-value/comma/bracket inputs, injection) → **validate-search-and-filter-queries**; this lane asserts only that the wire form parses to the right shape.
+- Page MATH (counts, caps, overlap/gap) → **test-pagination-behavior**; page-size/offset used here only as generic-mechanic probe surface.
+- ORDERING → **verify-sorting-behavior** (not asserted here).
+- SQL/NoSQL operator injection → **validate-search-and-filter-queries**; HPP here is precedence resolution, not injection.
+- Boundary proposal: array-bracket / comma-list sit exactly on the mechanics↔semantics seam. Resolved by asserting *parsing shape* here and *predicate correctness* in the search-filter sibling. If the MECE gate still flags collision on the multi-value class, route the split decision to §Z (proposed rule: "wire-form parsing → this agent; matched-record correctness → search-filter agent").
+
+## ADDENDUM (v2 — exhaustive test-case + reporting standard)
+
+When running update-agent for this agent, pass the Change prompt above AND this ADDENDUM together as a single change prompt.
+
+This agent is a **pure, exhaustive test-case generator** — it makes NO bug judgement. It authors each case and fills the *Expected Result* (the definition of correct query-parameter mechanics, sourced from the contract oracle and the given spec). It leaves `actual_result` = `"TO BE FILLED DURING EXECUTION"` and sets `status` = `Not Executed`. It emits **no** deviations, verdicts, `is_bug` flags, or pass/fail counts — a **separate judging agent** executes the cases and decides whether an Actual Result is a bug. This addendum is governed by `00-AUTHORING-STANDARD-exhaustive-testcases.md`.
+
+**Test Case ID prefix: `TC-QPARAM-NNN`** (zero-padded, sequential, stable across runs).
+
+**Render every case in the human-readable schema.** In addition to the machine fields, each test case MUST carry these human-readable fields in plain language with maximum detail: `test_case_id`, `title`, `description`, `category` (`happy`|`negative`|`boundary`|`edge`|`broad`), `feature_under_test`, `preconditions`, `test_data`, `test_steps`, `expected_result`, `actual_result` (= `"TO BE FILLED DURING EXECUTION"`), `status` (= `Not Executed`), `postconditions`, `severity_hint`, `references`, `tags`. Preserve every existing machine field (`role`, `endpoint_role`, `method`, `recipe{kind,input_role}`, `assertion`, `also_accept`) as sub-fields under a `machine` key so the harness/judge still gets structured inputs while humans get the readable case. Emit ONE JSON object with a `test_cases[]` array.
+
+**Lane-specific exhaustive coverage checklist** (generic wire-level parameter mechanics — cite the sibling owner for anything adjacent so nothing overlaps):
+- *Happy path*: a valid single documented parameter is accepted and applied; a documented default is applied when the parameter is omitted; a documented boolean parses per policy (`true`/`false`, `1`/`0`, `yes`/`no`); array-bracket (`key[]=a&key[]=b`) and comma-list (`key=a,b`) parse into the right SHAPE per policy.
+- *Negative path*: a missing REQUIRED parameter is rejected with a machine-readable error; a wrong-TYPE value is coerced-or-rejected per policy with no `5xx`; an unrecognized boolean form is rejected rather than silently defaulting.
+- *Boundary*: duplicate same-key with the SAME intent (precedence); HTTP Parameter Pollution — same key with CONFLICTING values resolves to one deterministic value (first/last-wins per policy), no `5xx`, no double-application.
+- *Edge*: URL-encoding of reserved characters; space encoded as `+` vs `%20` both decode to a space and apply identically; parameter-name-case handling; undocumented-PARAMETER policy (ignored/rejected per contract, never `5xx`).
+- *Broad*: each documented parameter probed for valid/missing/wrong-type/default; parsing-shape asserted for every multi-value encoding the surface documents; page-size/offset/sort/order params exercised ONLY as generic mechanics (never for their downstream outcomes).
+- Cite the owner for adjacencies: which records match parsed multi-value inputs, and SQL/NoSQL operator injection via values → **validate-search-and-filter-queries**; page-math outcomes (counts, caps, overlap/gap) → **test-pagination-behavior**; ordering outcomes (monotonicity, null placement, collation) → **verify-sorting-behavior**. This lane's HPP case is precedence-resolution, not an injection probe.
+
+Coverage is exhaustive in-lane and MECE across agents — no duplicate cases within this agent or against any sibling.

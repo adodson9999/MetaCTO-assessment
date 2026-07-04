@@ -1,0 +1,114 @@
+{
+  "agent": "api-tester-test-timeout-handling",
+  "lane": "upstream-timeout-enforcement",
+  "upstream_timeout_s": 30,
+  "buffer_s": 5,
+  "restore_budget_ms": 500,
+  "max_wait_s": 35,
+  "cases": [
+    {
+      "role": "delayed_timeout",
+      "endpoint_role": "upstream_dependent_endpoint",
+      "recipe": {
+        "kind": "inject_upstream_delay",
+        "within": "max_wait"
+      },
+      "expected_class": "504",
+      "also_accept": [
+        "408"
+      ],
+      "steps": [
+        "harness injects an upstream delay longer than the upstream timeout",
+        "send the request to the endpoint role",
+        "record the returned status class and the elapsed time",
+        "assert the response arrives within max_wait seconds"
+      ]
+    },
+    {
+      "role": "safe_error_body",
+      "endpoint_role": "upstream_dependent_endpoint",
+      "recipe": {
+        "kind": "assert_no_leak",
+        "forbid": [
+          "upstream",
+          "host",
+          "stack"
+        ]
+      },
+      "expected_class": "504",
+      "also_accept": [
+        "408"
+      ],
+      "steps": [
+        "capture the timeout error body from the delayed case",
+        "assert the body exposes no upstream identifier, no host, and no stack trace"
+      ]
+    },
+    {
+      "role": "restore_within_budget",
+      "endpoint_role": "upstream_dependent_endpoint",
+      "recipe": {
+        "kind": "recover_after_delay_clears",
+        "within": "restore_budget"
+      },
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "harness clears the injected upstream delay",
+        "send the request to the endpoint role again",
+        "assert the endpoint recovers within the restore budget in milliseconds"
+      ]
+    },
+    {
+      "role": "slow_client_slowloris",
+      "endpoint_role": "timeout_surface",
+      "recipe": {
+        "kind": "slowloris_dribble_body",
+        "slower_than": "read_budget"
+      },
+      "expected_class": "408",
+      "also_accept": [],
+      "steps": [
+        "client dribbles the request body slower than the read budget",
+        "assert the documented 408-class response is returned and the connection does not hang"
+      ]
+    },
+    {
+      "role": "connect_vs_read",
+      "endpoint_role": "timeout_surface",
+      "recipe": {
+        "kind": "distinguish_connect_and_read_timeout"
+      },
+      "expected_class": "504",
+      "also_accept": [
+        "408"
+      ],
+      "steps": [
+        "exercise a connect-timeout condition and record its outcome",
+        "exercise a read-timeout condition and record its outcome",
+        "assert the two timeout conditions are distinguished"
+      ]
+    },
+    {
+      "role": "retry_on_timeout",
+      "endpoint_role": "upstream_dependent_endpoint",
+      "recipe": {
+        "kind": "assert_documented_retry",
+        "only_if": "contract_documents_upstream_retry"
+      },
+      "expected_class": "2xx",
+      "also_accept": [
+        "504"
+      ],
+      "steps": [
+        "assert the documented upstream retry fires on the first timeout",
+        "record the final status class after the retry"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "timeout_enforcement_fidelity",
+    "value": 1.0
+  }
+}

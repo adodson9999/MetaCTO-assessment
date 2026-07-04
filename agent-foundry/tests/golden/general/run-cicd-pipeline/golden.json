@@ -1,0 +1,11 @@
+{
+  "agent": "general-run-cicd-pipeline",
+  "metric_name": "pipeline_summary_fidelity_pct",
+  "baseline": {
+    "value": 100.0,
+    "tolerance": 0.0,
+    "direction": "higher_is_better",
+    "note": "Derived from the rebuilt leaderboard (min framework best) as a hold-or-improve floor; this agent is not an update target."
+  },
+  "cases": []
+}

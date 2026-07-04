@@ -9,3 +9,6 @@
 - [2026-06-29T18:06:09.986441+00:00] run=2026-06-29_17-10-02 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
 - [2026-06-29T20:23:42.682826+00:00] run=2026-06-29_19-27-43 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
 - [2026-06-29T22:54:25.395172+00:00] run=2026-06-29_22-00-33 file-upload-download run: correctness_rate=21.43% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-02T02:27:30.462546+00:00] run=RUN-20260702-000138 file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-02T17:09:39.554883+00:00] run=20260702T170601-9cb177 file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)
+- [2026-07-03T23:32:18.474019+00:00] run=RUN-20260703-181017 file-upload-download run: correctness_rate=0.0% integrity=0.0% over413=0.0% invalid415=0.0% over 3 endpoints (42 scenarios)

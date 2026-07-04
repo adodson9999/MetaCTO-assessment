@@ -7,3 +7,5 @@
 - [2026-06-29T18:01:28.873423+00:00] run=2026-06-29_17-10-02 track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
 - [2026-06-29T20:18:37.505185+00:00] run=2026-06-29_19-27-43 track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
 - [2026-06-29T22:49:46.728870+00:00] run=2026-06-29_22-00-33 track-defect-density run: report_accuracy=100.0% over 6 sprints (60 fields)
+- [2026-07-02T01:59:00.797554+00:00] run=RUN-20260702-000138 track-defect-density run: report_accuracy=33.33% over 6 sprints (60 fields)
+- [2026-07-03T22:42:03.911988+00:00] run=RUN-20260703-181017 track-defect-density run: report_accuracy=0.0% over 6 sprints (60 fields)

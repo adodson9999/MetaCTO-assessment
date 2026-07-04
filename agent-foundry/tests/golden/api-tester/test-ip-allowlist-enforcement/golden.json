@@ -1,0 +1,194 @@
+{
+  "agent": "api-tester-test-ip-allowlist-enforcement",
+  "lane": "ip-allowlist-network-origin-enforcement",
+  "endpoint": "protected_endpoint",
+  "cases": [
+    {
+      "name": "allowlisted_200",
+      "role": "allowlisted_200",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "allowlisted_origin"
+      },
+      "primary": "2xx_with_data",
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "set the source origin to the allowlisted origin",
+        "send the request to the protected endpoint",
+        "assert the response status is 2xx",
+        "assert the protected resource data is present"
+      ]
+    },
+    {
+      "name": "non_allowlisted_403",
+      "role": "non_allowlisted_403",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "non_allowlisted_origin"
+      },
+      "primary": "403_no_data",
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "steps": [
+        "set the source origin to a non-allowlisted origin",
+        "send the request to the protected endpoint",
+        "assert the response status is the documented block status",
+        "assert no_data: no protected resource data is returned"
+      ]
+    },
+    {
+      "name": "xff_spoof_403",
+      "role": "xff_spoof_403",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "blocked_origin_forging_allowlisted_forwarded_header"
+      },
+      "primary": "403_no_data_forwarded_header_ignored",
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "steps": [
+        "set the true peer origin to a non-allowlisted origin",
+        "add a forwarded-for header naming an allowlisted origin",
+        "send the request to the protected endpoint",
+        "assert the client-supplied forwarded header is ignored and the true peer origin governs",
+        "assert the block status stands",
+        "assert no_data: no protected resource data leaks"
+      ]
+    },
+    {
+      "name": "cidr_subnet",
+      "role": "cidr_subnet",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "in_range_origin_vs_sibling_outside_range"
+      },
+      "primary": "in_range_2xx_with_data_and_sibling_outside_403_no_data",
+      "expected_class": "2xx",
+      "also_accept": [
+        "401"
+      ],
+      "steps": [
+        "pick an origin inside the documented allowed CIDR range",
+        "pick a sibling origin one address beyond the mask boundary",
+        "send both requests to the protected endpoint",
+        "assert the in-range origin is allowed 2xx with data present",
+        "assert the sibling-outside origin is blocked with no_data returned"
+      ]
+    },
+    {
+      "name": "ipv6",
+      "role": "ipv6",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "ipv6_origin"
+      },
+      "primary": "allow_or_block_per_ipv6_allowlist_membership",
+      "expected_class": "2xx",
+      "also_accept": [
+        "403",
+        "401"
+      ],
+      "steps": [
+        "set an IPv6 source origin matching the brief's allow or deny expectation",
+        "send the request to the protected endpoint",
+        "assert the outcome follows the IPv6 origin's allowlist membership",
+        "assert data is present only when the origin is allowed"
+      ]
+    },
+    {
+      "name": "multi_hop_xff_depth",
+      "role": "multi_hop_xff_depth",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "multi_hop_forwarded_chain"
+      },
+      "primary": "enforced_against_trusted_proxy_depth_client_origin",
+      "expected_class": "2xx",
+      "also_accept": [
+        "403",
+        "401"
+      ],
+      "steps": [
+        "build a forwarded-for chain longer than the configured trusted-proxy depth",
+        "send the request through the trusted proxy to the protected endpoint",
+        "assert the client origin chosen is the one at the configured trusted-proxy depth",
+        "assert untrusted hops are ignored",
+        "assert allow-or-deny follows that depth-selected origin's membership"
+      ]
+    },
+    {
+      "name": "denylist_precedence",
+      "role": "denylist_precedence",
+      "endpoint_role": "protected_endpoint",
+      "method": "GET",
+      "recipe": {
+        "kind": "origin_on_both_allowlist_and_denylist"
+      },
+      "primary": "denylist_wins_403_no_data",
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "steps": [
+        "ensure the origin appears on both the allowlist and the denylist",
+        "send the request to the protected endpoint",
+        "assert the denylist takes precedence",
+        "assert no_data: no protected resource data is returned"
+      ]
+    },
+    {
+      "name": "allowlist_add_allows",
+      "role": "allowlist_add_allows",
+      "endpoint_role": "allowlist_management_endpoint",
+      "method": "POST",
+      "recipe": {
+        "kind": "management_add"
+      },
+      "primary": "formerly_blocked_origin_now_2xx_with_data",
+      "expected_class": "2xx",
+      "also_accept": [],
+      "steps": [
+        "call the allowlist management endpoint to add a formerly-blocked origin",
+        "re-send the request from that origin to the protected endpoint",
+        "assert the origin is now allowed 2xx",
+        "assert the protected resource data is present"
+      ]
+    },
+    {
+      "name": "allowlist_remove_blocks",
+      "role": "allowlist_remove_blocks",
+      "endpoint_role": "allowlist_management_endpoint",
+      "method": "DELETE",
+      "recipe": {
+        "kind": "management_remove"
+      },
+      "primary": "formerly_allowed_origin_now_403_no_data",
+      "expected_class": "403",
+      "also_accept": [
+        "401"
+      ],
+      "steps": [
+        "call the allowlist management endpoint to remove a formerly-allowed origin",
+        "re-send the request from that origin to the protected endpoint",
+        "assert the origin is now blocked",
+        "assert no_data: no protected resource data is returned"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "ip_allowlist_enforcement_fidelity",
+    "value": 1.0
+  }
+}

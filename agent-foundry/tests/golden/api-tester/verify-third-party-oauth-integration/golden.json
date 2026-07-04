@@ -1,0 +1,182 @@
+{
+  "agent": "api-tester-verify-third-party-oauth-integration",
+  "lane": "third-party-oauth2-authorization-code-staged-flow",
+  "cases": [
+    {
+      "role": "redirect",
+      "endpoint_role": "authorize_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "authorize_redirect"
+      },
+      "expected_class": "302",
+      "asserts": [
+        "location_present",
+        "location_https",
+        "has_client_id",
+        "has_redirect_uri",
+        "has_scope",
+        "state_present_min_length"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "code_receipt",
+      "endpoint_role": "callback_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "callback_code_receipt"
+      },
+      "expected_class": "2xx",
+      "asserts": [
+        "code_present",
+        "state_match"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "token_exchange",
+      "endpoint_role": "token_endpoint",
+      "method": "POST",
+      "stage_kind": {
+        "kind": "code_for_token_exchange"
+      },
+      "expected_class": "2xx",
+      "asserts": [
+        "access_token_nonempty",
+        "refresh_token_nonempty",
+        "token_type_bearer",
+        "expiry_positive"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "userinfo",
+      "endpoint_role": "userinfo_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "bearer_userinfo"
+      },
+      "expected_class": "2xx",
+      "asserts": [
+        "profile_field_nonempty"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "refresh",
+      "endpoint_role": "refresh_endpoint",
+      "method": "POST",
+      "stage_kind": {
+        "kind": "refresh_token_exchange"
+      },
+      "expected_class": "2xx",
+      "asserts": [
+        "new_access_token_diff"
+      ],
+      "also_accept": []
+    },
+    {
+      "role": "state_csrf",
+      "endpoint_role": "callback_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "mismatched_state"
+      },
+      "expected_class": "400",
+      "asserts": [
+        "rejected",
+        "no_token_issued"
+      ],
+      "also_accept": [
+        "401"
+      ]
+    },
+    {
+      "role": "bad_redirect_uri",
+      "endpoint_role": "authorize_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "unregistered_redirect_uri"
+      },
+      "expected_class": "400",
+      "asserts": [
+        "rejected",
+        "no_code_issued"
+      ],
+      "also_accept": [
+        "401"
+      ]
+    },
+    {
+      "role": "replayed_expired_code",
+      "endpoint_role": "token_endpoint",
+      "method": "POST",
+      "stage_kind": {
+        "kind": "replayed_or_expired_code"
+      },
+      "expected_class": "400",
+      "asserts": [
+        "rejected",
+        "no_token_issued"
+      ],
+      "also_accept": [
+        "401"
+      ]
+    },
+    {
+      "role": "wrong_client_secret",
+      "endpoint_role": "token_endpoint",
+      "method": "POST",
+      "stage_kind": {
+        "kind": "wrong_client_secret"
+      },
+      "expected_class": "401",
+      "asserts": [
+        "rejected",
+        "no_token_issued"
+      ],
+      "also_accept": [
+        "400"
+      ]
+    },
+    {
+      "role": "pkce_mismatch",
+      "endpoint_role": "token_endpoint",
+      "method": "POST",
+      "stage_kind": {
+        "kind": "pkce_verifier_mismatch",
+        "requires": "pkce_documented"
+      },
+      "expected_class": "400",
+      "asserts": [
+        "rejected",
+        "no_token_issued"
+      ],
+      "also_accept": [
+        "401"
+      ]
+    },
+    {
+      "role": "denied_consent",
+      "endpoint_role": "callback_endpoint",
+      "method": "GET",
+      "stage_kind": {
+        "kind": "denied_consent_access_denied"
+      },
+      "expected_class": "4xx",
+      "asserts": [
+        "error_access_denied",
+        "no_token_issued"
+      ],
+      "also_accept": [
+        "2xx"
+      ]
+    }
+  ],
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "oauth_flow_fidelity",
+    "value": 1.0
+  }
+}

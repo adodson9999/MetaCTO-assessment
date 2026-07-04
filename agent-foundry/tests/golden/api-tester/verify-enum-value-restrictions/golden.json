@@ -1,0 +1,373 @@
+{
+  "agent": "api-tester-verify-enum-value-restrictions",
+  "lane": "request-body-enum-value-matrix",
+  "matrix": {
+    "valid_values": [
+      {
+        "role": "valid_values",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "ENUM_A_VALUE_1",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "2xx",
+        "also_accept": []
+      },
+      {
+        "role": "valid_values",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "ENUM_A_VALUE_2",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_2",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "2xx",
+        "also_accept": []
+      },
+      {
+        "role": "valid_values",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "ENUM_B_VALUE_1",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "2xx",
+        "also_accept": []
+      },
+      {
+        "role": "valid_values",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "ENUM_B_VALUE_2",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_2",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "2xx",
+        "also_accept": []
+      }
+    ],
+    "unknown_string": [
+      {
+        "role": "unknown_string",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+        "body": {
+          "enum_field_a": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "unknown_string",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "INVALID_ENUM_THAT_DOES_NOT_EXIST",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "empty_string": [
+      {
+        "role": "empty_string",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "",
+        "body": {
+          "enum_field_a": "",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "empty_string",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "null": [
+      {
+        "role": "null",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": null,
+        "body": {
+          "enum_field_a": null,
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "nullability_dependent",
+        "also_accept": ["2xx", "4xx"]
+      },
+      {
+        "role": "null",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": null,
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": null,
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "nullability_dependent",
+        "also_accept": ["2xx", "4xx"]
+      }
+    ],
+    "wrong_type": [
+      {
+        "role": "wrong_type",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": 0,
+        "body": {
+          "enum_field_a": 0,
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "wrong_type",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": 0,
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": 0,
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "case_variant": [
+      {
+        "role": "case_variant",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "enum_a_value_1",
+        "body": {
+          "enum_field_a": "enum_a_value_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "case_variant",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "enum_b_value_1",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "enum_b_value_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "numeric_enum": [
+      {
+        "role": "numeric_enum",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "variant": "out_of_set_number",
+        "value": 99,
+        "body": {
+          "enum_field_a": 99,
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "numeric_enum",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "variant": "stringified_number",
+        "value": "99",
+        "body": {
+          "enum_field_a": "99",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "numeric_enum",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "variant": "out_of_set_number",
+        "value": 99,
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": 99,
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "numeric_enum",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "variant": "stringified_number",
+        "value": "99",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "99",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "array_multi_select": [
+      {
+        "role": "array_multi_select",
+        "endpoint_role": "create_endpoint",
+        "field": "example_multi_select_field",
+        "variant": "valid_multi_select_accepted",
+        "value": ["ENUM_B_VALUE_1", "ENUM_B_VALUE_2"],
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1", "ENUM_B_VALUE_2"]
+        },
+        "expected_class": "2xx",
+        "also_accept": []
+      },
+      {
+        "role": "array_multi_select",
+        "endpoint_role": "create_endpoint",
+        "field": "example_multi_select_field",
+        "variant": "off_enum_member_rejected",
+        "value": ["ENUM_B_VALUE_1", "INVALID_ENUM_THAT_DOES_NOT_EXIST"],
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1", "INVALID_ENUM_THAT_DOES_NOT_EXIST"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "whitespace_padded": [
+      {
+        "role": "whitespace_padded",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": " ENUM_A_VALUE_1 ",
+        "body": {
+          "enum_field_a": " ENUM_A_VALUE_1 ",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "whitespace_padded",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": " ENUM_B_VALUE_1 ",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": " ENUM_B_VALUE_1 ",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ],
+    "unicode_look_alike": [
+      {
+        "role": "unicode_look_alike",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_a",
+        "value": "ЕNUM_A_VALUE_1",
+        "body": {
+          "enum_field_a": "ЕNUM_A_VALUE_1",
+          "enum_field_b": "ENUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      },
+      {
+        "role": "unicode_look_alike",
+        "endpoint_role": "create_endpoint",
+        "field": "enum_field_b",
+        "value": "ЕNUM_B_VALUE_1",
+        "body": {
+          "enum_field_a": "ENUM_A_VALUE_1",
+          "enum_field_b": "ЕNUM_B_VALUE_1",
+          "example_scalar_field": "example_value",
+          "example_multi_select_field": ["ENUM_B_VALUE_1"]
+        },
+        "expected_class": "4xx",
+        "also_accept": []
+      }
+    ]
+  },
+  "out_of_scope": null,
+  "baseline": {
+    "metric": "enum_restriction_fidelity",
+    "value": 1.0
+  }
+}
