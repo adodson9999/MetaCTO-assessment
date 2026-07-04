@@ -322,6 +322,36 @@ def _doc_lookup(corpus, invoke, report: dict) -> dict:
     return {"cited": False, "verdict": verdict, "note": uncited_note.format(v=verdict)}
 
 
+def _apply_documented_expectation(report: dict) -> None:
+    """When the documentation-reviewer cited a source, fold the ACTUAL documented behavior (the
+    quoted doc line) into the report's expected_result so it says WHAT is expected, not just that
+    'the checks pass against the documented behaviour'. Mutates the report in place. No-op for an
+    uncited (unverified) finding — its expectation is already the concrete contract expectation."""
+    doc = report.get("documentation") or {}
+    if not doc.get("cited"):
+        return
+    text = (doc.get("text") or "").strip().rstrip(".")
+    if not text:
+        return
+    cite = f"{doc.get('file')}:{doc.get('line')}"
+    url = doc.get("source_url")
+    src = f"{cite}" + (f" — {url}" if url else "")
+    documented = f'Per the documentation ({src}): "{text}."'
+    prev = (report.get("expected_result") or "").strip()
+    scenario = (report.get("_source", {}).get("agent", "") or "").replace("api-tester-", "") \
+        .replace("-", " ")
+    # An aggregate finding's expected is the vague "All N … checks pass against the documented
+    # behaviour" — replace it with the documented behavior itself so the reader sees WHAT is
+    # expected.
+    if "documented behaviour" in prev or "documented behavior" in prev:
+        report["expected_result"] = (
+            f"{documented} Every '{scenario}' scenario check must conform to this.")
+    else:
+        # A concrete finding already has a specific expectation — append the doc backing.
+        report["expected_result"] = f"{prev} ({documented})" if prev else documented
+    report["documented_expected"] = documented
+
+
 def _standard_report(raw: dict, agent: str, out_root: Path, run_id: str, target: str,
                      date: str, tm: str, attachments: dict) -> dict:
     """Transform a raw metric/artifact bug record into a standard defect report with the eight
@@ -524,6 +554,7 @@ def _materialize_bugreport(out_root: Path, run_id: str, target: str) -> dict:
                 artifacts += 1
         report = _standard_report(raw, agent, out_root, run_id, target, date, tm, attachments)
         report["documentation"] = _doc_lookup(corpus, invoke, report)
+        _apply_documented_expectation(report)
         doc = report["documentation"]
         if doc.get("cited"):
             adir = tree / agent / "verified_bugs"
