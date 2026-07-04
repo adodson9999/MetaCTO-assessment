@@ -724,7 +724,8 @@ def core_gate(out_root: Path = None) -> list:
             g16_search_coverage(out_root), g17_postman(out_root),
             g18_postman_testcase_alignment(out_root), g19_postman_coverage(out_root),
             g20_deliverable_separation(out_root), g22_no_bug_index_files(out_root),
-            g24_evidence_authenticity(out_root), g25_unverified_layout(out_root)]
+            g24_evidence_authenticity(out_root), g25_unverified_layout(out_root),
+            g26_documented_expectation(out_root)]
 
 
 def g22_no_bug_index_files(out_root: Path = None) -> dict:
@@ -958,6 +959,89 @@ def g25_unverified_layout(out_root: Path = None) -> dict:
                        f"category-consistent ids and co-located artifacts.")}
 
 
+# Vague placeholder phrases a documentation-cited expected_result must NEVER contain — it must
+# state the documented behavior, not defer to it.
+_VAGUE_EXPECTED_PHRASES = (
+    "pass against the documented behaviour",
+    "pass against the documented behavior",
+    "the documented behaviour for this scenario",
+    "the documented behavior for this scenario",
+    "an incorrect result",
+    "meets its pass threshold",
+)
+_EXPECTED_STOPWORDS = {
+    "the", "a", "an", "and", "or", "of", "to", "in", "on", "for", "with", "is", "are", "be",
+    "must", "should", "will", "can", "this", "that", "these", "those", "per", "documentation",
+    "documented", "behaviour", "behavior", "every", "scenario", "check", "checks", "conform",
+    "all", "get", "use", "used", "you", "your", "it", "its", "as", "by", "from", "at", "each",
+}
+
+
+def _sig_words(text: str) -> set:
+    """Significant content words (lowercased, len>=3, non-stopword) for grounding comparison."""
+    toks = re.findall(r"[A-Za-z0-9_]+", (text or "").lower())
+    return {t for t in toks if len(t) >= 3 and t not in _EXPECTED_STOPWORDS}
+
+
+def g26_documented_expectation(out_root: Path = None) -> dict:
+    """HARD: every VERIFIED (documentation-cited) bug's expected_result must state the documented
+    behavior in its own words, not defer to it vaguely. For each bug whose documentation.cited is
+    true:
+      - expected_result must be non-empty and must NOT contain a vague placeholder phrase
+        (e.g. 'All N checks pass against the documented behaviour');
+      - it must be GROUNDED in the cited documentation — it shares enough significant content words
+        with documentation.text to be a reworded version of it (not generic boilerplate).
+    Unverified/uncited bugs are out of scope (their expectation is the universal contract, not a
+    doc citation). A run with no verified bugs passes trivially."""
+    if out_root is None:
+        out_root = _latest_run_dir()
+    if out_root is None:
+        return {"id": "G26", "name": "documented-expectation", "hard": True, "status": "PASS",
+                "detail": "no dated run tree (nothing to validate)."}
+    tree = out_root / "BugReport"
+    if not tree.is_dir():
+        return {"id": "G26", "name": "documented-expectation", "hard": True, "status": "PASS",
+                "detail": "no BugReport tree (nothing to validate)."}
+    vague, ungrounded, n = [], [], 0
+    for rp in sorted(tree.rglob("verified_bugs/*.json")):
+        try:
+            d = json.loads(rp.read_text())
+        except (OSError, ValueError):
+            continue
+        doc = d.get("documentation") or {}
+        if not doc.get("cited"):
+            continue
+        n += 1
+        bid = d.get("id") or d.get("bug_id")
+        exp = (d.get("expected_result") or "").strip()
+        low = exp.lower()
+        if not exp or any(p in low for p in _VAGUE_EXPECTED_PHRASES):
+            vague.append(bid)
+            continue
+        # grounding: the expected must share enough content words with the cited doc text to be a
+        # reworded version of it (verbatim embed → full overlap; a genuine rewording → partial).
+        doc_words = _sig_words(doc.get("text", ""))
+        exp_words = _sig_words(exp)
+        shared = doc_words & exp_words
+        # Grounding floor: at least one shared content word, scaling to ~a quarter of the doc's
+        # content words for longer citations. Loose enough that a genuine synonym-rewording passes,
+        # strict enough that generic boilerplate sharing nothing with the doc fails.
+        need = max(1, len(doc_words) // 4)
+        if doc_words and len(shared) < min(need, len(doc_words)):
+            ungrounded.append(bid)
+    problems = []
+    if vague:
+        problems.append(f"{len(vague)} verified bug(s) with a vague/placeholder expected_result: {vague[:5]}")
+    if ungrounded:
+        problems.append(f"{len(ungrounded)} verified bug(s) whose expected_result is not grounded in "
+                        f"the cited documentation: {ungrounded[:5]}")
+    return {"id": "G26", "name": "documented-expectation", "hard": True,
+            "status": "FAIL" if problems else "PASS",
+            "detail": ("; ".join(problems) if problems else
+                       f"all {n} verified bug(s) state the documented behavior (reworded from the "
+                       f"cited docs), no vague placeholders.")}
+
+
 def deliverable_gate(out_root: Path) -> list:
     """The per-run HARD subset used by the full-orchestration finalize to decide BROKEN. Excludes the
     global G13 (which polices the WHOLE results/ dir for legacy strays — a separate cleanliness concern);
@@ -966,7 +1050,7 @@ def deliverable_gate(out_root: Path) -> list:
             g17_postman(out_root), g18_postman_testcase_alignment(out_root),
             g19_postman_coverage(out_root), g20_deliverable_separation(out_root),
             g22_no_bug_index_files(out_root), g24_evidence_authenticity(out_root),
-            g25_unverified_layout(out_root)]
+            g25_unverified_layout(out_root), g26_documented_expectation(out_root)]
 
 
 def run(run_id: str) -> dict:
