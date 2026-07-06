@@ -1,0 +1,83 @@
+{
+  "bug_id": "SW-RUN-20260703-181017-0175",
+  "category": "computer-software",
+  "category_reason": "system/internal signal or no positively user-visible signal (expected All 19 'run regression suite' scenario checks pass against the documented behaviour, observed [api-tester-run-regression-suite] quality outcome=FAIL; metric=7.14)",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "run-regression-suite",
+  "finding_endpoint": "n/a \u2014 aggregate finding across endpoints",
+  "sub_test": "Aggregate failure: run regression suite (0/19 scenario checks failed)",
+  "title": "[run-regression-suite] Aggregate failure: run regression suite (0/19 scenario checks failed) on n/a \u2014 aggregate finding across endpoints \u2014 expected All 19 'run regression suite' scenario checks pass against the documented behaviour, observed [api-tester-run-regression-suite] quality outcome=FAIL; metric=7.14 (undocumented)",
+  "severity": "LOW",
+  "priority": "P4",
+  "expected": "All 19 'run regression suite' scenario checks pass against the documented behaviour",
+  "observed": "[api-tester-run-regression-suite] quality outcome=FAIL; metric=7.14",
+  "artifacts": {
+    "testing_steps": [
+      "1. Start the target API at http://localhost:8899.",
+      "2. Write a script that replays every request in Postman/collection.json against http://localhost:8899 and diffs each status+body against the recorded expected values.",
+      "3. Any case that previously passed and now fails is the regression.",
+      "4. Compare your script's failures with the per-scenario evidence in TestCases/run-regression-suite/cases.json \u2014 this run recorded 0 of 19 checks failing."
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/computer-software/screenshots/SW-RUN-20260703-181017-0175.png",
+    "recording_path": "BugReport/unverified/computer-software/recordings/SW-RUN-20260703-181017-0175.mp4",
+    "log_path": "BugReport/unverified/computer-software/logs/SW-RUN-20260703-181017-0175.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9,
+  "description": "The run-regression-suite check failed in aggregate against http://localhost:8899: [api-tester-run-regression-suite] quality outcome=FAIL; metric=7.14. The per-scenario evidence is in TestCases/run-regression-suite/cases.json. There is no single reproducible API call \u2014 reproduce it with the script described in the steps below (which is also why this bug has no Postman section).",
+  "steps_to_reproduce": [
+    "1. Start the target API at http://localhost:8899.",
+    "2. Write a script that replays every request in Postman/collection.json against http://localhost:8899 and diffs each status+body against the recorded expected values.",
+    "3. Any case that previously passed and now fails is the regression.",
+    "4. Compare your script's failures with the per-scenario evidence in TestCases/run-regression-suite/cases.json \u2014 this run recorded 0 of 19 checks failing."
+  ],
+  "evidence": "TestCases/run-regression-suite/cases.json",
+  "documentation": {
+    "cited": false,
+    "verdict": "missing-docs",
+    "note": "No public documentation states this expected behavior (documentation-reviewer verdict: missing-docs). The expectation derives from the universal HTTP/REST contract (agent-foundry/references/contract-oracle.md)."
+  },
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "n/a \u2014 aggregate finding across endpoints",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "affected_test_cases": null,
+  "_source": {
+    "agent": "api-tester-run-regression-suite",
+    "raw_title": "[api-tester-run-regression-suite] quality outcome=FAIL; metric=7.14",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": false,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  }
+}

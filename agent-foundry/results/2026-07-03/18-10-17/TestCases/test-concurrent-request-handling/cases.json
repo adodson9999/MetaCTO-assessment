@@ -1,0 +1,162 @@
+[
+  {
+    "test_case_id": "TC-CONCUR-001",
+    "title_summary": "Read all status 200: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-002",
+    "title_summary": "Read all bodies identical: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-003",
+    "title_summary": "Read zero 500: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-004",
+    "title_summary": "Read success: verify test concurrent request handling returns 50.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 50.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-005",
+    "title_summary": "Write all status 201: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-006",
+    "title_summary": "Write count: verify test concurrent request handling returns 50.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 50.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-007",
+    "title_summary": "Write zero duplicates: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-008",
+    "title_summary": "Write zero missing: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-009",
+    "title_summary": "Write zero 500: verify test concurrent request handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-CONCUR-010",
+    "title_summary": "Write success: verify test concurrent request handling returns 50.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to read_endpoint_role.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 50.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  }
+]

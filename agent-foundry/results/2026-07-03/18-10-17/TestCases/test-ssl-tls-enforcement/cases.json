@@ -1,0 +1,274 @@
+[
+  {
+    "test_case_id": "TC-TLS-001",
+    "title_summary": "Plain http refused or redirected: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-002",
+    "title_summary": "Plain http zero api data: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-003",
+    "title_summary": "Tls1 0 refused: verify test ssl tls enforcement returns refused.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns refused.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-004",
+    "title_summary": "Tls1 1 refused: verify test ssl tls enforcement returns refused.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns refused.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-005",
+    "title_summary": "Tls1 2 accepted: verify test ssl tls enforcement returns accepted.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns accepted.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-006",
+    "title_summary": "Tls1 3 accepted: verify test ssl tls enforcement returns accepted.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns accepted.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-007",
+    "title_summary": "Tls1 2 http 200: verify test ssl tls enforcement returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-008",
+    "title_summary": "Tls1 3 http 200: verify test ssl tls enforcement returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-009",
+    "title_summary": "Cert not expired: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-010",
+    "title_summary": "Cert cn or san match: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-011",
+    "title_summary": "Cert chain of trust ok: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-012",
+    "title_summary": "Cert not self signed: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-013",
+    "title_summary": "No weak cipher rc4: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-014",
+    "title_summary": "No weak cipher des: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-015",
+    "title_summary": "No weak cipher 3des: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-016",
+    "title_summary": "No weak cipher export: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-TLS-017",
+    "title_summary": "No weak cipher null: verify test ssl tls enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to https://localhost:9443.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  }
+]

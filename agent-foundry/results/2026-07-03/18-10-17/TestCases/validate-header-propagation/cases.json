@@ -1,0 +1,210 @@
+[
+  {
+    "test_case_id": "TC-HDRPROP-001",
+    "title_summary": "Plan correlation id exact: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-002",
+    "title_summary": "Plan header name exact: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-003",
+    "title_summary": "Plan with header: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-004",
+    "title_summary": "Plan no header: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-005",
+    "title_summary": "Plan assertions complete: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-006",
+    "title_summary": "Resp header echo exact: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned absent.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-007",
+    "title_summary": "Api log: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-008",
+    "title_summary": "Api log unmodified: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned absent.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-009",
+    "title_summary": "Downstream services: verify validate header propagation returns >=2.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns >=2.",
+    "actual_result": "The API returned 0.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-010",
+    "title_summary": "Downstream log: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned n/a.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-011",
+    "title_summary": "No header uuid generated: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned absent.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-012",
+    "title_summary": "No header uuid in api log: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned n/a.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-HDRPROP-013",
+    "title_summary": "No header uuid in downstream: verify validate header propagation returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET products_add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned n/a.",
+    "status": "Fail"
+  }
+]

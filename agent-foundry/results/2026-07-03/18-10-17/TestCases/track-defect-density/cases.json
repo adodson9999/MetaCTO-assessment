@@ -1,0 +1,290 @@
+[
+  {
+    "test_case_id": "TC-DEFECT-001",
+    "title_summary": "Case 1: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-002",
+    "title_summary": "Case 2: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "edge"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-003",
+    "title_summary": "Case 3: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-004",
+    "title_summary": "Case 4: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-005",
+    "title_summary": "Case 5: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "edge"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-006",
+    "title_summary": "Case 6: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-007",
+    "title_summary": "Case 7: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "edge"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-008",
+    "title_summary": "Case 8: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-009",
+    "title_summary": "Case 9: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-010",
+    "title_summary": "Case 10: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-011",
+    "title_summary": "Case 11: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-012",
+    "title_summary": "Case 12: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-013",
+    "title_summary": "Case 13: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-014",
+    "title_summary": "Case 14: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-015",
+    "title_summary": "Case 15: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-016",
+    "title_summary": "Case 16: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-017",
+    "title_summary": "Case 17: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-DEFECT-018",
+    "title_summary": "Case 18: verify track defect density returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to the API target.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "test_case_id": "TC-IPALLOW-001",
+    "title_summary": "Allowlisted baseline: verify test ip allowlist enforcement returns 200:data.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /restricted/orders to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200:data.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-IPALLOW-002",
+    "title_summary": "Nonallowlisted baseline: verify test ip allowlist enforcement returns 403:nodata.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /restricted/orders to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 403:nodata.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-IPALLOW-003",
+    "title_summary": "Xff spoof rejected: verify test ip allowlist enforcement returns 403:nodata.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /restricted/orders to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 403:nodata.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-IPALLOW-004",
+    "title_summary": "Allowlist add allows: verify test ip allowlist enforcement returns 200:data.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /restricted/orders to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200:data.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-IPALLOW-005",
+    "title_summary": "Allowlist remove blocks: verify test ip allowlist enforcement returns 403:nodata.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /restricted/orders to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 403:nodata.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  }
+]

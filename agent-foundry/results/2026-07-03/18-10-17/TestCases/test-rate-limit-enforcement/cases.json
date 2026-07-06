@@ -1,0 +1,130 @@
+[
+  {
+    "test_case_id": "TC-RATE-001",
+    "title_summary": "At limit all non 429: verify test rate limit enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-002",
+    "title_summary": "Over limit: verify test rate limit enforcement returns 429.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 429.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-003",
+    "title_summary": "First 429 ordinal: verify test rate limit enforcement returns 101.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 101.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-004",
+    "title_summary": "Trigger precision exact: verify test rate limit enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-005",
+    "title_summary": "Retry after: verify test rate limit enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-006",
+    "title_summary": "Retry after positive int: verify test rate limit enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-007",
+    "title_summary": "Within window still 429: verify test rate limit enforcement returns 429.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 429.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-RATE-008",
+    "title_summary": "After window non 429: verify test rate limit enforcement returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  }
+]

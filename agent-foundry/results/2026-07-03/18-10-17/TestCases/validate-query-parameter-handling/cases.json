@@ -1,0 +1,194 @@
+[
+  {
+    "test_case_id": "TC-QPARAM-001",
+    "title_summary": "Missing required q: verify validate query parameter handling returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-002",
+    "title_summary": "Wrongtype limit nonnumeric: verify validate query parameter handling returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-003",
+    "title_summary": "Wrongtype skip nonnumeric: verify validate query parameter handling returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-004",
+    "title_summary": "Wrongtype order badenum: verify validate query parameter handling returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-005",
+    "title_summary": "Valid limit: verify validate query parameter handling returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-006",
+    "title_summary": "Valid limit filter: verify validate query parameter handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-007",
+    "title_summary": "Valid select: verify validate query parameter handling returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-008",
+    "title_summary": "Valid select filter: verify validate query parameter handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-009",
+    "title_summary": "Valid order: verify validate query parameter handling returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-010",
+    "title_summary": "Valid order filter: verify validate query parameter handling returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-011",
+    "title_summary": "Valid q: verify validate query parameter handling returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-QPARAM-012",
+    "title_summary": "Undocumented ignored: verify validate query parameter handling returns 200.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 200.",
+    "actual_result": "The API returned missing.",
+    "status": "Fail"
+  }
+]

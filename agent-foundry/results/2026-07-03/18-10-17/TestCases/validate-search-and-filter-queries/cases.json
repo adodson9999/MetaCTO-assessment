@@ -1,0 +1,168 @@
+[
+  {
+    "test_case_id": "TC-SEARCH-001",
+    "title_summary": "GET /products/search?q=phone returns matching products (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/search?q=phone.",
+      "2. Assert status == 200.",
+      "3. Assert products is array.",
+      "4. Assert body has 'total'."
+    ],
+    "test_data": {
+      "scenario_id": "SEARCH-KEYWORD",
+      "method": "GET",
+      "path": "/products/search",
+      "query": {
+        "q": "phone"
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; products is array; body has 'total'.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-002",
+    "title_summary": "GET /products/search?q=<nonsense> returns an empty product set (200, total 0)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/search?q=zzzqx-no-match.",
+      "2. Assert status == 200.",
+      "3. Assert products is array.",
+      "4. Assert total == 0."
+    ],
+    "test_data": {
+      "scenario_id": "SEARCH-KEYWORD-EMPTY",
+      "method": "GET",
+      "path": "/products/search",
+      "query": {
+        "q": "zzzqx-no-match"
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; products is array; total == 0.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-003",
+    "title_summary": "GET /products/category/smartphones returns only that category (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/category/smartphones.",
+      "2. Assert status == 200.",
+      "3. Assert products is array.",
+      "4. Assert every products[].category == 'smartphones'."
+    ],
+    "test_data": {
+      "scenario_id": "FILTER-CATEGORY",
+      "method": "GET",
+      "path": "/products/category/smartphones",
+      "query": {},
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; products is array; every products[].category == 'smartphones'.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-004",
+    "title_summary": "GET /products/categories returns the category list (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/categories.",
+      "2. Assert status == 200.",
+      "3. Assert $root is array."
+    ],
+    "test_data": {
+      "scenario_id": "FILTER-CATEGORY-LIST",
+      "method": "GET",
+      "path": "/products/categories",
+      "query": {},
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; $root is array.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-005",
+    "title_summary": "GET /products?limit=5&skip=10 honours pagination (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products?limit=5&skip=10.",
+      "2. Assert status == 200.",
+      "3. Assert len(products) <= 5.",
+      "4. Assert skip == 10.",
+      "5. Assert limit == 5."
+    ],
+    "test_data": {
+      "scenario_id": "PAGE-LIMIT-SKIP",
+      "method": "GET",
+      "path": "/products",
+      "query": {
+        "limit": 5,
+        "skip": 10
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; len(products) <= 5; skip == 10; limit == 5.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-006",
+    "title_summary": "GET /products?select=title,price returns only the selected fields (+id) (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products?limit=3&select=title%2Cprice.",
+      "2. Assert status == 200.",
+      "3. Assert every products[] keys \u2286 ['id', 'price', 'title']."
+    ],
+    "test_data": {
+      "scenario_id": "SELECT-FIELDS",
+      "method": "GET",
+      "path": "/products",
+      "query": {
+        "limit": 3,
+        "select": "title,price"
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; every products[] keys \u2286 ['id', 'price', 'title'].",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-SEARCH-007",
+    "title_summary": "GET /products?sortBy=title&order=asc returns title-sorted products (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products?limit=10&sortBy=title&order=asc.",
+      "2. Assert status == 200.",
+      "3. Assert products sorted by title asc."
+    ],
+    "test_data": {
+      "scenario_id": "SORT-ASC",
+      "method": "GET",
+      "path": "/products",
+      "query": {
+        "limit": 10,
+        "sortBy": "title",
+        "order": "asc"
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; products sorted by title asc.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  }
+]

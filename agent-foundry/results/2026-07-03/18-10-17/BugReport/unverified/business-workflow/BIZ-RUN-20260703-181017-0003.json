@@ -1,0 +1,49 @@
+{
+  "bug_id": "BIZ-RUN-20260703-181017-0003",
+  "category": "business-workflow",
+  "category_reason": "user-visible behaviour differs (expected 2, observed 0); no system signal",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "test-bulk-operation-endpoints",
+  "finding_endpoint": "",
+  "sub_test": "mixed_invalid_400_count",
+  "title": "[test-bulk-operation-endpoints] mixed_invalid_400_count on  \u2014 expected 2, observed 0 (undocumented)",
+  "severity": "HIGH",
+  "priority": "P2",
+  "expected": "2",
+  "observed": "0",
+  "artifacts": {
+    "testing_steps": [
+      {
+        "tc_id": "UV-test-bulk-operation-endpoints-1",
+        "step_id": 1,
+        "step_text": "Exercise the test-bulk-operation-endpoints scenario 'mixed_invalid_400_count' against ",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "2",
+        "fail_condition": "observed 0"
+      }
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/business-workflow/screenshots/BIZ-RUN-20260703-181017-0003.png",
+    "recording_path": "BugReport/unverified/business-workflow/recordings/BIZ-RUN-20260703-181017-0003.mp4",
+    "log_path": "BugReport/unverified/business-workflow/logs/BIZ-RUN-20260703-181017-0003.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9
+}

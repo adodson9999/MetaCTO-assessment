@@ -1,0 +1,66 @@
+[
+  {
+    "test_case_id": "TC-ENUM-001",
+    "title_summary": "Products add: verify verify enum value restrictions returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ENUM-002",
+    "title_summary": "Users add: verify verify enum value restrictions returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ENUM-003",
+    "title_summary": "Todos add: verify verify enum value restrictions returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /todos/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ENUM-004",
+    "title_summary": "Posts add: verify verify enum value restrictions returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /posts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  }
+]

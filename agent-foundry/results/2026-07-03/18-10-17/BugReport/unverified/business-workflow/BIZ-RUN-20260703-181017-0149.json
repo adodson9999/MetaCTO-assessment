@@ -1,0 +1,49 @@
+{
+  "bug_id": "BIZ-RUN-20260703-181017-0149",
+  "category": "business-workflow",
+  "category_reason": "user-visible behaviour differs (expected 200, observed missing); no system signal",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "validate-query-parameter-handling",
+  "finding_endpoint": "/recipes",
+  "sub_test": "valid_q_status",
+  "title": "[validate-query-parameter-handling] valid_q_status on /recipes \u2014 expected 200, observed missing (undocumented)",
+  "severity": "MEDIUM",
+  "priority": "P3",
+  "expected": "200",
+  "observed": "missing",
+  "artifacts": {
+    "testing_steps": [
+      {
+        "tc_id": "UV-validate-query-parameter-handling-1",
+        "step_id": 1,
+        "step_text": "Exercise the validate-query-parameter-handling scenario 'valid_q_status' against /recipes",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "200",
+        "fail_condition": "observed missing"
+      }
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/business-workflow/screenshots/BIZ-RUN-20260703-181017-0149.png",
+    "recording_path": "BugReport/unverified/business-workflow/recordings/BIZ-RUN-20260703-181017-0149.mp4",
+    "log_path": "BugReport/unverified/business-workflow/logs/BIZ-RUN-20260703-181017-0149.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9
+}

@@ -1,0 +1,77 @@
+{
+  "id": "BUG-20260703-0003",
+  "title_summary": "Aggregate failure: test pagination behavior (18/18 scenario checks failed)",
+  "description": "The test-pagination-behavior check failed in aggregate against http://localhost:8899: [api-tester-test-pagination-behavior] quality outcome=FAIL; metric=0.0. The per-scenario evidence is in TestCases/test-pagination-behavior/cases.json. There is no single reproducible API call \u2014 reproduce it with the script described in the steps below (which is also why this bug has no Postman section).",
+  "steps_to_reproduce": [
+    "1. Start the target API at http://localhost:8899.",
+    "2. Write a script that calls GET http://localhost:8899/products?limit=10&skip=0 and then ?limit=10&skip=10 (repeat for /users and /posts).",
+    "3. Assert each page returns exactly `limit` items, the two pages share no ids, `total` is identical across pages, and `skip`/`limit` are echoed correctly.",
+    "4. Compare your script's failures with the per-scenario evidence in TestCases/test-pagination-behavior/cases.json \u2014 this run recorded 18 of 18 checks failing."
+  ],
+  "expected_result": "Per the documentation (references/dummyjson-com/dummyjson-com-docs.md:27 \u2014 https://dummyjson.com/docs): \"All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items.\" Every 'test pagination behavior' scenario check must conform to this.",
+  "actual_result": "[api-tester-test-pagination-behavior] quality outcome=FAIL; metric=0.0",
+  "severity": "LOW",
+  "severity_impact": "Minor \u2014 cosmetic / low-impact",
+  "priority": "P4",
+  "priority_urgency": "Low",
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "n/a \u2014 aggregate finding across endpoints",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "evidence": "TestCases/test-pagination-behavior/cases.json",
+  "attachments": {
+    "screenshot": "BugReport/test-pagination-behavior/screenshots/BUG-20260703-0003.png",
+    "recording": "BugReport/test-pagination-behavior/recordings/BUG-20260703-0003.mp4",
+    "log": "BugReport/test-pagination-behavior/logs/BUG-20260703-0003.log"
+  },
+  "affected_test_cases": [
+    "TC-PAGE-001",
+    "TC-PAGE-002",
+    "TC-PAGE-003",
+    "TC-PAGE-004",
+    "TC-PAGE-005",
+    "TC-PAGE-006",
+    "TC-PAGE-007",
+    "TC-PAGE-008",
+    "TC-PAGE-009",
+    "TC-PAGE-010",
+    "TC-PAGE-011",
+    "TC-PAGE-012",
+    "TC-PAGE-013",
+    "TC-PAGE-014",
+    "TC-PAGE-015",
+    "TC-PAGE-016",
+    "TC-PAGE-017",
+    "TC-PAGE-018"
+  ],
+  "_source": {
+    "agent": "api-tester-test-pagination-behavior",
+    "raw_title": "[api-tester-test-pagination-behavior] quality outcome=FAIL; metric=0.0",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": true,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  },
+  "documentation": {
+    "cited": true,
+    "file": "references/dummyjson-com/dummyjson-com-docs.md",
+    "line": 27,
+    "text": "All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items",
+    "source_url": "https://dummyjson.com/docs",
+    "reviewer_reason": "The documentation (references/dummyjson-com/dummyjson-com-docs.md, most recent) specifies that pagination with `limit=0` must clear the limit and return all items. The observed test result shows all 18 pagination behavior scenario checks failed entirely (metric=0.0), indicating the API is not behaving as documented."
+  },
+  "documented_expected": "Per the documentation (references/dummyjson-com/dummyjson-com-docs.md:27 \u2014 https://dummyjson.com/docs): \"All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items.\""
+}

@@ -1,0 +1,71 @@
+{
+  "id": "BUG-20260703-0015",
+  "title_summary": "Aggregate failure: verify sorting behavior (12/12 scenario checks failed)",
+  "description": "The verify-sorting-behavior check failed in aggregate against http://localhost:8899: [api-tester-verify-sorting-behavior] quality outcome=FAIL; metric=0.0. The per-scenario evidence is in TestCases/verify-sorting-behavior/cases.json. There is no single reproducible API call \u2014 reproduce it with the script described in the steps below (which is also why this bug has no Postman section).",
+  "steps_to_reproduce": [
+    "1. Start the target API at http://localhost:8899.",
+    "2. Write a script that calls GET http://localhost:8899/products?sortBy=price&order=asc, then order=desc, then sortBy=title.",
+    "3. Assert the returned list is monotonically ordered by the requested field and direction on every call.",
+    "4. Compare your script's failures with the per-scenario evidence in TestCases/verify-sorting-behavior/cases.json \u2014 this run recorded 12 of 12 checks failing."
+  ],
+  "expected_result": "Per the documentation (data/documentation-reviewer/cli/products.md:5 \u2014 https://dummyjson.com/docs/products): \"Use --sort-by FIELD --order asc|desc to sort the results.\" Every 'verify sorting behavior' scenario check must conform to this.",
+  "actual_result": "[api-tester-verify-sorting-behavior] quality outcome=FAIL; metric=0.0",
+  "severity": "LOW",
+  "severity_impact": "Minor \u2014 cosmetic / low-impact",
+  "priority": "P4",
+  "priority_urgency": "Low",
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "n/a \u2014 aggregate finding across endpoints",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "evidence": "TestCases/verify-sorting-behavior/cases.json",
+  "attachments": {
+    "screenshot": "BugReport/verify-sorting-behavior/screenshots/BUG-20260703-0015.png",
+    "recording": "BugReport/verify-sorting-behavior/recordings/BUG-20260703-0015.mp4",
+    "log": "BugReport/verify-sorting-behavior/logs/BUG-20260703-0015.log"
+  },
+  "affected_test_cases": [
+    "TC-SORT-001",
+    "TC-SORT-002",
+    "TC-SORT-003",
+    "TC-SORT-004",
+    "TC-SORT-005",
+    "TC-SORT-006",
+    "TC-SORT-007",
+    "TC-SORT-008",
+    "TC-SORT-009",
+    "TC-SORT-010",
+    "TC-SORT-011",
+    "TC-SORT-012"
+  ],
+  "_source": {
+    "agent": "api-tester-verify-sorting-behavior",
+    "raw_title": "[api-tester-verify-sorting-behavior] quality outcome=FAIL; metric=0.0",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": false,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  },
+  "documentation": {
+    "cited": true,
+    "file": "data/documentation-reviewer/cli/products.md",
+    "line": 5,
+    "text": "Use --sort-by FIELD --order asc|desc to sort the results.",
+    "source_url": "https://dummyjson.com/docs/products",
+    "reviewer_reason": "The documentation at cli/products.md specifies that sorting should work using --sort-by FIELD and --order asc|desc parameters, but the observed result shows all 12 sorting behavior scenario checks failed (metric 0.0), indicating the sorting functionality is not working as documented."
+  },
+  "documented_expected": "Per the documentation (data/documentation-reviewer/cli/products.md:5 \u2014 https://dummyjson.com/docs/products): \"Use --sort-by FIELD --order asc|desc to sort the results.\""
+}

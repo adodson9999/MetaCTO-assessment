@@ -1,0 +1,49 @@
+{
+  "bug_id": "BIZ-RUN-20260703-181017-0006",
+  "category": "business-workflow",
+  "category_reason": "user-visible behaviour differs (expected 413, observed -1); no system signal",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "test-bulk-operation-endpoints",
+  "finding_endpoint": "",
+  "sub_test": "oversize_rejected",
+  "title": "[test-bulk-operation-endpoints] oversize_rejected on  \u2014 expected 413, observed -1 (undocumented)",
+  "severity": "MEDIUM",
+  "priority": "P3",
+  "expected": "413",
+  "observed": "-1",
+  "artifacts": {
+    "testing_steps": [
+      {
+        "tc_id": "UV-test-bulk-operation-endpoints-1",
+        "step_id": 1,
+        "step_text": "Exercise the test-bulk-operation-endpoints scenario 'oversize_rejected' against ",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "413",
+        "fail_condition": "observed -1"
+      }
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/business-workflow/screenshots/BIZ-RUN-20260703-181017-0006.png",
+    "recording_path": "BugReport/unverified/business-workflow/recordings/BIZ-RUN-20260703-181017-0006.mp4",
+    "log_path": "BugReport/unverified/business-workflow/logs/BIZ-RUN-20260703-181017-0006.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9
+}

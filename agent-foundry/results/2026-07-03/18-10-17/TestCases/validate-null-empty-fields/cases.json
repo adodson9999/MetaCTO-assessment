@@ -1,0 +1,2371 @@
+[
+  {
+    "test_case_id": "TC-NULLF-001",
+    "title_summary": "Auth login: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-002",
+    "title_summary": "Products add: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-003",
+    "title_summary": "Products put: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-004",
+    "title_summary": "Products patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-005",
+    "title_summary": "Posts add: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /posts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-006",
+    "title_summary": "Posts put: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-007",
+    "title_summary": "Posts patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-008",
+    "title_summary": "Todos add: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /todos/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-009",
+    "title_summary": "Todos put: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-010",
+    "title_summary": "Todos patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-011",
+    "title_summary": "Firstname:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-012",
+    "title_summary": "Firstname:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-013",
+    "title_summary": "Firstname:empty string: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-014",
+    "title_summary": "Firstname:whitespace only: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-015",
+    "title_summary": "Firstname:whitespace tab newline: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "whitespace-tab-newline"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-016",
+    "title_summary": "Firstname:whitespace unicode: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "whitespace-unicode"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-017",
+    "title_summary": "Firstname:zero length vs absent echo: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "required_state",
+      "state": "zero-length-vs-absent-echo"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-018",
+    "title_summary": "Lastname:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-019",
+    "title_summary": "Lastname:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-020",
+    "title_summary": "Lastname:empty string: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-021",
+    "title_summary": "Lastname:whitespace only: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-022",
+    "title_summary": "Lastname:whitespace tab newline: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "whitespace-tab-newline"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-023",
+    "title_summary": "Lastname:whitespace unicode: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "lastName",
+      "category": "optional_state",
+      "state": "whitespace-unicode"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-024",
+    "title_summary": "Age:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "age",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-025",
+    "title_summary": "Age:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "age",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-026",
+    "title_summary": "Age:integer zero: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "age",
+      "category": "optional_state",
+      "state": "integer-zero"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-027",
+    "title_summary": "Email:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-028",
+    "title_summary": "Email:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-029",
+    "title_summary": "Email:empty string: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-030",
+    "title_summary": "Email:whitespace only: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-031",
+    "title_summary": "Email:whitespace tab newline: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "whitespace-tab-newline"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-032",
+    "title_summary": "Email:whitespace unicode: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "email",
+      "category": "optional_state",
+      "state": "whitespace-unicode"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-033",
+    "title_summary": "Users add: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "all_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-034",
+    "title_summary": "Firstname: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-035",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-036",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-037",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-038",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-039",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-040",
+    "title_summary": "Firstname: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "firstName",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-041",
+    "title_summary": "Users put: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-042",
+    "title_summary": "Users patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-043",
+    "title_summary": "Name:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-044",
+    "title_summary": "Name:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-045",
+    "title_summary": "Name:empty string: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-046",
+    "title_summary": "Name:whitespace only: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-047",
+    "title_summary": "Name:whitespace tab newline: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "whitespace-tab-newline"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-048",
+    "title_summary": "Name:whitespace unicode: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "whitespace-unicode"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-049",
+    "title_summary": "Name:zero length vs absent echo: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "required_state",
+      "state": "zero-length-vs-absent-echo"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-050",
+    "title_summary": "Ingredients:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-051",
+    "title_summary": "Ingredients:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-052",
+    "title_summary": "Ingredients:empty array: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "required_state",
+      "state": "empty-array"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-053",
+    "title_summary": "Ingredients:empty array with null element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "required_state",
+      "state": "empty-array-with-null-element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-054",
+    "title_summary": "Ingredients:null first array element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "required_state",
+      "state": "null first array element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-055",
+    "title_summary": "Instructions:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "instructions",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-056",
+    "title_summary": "Instructions:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "instructions",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-057",
+    "title_summary": "Instructions:empty array: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "instructions",
+      "category": "optional_state",
+      "state": "empty-array"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-058",
+    "title_summary": "Instructions:empty array with null element: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "instructions",
+      "category": "optional_state",
+      "state": "empty-array-with-null-element"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-059",
+    "title_summary": "Instructions:null first array element: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "instructions",
+      "category": "optional_state",
+      "state": "null first array element"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-060",
+    "title_summary": "Preptimeminutes:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "prepTimeMinutes",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-061",
+    "title_summary": "Preptimeminutes:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "prepTimeMinutes",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-062",
+    "title_summary": "Preptimeminutes:integer zero: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "prepTimeMinutes",
+      "category": "optional_state",
+      "state": "integer-zero"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-063",
+    "title_summary": "Recipes add: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "all_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-064",
+    "title_summary": "Name: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-065",
+    "title_summary": "Ingredients: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "ingredients",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-066",
+    "title_summary": "Name+ingredients: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "combo_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-067",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-068",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-069",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-070",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-071",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-072",
+    "title_summary": "Name: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "name",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-073",
+    "title_summary": "Recipes put: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-074",
+    "title_summary": "Recipes patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-075",
+    "title_summary": "Userid:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-076",
+    "title_summary": "Userid:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-077",
+    "title_summary": "Userid:empty string: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-078",
+    "title_summary": "Userid:integer zero: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "integer-zero"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-079",
+    "title_summary": "Userid:boolean false: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "boolean-false"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-080",
+    "title_summary": "Userid:empty array: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "empty-array"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-081",
+    "title_summary": "Userid:empty object: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "empty-object"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-082",
+    "title_summary": "Userid:whitespace only: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 404.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-083",
+    "title_summary": "Userid:whitespace tab newline: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "whitespace-tab-newline"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 404.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-084",
+    "title_summary": "Userid:whitespace unicode: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "required_state",
+      "state": "whitespace-unicode"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 404.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-085",
+    "title_summary": "Products:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-086",
+    "title_summary": "Products:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-087",
+    "title_summary": "Products:empty string: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-string"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-088",
+    "title_summary": "Products:integer zero: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "integer-zero"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-089",
+    "title_summary": "Products:boolean false: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "boolean-false"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-090",
+    "title_summary": "Products:empty array: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-array"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-091",
+    "title_summary": "Products:empty object: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-object"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-092",
+    "title_summary": "Products:whitespace only: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "whitespace-only"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-093",
+    "title_summary": "Products:empty array with null element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-array-with-null-element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 500.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-094",
+    "title_summary": "Products:null first array element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "null first array element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 500.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-095",
+    "title_summary": "Carts add: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "all_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-096",
+    "title_summary": "Userid: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-097",
+    "title_summary": "Products: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-098",
+    "title_summary": "Userid+products: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "combo_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-099",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-100",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-101",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-102",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-103",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-104",
+    "title_summary": "Userid: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "userId",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 400.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-105",
+    "title_summary": "Products:key absent: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-106",
+    "title_summary": "Products:json null: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-107",
+    "title_summary": "Products:empty array: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-array"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-108",
+    "title_summary": "Products:empty array with null element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "empty-array-with-null-element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 500.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-109",
+    "title_summary": "Products:null first array element: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "required_state",
+      "state": "null first array element"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 500.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-110",
+    "title_summary": "Merge:key absent: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "merge",
+      "category": "optional_state",
+      "state": "key-absent"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-111",
+    "title_summary": "Merge:json null: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "merge",
+      "category": "optional_state",
+      "state": "json-null"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-112",
+    "title_summary": "Merge:boolean false: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "merge",
+      "category": "optional_state",
+      "state": "boolean-false"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-113",
+    "title_summary": "Merge:boolean true: verify validate null empty fields returns ?.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "merge",
+      "category": "optional_state",
+      "state": "boolean-true"
+    },
+    "expected_result": "The API returns ?.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-114",
+    "title_summary": "Carts put: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "all_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-115",
+    "title_summary": "Products: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "products",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-NULLF-116",
+    "title_summary": "Carts patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-117",
+    "title_summary": "Comments add: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /comments/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-118",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-119",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-120",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-121",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-122",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-123",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-124",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-125",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-126",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-127",
+    "title_summary": "?:?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "required_state",
+      "state": "?"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-128",
+    "title_summary": "Comments put: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "all_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-129",
+    "title_summary": "?: verify validate null empty fields returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "each_required_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-130",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-131",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-132",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-133",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-134",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-135",
+    "title_summary": "?: verify validate null empty fields returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "?",
+      "category": "string_null"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-NULLF-136",
+    "title_summary": "Comments patch: verify validate null empty fields returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Fail"
+  }
+]

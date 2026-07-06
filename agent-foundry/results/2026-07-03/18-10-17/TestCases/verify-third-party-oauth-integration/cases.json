@@ -1,0 +1,56 @@
+[
+  {
+    "test_case_id": "TC-OAUTH-001",
+    "title_summary": "Google: verify verify third party oauth integration returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. 1: -> .",
+      "2. 2: -> .",
+      "3. 3: -> .",
+      "4. 4: -> .",
+      "5. 5: -> ."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "Every step returns its documented success code and state persists across the flow.",
+    "actual_result": "Observed: 1=?, 2=?, 3=?, 4=?, 5=?.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-OAUTH-002",
+    "title_summary": "Github: verify verify third party oauth integration returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. 1: -> .",
+      "2. 2: -> .",
+      "3. 3: -> .",
+      "4. 4: -> .",
+      "5. 5: -> ."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "Every step returns its documented success code and state persists across the flow.",
+    "actual_result": "Observed: 1=?, 2=?, 3=?, 4=?, 5=?.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-OAUTH-003",
+    "title_summary": "Facebook: verify verify third party oauth integration returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. 1: -> .",
+      "2. 2: -> .",
+      "3. 3: -> .",
+      "4. 4: -> .",
+      "5. 5: -> ."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "Every step returns its documented success code and state persists across the flow.",
+    "actual_result": "Observed: 1=?, 2=?, 3=?, 4=?, 5=?.",
+    "status": "Fail"
+  }
+]

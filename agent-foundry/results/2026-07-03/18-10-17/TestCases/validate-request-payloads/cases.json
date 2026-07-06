@@ -1,0 +1,928 @@
+[
+  {
+    "test_case_id": "TC-REQPAY-001",
+    "title_summary": "Auth login: verify validate request payloads returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "valid"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-002",
+    "title_summary": "Auth login: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "inv_all_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-003",
+    "title_summary": "Username:key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-004",
+    "title_summary": "Password:key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-005",
+    "title_summary": "Username,password:key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username,password",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-006",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-007",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-008",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-009",
+    "title_summary": "Username:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-010",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-011",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-012",
+    "title_summary": "Password:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-013",
+    "title_summary": "Expiresinmins:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "expiresInMins",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-014",
+    "title_summary": "Expiresinmins:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "expiresInMins",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-015",
+    "title_summary": "Expiresinmins:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "expiresInMins",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-016",
+    "title_summary": "Expiresinmins:?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "expiresInMins",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-017",
+    "title_summary": "?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "inv_extra_field"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-018",
+    "title_summary": "?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "inv_extra_field"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 200.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-019",
+    "title_summary": "Username: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_maxlength"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-020",
+    "title_summary": "Username: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "username",
+      "category": "inv_maxlength"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-021",
+    "title_summary": "Password: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_maxlength"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-022",
+    "title_summary": "Password: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "password",
+      "category": "inv_maxlength"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 400.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-023",
+    "title_summary": "Products add: verify validate request payloads returns 2xx.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "valid"
+    },
+    "expected_result": "The API returns 2xx.",
+    "actual_result": "The API returned 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-REQPAY-024",
+    "title_summary": "Products add: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "inv_all_null"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-025",
+    "title_summary": "The required string field (title role):key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required string field (title role)",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-026",
+    "title_summary": "The required numeric field (price role):key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required numeric field (price role)",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-027",
+    "title_summary": "Both required fields (title and price roles):key absent: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "both required fields (title and price roles)",
+      "category": "inv_missing_required"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-028",
+    "title_summary": "The required string field (title role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required string field (title role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-029",
+    "title_summary": "The required string field (title role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required string field (title role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-030",
+    "title_summary": "The required numeric field (price role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required numeric field (price role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-031",
+    "title_summary": "The required numeric field (price role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the required numeric field (price role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-032",
+    "title_summary": "The optional integer field (stock role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the optional integer field (stock role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-033",
+    "title_summary": "The optional integer field (stock role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the optional integer field (stock role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-034",
+    "title_summary": "The optional integer field (stock role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the optional integer field (stock role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-035",
+    "title_summary": "The optional string field (category role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the optional string field (category role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-036",
+    "title_summary": "The optional string field (description role):?: verify validate request payloads returns 400.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "field": "the optional string field (description role)",
+      "category": "inv_wrong_type"
+    },
+    "expected_result": "The API returns 400.",
+    "actual_result": "The API returned 201.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-REQPAY-037",
+    "title_summary": "Products put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-038",
+    "title_summary": "Products patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-039",
+    "title_summary": "Posts add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /posts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-040",
+    "title_summary": "Posts put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-041",
+    "title_summary": "Posts patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-042",
+    "title_summary": "Todos add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /todos/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-043",
+    "title_summary": "Todos put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-044",
+    "title_summary": "Todos patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-045",
+    "title_summary": "Users add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-046",
+    "title_summary": "Users put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-047",
+    "title_summary": "Users patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-048",
+    "title_summary": "Recipes add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-049",
+    "title_summary": "Recipes put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-050",
+    "title_summary": "Recipes patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-051",
+    "title_summary": "Carts add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-052",
+    "title_summary": "Carts put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-053",
+    "title_summary": "Carts patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-054",
+    "title_summary": "Comments add: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /comments/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-055",
+    "title_summary": "Comments put: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REQPAY-056",
+    "title_summary": "Comments patch: verify validate request payloads returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "_none_"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  }
+]

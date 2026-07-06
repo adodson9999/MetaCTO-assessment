@@ -1,0 +1,178 @@
+[
+  {
+    "test_case_id": "TC-BULK-001",
+    "title_summary": "Mixed batch status 207: verify test bulk operation endpoints returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-002",
+    "title_summary": "Mixed results len 10: verify test bulk operation endpoints returns 10.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 10.",
+    "actual_result": "The API returned 0.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-003",
+    "title_summary": "Mixed valid 2xx: verify test bulk operation endpoints returns 8.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 8.",
+    "actual_result": "The API returned 0.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-004",
+    "title_summary": "Mixed invalid 400: verify test bulk operation endpoints returns 2.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 2.",
+    "actual_result": "The API returned 0.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-005",
+    "title_summary": "Mixed missing field named: verify test bulk operation endpoints returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-006",
+    "title_summary": "Mixed wrongtype field named: verify test bulk operation endpoints returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-007",
+    "title_summary": "Mixed db delta 8: verify test bulk operation endpoints returns 8.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 8.",
+    "actual_result": "The API returned 0.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-008",
+    "title_summary": "Allinvalid status 207: verify test bulk operation endpoints returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-009",
+    "title_summary": "Allinvalid all 400: verify test bulk operation endpoints returns true.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns true.",
+    "actual_result": "The API returned false.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-BULK-010",
+    "title_summary": "Allinvalid db delta 0: verify test bulk operation endpoints returns 0.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 0.",
+    "actual_result": "The API returned 0.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-BULK-011",
+    "title_summary": "Oversize rejected: verify test bulk operation endpoints returns 413.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://127.0.0.1:8924.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The API returns 413.",
+    "actual_result": "The API returned -1.",
+    "status": "Fail"
+  }
+]

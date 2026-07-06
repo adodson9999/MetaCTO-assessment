@@ -1,0 +1,306 @@
+[
+  {
+    "test_case_id": "TC-REGR-001",
+    "title_summary": "Case 1: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-002",
+    "title_summary": "Case 2: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-003",
+    "title_summary": "Case 3: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-004",
+    "title_summary": "Case 4: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-005",
+    "title_summary": "Case 5: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-006",
+    "title_summary": "Case 6: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-007",
+    "title_summary": "Case 7: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-008",
+    "title_summary": "Case 8: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "broad"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-009",
+    "title_summary": "Case 9: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "boundary"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-010",
+    "title_summary": "Case 10: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-011",
+    "title_summary": "Case 11: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-012",
+    "title_summary": "Case 12: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-013",
+    "title_summary": "Case 13: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-014",
+    "title_summary": "Case 14: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-015",
+    "title_summary": "Case 15: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-016",
+    "title_summary": "Case 16: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "edge"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-017",
+    "title_summary": "Case 17: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-018",
+    "title_summary": "Case 18: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "happy"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-REGR-019",
+    "title_summary": "Case 19: verify run regression suite returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "category": "negative"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned Not Executed.",
+    "status": "Blocked"
+  }
+]

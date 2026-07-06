@@ -1,0 +1,110 @@
+{
+  "bug_id": "SW-RUN-20260703-181017-0174",
+  "category": "computer-software",
+  "category_reason": "system/internal signal or no positively user-visible signal (expected All 26 'measure api consumer satisfaction' scenario checks pass against the documented behaviour, observed [api-tester-measure-api-consumer-satisfaction] quality outcome=FAIL; metric=0.0)",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "measure-api-consumer-satisfaction",
+  "finding_endpoint": "n/a \u2014 aggregate finding across endpoints",
+  "sub_test": "Aggregate failure: measure api consumer satisfaction (26/26 scenario checks failed)",
+  "title": "[measure-api-consumer-satisfaction] Aggregate failure: measure api consumer satisfaction (26/26 scenario checks failed) on n/a \u2014 aggregate finding across endpoints \u2014 expected All 26 'measure api consumer satisfaction' scenario checks pass against the documented behaviour, observed [api-tester-measure-api-consumer-satisfaction] quality outcome=FAIL; metric=0.0 (undocumented)",
+  "severity": "LOW",
+  "priority": "P4",
+  "expected": "All 26 'measure api consumer satisfaction' scenario checks pass against the documented behaviour",
+  "observed": "[api-tester-measure-api-consumer-satisfaction] quality outcome=FAIL; metric=0.0",
+  "artifacts": {
+    "testing_steps": [
+      "1. Start the target API at http://localhost:8899.",
+      "2. Write a script that samples every endpoint in agent-foundry/data/openapi.json (~5 requests each) against http://localhost:8899, recording latency, error rate and schema-consistency, and computes the satisfaction score per the evidence file's formula.",
+      "3. Assert the score meets the pass threshold; sub-threshold endpoints locate the failure.",
+      "4. Compare your script's failures with the per-scenario evidence in TestCases/measure-api-consumer-satisfaction/cases.json \u2014 this run recorded 26 of 26 checks failing."
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/computer-software/screenshots/SW-RUN-20260703-181017-0174.png",
+    "recording_path": "BugReport/unverified/computer-software/recordings/SW-RUN-20260703-181017-0174.mp4",
+    "log_path": "BugReport/unverified/computer-software/logs/SW-RUN-20260703-181017-0174.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9,
+  "description": "The measure-api-consumer-satisfaction check failed in aggregate against http://localhost:8899: [api-tester-measure-api-consumer-satisfaction] quality outcome=FAIL; metric=0.0. The per-scenario evidence is in TestCases/measure-api-consumer-satisfaction/cases.json. There is no single reproducible API call \u2014 reproduce it with the script described in the steps below (which is also why this bug has no Postman section).",
+  "steps_to_reproduce": [
+    "1. Start the target API at http://localhost:8899.",
+    "2. Write a script that samples every endpoint in agent-foundry/data/openapi.json (~5 requests each) against http://localhost:8899, recording latency, error rate and schema-consistency, and computes the satisfaction score per the evidence file's formula.",
+    "3. Assert the score meets the pass threshold; sub-threshold endpoints locate the failure.",
+    "4. Compare your script's failures with the per-scenario evidence in TestCases/measure-api-consumer-satisfaction/cases.json \u2014 this run recorded 26 of 26 checks failing."
+  ],
+  "evidence": "TestCases/measure-api-consumer-satisfaction/cases.json",
+  "documentation": {
+    "cited": false,
+    "verdict": "missing-docs",
+    "note": "No public documentation states this expected behavior (documentation-reviewer verdict: missing-docs). The expectation derives from the universal HTTP/REST contract (agent-foundry/references/contract-oracle.md)."
+  },
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "n/a \u2014 aggregate finding across endpoints",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "affected_test_cases": [
+    "TC-NPS-001",
+    "TC-NPS-002",
+    "TC-NPS-003",
+    "TC-NPS-004",
+    "TC-NPS-005",
+    "TC-NPS-006",
+    "TC-NPS-007",
+    "TC-NPS-008",
+    "TC-NPS-009",
+    "TC-NPS-010",
+    "TC-NPS-011",
+    "TC-NPS-012",
+    "TC-NPS-013",
+    "TC-NPS-014",
+    "TC-NPS-015",
+    "TC-NPS-016",
+    "TC-NPS-017",
+    "TC-NPS-018",
+    "TC-NPS-019",
+    "TC-NPS-020",
+    "TC-NPS-021",
+    "TC-NPS-022",
+    "TC-NPS-023",
+    "TC-NPS-024",
+    "TC-NPS-025",
+    "TC-NPS-026"
+  ],
+  "_source": {
+    "agent": "api-tester-measure-api-consumer-satisfaction",
+    "raw_title": "[api-tester-measure-api-consumer-satisfaction] quality outcome=FAIL; metric=0.0",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": false,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  }
+}

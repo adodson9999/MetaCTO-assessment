@@ -1,0 +1,26 @@
+{
+  "name": "DummyJSON (public)",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "https://dummyjson.com",
+      "enabled": true
+    },
+    {
+      "key": "token",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "newProductId",
+      "value": "",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

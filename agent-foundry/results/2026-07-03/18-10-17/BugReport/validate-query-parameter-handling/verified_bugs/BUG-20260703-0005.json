@@ -1,0 +1,71 @@
+{
+  "id": "BUG-20260703-0005",
+  "title_summary": "Aggregate failure: validate query parameter handling (12/12 scenario checks failed)",
+  "description": "The validate-query-parameter-handling check failed in aggregate against http://localhost:8899: [api-tester-validate-query-parameter-handling] quality outcome=FAIL; metric=0.0. The per-scenario evidence is in TestCases/validate-query-parameter-handling/cases.json. There is no single reproducible API call \u2014 reproduce it with the script described in the steps below (which is also why this bug has no Postman section).",
+  "steps_to_reproduce": [
+    "1. Start the target API at http://localhost:8899.",
+    "2. Write a script that calls GET http://localhost:8899/products with valid (limit=5&skip=5&select=title,price), boundary (limit=0, limit=-1, limit=99999) and unknown (foo=bar) query parameters.",
+    "3. Assert documented handling per case: valid params honored, invalid rejected or defaulted per docs, unknown params ignored.",
+    "4. Compare your script's failures with the per-scenario evidence in TestCases/validate-query-parameter-handling/cases.json \u2014 this run recorded 12 of 12 checks failing."
+  ],
+  "expected_result": "Per the documentation (references/dummyjson-com/dummyjson-com-docs.md:27 \u2014 https://dummyjson.com/docs): \"All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items.\" Every 'validate query parameter handling' scenario check must conform to this.",
+  "actual_result": "[api-tester-validate-query-parameter-handling] quality outcome=FAIL; metric=0.0",
+  "severity": "LOW",
+  "severity_impact": "Minor \u2014 cosmetic / low-impact",
+  "priority": "P4",
+  "priority_urgency": "Low",
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "n/a \u2014 aggregate finding across endpoints",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "evidence": "TestCases/validate-query-parameter-handling/cases.json",
+  "attachments": {
+    "screenshot": "BugReport/validate-query-parameter-handling/screenshots/BUG-20260703-0005.png",
+    "recording": "BugReport/validate-query-parameter-handling/recordings/BUG-20260703-0005.mp4",
+    "log": "BugReport/validate-query-parameter-handling/logs/BUG-20260703-0005.log"
+  },
+  "affected_test_cases": [
+    "TC-QPARAM-001",
+    "TC-QPARAM-002",
+    "TC-QPARAM-003",
+    "TC-QPARAM-004",
+    "TC-QPARAM-005",
+    "TC-QPARAM-006",
+    "TC-QPARAM-007",
+    "TC-QPARAM-008",
+    "TC-QPARAM-009",
+    "TC-QPARAM-010",
+    "TC-QPARAM-011",
+    "TC-QPARAM-012"
+  ],
+  "_source": {
+    "agent": "api-tester-validate-query-parameter-handling",
+    "raw_title": "[api-tester-validate-query-parameter-handling] quality outcome=FAIL; metric=0.0",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": true,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  },
+  "documentation": {
+    "cited": true,
+    "file": "references/dummyjson-com/dummyjson-com-docs.md",
+    "line": 27,
+    "text": "All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items",
+    "source_url": "https://dummyjson.com/docs",
+    "reviewer_reason": "The documentation in dummyjson-com-docs.md states that query parameters should be usable for pagination and data limiting, with limit=0 returning all items. The observed test result shows all 12 query parameter handling validation checks failed (metric=0.0), indicating the API is not functioning as documented."
+  },
+  "documented_expected": "Per the documentation (references/dummyjson-com/dummyjson-com-docs.md:27 \u2014 https://dummyjson.com/docs): \"All the resources can be used with query params to achieve pagination and get limited data. `limit=0` clears the limit and you get all items.\""
+}

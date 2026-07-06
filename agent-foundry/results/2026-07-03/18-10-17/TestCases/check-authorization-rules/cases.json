@@ -1,0 +1,18 @@
+[
+  {
+    "test_case_id": "TC-AUTHZ-001",
+    "title_summary": "Case 1: verify check authorization rules returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET  to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned none.",
+    "status": "Blocked"
+  }
+]

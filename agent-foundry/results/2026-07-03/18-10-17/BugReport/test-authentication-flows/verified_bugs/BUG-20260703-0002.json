@@ -1,0 +1,59 @@
+{
+  "id": "BUG-20260703-0002",
+  "title_summary": "GET /auth/me with a malformed/invalid token is rejected (401/403)",
+  "description": "When I exercise the 'GET /auth/me with a malformed/invalid token is rejected (401/403)' check against GET /auth/me on http://localhost:8899, I expect status in [401, 403]; body has 'message'. but I get: HTTP 500. message='invalid signature' FAILED: status in [401, 403].",
+  "steps_to_reproduce": [
+    "1. Send GET /auth/me with a malformed Bearer token.",
+    "2. Assert status in [401, 403].",
+    "3. Assert body has 'message'."
+  ],
+  "expected_result": "status in [401, 403]; body has 'message'. (Per the documentation (data/documentation-reviewer/reference/auth.md:9 \u2014 https://dummyjson.com/docs/auth): \"When the Authorization header is missing or the token is invalid, the API returns 401 Unauthorized.\")",
+  "actual_result": "HTTP 500. message='invalid signature' FAILED: status in [401, 403].",
+  "severity": "CRITICAL",
+  "severity_impact": "Blocker \u2014 crash, data loss, or auth/data exposure",
+  "priority": "P1",
+  "priority_urgency": "High \u2014 fix now",
+  "environment": {
+    "target": "http://localhost:8899",
+    "api": "DummyJSON clone (local)",
+    "runtime": "Node.js",
+    "endpoint": "GET /auth/me",
+    "run_id": "RUN-20260703-181017",
+    "date": "2026-07-03 18:10:17"
+  },
+  "evidence": "TestCases/test-authentication-flows/cases.json",
+  "attachments": {
+    "screenshot": "BugReport/test-authentication-flows/screenshots/BUG-20260703-0002.png",
+    "recording": "BugReport/test-authentication-flows/recordings/BUG-20260703-0002.mp4",
+    "log": "BugReport/test-authentication-flows/logs/BUG-20260703-0002.log"
+  },
+  "affected_test_cases": [
+    "TC-AUTH-007"
+  ],
+  "_source": {
+    "agent": "api-tester-test-authentication-flows",
+    "raw_title": "[api-tester-test-authentication-flows] quality outcome=FAIL; metric=0.0",
+    "created_at": "2026-07-03T18:10:17Z",
+    "artifact_completeness": {
+      "testing_steps": false,
+      "postman_references": true,
+      "screenshot": true,
+      "recording": true,
+      "logs": true,
+      "db_dump": false,
+      "created_at": true,
+      "title": true,
+      "severity": true,
+      "priority": true
+    }
+  },
+  "documentation": {
+    "cited": true,
+    "file": "data/documentation-reviewer/reference/auth.md",
+    "line": 9,
+    "text": "When the Authorization header is missing or the token is invalid, the API returns 401 Unauthorized.",
+    "source_url": "https://dummyjson.com/docs/auth",
+    "reviewer_reason": "The documentation states that GET /auth/me with an invalid token should return 401 Unauthorized, but the observed response is HTTP 500. The actual status code (500) contradicts the documented expected behavior (401)."
+  },
+  "documented_expected": "Per the documentation (data/documentation-reviewer/reference/auth.md:9 \u2014 https://dummyjson.com/docs/auth): \"When the Authorization header is missing or the token is invalid, the API returns 401 Unauthorized.\""
+}

@@ -149,3 +149,9 @@ agent-foundry/results/code-review/minimalist/*
 !agent-foundry/results/code-review/math-correctness/
 agent-foundry/results/code-review/math-correctness/*
 !agent-foundry/results/code-review/math-correctness/held_out.jsonl
+# ...and the 2026-07-03/18-10-17 orchestration deliverable — kept as a committed EXAMPLE run
+# (TestCases/ + Postman/ + BugReport/ with real screenshot/recording/log evidence) so the
+# full-orchestration output is browsable in the repo. Other/future run dirs stay ignored.
+!agent-foundry/results/2026-07-03/
+agent-foundry/results/2026-07-03/*
+!agent-foundry/results/2026-07-03/18-10-17/

@@ -1,0 +1,49 @@
+{
+  "bug_id": "SW-RUN-20260703-181017-0002",
+  "category": "computer-software",
+  "category_reason": "system/internal signal or no positively user-visible signal (expected 8, observed 0)",
+  "reviewer_verdict": "missing-docs",
+  "documentation_cited": false,
+  "source_of_truth": null,
+  "run_id": "RUN-20260703-181017",
+  "created_at": "2026-07-03T18:10:17Z",
+  "finding_agent": "test-bulk-operation-endpoints",
+  "finding_endpoint": "",
+  "sub_test": "mixed_db_delta_8",
+  "title": "[test-bulk-operation-endpoints] mixed_db_delta_8 on  \u2014 expected 8, observed 0 (undocumented)",
+  "severity": "HIGH",
+  "priority": "P2",
+  "expected": "8",
+  "observed": "0",
+  "artifacts": {
+    "testing_steps": [
+      {
+        "tc_id": "UV-test-bulk-operation-endpoints-1",
+        "step_id": 1,
+        "step_text": "Exercise the test-bulk-operation-endpoints scenario 'mixed_db_delta_8' against ",
+        "involves_http_call": true,
+        "involves_assertion": true,
+        "expected_outcome": "8",
+        "fail_condition": "observed 0"
+      }
+    ],
+    "postman_references": [],
+    "screenshot_path": "BugReport/unverified/computer-software/screenshots/SW-RUN-20260703-181017-0002.png",
+    "recording_path": "BugReport/unverified/computer-software/recordings/SW-RUN-20260703-181017-0002.mp4",
+    "log_path": "BugReport/unverified/computer-software/logs/SW-RUN-20260703-181017-0002.log",
+    "db_dump_path": null
+  },
+  "artifact_completeness": {
+    "testing_steps": true,
+    "postman_references": true,
+    "screenshot": true,
+    "recording": true,
+    "logs": true,
+    "db_dump": false,
+    "created_at": true,
+    "title": true,
+    "severity": true,
+    "priority": true
+  },
+  "complete_artifact_count": 9
+}

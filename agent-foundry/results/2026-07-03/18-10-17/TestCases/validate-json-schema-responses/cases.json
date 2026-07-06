@@ -1,0 +1,354 @@
+[
+  {
+    "test_case_id": "TC-SCHEMA-001",
+    "title_summary": "Auth login: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-002",
+    "title_summary": "Products add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 201.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-003",
+    "title_summary": "Products put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-004",
+    "title_summary": "Products patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-005",
+    "title_summary": "Posts add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /posts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 400.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-006",
+    "title_summary": "Posts put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 400.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-007",
+    "title_summary": "Posts patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-008",
+    "title_summary": "Todos add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /todos/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 400.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-009",
+    "title_summary": "Todos put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-010",
+    "title_summary": "Todos patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-011",
+    "title_summary": "Users add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /users/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-012",
+    "title_summary": "Users put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-013",
+    "title_summary": "Users patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-014",
+    "title_summary": "Recipes add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /recipes/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 200.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-015",
+    "title_summary": "Recipes put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-016",
+    "title_summary": "Recipes patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /recipes/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-017",
+    "title_summary": "Carts add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /carts/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-018",
+    "title_summary": "Carts put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-019",
+    "title_summary": "Carts patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-020",
+    "title_summary": "Comments add: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /comments/add to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 400.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-021",
+    "title_summary": "Comments put: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  },
+  {
+    "test_case_id": "TC-SCHEMA-022",
+    "title_summary": "Comments patch: verify validate json schema responses returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send PATCH /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "The API returned 404.",
+    "status": "Blocked"
+  }
+]

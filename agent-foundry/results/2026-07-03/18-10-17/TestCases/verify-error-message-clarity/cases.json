@@ -1,0 +1,242 @@
+[
+  {
+    "test_case_id": "TC-ERRMSG-001",
+    "title_summary": "Auth login: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /auth/login to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-002",
+    "title_summary": "Auth me: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /auth/me to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-003",
+    "title_summary": "Auth me: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /auth/me to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-004",
+    "title_summary": "Products get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-005",
+    "title_summary": "Users get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /users/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-006",
+    "title_summary": "Posts get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /posts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-007",
+    "title_summary": "Comments get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /comments/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-008",
+    "title_summary": "Todos get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /todos/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-009",
+    "title_summary": "Carts get: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /carts/{id} to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-010",
+    "title_summary": "Products list: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-011",
+    "title_summary": "Http 403: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /http/403 to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-012",
+    "title_summary": "Http 409: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /http/409 to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-013",
+    "title_summary": "Http 422: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /http/422 to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-014",
+    "title_summary": "Http 429: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /http/429 to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  },
+  {
+    "test_case_id": "TC-ERRMSG-015",
+    "title_summary": "Http 500: verify verify error message clarity returns the expected result.",
+    "preconditions": "API target reachable and authenticated where required; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /http/500 to http://localhost:8899.",
+      "2. Read the HTTP response status code and body.",
+      "3. Compare the observed result to the expected result."
+    ],
+    "test_data": {
+      "note": "no explicit inputs for this case"
+    },
+    "expected_result": "The response matches the documented contract for this case.",
+    "actual_result": "Not captured.",
+    "status": "Fail"
+  }
+]

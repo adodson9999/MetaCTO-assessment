@@ -1,0 +1,216 @@
+[
+  {
+    "test_case_id": "TC-CRUD-001",
+    "title_summary": "GET /products returns a paginated product list (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products?limit=5.",
+      "2. Assert status == 200.",
+      "3. Assert products is array.",
+      "4. Assert body has 'total'.",
+      "5. Assert len(products) <= 5."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-READ-LIST",
+      "method": "GET",
+      "path": "/products",
+      "query": {
+        "limit": 5
+      },
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; products is array; body has 'total'; len(products) <= 5.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-002",
+    "title_summary": "GET /products/1 returns a single product with the expected shape (200)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/1.",
+      "2. Assert status == 200.",
+      "3. Assert id == 1.",
+      "4. Assert body has 'title'.",
+      "5. Assert body has 'price'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-READ-ONE",
+      "method": "GET",
+      "path": "/products/1",
+      "query": {},
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 200; id == 1; body has 'title'; body has 'price'.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-003",
+    "title_summary": "POST /products/add echoes the new product with an id (201, simulated)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send POST /products/add.",
+      "2. Request body: {\"title\": \"Forge Test Widget\", \"price\": 42, \"category\": \"groceries\", \"stock\": 7}.",
+      "3. Assert status in [200, 201].",
+      "4. Assert title == 'Forge Test Widget'.",
+      "5. Assert id is number."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-CREATE",
+      "method": "POST",
+      "path": "/products/add",
+      "query": {},
+      "body": {
+        "title": "Forge Test Widget",
+        "price": 42,
+        "category": "groceries",
+        "stock": 7
+      },
+      "auth": null,
+      "note": "DummyJSON SIMULATES creation: it returns a success body + a fresh id but does NOT persist."
+    },
+    "expected_result": "status in [200, 201]; title == 'Forge Test Widget'; id is number.",
+    "actual_result": "HTTP 201.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-004",
+    "title_summary": "GET the freshly-created product id returns 404 \u2014 documented non-persistence (not a bug)",
+    "preconditions": "newProductId captured from CRUD-CREATE.",
+    "test_steps": [
+      "1. Send GET /products/195.",
+      "2. Assert status == 404.",
+      "3. Assert message contains 'not found'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-CREATE-NONPERSIST",
+      "method": "GET",
+      "path": "/products/{newProductId}",
+      "query": {},
+      "body": null,
+      "auth": null,
+      "note": "Proves the simulated contract: the add succeeded but nothing was stored."
+    },
+    "expected_result": "status == 404; message contains 'not found'.",
+    "actual_result": "HTTP 404. message='Product with id '195' not found'",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-005",
+    "title_summary": "PUT /products/1 echoes the changed field (200, simulated)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /products/1.",
+      "2. Request body: {\"title\": \"Forge Updated Title\"}.",
+      "3. Assert status == 200.",
+      "4. Assert id == 1.",
+      "5. Assert title == 'Forge Updated Title'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-UPDATE",
+      "method": "PUT",
+      "path": "/products/1",
+      "query": {},
+      "body": {
+        "title": "Forge Updated Title"
+      },
+      "auth": null,
+      "note": "Update is simulated: the changed field is echoed back, not persisted."
+    },
+    "expected_result": "status == 200; id == 1; title == 'Forge Updated Title'.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-006",
+    "title_summary": "DELETE /products/1 returns the product flagged isDeleted + deletedOn (200, simulated)",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send DELETE /products/1.",
+      "2. Assert status == 200.",
+      "3. Assert isDeleted == True.",
+      "4. Assert body has 'deletedOn'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-DELETE",
+      "method": "DELETE",
+      "path": "/products/1",
+      "query": {},
+      "body": null,
+      "auth": null,
+      "note": "Delete is simulated: it flags isDeleted/deletedOn but does not remove the record."
+    },
+    "expected_result": "status == 200; isDeleted == True; body has 'deletedOn'.",
+    "actual_result": "HTTP 200.",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-007",
+    "title_summary": "GET /products/99999 returns 404 with a clear message",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send GET /products/99999.",
+      "2. Assert status == 404.",
+      "3. Assert message contains 'not found'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-READ-MISSING",
+      "method": "GET",
+      "path": "/products/99999",
+      "query": {},
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status == 404; message contains 'not found'.",
+    "actual_result": "HTTP 404. message='Product with id '99999' not found'",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-008",
+    "title_summary": "PUT /products/99999 (nonexistent) returns 404",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send PUT /products/99999.",
+      "2. Request body: {\"title\": \"x\"}.",
+      "3. Assert status in [404, 400].",
+      "4. Assert body has 'message'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-UPDATE-MISSING",
+      "method": "PUT",
+      "path": "/products/99999",
+      "query": {},
+      "body": {
+        "title": "x"
+      },
+      "auth": null
+    },
+    "expected_result": "status in [404, 400]; body has 'message'.",
+    "actual_result": "HTTP 404. message='Product with id '99999' not found'",
+    "status": "Pass"
+  },
+  {
+    "test_case_id": "TC-CRUD-009",
+    "title_summary": "DELETE /products/99999 (nonexistent) returns 404",
+    "preconditions": "Target reachable; no special prior state required.",
+    "test_steps": [
+      "1. Send DELETE /products/99999.",
+      "2. Assert status in [404, 400].",
+      "3. Assert body has 'message'."
+    ],
+    "test_data": {
+      "scenario_id": "CRUD-DELETE-MISSING",
+      "method": "DELETE",
+      "path": "/products/99999",
+      "query": {},
+      "body": null,
+      "auth": null
+    },
+    "expected_result": "status in [404, 400]; body has 'message'.",
+    "actual_result": "HTTP 404. message='Product with id '99999' not found'",
+    "status": "Pass"
+  }
+]
